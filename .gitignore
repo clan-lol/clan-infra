@@ -1,0 +1,6 @@
+# secrets
+.envrc.private
+.terraform.lock.hcl
+
+# git is our backup
+*.tfstate.backup
