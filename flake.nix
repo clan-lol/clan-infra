@@ -2,7 +2,8 @@
   description = "Dependencies to deploy a clan";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # https://github.com/NixOS/nixpkgs/pull/241526
+    nixpkgs.url = "github:Mic92/nixpkgs/cloud-init";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";

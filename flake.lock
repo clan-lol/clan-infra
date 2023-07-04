@@ -42,16 +42,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1688322751,
-        "narHash": "sha256-eW62dC5f33oKZL7VWlomttbUnOTHrAbte9yNUNW8rbk=",
-        "owner": "NixOS",
+        "lastModified": 1688490352,
+        "narHash": "sha256-XSC1FGcB35cLsIO4f6wMxXh/cy70BV5FyPjhASMy+gY=",
+        "owner": "Mic92",
         "repo": "nixpkgs",
-        "rev": "0fbe93c5a7cac99f90b60bdf5f149383daaa615f",
+        "rev": "8d0b85d15ab430cff31ecef7a7f2c42e9246863b",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "Mic92",
+        "ref": "cloud-init",
         "repo": "nixpkgs",
         "type": "github"
       }
