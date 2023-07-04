@@ -1,1 +1,0 @@
-../admins/apply.sh

@@ -3,6 +3,6 @@ resource "hcloud_ssh_key" "hcloud" {
   name       = each.key
   public_key = each.value
   labels = {
-    "wiki" = "true"
+    "web01" = "true"
   }
 }

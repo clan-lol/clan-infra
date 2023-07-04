@@ -1,6 +1,6 @@
 variable "server_type" {
   type        = string
-  default     = "cx21"
+  default     = "cx31"
   description = "Hetzner cloud server type"
 }
 

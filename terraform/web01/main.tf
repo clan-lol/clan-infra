@@ -1,14 +1,14 @@
 # Record the SSH public key into Hetzner Cloud
-data "hcloud_ssh_keys" "nixos_wiki" {
-  with_selector = "wiki=true"
+data "hcloud_ssh_keys" "server" {
+  with_selector = "web01=true"
 }
 
-resource "hcloud_server" "nixos_wiki" {
+resource "hcloud_server" "server" {
   image       = "debian-10"
   keep_disk   = true
-  name        = "nixos-wiki"
+  name        = "web01"
   server_type = var.server_type
-  ssh_keys    = data.hcloud_ssh_keys.nixos_wiki.ssh_keys.*.name
+  ssh_keys    = data.hcloud_ssh_keys.server.ssh_keys.*.name
   backups     = false
   labels      = var.tags
 
@@ -26,14 +26,14 @@ module "deploy" {
   source                 = "github.com/numtide/nixos-anywhere//terraform/all-in-one"
   nixos_system_attr      = ".#nixosConfigurations.${var.nixos_flake_attr}.config.system.build.toplevel"
   nixos_partitioner_attr = ".#nixosConfigurations.${var.nixos_flake_attr}.config.system.build.diskoNoDeps"
-  target_host            = hcloud_server.nixos_wiki.ipv4_address
-  instance_id            = hcloud_server.nixos_wiki.id
+  target_host            = hcloud_server.server.ipv4_address
+  instance_id            = hcloud_server.server.id
   debug_logging          = true
 }
 
 locals {
   nixos_vars = {
-    ipv6_address = hcloud_server.nixos_wiki.ipv6_address
-    ssh_keys     = data.hcloud_ssh_keys.nixos_wiki.ssh_keys.*.public_key
+    ipv6_address = hcloud_server.server.ipv6_address
+    ssh_keys     = data.hcloud_ssh_keys.server.ssh_keys.*.public_key
   }
 }
