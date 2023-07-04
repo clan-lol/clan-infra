@@ -7,7 +7,8 @@
     ];
 
     web01.imports = [
-      ./web01.nix
+      inputs.srvos.nixosModules.mixins-nginx
+      ./web01
     ];
   };
 }
