@@ -4,11 +4,12 @@ let
     grub = {
       name = "grub";
       size = "1M";
-      flags = [ "bios_grub" ];
+      type = "ef02";
     };
     esp = {
       name = "ESP";
-      size = "500MB";
+      type = "EF00";
+      size = "500M";
       content = {
         type = "filesystem";
         format = "vfat";
@@ -18,7 +19,6 @@ let
     root = {
       name = "root";
       size = "100%";
-      bootable = true;
       content = {
         type = "filesystem";
         # We use xfs because it has support for compression and has a quite good performance for databases
