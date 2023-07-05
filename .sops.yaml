@@ -1,15 +1,23 @@
 keys:
+  # To generate new admin key, run (requires [age](https://github.com/FiloSottile/age)):
+  # ```
+  # mkdir -p ~/.config/sops/age/
+  # age-keygen -o ~/.config/sops/age/keys.txt
+  # ```
+  # Provide the generated key to a pre-existing admin and wait for him to re-encrypt all secrets in this repo with it. After pulling the re-encrypted secrets you can read them with `sops some-file`.
   - &joerg age17n64ahe3wesh8l8lj0zylf4nljdmqn28hvqns2g7hgm9mdkhlsvsjuvkxz
   - &lassulus age1eq0e6uhjj2tja8v338tkdz8ema2aw5anpuyaq2uru7rt4lq7msyqqut6m2
-# To generate new admin key, run (requires [age](https://github.com/FiloSottile/age)):
-# ```
-# mkdir -p ~/.config/sops/age/
-# age-keygen -o ~/.config/sops/age/keys.txt
-# ```
-# Provide the generated key to a pre-existing admin and wait for him to re-encrypt all secrets in this repo with it. After pulling the re-encrypted secrets you can read them with `sops some-file`.
+  # Downloaded like this: nix-shell -p ssh-to-age --run 'ssh-keyscan clan.lol | ssh-to-age' 
+  - &web01 age17xuvz0fqtynzdmf8rfh4g3e46tx8w3mc6zgytrmuj5v9dhnldgxs7ue7ct
 creation_rules:
   - path_regex: targets/.*/terraform.tfstate$
     key_groups:
     - age:
       - *joerg
       - *lassulus
+  - path_regex: targets/web01/secrets.yaml$
+    key_groups:
+    - age:
+      - *joerg
+      - *lassulus
+      - *web01

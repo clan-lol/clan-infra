@@ -1,13 +1,17 @@
-{ inputs, ... }: {
+{ self, inputs, ... }: {
   flake.nixosModules = {
-    hcloud.imports = [
+    server.imports = [
       inputs.srvos.nixosModules.server
+      inputs.sops-nix.nixosModules.default
+    ];
+
+    hcloud.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-cloud
       ./single-disk.nix
     ];
 
     web01.imports = [
-      inputs.srvos.nixosModules.mixins-nginx
+      self.nixosModules.server
       ./web01
     ];
   };
