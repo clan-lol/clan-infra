@@ -1,11 +1,16 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   services.harmonia.enable = true;
   # $ nix-store --generate-binary-cache-key cache.yourdomain.tld-1 harmonia.secret harmonia.pub
   services.harmonia.signKeyPath = config.sops.secrets.harmonia-key.path;
   sops.secrets.harmonia-key = { };
 
+  services.nginx = {
+    package = pkgs.nginxStable.override {
+      modules = [ pkgs.nginxModules.zstd ];
+    };
+  };
+
   services.nginx.virtualHosts."cache.clan.lol" = {
-    useACMEHost = "thalheim.io";
     forceSSL = true;
     enableACME = true;
     locations."/".extraConfig = ''

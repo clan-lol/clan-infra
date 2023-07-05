@@ -12,6 +12,7 @@
 
     web01.imports = [
       self.nixosModules.server
+      inputs.srvos.nixosModules.mixins-nginx
       ./web01
     ];
   };
