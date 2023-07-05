@@ -12,6 +12,11 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    homepage.url = "git+https://git.clan.lol/clan/clan-homepage";
+    homepage.inputs.nixpkgs.follows = "nixpkgs";
+    homepage.inputs.flake-parts.follows = "flake-parts";
+
+
     srvos.url = "github:numtide/srvos";
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";

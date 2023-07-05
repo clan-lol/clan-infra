@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, self, ... }: {
   security.acme.defaults.email = "admins@clan.lol";
   security.acme.acceptTerms = true;
 
@@ -6,17 +6,7 @@
     virtualHosts."clan.lol" = {
       forceSSL = true;
       enableACME = true;
-      root = pkgs.runCommand "clan.lol" { } ''
-        mkdir -p $out;
-        cat > $out/index.html <<EOF
-        <html>
-          <head>
-            <title>Clan</title>
-          </head>
-          <body><h1>Clan</h1></body>
-        </html>
-        EOF
-      '';
+      root = self.inputs.homepage.packages.${pkgs.system}.default;
       extraConfig = ''
         charset utf-8;
         source_charset utf-8;
