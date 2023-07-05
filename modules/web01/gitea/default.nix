@@ -15,6 +15,11 @@
       host = "/run/postgresql";
       port = 5432;
     };
+    package = pkgs.gitea.overrideAttrs (oldAttrs: {
+      patches = [
+        ./0001-add-bot-check.patch
+      ];
+    });
     #mailerPasswordFile = config.sops.secrets.gitea-mail.path;
     settings.mailer = {
       ENABLED = true;
@@ -22,8 +27,7 @@
       HOST = "localhost:25";
     };
     settings.log.LEVEL = "Error";
-    # TODO: prevent spammers from logging in, before enabling registration
-    settings.service.DISABLE_REGISTRATION = true;
+    settings.service.DISABLE_REGISTRATION = false;
     settings.metrics.ENABLED = true;
     settings.server = {
       DISABLE_ROUTER_LOG = true;

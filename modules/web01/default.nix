@@ -1,7 +1,7 @@
 {
   imports = [
     ./homepage.nix
-    ./gitea.nix
+    ./gitea
     ./postfix.nix
   ];
 
