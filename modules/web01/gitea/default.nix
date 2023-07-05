@@ -17,10 +17,10 @@
     };
     package = pkgs.gitea.overrideAttrs (oldAttrs: {
       patches = [
+        # To keep out spam bots: https://github.com/Mic92/gitea/tree/bot-check
         ./0001-add-bot-check.patch
       ];
     });
-    #mailerPasswordFile = config.sops.secrets.gitea-mail.path;
     settings.mailer = {
       ENABLED = true;
       FROM = "gitea@clan.lol";
