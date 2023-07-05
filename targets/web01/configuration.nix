@@ -1,6 +1,8 @@
-{ self, ... }: let
+{ self, ... }:
+let
   nixosVars = builtins.fromJSON (builtins.readFile ./nixos-vars.json);
-in {
+in
+{
   imports = [
     self.nixosModules.web01
     self.nixosModules.hcloud

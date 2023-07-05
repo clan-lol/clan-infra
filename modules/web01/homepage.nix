@@ -1,4 +1,4 @@
-{ pkgs, ...}: {
+{ pkgs, ... }: {
   security.acme.defaults.email = "admins@clan.lol";
   security.acme.acceptTerms = true;
 
@@ -6,7 +6,7 @@
     virtualHosts."clan.lol" = {
       forceSSL = true;
       enableACME = true;
-      root = pkgs.runCommand "clan.lol" {} ''
+      root = pkgs.runCommand "clan.lol" { } ''
         mkdir -p $out;
         cat > $out/index.html <<EOF
         <html>

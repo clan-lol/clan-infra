@@ -16,7 +16,7 @@ resource "netlify_dns_record" "server_aaaa" {
   type     = "AAAA"
   value    = hcloud_server.server.ipv6_address
 }
-  
+
 resource "netlify_dns_record" "www_a" {
   zone_id  = netlify_dns_zone.server.id
   hostname = "www.${var.domain}"

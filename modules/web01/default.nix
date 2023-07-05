@@ -1,4 +1,4 @@
-{ 
+{
   imports = [
     ./homepage.nix
     ./gitea.nix
