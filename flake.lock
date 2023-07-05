@@ -50,11 +50,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1688556282,
-        "narHash": "sha256-U0IJtBCwcFsGIXWkxM22igPsjsutmJncgVX6gcQCEuY=",
+        "lastModified": 1688565734,
+        "narHash": "sha256-sjA2VCNZFay/a5lmk1M14xFiX4bbolnxgb6uwOrzKn0=",
         "ref": "refs/heads/main",
-        "rev": "444f075e1d1c5cf9f8433434e9df44aaed1c3f46",
-        "revCount": 9,
+        "rev": "6945dec58540309022103516bd4d12ce3810e0a3",
+        "revCount": 12,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-homepage"
       },
