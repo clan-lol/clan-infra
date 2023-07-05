@@ -19,11 +19,10 @@
     settings.mailer = {
       ENABLED = true;
       FROM = "gitea@clan.lol";
-      USER = "gitea@clan.lol";
-      # TODO
-      HOST = "mail.lan.lol:587";
+      HOST = "localhost:25";
     };
     settings.log.LEVEL = "Error";
+    # TODO: prevent spammers from logging in, before enabling registration
     settings.service.DISABLE_REGISTRATION = true;
     settings.metrics.ENABLED = true;
     settings.server = {
