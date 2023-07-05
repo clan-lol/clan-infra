@@ -7,6 +7,7 @@ in
     self.nixosModules.web01
     self.nixosModules.hcloud
   ];
+  sops.defaultSopsFile = ./secrets.yaml;
   users.users.root.openssh.authorizedKeys.keys = nixosVars.ssh_keys;
   system.stateVersion = "23.05";
 }

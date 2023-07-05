@@ -1,6 +1,11 @@
 {
   description = "Dependencies to deploy a clan";
 
+  nixConfig = {
+    extra-substituters = [ "https://cache.clan.lol" ];
+    extra-trusted-public-keys = [ "cache.clan.lol-1:j83TYLUVsrSXZvQdMoY+Ms81Xd/nO8GNuQQHqphzRSg=" ];
+  };
+
   inputs = {
     # https://github.com/NixOS/nixpkgs/pull/241526
     nixpkgs.url = "github:Mic92/nixpkgs/cloud-init";

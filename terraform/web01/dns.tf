@@ -59,6 +59,20 @@ resource "netlify_dns_record" "mail_aaaa" {
   value    = hcloud_server.server.ipv6_address
 }
 
+resource "netlify_dns_record" "cache_a" {
+  zone_id  = netlify_dns_zone.server.id
+  hostname = "cache.${var.domain}"
+  type     = "A"
+  value    = hcloud_server.server.ipv4_address
+}
+
+resource "netlify_dns_record" "cache_aaaa" {
+  zone_id  = netlify_dns_zone.server.id
+  hostname = "cache.${var.domain}"
+  type     = "AAAA"
+  value    = hcloud_server.server.ipv6_address
+}
+
 # for sending emails
 resource "netlify_dns_record" "spf" {
   zone_id  = netlify_dns_zone.server.id
@@ -88,6 +102,7 @@ resource "netlify_dns_record" "dmarc" {
   type     = "TXT"
   value    = "v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerc.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100"
 }
+
 
 resource "hcloud_rdns" "master_a" {
   server_id  = hcloud_server.server.id

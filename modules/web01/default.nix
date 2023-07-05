@@ -3,6 +3,7 @@
     ./homepage.nix
     ./gitea
     ./postfix.nix
+    ./harmonia.nix
     ../zerotier
     ../zerotier/ctrl.nix
   ];
