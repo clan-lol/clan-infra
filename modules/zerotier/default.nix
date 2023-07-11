@@ -6,17 +6,14 @@
   networking.firewall.interfaces."zt+".allowedUDPPorts = [ 5353 ];
 
   # Note avahi was super slow. systemd-resolved worked much faster for mdns
-  systemd.network.networks = {
-    zerotier.extraConfig = ''
-      [Match]
-      Name=zt*
-
-      [Network]
-      LLMNR=true
-      LLDP=true
-      MulticastDNS=true
-      KeepConfiguration=static
-    '';
+  systemd.network.networks.zerotier = {
+    matchConfig.Name = "zt*";
+    networkConfig = {
+      LLMNR = true;
+      LLDP = true;
+      MulticastDNS = true;
+      KeepConfiguration = "static";
+    };
   };
 
   services.zerotierone = {
