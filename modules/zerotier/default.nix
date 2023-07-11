@@ -1,14 +1,11 @@
 { lib, ... }:
 {
-  networking.firewall.allowedTCPPorts = [
-    9993 
-    # FIXME: figure out why it's not enough to just allow it on interface zt*
-    5353
-  ];
-  networking.firewall.allowedUDPPorts = [
-    9993
-    5353
-  ];
+  networking.firewall.allowedTCPPorts = [ 9993 ];
+  networking.firewall.allowedUDPPorts = [ 9993 ];
+  networking.firewall.interfaces."zt+".allowedTCPPorts = [ 5353 ];
+  networking.firewall.interfaces."zt+".allowedUDPPorts = [ 5353 ];
+
+  # Note avahi was super slow. systemd-resolved worked much faster for mdns
   systemd.network.networks = {
     zerotier.extraConfig = ''
       [Match]
