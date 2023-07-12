@@ -25,7 +25,9 @@
     serviceConfig = {
       Type = "simple";
       # imap port
-      ExecStart = "${pkgs.callPackage ../../pkgs/zt-tcp-relay.nix {}}/bin/zt-tcp-relay --listen [::]:993";
+      ExecStart = "${pkgs.callPackage ../../pkgs/zerotier-tcp-proxy.nix {
+        zerotierProxyPort = 993;
+      }}/bin/zerotier-tcp-proxy";
       Restart = "always";
       RestartSec = 5;
       DynamicUser = true;

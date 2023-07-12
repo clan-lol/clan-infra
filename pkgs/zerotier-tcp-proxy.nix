@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, fetchpatch, zerotierone }:
+{ stdenv, fetchFromGitHub, fetchpatch, zerotierProxyPort ? 443 }:
 stdenv.mkDerivation {
   name = "zerotier-tcp-proxy";
   src = fetchFromGitHub {
@@ -15,6 +15,7 @@ stdenv.mkDerivation {
   ];
   buildPhase = ''
     pushd tcp-proxy
+    sed -i -e "s/ZT_TCP_PROXY_TCP_PORT.*443/ZT_TCP_PROXY_TCP_PORT ${toString zerotierProxyPort}/g" tcp-proxy.cpp
     cat tcp-proxy.cpp
     make -j $NIX_BUILD_CORES CXX=$CXX
     popd
