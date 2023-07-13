@@ -18,8 +18,8 @@ rustPlatform.buildRustPackage {
   patches = [
     # https://github.com/alexander-akhmetov/zt-tcp-relay/pull/19
     (fetchpatch {
-     url = "https://github.com/alexander-akhmetov/zt-tcp-relay/commit/69f0a4f1f210dcd7a305036d4737d9a29215824d.patch";
-     hash = "sha256-kqZS9IjwEggLE6CQFaacL2TyTUn0PQCz1TPdoZdDrk0=";
+      url = "https://github.com/alexander-akhmetov/zt-tcp-relay/commit/69f0a4f1f210dcd7a305036d4737d9a29215824d.patch";
+      hash = "sha256-kqZS9IjwEggLE6CQFaacL2TyTUn0PQCz1TPdoZdDrk0=";
     })
   ];
 
