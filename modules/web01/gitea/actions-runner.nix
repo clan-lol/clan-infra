@@ -1,20 +1,7 @@
 { config, self, pkgs, lib, ... }:
 
-let
-  inherit (self.packages.${pkgs.hostPlatform.system}) actions-runner;
-in
 {
-  systemd.services.gitea-actions-runner-nix-image = {
-    wantedBy = [ "multi-user.target" ];
-    script = ''
-      ${lib.getExe pkgs.podman} load --input=${actions-runner}
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-  };
-  systemd.services.gitea-actions-runner-nix-token = {
+  systemd.services.gitea-runner-nix-token = {
     wantedBy = [ "multi-user.target" ];
     after = [ "gitea.service" ];
     environment = {
@@ -26,28 +13,31 @@ in
       token=$(${lib.getExe self.packages.${pkgs.hostPlatform.system}.gitea} actions generate-runner-token)
       echo "TOKEN=$token" > /var/lib/gitea-actions-runner/token
     '';
+    unitConfig.ConditionPathExists = [ "!/var/lib/gitea-actions-runner/token" ];
     serviceConfig = {
       User = "gitea";
       Group = "gitea";
       StateDirectory = "gitea-actions-runner";
-      ConditionPathExists = [ "!/var/lib/gitea-actions-runner/token" ];
       Type = "oneshot";
       RemainAfterExit = true;
     };
   };
 
-  # Format of the token file:
-  virtualisation.podman.enable = true;
-
   systemd.services.gitea-runner-nix = {
-    after = [
-      "gitea-actions-runner-nix-token.service"
-      "gitea-actions-runner-nix-image.service"
-    ];
-    requires = [
-      "gitea-actions-runner-nix-token.service"
-      "gitea-actions-runner-nix-image.service"
-    ];
+    after = [ "gitea-runner-nix-token.service" ];
+    requires = [ "gitea-runner-nix-token.service" ];
+    # TODO: systemd confinment
+    #serviceConfig = {
+    #  Environment = [
+    #    "NIX_REMOTE=daemon"
+    #    "PAGER=cat"
+    #  ];
+    #  BindPaths = [
+    #    "/nix/var/nix/daemon-socket/socket"
+    #    "/run/nscd/socket"
+    #    "/var/lib/drone"
+    #  ];
+    #};
   };
 
   services.gitea-actions-runner.instances.nix = {
@@ -59,8 +49,27 @@ in
     url = config.services.gitea.settings.server.ROOT_URL;
     # use your favourite nix secret manager to get a path for this
     tokenFile = "/var/lib/gitea-actions-runner/token";
-    labels = [
-      "nix:docker://${actions-runner.imageName}"
+    labels = [ "nix:host" ];
+    hostPackages = with pkgs; [
+      bash
+      coreutils
+      curl
+      gawk
+      gitMinimal
+      gnused
+      jq
+      nixUnstable
+      nodejs
+      wget
+      gnutar
+      bash
+      config.nix.package
+      gzip
     ];
+    settings = {
+      runner.envs = {
+        HOME = "/var/lib/gitea-runner/nix";
+      };
+    };
   };
 }
