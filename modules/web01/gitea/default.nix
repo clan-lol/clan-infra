@@ -24,6 +24,7 @@
     settings.service.DISABLE_REGISTRATION = false;
     settings.metrics.ENABLED = true;
     settings.server = {
+      APP_DATA_PATH = "/var/lib/gitea/data";
       DISABLE_ROUTER_LOG = true;
       ROOT_URL = "https://git.clan.lol";
       HTTP_PORT = 3002;
