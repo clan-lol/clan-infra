@@ -97,6 +97,13 @@ resource "hetznerdns_record" "adsp" {
   value   = "\"dkim=all;\""
 }
 
+resource "hetznerdns_record" "matrix" {
+  zone_id = hetznerdns_zone.server.id
+  name    = "_matrix._tcp"
+  type    = "SRV"
+  value   = "0 5 443 matrix"
+}
+
 resource "netlify_dns_record" "adsp" {
   zone_id  = netlify_dns_zone.server.id
   hostname = "_adsp._domainkey.${var.domain}"
