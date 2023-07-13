@@ -69,6 +69,8 @@
     settings = {
       runner.envs = {
         HOME = "/var/lib/gitea-runner/nix";
+        # unset the token so it doesn't leak into the runner
+        TOKEN = "";
       };
     };
   };
