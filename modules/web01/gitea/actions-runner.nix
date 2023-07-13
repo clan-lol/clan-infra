@@ -2,7 +2,8 @@
 
 let
   inherit (self.packages.${pkgs.hostPlatform.system}) actions-runner;
-in {
+in
+{
   systemd.services.gitea-actions-runner-nix-image = {
     wantedBy = [ "multi-user.target" ];
     script = ''
@@ -39,12 +40,12 @@ in {
   virtualisation.podman.enable = true;
 
   systemd.services.gitea-runner-nix = {
-    after = [ 
+    after = [
       "gitea-actions-runner-nix-token.service"
       "gitea-actions-runner-nix-image.service"
     ];
-    requires = [ 
-      "gitea-actions-runner-nix-token.service" 
+    requires = [
+      "gitea-actions-runner-nix-token.service"
       "gitea-actions-runner-nix-image.service"
     ];
   };

@@ -9,8 +9,8 @@ stdenv.mkDerivation {
   };
   patches = [
     (fetchpatch {
-       url = "https://github.com/zerotier/ZeroTierOne/commit/dd2006d494e85a41d8b818b37460e7cf458a2aee.patch";
-       hash = "sha256-nuao04pDha7h62RHviUZYx21p6bNOyiU78kBBq2o2Rs=";
+      url = "https://github.com/zerotier/ZeroTierOne/commit/dd2006d494e85a41d8b818b37460e7cf458a2aee.patch";
+      hash = "sha256-nuao04pDha7h62RHviUZYx21p6bNOyiU78kBBq2o2Rs=";
     })
   ];
   buildPhase = ''
