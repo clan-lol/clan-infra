@@ -1,12 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, self, ... }: {
 
-  services.postgresql.enable = true;
-  services.postgresql.package = pkgs.postgresql_14;
-  services.postgresql.settings = {
-    max_connections = "300";
-    shared_buffers = "80MB";
-  };
-  services.postgresqlBackup.enable = true;
+  imports = [
+    ./postgresql.nix
+    ./actions-runner.nix
+  ];
 
   services.gitea = {
     enable = true;
@@ -15,12 +12,9 @@
       host = "/run/postgresql";
       port = 5432;
     };
-    package = pkgs.gitea.overrideAttrs (oldAttrs: {
-      patches = [
-        # To keep out spam bots: https://github.com/Mic92/gitea/tree/bot-check
-        ./0001-add-bot-check.patch
-      ];
-    });
+    package = self.packages.${pkgs.hostPlatform.system}.gitea;
+
+    settings.actions.ENABLED = true;
     settings.mailer = {
       ENABLED = true;
       FROM = "gitea@clan.lol";
@@ -44,5 +38,4 @@
       proxy_pass http://localhost:3002;
     '';
   };
-
 }

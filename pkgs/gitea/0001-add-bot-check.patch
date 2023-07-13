@@ -1,0 +1,62 @@
+From f06e0e1aaa9bb0602e6944d0dd4370e24b66b4e3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B6rg=20Thalheim?= <joerg@thalheim.io>
+Date: Wed, 5 Jul 2023 15:02:03 +0200
+Subject: [PATCH] add bot check
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
+---
+ routers/web/auth/auth.go              | 5 +++++
+ services/forms/user_form.go           | 1 +
+ templates/user/auth/signup_inner.tmpl | 5 +++++
+ 3 files changed, 11 insertions(+)
+
+diff --git a/routers/web/auth/auth.go b/routers/web/auth/auth.go
+index 9f1395225..2f7f434a5 100644
+--- a/routers/web/auth/auth.go
++++ b/routers/web/auth/auth.go
+@@ -411,6 +411,11 @@ func SignUpPost(ctx *context.Context) {
+ 	context.SetCaptchaData(ctx)
+ 	ctx.Data["PageIsSignUp"] = true
+ 
++	if form.Notabot != "Notabot" {
++		ctx.Error(http.StatusForbidden)
++		return
++	}
++
+ 	// Permission denied if DisableRegistration or AllowOnlyExternalRegistration options are true
+ 	if setting.Service.DisableRegistration || setting.Service.AllowOnlyExternalRegistration {
+ 		ctx.Error(http.StatusForbidden)
+diff --git a/services/forms/user_form.go b/services/forms/user_form.go
+index 1f5abf94e..196300a14 100644
+--- a/services/forms/user_form.go
++++ b/services/forms/user_form.go
+@@ -94,6 +94,7 @@ type RegisterForm struct {
+ 	UserName string `binding:"Required;Username;MaxSize(40)"`
+ 	Email    string `binding:"Required;MaxSize(254)"`
+ 	Password string `binding:"MaxSize(255)"`
++	Notabot  string `binding:"Required"`
+ 	Retype   string
+ }
+ 
+diff --git a/templates/user/auth/signup_inner.tmpl b/templates/user/auth/signup_inner.tmpl
+index 8dfcb7b7d..0316163c5 100644
+--- a/templates/user/auth/signup_inner.tmpl
++++ b/templates/user/auth/signup_inner.tmpl
+@@ -24,6 +24,11 @@
+ 					<input id="email" name="email" type="email" value="{{.email}}" required>
+ 				</div>
+ 
++				<div class="required inline field">
++					<input type="checkbox" id="notabot" name="notabot" value="Notabot">
++					<label for="notabot">Confirm that you are not a bot</label><br>
++				</div>
++
+ 				{{if not .DisablePassword}}
+ 					<div class="required inline field {{if and (.Err_Password) (or (not .LinkAccountMode) (and .LinkAccountMode .LinkAccountModeRegister))}}error{{end}}">
+ 						<label for="password">{{.locale.Tr "password"}}</label>
+-- 
+2.41.0
+

@@ -16,6 +16,7 @@ in
               self = {
                 inputs = self.inputs;
                 nixosModules = self.nixosModules;
+                packages = self.packages;
               };
             };
 
