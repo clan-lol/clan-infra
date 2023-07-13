@@ -37,7 +37,12 @@
 
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
-      systems = lib.systems.flakeExposed;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
       imports = [
         inputs.treefmt-nix.flakeModule
         ./targets/flake-module.nix
@@ -49,23 +54,26 @@
           programs.terraform.enable = true;
           programs.nixpkgs-fmt.enable = true;
         };
-        packages.actions-runner = pkgs.callPackage ./pkgs/actions-runner.nix {
-          inherit inputs;
-        };
-        packages.gitea = pkgs.callPackage ./pkgs/gitea {};
-        packages.default = pkgs.mkShell {
-          packages = [
-            pkgs.bashInteractive
-            pkgs.sops
-            (pkgs.terraform.withPlugins (p: [
-              p.namecheap
-              p.netlify
-              p.hcloud
-              p.null
-              p.external
-              p.local
-            ]))
-          ];
+        packages = {
+          default = pkgs.mkShell {
+            packages = [
+              pkgs.bashInteractive
+              pkgs.sops
+              (pkgs.terraform.withPlugins (p: [
+                p.namecheap
+                p.netlify
+                p.hcloud
+                p.null
+                p.external
+                p.local
+              ]))
+            ];
+          };
+        } // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
+          gitea = pkgs.callPackage ./pkgs/gitea { };
+          actions-runner = pkgs.callPackage ./pkgs/actions-runner.nix {
+            inherit inputs;
+          };
         };
       };
     });
