@@ -10,7 +10,7 @@ keys:
   # Downloaded like this: nix-shell -p ssh-to-age --run 'ssh-keyscan clan.lol | ssh-to-age' 
   - &web01 age17xuvz0fqtynzdmf8rfh4g3e46tx8w3mc6zgytrmuj5v9dhnldgxs7ue7ct
 creation_rules:
-  - path_regex: targets/.*/terraform.tfstate$
+  - path_regex: targets/.*/(terraform.tfstate|secrets.auto.tfvars.sops.json)$
     key_groups:
     - age:
       - *joerg

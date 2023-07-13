@@ -60,7 +60,8 @@
               pkgs.bashInteractive
               pkgs.sops
               (pkgs.terraform.withPlugins (p: [
-                p.namecheap
+                p.hetznerdns
+                # TODO: drop netlify
                 p.netlify
                 p.hcloud
                 p.null

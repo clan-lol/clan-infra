@@ -1,6 +1,7 @@
 # secrets
 .envrc.private
 .terraform.lock.hcl
+secrets.auto.tfvars.sops.json
 
 # git is our backup
 *.tfstate.backup

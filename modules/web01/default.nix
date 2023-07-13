@@ -4,6 +4,7 @@
     ./gitea
     ./postfix.nix
     ./harmonia.nix
+    ./dendrite.nix
     ../zerotier
     ../zerotier/ctrl.nix
   ];
