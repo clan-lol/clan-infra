@@ -62,6 +62,10 @@
         "~@obsolete"
         "~@raw-io"
         "~@reboot"
+        "~@swap"
+        # needed by go?
+        #"~@resources"
+        "~@privileged"
         "~capset"
         "~setdomainname"
         "~sethostname"
