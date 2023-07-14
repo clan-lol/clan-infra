@@ -53,6 +53,12 @@
           projectRootFile = "flake.nix";
           programs.terraform.enable = true;
           programs.nixpkgs-fmt.enable = true;
+          settings.formatter.nixpkgs-fmt.excludes = [
+            # generated files
+            "node-env.nix"
+            "node-packages.nix"
+            "composition.nix"
+          ];
         };
         packages = {
           default = pkgs.mkShell {
@@ -69,6 +75,7 @@
             ];
           };
           homepage = inputs'.homepage.packages.default;
+          inherit (pkgs.callPackage ./pkgs/renovate { }) renovate;
         } // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
           gitea = pkgs.callPackage ./pkgs/gitea { };
         };
