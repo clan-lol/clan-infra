@@ -61,8 +61,6 @@
               pkgs.sops
               (pkgs.terraform.withPlugins (p: [
                 p.hetznerdns
-                # TODO: drop netlify
-                p.netlify
                 p.hcloud
                 p.null
                 p.external

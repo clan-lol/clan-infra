@@ -1,8 +1,3 @@
-resource "netlify_dns_zone" "server" {
-  site_id = ""
-  name    = var.netlify_dns_zone
-}
-
 locals {
   subdomains = [
     "@",
@@ -43,22 +38,6 @@ resource "hetznerdns_record" "server_aaaa" {
   value    = hcloud_server.server.ipv6_address
 }
 
-resource "netlify_dns_record" "server_a" {
-  for_each = toset(local.domains)
-  zone_id  = netlify_dns_zone.server.id
-  hostname = each.value
-  type     = "A"
-  value    = hcloud_server.server.ipv4_address
-}
-
-resource "netlify_dns_record" "server_aaaa" {
-  for_each = toset(local.domains)
-  zone_id  = netlify_dns_zone.server.id
-  hostname = each.value
-  type     = "AAAA"
-  value    = hcloud_server.server.ipv6_address
-}
-
 # for sending emails
 resource "hetznerdns_record" "spf" {
   zone_id = hetznerdns_zone.server.id
@@ -67,27 +46,12 @@ resource "hetznerdns_record" "spf" {
   value   = "\"v=spf1 ip4:${hcloud_server.server.ipv4_address} ip6:${hcloud_server.server.ipv6_address} ~all\""
 }
 
-resource "netlify_dns_record" "spf" {
-  zone_id  = netlify_dns_zone.server.id
-  hostname = var.domain
-  type     = "TXT"
-  value    = "v=spf1 ip4:${hcloud_server.server.ipv4_address} ip6:${hcloud_server.server.ipv6_address} ~all"
-}
-
 resource "hetznerdns_record" "dkim" {
   zone_id = hetznerdns_zone.server.id
   name    = "v1._domainkey"
   type    = "TXT"
   # take from `systemctl status opendkim`
   value = "\"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTFSkQcM0v6mC4kiWEoF/EgK/hPVgOBJlHesLVIe+8BmidylaUowKlyC2gECipXhoVX9++OfMFAKNtGrIJcCTVNH/DRGkhbHLSxzzXijCbJ7G/fjpHRifpxMydEmybQDKdidR44YMR74Aj0OwUEgu+N/yJZ2+ubOlstW0fZJaJwQIDAQAB\""
-}
-
-resource "netlify_dns_record" "dkim" {
-  zone_id  = netlify_dns_zone.server.id
-  hostname = "v1._domainkey.${var.domain}"
-  type     = "TXT"
-  # take from `systemctl status opendkim`
-  value = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTFSkQcM0v6mC4kiWEoF/EgK/hPVgOBJlHesLVIe+8BmidylaUowKlyC2gECipXhoVX9++OfMFAKNtGrIJcCTVNH/DRGkhbHLSxzzXijCbJ7G/fjpHRifpxMydEmybQDKdidR44YMR74Aj0OwUEgu+N/yJZ2+ubOlstW0fZJaJwQIDAQAB"
 }
 
 resource "hetznerdns_record" "adsp" {
@@ -104,25 +68,11 @@ resource "hetznerdns_record" "matrix" {
   value   = "0 5 443 matrix"
 }
 
-resource "netlify_dns_record" "adsp" {
-  zone_id  = netlify_dns_zone.server.id
-  hostname = "_adsp._domainkey.${var.domain}"
-  type     = "TXT"
-  value    = "dkim=all;"
-}
-
 resource "hetznerdns_record" "dmarc" {
   zone_id = hetznerdns_zone.server.id
   name    = "_dmarc"
   type    = "TXT"
   value   = "\"v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerc.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100\""
-}
-
-resource "netlify_dns_record" "dmarc" {
-  zone_id  = netlify_dns_zone.server.id
-  hostname = "_dmarc.${var.domain}"
-  type     = "TXT"
-  value    = "v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerc.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100"
 }
 
 resource "hcloud_rdns" "master_a" {

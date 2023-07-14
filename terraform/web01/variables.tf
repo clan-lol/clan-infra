@@ -10,11 +10,6 @@ variable "server_location" {
   description = "Hetzner cloud server location"
 }
 
-variable "netlify_dns_zone" {
-  type        = string
-  description = "Netlify DNS zone"
-}
-
 variable "nixos_vars_file" {
   type        = string
   description = "File to write NixOS configuration variables to"
