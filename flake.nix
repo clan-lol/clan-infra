@@ -69,6 +69,7 @@
             ];
           };
           homepage = inputs'.homepage.packages.default;
+          inherit (pkgs.callPackage ./pkgs/renovate { }) renovate;
         } // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
           gitea = pkgs.callPackage ./pkgs/gitea { };
         };
