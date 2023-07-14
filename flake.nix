@@ -53,6 +53,12 @@
           projectRootFile = "flake.nix";
           programs.terraform.enable = true;
           programs.nixpkgs-fmt.enable = true;
+          settings.formatter.nixpkgs-fmt.excludes = [
+            # generated files
+            "node-env.nix"
+            "node-packages.nix"
+            "composition.nix"
+          ];
         };
         packages = {
           default = pkgs.mkShell {
