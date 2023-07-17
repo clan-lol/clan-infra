@@ -1,5 +1,2 @@
-# https://app.netlify.com/user/applications#personal-access-tokens
-export NETLIFY_TOKEN=<your-netlify-token>
-
 # https://console.hetzner.cloud/projects/2447141/security/tokens
 export HCLOUD_TOKEN=<your-hetzner-token>
