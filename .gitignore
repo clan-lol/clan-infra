@@ -5,3 +5,6 @@ secrets.auto.tfvars.json
 
 # git is our backup
 *.tfstate.backup
+
+# nix
+.direnv
