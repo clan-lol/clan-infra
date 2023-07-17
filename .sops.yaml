@@ -7,7 +7,8 @@ keys:
   # Provide the generated key to a pre-existing admin and wait for him to re-encrypt all secrets in this repo with it. After pulling the re-encrypted secrets you can read them with `sops some-file`.
   - &joerg age17n64ahe3wesh8l8lj0zylf4nljdmqn28hvqns2g7hgm9mdkhlsvsjuvkxz
   - &lassulus age1eq0e6uhjj2tja8v338tkdz8ema2aw5anpuyaq2uru7rt4lq7msyqqut6m2
-  # Downloaded like this: nix-shell -p ssh-to-age --run 'ssh-keyscan clan.lol | ssh-to-age' 
+  - &dave age1vphy2sr6uw4ptsua3gh9khrm2cqyt65t46tusmt44z98qa7q6ymq6prrdl
+  # Downloaded like this: nix-shell -p ssh-to-age --run 'ssh-keyscan clan.lol | ssh-to-age'
   - &web01 age17xuvz0fqtynzdmf8rfh4g3e46tx8w3mc6zgytrmuj5v9dhnldgxs7ue7ct
 creation_rules:
   - path_regex: targets/.*/(terraform.tfstate|secrets.auto.tfvars.sops.json)$
@@ -15,9 +16,11 @@ creation_rules:
     - age:
       - *joerg
       - *lassulus
+      - *dave
   - path_regex: targets/web01/secrets.yaml$
     key_groups:
     - age:
       - *joerg
       - *lassulus
+      - *dave
       - *web01
