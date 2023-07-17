@@ -17,10 +17,6 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    homepage.url = "git+https://git.clan.lol/clan/clan-homepage";
-    homepage.inputs.nixpkgs.follows = "nixpkgs";
-    homepage.inputs.flake-parts.follows = "flake-parts";
-
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "";
@@ -74,7 +70,6 @@
               ]))
             ];
           };
-          homepage = inputs'.homepage.packages.default;
           inherit (pkgs.callPackage ./pkgs/renovate { }) renovate;
         } // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
           gitea = pkgs.callPackage ./pkgs/gitea { };

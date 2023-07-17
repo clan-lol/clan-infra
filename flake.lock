@@ -40,29 +40,6 @@
         "type": "github"
       }
     },
-    "homepage": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1689268066,
-        "narHash": "sha256-WyQEy6BB33liJy2BbTTCfmYVw3Ai/LxbOua2fM2Eyw4=",
-        "ref": "refs/heads/main",
-        "rev": "72d688391adaddad89bacbd2e6d373cbed5ff13f",
-        "revCount": 16,
-        "type": "git",
-        "url": "https://git.clan.lol/clan/clan-homepage"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.clan.lol/clan/clan-homepage"
-      }
-    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -123,7 +100,6 @@
       "inputs": {
         "disko": "disko",
         "flake-parts": "flake-parts",
-        "homepage": "homepage",
         "nix": "nix",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix",

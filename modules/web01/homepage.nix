@@ -6,7 +6,8 @@
     virtualHosts."clan.lol" = {
       forceSSL = true;
       enableACME = true;
-      root = self.inputs.homepage.packages.${pkgs.system}.default;
+      # to be deployed via rsync
+      root = "/var/www";
       extraConfig = ''
         charset utf-8;
         source_charset utf-8;

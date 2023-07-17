@@ -24,11 +24,3 @@ $ ./tf.sh apply
 $ cd ./targets/web01
 $ ./tf.sh apply
 ```
-
-## To update the website
-
-```
-$ cd ./targets/web01
-$ nix flake lock --update-input homepage --commit-lock-file
-$ ./tf.sh apply
-```
