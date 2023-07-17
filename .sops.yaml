@@ -24,3 +24,10 @@ creation_rules:
       - *lassulus
       - *dave
       - *web01
+  - path_regex: targets/web01-new/secrets.yaml$
+    key_groups:
+    - age:
+      - *joerg
+      - *lassulus
+      - *dave
+      - *web01
