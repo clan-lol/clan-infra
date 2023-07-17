@@ -1,5 +1,5 @@
 locals {
-  subdomains = [
+  subhostnames = [
     "@",
     "git",
     "mail",
@@ -7,35 +7,35 @@ locals {
     "matrix",
     "www"
   ]
-  domains = [
-    var.domain,
-    "www.${var.domain}",
-    "git.${var.domain}",
-    "mail.${var.domain}",
-    "cache.${var.domain}",
-    "matrix.${var.domain}",
+  hostnames = [
+    var.hostname,
+    "www.${var.hostname}",
+    "git.${var.hostname}",
+    "mail.${var.hostname}",
+    "cache.${var.hostname}",
+    "matrix.${var.hostname}",
   ]
 }
 
 resource "hetznerdns_zone" "server" {
-  name = var.domain
+  name = var.dns_zone
   ttl  = 3600
 }
 
 resource "hetznerdns_record" "server_a" {
-  for_each = toset(local.subdomains)
+  for_each = toset(local.subhostnames)
   zone_id  = hetznerdns_zone.server.id
   name     = each.value
   type     = "A"
-  value    = hcloud_server.server.ipv4_address
+  value    = var.ipv4_address
 }
 
 resource "hetznerdns_record" "server_aaaa" {
-  for_each = toset(local.subdomains)
+  for_each = toset(local.subhostnames)
   zone_id  = hetznerdns_zone.server.id
   name     = each.value
   type     = "AAAA"
-  value    = hcloud_server.server.ipv6_address
+  value    = var.ipv6_address
 }
 
 # for sending emails
@@ -43,20 +43,20 @@ resource "hetznerdns_record" "spf" {
   zone_id = hetznerdns_zone.server.id
   name    = "@"
   type    = "TXT"
-  value   = "\"v=spf1 ip4:${hcloud_server.server.ipv4_address} ip6:${hcloud_server.server.ipv6_address} ~all\""
+  value   = "\"v=spf1 ip4:${var.ipv4_address} ip6:${var.ipv6_address} ~all\""
 }
 
 resource "hetznerdns_record" "dkim" {
   zone_id = hetznerdns_zone.server.id
-  name    = "v1._domainkey"
+  name    = "v1._hostnamekey"
   type    = "TXT"
   # take from `systemctl status opendkim`
-  value = "\"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTFSkQcM0v6mC4kiWEoF/EgK/hPVgOBJlHesLVIe+8BmidylaUowKlyC2gECipXhoVX9++OfMFAKNtGrIJcCTVNH/DRGkhbHLSxzzXijCbJ7G/fjpHRifpxMydEmybQDKdidR44YMR74Aj0OwUEgu+N/yJZ2+ubOlstW0fZJaJwQIDAQAB\""
+  value = "\"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDpQeJirqh8VFGHRQBemqF5CeicC/5qHJn3vqKkVIOQNqkgp7IE+EZDg+MXoxMQZEJ0RbO0JpZZgYpOf3jf8o5w56WbE4dbpbi+9112R57k5w41R16Q0EUjf7MbrLJqcF6mtf+3bPklF9ngdcWhgN024YfhR9SlebCOapCVYqVt8QIDAQAB\""
 }
 
 resource "hetznerdns_record" "adsp" {
   zone_id = hetznerdns_zone.server.id
-  name    = "_adsp._domainkey"
+  name    = "_adsp._hostnamekey"
   type    = "TXT"
   value   = "\"dkim=all;\""
 }
@@ -73,16 +73,4 @@ resource "hetznerdns_record" "dmarc" {
   name    = "_dmarc"
   type    = "TXT"
   value   = "\"v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerc.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100\""
-}
-
-resource "hcloud_rdns" "master_a" {
-  server_id  = hcloud_server.server.id
-  ip_address = hcloud_server.server.ipv4_address
-  dns_ptr    = "mail.${var.domain}"
-}
-
-resource "hcloud_rdns" "master_aaaa" {
-  server_id  = hcloud_server.server.id
-  ip_address = hcloud_server.server.ipv6_address
-  dns_ptr    = "mail.${var.domain}"
 }
