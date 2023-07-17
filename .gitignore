@@ -8,3 +8,4 @@ secrets.auto.tfvars.json
 
 # nix
 .direnv
+result*
