@@ -2,6 +2,7 @@
   flake.nixosModules = {
     server.imports = [
       inputs.srvos.nixosModules.server
+      inputs.srvos.nixosModules.mixins-telegraf
       inputs.sops-nix.nixosModules.default
     ];
 
