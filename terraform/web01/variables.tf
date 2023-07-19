@@ -1,13 +1,11 @@
-variable "server_type" {
+variable "ipv4_address" {
   type        = string
-  default     = "cpx41"
-  description = "Hetzner cloud server type"
+  description = "IPv4 address of the machine"
 }
 
-variable "server_location" {
+variable "ipv6_address" {
   type        = string
-  default     = "hel1"
-  description = "Hetzner cloud server location"
+  description = "IPv6 address of the machine"
 }
 
 variable "nixos_vars_file" {
@@ -20,9 +18,19 @@ variable "nixos_flake_attr" {
   description = "NixOS configuration flake attribute"
 }
 
-variable "domain" {
+variable "sops_secrets_file" {
   type        = string
-  description = "Domain name"
+  description = "Path to SOPS secrets file storing the secrets for ssh keys and cryptsetup keys"
+}
+
+variable "hostname" {
+  type        = string
+  description = "Zone name of the machine"
+}
+
+variable "dns_zone" {
+  type        = string
+  description = "DNS zone to add the machine to"
 }
 
 variable "tags" {
