@@ -11,7 +11,7 @@
 
   # looks like the Intel i9-13900 draws too much power and crashes the system
   systemd.services.limit-cpu-freq = {
-    description = "Limit CPU frequency to 4.2GHz";
+    description = "Limit CPU frequency to 4GHz";
     wantedBy = [ "multi-user.target" ];
     after = [ "systemd-modules-load.service" ];
     # Some cores do have a scaling max freq less than 5GHz, so we need to
@@ -20,8 +20,8 @@
       #!/bin/sh
       for f in /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq; do
         old_val="$(<"$f")"
-        if [[ "$old_val" -gt 4200000 ]]; then
-          echo 4200000 > "$f"
+        if [[ "$old_val" -gt 4000000 ]]; then
+          echo 4000000 > "$f"
         fi
       done
     '';
