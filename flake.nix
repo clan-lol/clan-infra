@@ -8,7 +8,7 @@
 
   inputs = {
     # https://github.com/NixOS/nixpkgs/pull/243252
-    nixpkgs.url = "github:Mic92/nixpkgs/daemon";
+    nixpkgs.url = "github:DavHau/nixpkgs/gitea";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
