@@ -5,6 +5,7 @@
     ./postfix.nix
     ./harmonia.nix
     ./dendrite.nix
+    ./borgbackup.nix
     ../zerotier
     ../zerotier/ctrl.nix
   ];
