@@ -4,7 +4,7 @@
 set -euo pipefail
 
 path=$(nix flake metadata --json '.#' | jq -r .path)
-ip=65.109.103.5
+ip=clan.lol
 rsync --checksum -vaF --delete -e ssh "${path}/" "root@${ip}:/etc/nixos"
 
 ssh "root@$ip" nixos-rebuild switch \

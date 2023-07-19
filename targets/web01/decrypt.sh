@@ -3,12 +3,7 @@
 
 set -euox pipefail
 
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 <host>"
-  exit 1
-fi
-
-HOST=$1
+HOST=clan.lol
 temp=$(mktemp -d)
 trap 'rm -rf $temp' EXIT
 sops --extract '["cryptsetup_key"]' -d secrets.yaml > "$temp/secret.key"
