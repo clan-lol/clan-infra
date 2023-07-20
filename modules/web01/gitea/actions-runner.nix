@@ -1,6 +1,19 @@
 { config, self, pkgs, lib, ... }:
-
+let
+  inherit (self.packages.${pkgs.hostPlatform.system}) actions-runner;
+in
 {
+  systemd.services.gitea-runner-nix-image = {
+    wantedBy = [ "multi-user.target" ];
+    script = ''
+      ${lib.getExe pkgs.podman} load --input=${actions-runner}
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+  };
+
   systemd.services.gitea-runner-nix-token = {
     wantedBy = [ "multi-user.target" ];
     after = [ "gitea.service" ];
@@ -11,21 +24,30 @@
     script = ''
       set -euo pipefail
       token=$(${lib.getExe self.packages.${pkgs.hostPlatform.system}.gitea} actions generate-runner-token)
-      echo "TOKEN=$token" > /var/lib/gitea-actions-runner/token
+      echo "TOKEN=$token" > /var/lib/gitea-runner/token
     '';
-    unitConfig.ConditionPathExists = [ "!/var/lib/gitea-actions-runner/token" ];
+    unitConfig.ConditionPathExists = [ "!/var/lib/gitea-runner/token" ];
     serviceConfig = {
       User = "gitea";
       Group = "gitea";
-      StateDirectory = "gitea-actions-runner";
+      StateDirectory = "gitea-runner";
       Type = "oneshot";
       RemainAfterExit = true;
     };
   };
 
+  # Format of the token file:
+  virtualisation.podman.enable = true;
+
   systemd.services.gitea-runner-nix = {
-    after = [ "gitea-runner-nix-token.service" ];
-    requires = [ "gitea-runner-nix-token.service" ];
+    after = [
+      "gitea-runner-nix-token.service"
+      "gitea-runner-nix-image.service"
+    ];
+    requires = [
+      "gitea-runner-nix-token.service"
+      "gitea-runner-nix-image.service"
+    ];
 
     # TODO: systemd confinment
     serviceConfig = {
@@ -109,8 +131,8 @@
     # otherwise you need to set it manually
     url = config.services.gitea.settings.server.ROOT_URL;
     # use your favourite nix secret manager to get a path for this
-    tokenFile = "/var/lib/gitea-actions-runner/token";
-    labels = [ "nix:host" ];
+    tokenFile = "/var/lib/gitea-runner/token";
+    labels = [ "nix:docker://${actions-runner.imageName}" ];
     hostPackages = with pkgs; [
       bash
       coreutils

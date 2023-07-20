@@ -82,16 +82,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1689638193,
-        "narHash": "sha256-7SCl/TEswRCtVSFD9p2SXKH4iWbXDmly2O1oYsxidDc=",
-        "owner": "DavHau",
+        "lastModified": 1689838306,
+        "narHash": "sha256-rKQERGxsbP+Mkkwgepmy/a3KgYYdbFR7vTgEZ6GMoIA=",
+        "owner": "Mic92",
         "repo": "nixpkgs",
-        "rev": "2ab9f837047affd23ebf27b0175aff34d6b9e7e3",
+        "rev": "4bfb50dc6d66a86e61c6b38f567f7770d54db53e",
         "type": "github"
       },
       "original": {
-        "owner": "DavHau",
-        "ref": "gitea",
+        "owner": "Mic92",
+        "ref": "daemon",
         "repo": "nixpkgs",
         "type": "github"
       }
