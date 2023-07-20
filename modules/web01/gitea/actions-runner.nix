@@ -38,6 +38,10 @@
 
   # Format of the token file:
   virtualisation.podman.enable = true;
+  virtualisation.containers.containersConf.settings = {
+    # podman seems to not work with systemd-resolved
+    containers.dns_servers = [ "8.8.8.8" "8.8.4.4" ];
+  };
 
   systemd.services.gitea-runner-nix = {
     after = [
@@ -120,7 +124,7 @@
     let
       bin = pkgs.runCommand "extra-bins" { } ''
         mkdir -p $out
-        for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs]}; do
+        for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs ]}; do
           for bin in "$dir"/bin/*; do
             ln -s "$bin" "$out/$(basename "$bin")"
           done
@@ -129,10 +133,24 @@
       etc = pkgs.runCommand "etc" { } ''
         mkdir -p $out/etc/nix
 
-        cat <<NIX_CONFIG > $out/etc/nix.conf
+        cat <<NIX_CONFIG > $out/etc/nix/nix.conf
         accept-flake-config = true
         experimental-features = nix-command flakes
         NIX_CONFIG
+
+        cat <<NSSWITCH > $out/etc/nsswitch.conf
+        passwd:    files mymachines systemd
+        group:     files mymachines systemd
+        shadow:    files
+
+        hosts:     files mymachines dns myhostname
+        networks:  files
+
+        ethers:    files
+        services:  files
+        protocols: files
+        rpc:       files
+        NSSWITCH
 
         # Create an unpriveleged user that we can use also without the run-as-user.sh script
         touch $out/etc/passwd $out/etc/group
@@ -156,6 +174,8 @@
       labels = [ "nix:docker://scratch" ];
       settings = {
         container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /tmp:/tmp -v /nix:/nix -v ${etc}/etc:/etc -v ${bin}:/bin --user nixuser";
+        # the default network that also respects our dns server settings
+        container.network = "podman";
         container.valid_volumes = [
           "/nix"
           "/tmp"
