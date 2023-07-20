@@ -2,7 +2,7 @@
 let
   bin = pkgs.runCommand "extra-bins" { } ''
     mkdir -p $out
-    for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs ]}; do
+    for dir in ${toString [ pkgs.coreutils pkgs.findutils pkgs.gnugrep pkgs.gawk pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs ]}; do
       for bin in "$dir"/bin/*; do
         ln -s "$bin" "$out/$(basename "$bin")"
       done
