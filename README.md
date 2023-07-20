@@ -5,11 +5,10 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
 
 ## Servers
 - web01:
-  - soon to be replaced by baremetal hardware
-  - Instance type: CPX42
-  - CPU: 8 vCPUs on AMD
-  - RAM: 16GB
-  - Drives: 80GB SSD
+  - Instance type: [ex101](https://www.hetzner.com/de/dedicated-rootserver/ex101)
+  - CPU: Intel Core i9-13900 (24 cores / 32 threads)
+  - RAM: 64GB DDR5
+  - Drives: 2 x 1.92 TB NVME
 
 ## To deploy new ssh keys on hcloud:
 
