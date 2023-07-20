@@ -1,5 +1,19 @@
 { config, self, pkgs, lib, ... }:
 {
+  systemd.services.gitea-runner-nix-image = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "podman.service" ];
+    requires = [ "podman.service" ];
+    path = [ pkgs.podman pkgs.gnutar ];
+    script = ''
+      tar cv --files-from /dev/null | podman import - scratch
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+  };
+
   systemd.services.gitea-runner-nix-token = {
     wantedBy = [ "multi-user.target" ];
     after = [ "gitea.service" ];
@@ -28,9 +42,11 @@
   systemd.services.gitea-runner-nix = {
     after = [
       "gitea-runner-nix-token.service"
+      "gitea-runner-nix-image.service"
     ];
     requires = [
       "gitea-runner-nix-token.service"
+      "gitea-runner-nix-image.service"
     ];
 
     # TODO: systemd confinment
@@ -102,16 +118,30 @@
 
   services.gitea-actions-runner.instances.nix =
     let
-      extraBins = pkgs.runCommand "extra-bins" { } ''
+      bin = pkgs.runCommand "extra-bins" { } ''
         mkdir -p $out
-        ln -s ${pkgs.nodejs}/bin/node $out/node
-        ln -s ${pkgs.nix}/bin/nix $out/nix
-        ln -s ${pkgs.git}/bin/git $out/git
-        ln -s ${pkgs.jq}/bin/jq $out/jq
-        ln -s ${pkgs.bash}/bin/bash $out/bash
-        for i in ${pkgs.coreutils}/bin/*; do
-          ln -s $i $out/$(basename $i)
+        for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs]}; do
+          for bin in "$dir"/bin/*; do
+            ln -s "$bin" "$out/$(basename "$bin")"
+          done
         done
+      '';
+      etc = pkgs.runCommand "etc" { } ''
+        mkdir -p $out/etc/nix
+
+        cat <<NIX_CONFIG > $out/etc/nix.conf
+        accept-flake-config = true
+        experimental-features = nix-command flakes
+        NIX_CONFIG
+
+        # Create an unpriveleged user that we can use also without the run-as-user.sh script
+        touch $out/etc/passwd $out/etc/group
+        ${pkgs.buildPackages.shadow}/bin/groupadd --prefix $out -g 9000 nixuser
+        ${pkgs.buildPackages.shadow}/bin/useradd --prefix $out -m -d /tmp -u 9000 -g 9000 -G nixuser nixuser
+
+        # Add SSL CA certs
+        mkdir -p $out/etc/ssl/certs
+        cp -a "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" $out/etc/ssl/certs/ca-bundle.crt
       '';
     in
     {
@@ -123,16 +153,15 @@
       url = config.services.gitea.settings.server.ROOT_URL;
       # use your favourite nix secret manager to get a path for this
       tokenFile = "/var/lib/gitea-registration/token";
-      labels = [ "nix:docker://mic92/nix-unstable-static" ];
+      labels = [ "nix:docker://scratch" ];
       settings = {
-        container.options = "-v /nix:/nix -v ${extraBins}:/bin --user nixuser";
+        container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /tmp:/tmp -v /nix:/nix -v ${etc}/etc:/etc -v ${bin}:/bin --user nixuser";
         container.valid_volumes = [
           "/nix"
-          extraBins
+          "/tmp"
+          bin
+          "${etc}/etc"
         ];
-        runner = {
-          envs.BIN = extraBins;
-        };
       };
     };
 }
