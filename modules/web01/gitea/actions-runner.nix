@@ -1,12 +1,55 @@
 { config, self, pkgs, lib, ... }:
+let
+  bin = pkgs.runCommand "extra-bins" { } ''
+    mkdir -p $out
+    for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs ]}; do
+      for bin in "$dir"/bin/*; do
+        ln -s "$bin" "$out/$(basename "$bin")"
+      done
+    done
+  '';
+  etc = pkgs.runCommand "etc" { } ''
+    mkdir -p $out/etc/nix
+
+    cat <<NIX_CONFIG > $out/etc/nix/nix.conf
+    accept-flake-config = true
+    experimental-features = nix-command flakes
+    NIX_CONFIG
+
+    cat <<NSSWITCH > $out/etc/nsswitch.conf
+    passwd:    files mymachines systemd
+    group:     files mymachines systemd
+    shadow:    files
+
+    hosts:     files mymachines dns myhostname
+    networks:  files
+
+    ethers:    files
+    services:  files
+    protocols: files
+    rpc:       files
+    NSSWITCH
+
+    # Create an unpriveleged user that we can use also without the run-as-user.sh script
+    touch $out/etc/passwd $out/etc/group
+    ${pkgs.buildPackages.shadow}/bin/groupadd --prefix $out -g 9000 nixuser
+    ${pkgs.buildPackages.shadow}/bin/useradd --prefix $out -m -d /tmp -u 9000 -g 9000 -G nixuser nixuser
+
+    # Add SSL CA certs
+    mkdir -p $out/etc/ssl/certs
+    cp -a "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" $out/etc/ssl/certs/ca-bundle.crt
+  '';
+in
 {
   systemd.services.gitea-runner-nix-image = {
     wantedBy = [ "multi-user.target" ];
     after = [ "podman.service" ];
     requires = [ "podman.service" ];
     path = [ pkgs.podman pkgs.gnutar ];
+    # we also include etc here because the cleanup job also wants the nixuser to be present
     script = ''
-      tar cv --files-from /dev/null | podman import - scratch
+      set -eux
+      tar -C ${etc} -cv . | podman import - almost-scratch
     '';
     serviceConfig = {
       Type = "oneshot";
@@ -38,6 +81,10 @@
 
   # Format of the token file:
   virtualisation.podman.enable = true;
+  virtualisation.containers.containersConf.settings = {
+    # podman seems to not work with systemd-resolved
+    containers.dns_servers = [ "8.8.8.8" "8.8.4.4" ];
+  };
 
   systemd.services.gitea-runner-nix = {
     after = [
@@ -116,52 +163,26 @@
     };
   };
 
-  services.gitea-actions-runner.instances.nix =
-    let
-      bin = pkgs.runCommand "extra-bins" { } ''
-        mkdir -p $out
-        for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs]}; do
-          for bin in "$dir"/bin/*; do
-            ln -s "$bin" "$out/$(basename "$bin")"
-          done
-        done
-      '';
-      etc = pkgs.runCommand "etc" { } ''
-        mkdir -p $out/etc/nix
-
-        cat <<NIX_CONFIG > $out/etc/nix.conf
-        accept-flake-config = true
-        experimental-features = nix-command flakes
-        NIX_CONFIG
-
-        # Create an unpriveleged user that we can use also without the run-as-user.sh script
-        touch $out/etc/passwd $out/etc/group
-        ${pkgs.buildPackages.shadow}/bin/groupadd --prefix $out -g 9000 nixuser
-        ${pkgs.buildPackages.shadow}/bin/useradd --prefix $out -m -d /tmp -u 9000 -g 9000 -G nixuser nixuser
-
-        # Add SSL CA certs
-        mkdir -p $out/etc/ssl/certs
-        cp -a "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" $out/etc/ssl/certs/ca-bundle.crt
-      '';
-    in
-    {
-      enable = true;
-      name = "nix-runner";
-      # take the git root url from the gitea config
-      # only possible if you've also configured your gitea though the same nix config
-      # otherwise you need to set it manually
-      url = config.services.gitea.settings.server.ROOT_URL;
-      # use your favourite nix secret manager to get a path for this
-      tokenFile = "/var/lib/gitea-registration/token";
-      labels = [ "nix:docker://scratch" ];
-      settings = {
-        container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /tmp:/tmp -v /nix:/nix -v ${etc}/etc:/etc -v ${bin}:/bin --user nixuser";
-        container.valid_volumes = [
-          "/nix"
-          "/tmp"
-          bin
-          "${etc}/etc"
-        ];
-      };
+  services.gitea-actions-runner.instances.nix = {
+    enable = true;
+    name = "nix-runner";
+    # take the git root url from the gitea config
+    # only possible if you've also configured your gitea though the same nix config
+    # otherwise you need to set it manually
+    url = config.services.gitea.settings.server.ROOT_URL;
+    # use your favourite nix secret manager to get a path for this
+    tokenFile = "/var/lib/gitea-registration/token";
+    labels = [ "nix:docker://almost-scratch" ];
+    settings = {
+      container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /tmp:/tmp -v /nix:/nix -v ${etc}/etc:/etc -v ${bin}:/bin --user nixuser";
+      # the default network that also respects our dns server settings
+      container.network = "podman";
+      container.valid_volumes = [
+        "/nix"
+        "/tmp"
+        bin
+        "${etc}/etc"
+      ];
     };
+  };
 }
