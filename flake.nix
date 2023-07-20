@@ -8,7 +8,7 @@
 
   inputs = {
     # https://github.com/NixOS/nixpkgs/pull/243252
-    nixpkgs.url = "github:DavHau/nixpkgs/gitea";
+    nixpkgs.url = "github:Mic92/nixpkgs/daemon";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -43,8 +43,9 @@
         inputs.treefmt-nix.flakeModule
         ./targets/flake-module.nix
         ./modules/flake-module.nix
+        ./pkgs/flake-module.nix
       ];
-      perSystem = { config, pkgs, inputs', ... }: {
+      perSystem = { pkgs, inputs', ... }: {
         treefmt = {
           projectRootFile = "flake.nix";
           programs.terraform.enable = true;
@@ -70,9 +71,6 @@
               ]))
             ];
           };
-          inherit (pkgs.callPackage ./pkgs/renovate { }) renovate;
-        } // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
-          gitea = pkgs.callPackage ./pkgs/gitea { };
         };
       };
     });
