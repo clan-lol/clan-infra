@@ -1,16 +1,5 @@
 { config, self, pkgs, lib, ... }:
 {
-  #systemd.services.gitea-runner-nix-image = {
-  #  wantedBy = [ "multi-user.target" ];
-  #  script = ''
-  #    ${lib.getExe pkgs.podman} load --input=${actions-runner}
-  #  '';
-  #  serviceConfig = {
-  #    Type = "oneshot";
-  #    RemainAfterExit = true;
-  #  };
-  #};
-
   systemd.services.gitea-runner-nix-token = {
     wantedBy = [ "multi-user.target" ];
     after = [ "gitea.service" ];
@@ -108,33 +97,42 @@
       # Note that this has some interactions with the User setting; so you may
       # want to consult the systemd docs if using both.
       DynamicUser = true;
-      #  Environment = [
-      #  ];
-      #  BindPaths = [
-      #    "/nix/var/nix/daemon-socket/socket"
-      #    "/run/nscd/socket"
-      #    "/var/lib/drone"
-      #  ];
     };
   };
 
-  services.gitea-actions-runner.instances.nix = let
-    extraBins = pkgs.runCommand "extra-bins" {} ''
-      mkdir -p $out
-      ln -s ${pkgs.nodejs}/bin/node $out/node
-    '';
-  in {
-    enable = true;
-    name = "nix-runner";
-    # take the git root url from the gitea config
-    # only possible if you've also configured your gitea though the same nix config
-    # otherwise you need to set it manually
-    url = config.services.gitea.settings.server.ROOT_URL;
-    # use your favourite nix secret manager to get a path for this
-    tokenFile = "/var/lib/gitea-registration/token";
-    labels = [ "nix:docker://mic92/nix-unstable-static" ];
-    settings = {
-      container.options = "-v /nix:/nix -v ${extraBins}:/host/bin --user nixuser";
+  services.gitea-actions-runner.instances.nix =
+    let
+      extraBins = pkgs.runCommand "extra-bins" { } ''
+        mkdir -p $out
+        ln -s ${pkgs.nodejs}/bin/node $out/node
+        ln -s ${pkgs.nix}/bin/nix $out/nix
+        ln -s ${pkgs.git}/bin/git $out/git
+        ln -s ${pkgs.jq}/bin/jq $out/jq
+        ln -s ${pkgs.bash}/bin/bash $out/bash
+        for i in ${pkgs.coreutils}/bin/*; do
+          ln -s $i $out/$(basename $i)
+        done
+      '';
+    in
+    {
+      enable = true;
+      name = "nix-runner";
+      # take the git root url from the gitea config
+      # only possible if you've also configured your gitea though the same nix config
+      # otherwise you need to set it manually
+      url = config.services.gitea.settings.server.ROOT_URL;
+      # use your favourite nix secret manager to get a path for this
+      tokenFile = "/var/lib/gitea-registration/token";
+      labels = [ "nix:docker://mic92/nix-unstable-static" ];
+      settings = {
+        container.options = "-v /nix:/nix -v ${extraBins}:/bin --user nixuser";
+        container.valid_volumes = [
+          "/nix"
+          extraBins
+        ];
+        runner = {
+          envs.BIN = extraBins;
+        };
+      };
     };
-  };
 }
