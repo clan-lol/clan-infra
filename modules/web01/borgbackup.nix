@@ -6,7 +6,7 @@
   # $ ssh-keygen -t ed25519 -N "" -f /tmp/ssh_host_ed25519_key
   sops.secrets.hetzner-borgbackup-passphrase = { };
 
-  systemd.services.borgbackup-job-nixpkgs-update.serviceConfig.ReadWritePaths = [
+  systemd.services.borgbackup-job-clan-lol.serviceConfig.ReadWritePaths = [
     "/var/log/telegraf"
   ];
 
