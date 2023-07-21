@@ -1,39 +1,12 @@
 { config, self, pkgs, lib, ... }:
 let
-  bin = pkgs.runCommand "extra-bins" { } ''
-    mkdir -p $out
-    for dir in ${toString [ pkgs.coreutils pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs ]}; do
+  storeDeps = pkgs.runCommand "store-deps" { } ''
+    mkdir -p $out/bin
+    for dir in ${toString [ pkgs.coreutils pkgs.findutils pkgs.gnugrep pkgs.gawk pkgs.git pkgs.nix pkgs.bash pkgs.jq pkgs.nodejs ]}; do
       for bin in "$dir"/bin/*; do
-        ln -s "$bin" "$out/$(basename "$bin")"
+        ln -s "$bin" "$out/bin/$(basename "$bin")"
       done
     done
-  '';
-  etc = pkgs.runCommand "etc" { } ''
-    mkdir -p $out/etc/nix
-
-    cat <<NIX_CONFIG > $out/etc/nix/nix.conf
-    accept-flake-config = true
-    experimental-features = nix-command flakes
-    NIX_CONFIG
-
-    cat <<NSSWITCH > $out/etc/nsswitch.conf
-    passwd:    files mymachines systemd
-    group:     files mymachines systemd
-    shadow:    files
-
-    hosts:     files mymachines dns myhostname
-    networks:  files
-
-    ethers:    files
-    services:  files
-    protocols: files
-    rpc:       files
-    NSSWITCH
-
-    # Create an unpriveleged user that we can use also without the run-as-user.sh script
-    touch $out/etc/passwd $out/etc/group
-    ${pkgs.buildPackages.shadow}/bin/groupadd --prefix $out -g 9000 nixuser
-    ${pkgs.buildPackages.shadow}/bin/useradd --prefix $out -m -d /tmp -u 9000 -g 9000 -G nixuser nixuser
 
     # Add SSL CA certs
     mkdir -p $out/etc/ssl/certs
@@ -41,21 +14,62 @@ let
   '';
 in
 {
+  # everything here has dependencies on the store
   systemd.services.gitea-runner-nix-image = {
     wantedBy = [ "multi-user.target" ];
     after = [ "podman.service" ];
     requires = [ "podman.service" ];
-    path = [ pkgs.podman pkgs.gnutar ];
+    path = [ pkgs.podman pkgs.gnutar pkgs.shadow pkgs.getent ];
     # we also include etc here because the cleanup job also wants the nixuser to be present
     script = ''
-      set -eux
-      tar -C ${etc} -cv . | podman import - almost-scratch
+      set -eux -o pipefail
+      mkdir -p etc/nix
+
+      # Create an unpriveleged user that we can use also without the run-as-user.sh script
+      touch etc/passwd etc/group
+      groupid=$(cut -d: -f3 < <(getent group nixuser))
+      userid=$(cut -d: -f3 < <(getent passwd nixuser))
+      groupadd --prefix $(pwd) --gid "$groupid" nixuser
+      useradd --prefix $(pwd) -m -d /tmp -u "$userid" -g "$groupid" -G nixuser nixuser
+
+      cat <<NIX_CONFIG > etc/nix/nix.conf
+      accept-flake-config = true
+      experimental-features = nix-command flakes
+      NIX_CONFIG
+
+      cat <<NSSWITCH > etc/nsswitch.conf
+      passwd:    files mymachines systemd
+      group:     files mymachines systemd
+      shadow:    files
+
+      hosts:     files mymachines dns myhostname
+      networks:  files
+
+      ethers:    files
+      services:  files
+      protocols: files
+      rpc:       files
+      NSSWITCH
+
+      # list the content as it will be imported into the container
+      tar -cv . | tar -tvf -
+      tar -cv . | podman import - gitea-runner-nix
     '';
     serviceConfig = {
+      RuntimeDirectory = "gitea-runner-nix-image";
+      WorkingDirectory = "/run/gitea-runner-nix-image";
       Type = "oneshot";
       RemainAfterExit = true;
     };
   };
+
+  users.users.nixuser = {
+    group = "nixuser";
+    description = "Used for running nix ci jobs";
+    home = "/var/empty";
+    isSystemUser = true;
+  };
+  users.groups.nixuser = { };
 
   systemd.services.gitea-runner-nix-token = {
     wantedBy = [ "multi-user.target" ];
@@ -172,16 +186,15 @@ in
     url = config.services.gitea.settings.server.ROOT_URL;
     # use your favourite nix secret manager to get a path for this
     tokenFile = "/var/lib/gitea-registration/token";
-    labels = [ "nix:docker://almost-scratch" ];
+    labels = [ "nix:docker://gitea-runner-nix" ];
     settings = {
-      container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /tmp:/tmp -v /nix:/nix -v ${etc}/etc:/etc -v ${bin}:/bin --user nixuser";
+      container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser";
       # the default network that also respects our dns server settings
       container.network = "podman";
       container.valid_volumes = [
         "/nix"
-        "/tmp"
-        bin
-        "${etc}/etc"
+        "${storeDeps}/bin"
+        "${storeDeps}/etc/ssl"
       ];
     };
   };
