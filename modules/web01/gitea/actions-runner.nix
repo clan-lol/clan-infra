@@ -14,7 +14,7 @@ let
   '';
 in
 {
-  # everything here has dependencies on the store
+  # everything here has no dependencies on the store
   systemd.services.gitea-runner-nix-image = {
     wantedBy = [ "multi-user.target" ];
     after = [ "podman.service" ];
