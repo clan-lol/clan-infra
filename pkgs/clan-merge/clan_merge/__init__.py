@@ -30,12 +30,14 @@ def is_ci_green(pr: dict) -> bool:
     return True
 
 
-def decide_merge(pr: dict, allowed_users: list[str]) -> bool:
+def decide_merge(pr: dict, allowed_users: list[str], bot_name: str) -> bool:
     if (
         pr["user"]["login"] in allowed_users
         and pr["mergeable"] is True
         and not pr["title"].startswith("WIP:")
         and pr["state"] == "open"
+        # check if bot is assigned
+        and any(reviewer["login"] == bot_name for reviewer in pr["assignees"])
         and is_ci_green(pr)
     ):
         return True
@@ -50,10 +52,10 @@ def list_prs(repo: str) -> list:
     return data
 
 
-def list_prs_to_merge(prs: list, allowed_users: list[str]) -> list:
+def list_prs_to_merge(prs: list, allowed_users: list[str], bot_name: str) -> list:
     prs_to_merge = []
     for pr in prs:
-        if decide_merge(pr, allowed_users) is True:
+        if decide_merge(pr, allowed_users, bot_name) is True:
             prs_to_merge.append(pr)
     return prs_to_merge
 
@@ -65,6 +67,12 @@ def parse_args() -> argparse.Namespace:
         "--allowed-users",
         nargs="+",
         help="list of users allowed to merge",
+        required=True,
+    )
+    # option for bot-name
+    parser.add_argument(
+        "--bot-name",
+        help="name of the bot",
         required=True,
     )
     # parse list of repository names for which to merge PRs
@@ -93,9 +101,10 @@ def clan_merge(
     allowed_users = args.allowed_users
     repos = args.repos
     dry_run = args.dry_run
+    bot_name = args.bot_name
     for repo in repos:
         prs = list_prs(repo)
-        prs_to_merge = list_prs_to_merge(prs, allowed_users)
+        prs_to_merge = list_prs_to_merge(prs, allowed_users, bot_name)
         for pr in prs_to_merge:
             url = (
                 "https://git.clan.lol/api/v1/repos/clan/"
