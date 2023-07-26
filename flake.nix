@@ -42,6 +42,7 @@
       imports = [
         inputs.treefmt-nix.flakeModule
         inputs.clan-core.modules.flake-parts.writers
+        ./flake-parts/action-checkout
         ./flake-parts/action-flake-update
         ./flake-parts/action-create-pr
         ./targets/flake-module.nix
