@@ -1,5 +1,32 @@
 {
   "nodes": {
+    "clan-core": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixos-generators": "nixos-generators",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1690388700,
+        "narHash": "sha256-9hYtUcPe6R/Bp8S+jXw2pFfBYhiLPtAtyG3gAh1HLHo=",
+        "ref": "refs/heads/main",
+        "rev": "1a0cdf0d1d7519073db76a73934912e8d7c0c5fe",
+        "revCount": 108,
+        "type": "git",
+        "url": "https://git.clan.lol/clan/clan-core"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.clan.lol/clan/clan-core"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -40,6 +67,43 @@
         "type": "github"
       }
     },
+    "nixlib": {
+      "locked": {
+        "lastModified": 1688259758,
+        "narHash": "sha256-CYVbYQfIm3vwciCf6CCYE+WOOLE3vcfxfEfNHIfKUJQ=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "a92befce80a487380ea5e92ae515fe33cebd3ac6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixos-generators": {
+      "inputs": {
+        "nixlib": "nixlib",
+        "nixpkgs": [
+          "clan-core",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1688738567,
+        "narHash": "sha256-yax5BYOfpE0+95kyJmEcfKEdZBaFvCENDogBB4VQB3Q=",
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "rev": "9191c85aab6b1a7ad395c13d340f2aa0e3ddf552",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1689846894,
@@ -58,6 +122,7 @@
     },
     "root": {
       "inputs": {
+        "clan-core": "clan-core",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs",
