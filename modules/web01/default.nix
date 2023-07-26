@@ -1,11 +1,12 @@
 {
   imports = [
-    ./homepage.nix
-    ./gitea
-    ./postfix.nix
-    ./harmonia.nix
-    ./dendrite.nix
     ./borgbackup.nix
+    ./clan-merge.nix
+    ./dendrite.nix
+    ./gitea
+    ./harmonia.nix
+    ./homepage.nix
+    ./postfix.nix
     ../zerotier
     ../zerotier/ctrl.nix
   ];
