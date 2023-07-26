@@ -17,7 +17,7 @@
       while sleep 10; do
         ${self.packages.${pkgs.system}.clan-merge}/bin/clan-merge \
           --allowed-users DavHau lassulus mic92 \
-          --repos clan-core \
+          --repos clan-infra clan-core clan-homepage \
           --bot-name clan-bot
       done
     '';
