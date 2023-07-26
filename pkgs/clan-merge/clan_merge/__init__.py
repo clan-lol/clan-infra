@@ -31,13 +31,14 @@ def is_ci_green(pr: dict) -> bool:
 
 
 def decide_merge(pr: dict, allowed_users: list[str], bot_name: str) -> bool:
+    assignees = pr["assignees"] if pr["assignees"] else []
     if (
         pr["user"]["login"] in allowed_users
         and pr["mergeable"] is True
         and not pr["title"].startswith("WIP:")
         and pr["state"] == "open"
         # check if bot is assigned
-        and any(reviewer["login"] == bot_name for reviewer in pr["assignees"])
+        and any(assignee["login"] == bot_name for assignee in assignees)
         and is_ci_green(pr)
     ):
         return True
@@ -124,7 +125,6 @@ def clan_merge(
                     Do="merge",
                 )
                 data_encoded = json.dumps(data).encode("utf8")
-                print(data)
                 req = urllib.request.Request(
                     url, data=data_encoded, headers={"Content-Type": "application/json"}
                 )
