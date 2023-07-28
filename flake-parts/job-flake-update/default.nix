@@ -13,8 +13,9 @@
           pkgs.bash
           pkgs.coreutils
           self'.packages.action-checkout
-          self'.packages.action-flake-update
+          self'.packages.action-ensure-tea-login
           self'.packages.action-create-pr
+          self'.packages.action-flake-update
         ]
         ''
           bash ${./script.sh}

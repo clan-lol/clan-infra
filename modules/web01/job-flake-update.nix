@@ -1,6 +1,7 @@
 { config, self, pkgs, ... }: {
 
-  sops.secrets.merge-bot-gitea-token = { };
+  sops.secrets.clan-bot-gitea-token = { };
+  sops.secrets.clan-bot-ssh-key = { };
 
   systemd.timers.job-flake-update = {
     description = "Time for flake update workflow";
@@ -18,28 +19,30 @@
     description = "Automatically update flake inputs for clan-repos";
     after = [ "network-online.target" ];
     environment = {
+      # secrets
       GITEA_TOKEN_FILE = "%d/GITEA_TOKEN_FILE";
-      # these ariables are repescted by git itself
-      GIT_AUTHOR_NAME = "Clan Merge Bot";
-      GIT_COMMITTER_NAME = "Clan Merge Bot";
-      GIT_AUTHOR_EMAIL = "clan-bot@git.clan.lol";
-      GIT_COMMITTER_EMAIL = "clan-bot@git.clan.lol";
+      CLAN_BOT_SSH_KEY_FILE = "%d/CLAN_BOT_SSH_KEY_FILE";
+
+      HOME = "/run/job-flake-update";
+
+      # used by action-checkout
+      REPO_DIR = "/run/job-flake-update/repo";
+
+      # used by git
+      GIT_SSH_COMMAND = "ssh -i %d/CLAN_BOT_SSH_KEY_FILE -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null";
+
+      # prevent these variables from being unset by writePureShellScript
+      KEEP_VARS = "GIT_SSH_COMMAND GITEA_TOKEN_FILE";
     };
     serviceConfig = {
-      LoadCredential = [ "GITEA_TOKEN_FILE:${config.sops.secrets.merge-bot-gitea-token.path}" ];
+      LoadCredential = [
+        "GITEA_TOKEN_FILE:${config.sops.secrets.clan-bot-gitea-token.path}"
+        "CLAN_BOT_SSH_KEY_FILE:${config.sops.secrets.clan-bot-ssh-key.path}"
+      ];
       DynamicUser = true;
       RuntimeDirectory = "job-flake-update";
+      WorkingDirectory = "/run/job-flake-update";
+      ExecStart = "${self.packages.${pkgs.system}.job-flake-update}/bin/job-flake-update";
     };
-    path = [
-      self.packages.${pkgs.system}.job-flake-update
-      self.packages.${pkgs.system}.job-flake-update
-    ];
-    script = ''
-      cd /run/job-flake-update
-      mkdir -p home
-      export HOME=$(realpath home)
-      export REPO_DIR=$HOME/repo
-      job-flake-update
-    '';
   };
 }
