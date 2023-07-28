@@ -9,3 +9,4 @@ secrets.auto.tfvars.json
 # nix
 .direnv
 result*
+.pre-commit-config.yaml
