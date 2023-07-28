@@ -43,8 +43,9 @@
         inputs.treefmt-nix.flakeModule
         inputs.clan-core.modules.flake-parts.writers
         ./flake-parts/action-checkout
-        ./flake-parts/action-flake-update
         ./flake-parts/action-create-pr
+        ./flake-parts/action-ensure-tea-login
+        ./flake-parts/action-flake-update
         ./flake-parts/job-flake-update
         ./targets/flake-module.nix
         ./modules/flake-module.nix
