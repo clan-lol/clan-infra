@@ -24,6 +24,11 @@
     srvos.url = "github:numtide/srvos";
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
+
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.inputs.flake-parts.follows = "flake-parts";
+    clan-core.inputs.nixpkgs.follows = "nixpkgs";
+    clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -36,6 +41,12 @@
       ];
       imports = [
         inputs.treefmt-nix.flakeModule
+        inputs.clan-core.modules.flake-parts.writers
+        ./flake-parts/action-checkout
+        ./flake-parts/action-create-pr
+        ./flake-parts/action-ensure-tea-login
+        ./flake-parts/action-flake-update
+        ./flake-parts/job-flake-update
         ./targets/flake-module.nix
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
