@@ -36,8 +36,6 @@
       systems = [
         "x86_64-linux"
         "aarch64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
       ];
       imports = [
         inputs.treefmt-nix.flakeModule
@@ -46,6 +44,7 @@
         ./flake-parts/action-create-pr
         ./flake-parts/action-ensure-tea-login
         ./flake-parts/action-flake-update
+        ./flake-parts/devShells
         ./flake-parts/job-flake-update
         ./targets/flake-module.nix
         ./modules/flake-module.nix
@@ -63,21 +62,6 @@
             "node-packages.nix"
             "composition.nix"
           ];
-        };
-        packages = {
-          default = pkgs.mkShell {
-            packages = [
-              pkgs.bashInteractive
-              pkgs.sops
-              (pkgs.terraform.withPlugins (p: [
-                p.hetznerdns
-                p.hcloud
-                p.null
-                p.external
-                p.local
-              ]))
-            ];
-          };
         };
       };
     });
