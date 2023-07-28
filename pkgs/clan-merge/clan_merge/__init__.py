@@ -14,9 +14,10 @@ def load_token() -> str:
 
 def is_ci_green(pr: dict) -> bool:
     print("Checking CI status for PR " + str(pr["id"]))
+    repo = pr["base"]["repo"]["name"]
     url = (
         "https://git.clan.lol/api/v1/repos/clan/"
-        + pr["base"]["repo"]["name"]
+        + repo
         + "/commits/"
         + pr["head"]["sha"]
         + "/status"
@@ -24,6 +25,11 @@ def is_ci_green(pr: dict) -> bool:
     response = urllib.request.urlopen(url)
     data = json.loads(response.read())
     # check for all commit statuses to have status "success"
+    if not data["statuses"]:
+        print(
+            f"No CI status for PR {pr['number']} in repo {repo} from user {pr['user']['login']}"
+        )
+        return False
     for status in data["statuses"]:
         if status["status"] != "success":
             return False
