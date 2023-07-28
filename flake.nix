@@ -44,8 +44,11 @@
         ./flake-parts/action-create-pr
         ./flake-parts/action-ensure-tea-login
         ./flake-parts/action-flake-update
+        ./flake-parts/action-flake-update-pr-clan
         ./flake-parts/devShells
-        ./flake-parts/job-flake-update
+        ./flake-parts/job-flake-update-clan-core
+        ./flake-parts/job-flake-update-clan-homepage
+        ./flake-parts/job-flake-update-clan-infra
         ./targets/flake-module.nix
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix

@@ -7,7 +7,7 @@
     ./harmonia.nix
     ./homepage.nix
     ./postfix.nix
-    ./job-flake-update.nix
+    ./jobs.nix
     ../zerotier
     ../zerotier/ctrl.nix
   ];
