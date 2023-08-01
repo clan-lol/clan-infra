@@ -16,11 +16,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690675234,
-        "narHash": "sha256-JrGAgnT+k2/4epwOAPbCighy3Ps8KePIV+i8nNWHpRM=",
+        "lastModified": 1690761637,
+        "narHash": "sha256-Y6vABFmBeSofpkr3GTJv+37p1LVoN9BJ1AsCLWTMOHU=",
         "ref": "refs/heads/main",
-        "rev": "aeb977f1739de6b9e7818e651c2d6221efc5a29f",
-        "revCount": 160,
+        "rev": "284e1ef54f52f2788309c8374945b6cdc7ec1d61",
+        "revCount": 162,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -37,11 +37,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690548222,
-        "narHash": "sha256-EcVjLOpbAuL/y55fLlEl3BNM4FP5Pwtp+6DbTiL6FDM=",
+        "lastModified": 1690739034,
+        "narHash": "sha256-roW02IaiQ3gnEEDMCDWL5YyN+C4nBf/te6vfL7rG0jk=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "43f17a8b31c49f6696b8b258d317161afdc7e36b",
+        "rev": "4015740375676402a2ee6adebc3c30ea625b9a94",
         "type": "github"
       },
       "original": {
@@ -240,11 +240,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1690628027,
-        "narHash": "sha256-OTSbA2hM6VmxyZ/4siYPANffMBzIsKu04GLjXcv8ST0=",
+        "lastModified": 1690743255,
+        "narHash": "sha256-dsJzQsyJGWCym1+LMyj2rbYmvjYmzeOrk7ypPrSFOPo=",
         "owner": "cachix",
         "repo": "pre-commit-hooks.nix",
-        "rev": "1e2443dd3f669eb65433b2fc26a3065e05a7dc9c",
+        "rev": "fcbf4705d98398d084e6cb1c826a0b90a91d22d7",
         "type": "github"
       },
       "original": {
