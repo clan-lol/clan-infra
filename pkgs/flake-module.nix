@@ -20,6 +20,18 @@
         inherit (config.writers) writePureShellScriptBin;
         inherit (config.packages) action-checkout action-ensure-tea-login action-create-pr action-flake-update;
       };
+      job-flake-update-clan-core = pkgs.callPackage ./job-flake-update-clan-core {
+        inherit (config.writers) writePureShellScriptBin;
+        inherit (config.packages) action-flake-update-pr-clan;
+      };
+      job-flake-update-clan-homepage = pkgs.callPackage ./job-flake-update-clan-homepage {
+        inherit (config.writers) writePureShellScriptBin;
+        inherit (config.packages) action-flake-update-pr-clan;
+      };
+      job-flake-update-clan-infra = pkgs.callPackage ./job-flake-update-clan-infra {
+        inherit (config.writers) writePureShellScriptBin;
+        inherit (config.packages) action-flake-update-pr-clan;
+      };
     };
   };
 }

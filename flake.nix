@@ -41,9 +41,6 @@
         inputs.treefmt-nix.flakeModule
         inputs.clan-core.modules.flake-parts.writers
         ./devShells/flake-module.nix
-        ./flake-parts/job-flake-update-clan-core
-        ./flake-parts/job-flake-update-clan-homepage
-        ./flake-parts/job-flake-update-clan-infra
         ./targets/flake-module.nix
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
