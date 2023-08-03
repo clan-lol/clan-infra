@@ -32,7 +32,7 @@
   };
 
   outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } ({ lib, ... }: {
+    flake-parts.lib.mkFlake { inherit inputs; } ({ ... }: {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -40,12 +40,7 @@
       imports = [
         inputs.treefmt-nix.flakeModule
         inputs.clan-core.modules.flake-parts.writers
-        ./flake-parts/action-checkout
-        ./flake-parts/action-create-pr
-        ./flake-parts/action-ensure-tea-login
-        ./flake-parts/action-flake-update
-        ./flake-parts/action-flake-update-pr-clan
-        ./flake-parts/devShells
+        ./devShells/flake-module.nix
         ./flake-parts/job-flake-update-clan-core
         ./flake-parts/job-flake-update-clan-homepage
         ./flake-parts/job-flake-update-clan-infra
@@ -54,7 +49,7 @@
         ./pkgs/flake-module.nix
         ./pkgs/clan-merge/flake-module.nix
       ];
-      perSystem = { pkgs, inputs', ... }: {
+      perSystem = { ... }: {
         treefmt = {
           projectRootFile = "flake.nix";
           programs.terraform.enable = true;
