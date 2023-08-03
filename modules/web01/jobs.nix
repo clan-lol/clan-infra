@@ -18,7 +18,7 @@ let
       wantedBy = [ "timers.target" ];
       timerConfig = {
         Persistent = true;
-        OnCalendar = "daily";
+        OnCalendar = "weekly";
       };
       after = [ "network-online.target" ];
     };
