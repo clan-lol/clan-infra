@@ -15,8 +15,8 @@ export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_NAME"
 export GITEA_USER="clan-bot"
 export GITEA_URL="https://git.clan.lol"
 
-action-checkout
-cd $REPO_DIR
+git clone --depth 1 --branch main "$REPO" "$REPO_DIR"
+cd "$REPO_DIR"
 action-ensure-tea-login
 action-flake-update
 action-create-pr --assignees clan-bot

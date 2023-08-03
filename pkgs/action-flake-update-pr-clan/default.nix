@@ -1,6 +1,6 @@
 { bash
 , coreutils
-, action-checkout
+, git
 , action-ensure-tea-login
 , action-create-pr
 , action-flake-update
@@ -9,7 +9,7 @@
 writePureShellScriptBin "action-flake-update-pr-clan" [
   bash
   coreutils
-  action-checkout
+  git
   action-ensure-tea-login
   action-create-pr
   action-flake-update

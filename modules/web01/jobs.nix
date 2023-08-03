@@ -34,7 +34,7 @@ let
 
         HOME = "/run/${name}";
 
-        # used by action-checkout
+        # used by action-flake-update-pr-clan
         REPO_DIR = "/run/${name}/repo";
 
         # used by git
