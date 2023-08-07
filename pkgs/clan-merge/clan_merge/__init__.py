@@ -13,7 +13,7 @@ def load_token() -> str:
 
 
 def is_ci_green(pr: dict) -> bool:
-    print("Checking CI status for PR " + str(pr["id"]))
+    print(f"Checking CI status for PR {pr['number']} (id: {pr['id']})")
     repo = pr["base"]["repo"]["name"]
     url = (
         "https://git.clan.lol/api/v1/repos/clan/"
