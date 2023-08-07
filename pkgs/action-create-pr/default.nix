@@ -6,5 +6,5 @@
 , writePureShellScriptBin
 }:
 writePureShellScriptBin "action-create-pr" [ bash coreutils git tea openssh ] ''
-  bash ${./script.sh}
+  bash ${./script.sh} "$@"
 ''
