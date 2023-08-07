@@ -12,8 +12,12 @@ def load_token() -> str:
         return f.read().strip()
 
 
+def pr_message(pr: dict) -> str:
+    return f"PR {pr['number']} in repo {pr['base']['repo']['name']} from user {pr['user']['login']}: {pr['title']}"
+
+
 def is_ci_green(pr: dict) -> bool:
-    print(f"Checking CI status for PR {pr['number']} (id: {pr['id']})")
+    print(f"Checking CI status for {pr_message(pr)}")
     repo = pr["base"]["repo"]["name"]
     url = (
         "https://git.clan.lol/api/v1/repos/clan/"
@@ -26,9 +30,7 @@ def is_ci_green(pr: dict) -> bool:
     data = json.loads(response.read())
     # check for all commit statuses to have status "success"
     if not data["statuses"]:
-        print(
-            f"No CI status for PR {pr['number']} in repo {repo} from user {pr['user']['login']}"
-        )
+        print(f"No CI status for {pr_message(pr)}")
         return False
     for status in data["statuses"]:
         if status["status"] != "success":
@@ -122,13 +124,9 @@ def clan_merge(
                 + f"?token={gitea_token}"
             )
             if dry_run is True:
-                print(
-                    f"Would merge PR {pr['number']} in repo {repo} from user {pr['user']['login']}"
-                )
+                print(f"Would merge {pr_message(pr)}")
             else:
-                print(
-                    f"Merging PR {pr['number']} in repo {repo} from user {pr['user']['login']}"
-                )
+                print(f"Merging {pr_message(pr)}")
                 data = dict(
                     Do="merge",
                 )
