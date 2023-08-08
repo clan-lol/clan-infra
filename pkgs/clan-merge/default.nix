@@ -7,7 +7,7 @@
 }:
 let
   pyproject = builtins.fromTOML (builtins.readFile ./pyproject.toml);
-  name = pyproject.project.name;
+  inherit (pyproject.project) name;
 
   src = lib.cleanSource ./.;
 
