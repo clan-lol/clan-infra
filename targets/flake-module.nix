@@ -14,9 +14,7 @@ in
             # Make flake available in modules
             specialArgs = {
               self = {
-                inputs = self.inputs;
-                nixosModules = self.nixosModules;
-                packages = self.packages;
+                inherit (self) inputs nixosModules packages;
               };
             };
 

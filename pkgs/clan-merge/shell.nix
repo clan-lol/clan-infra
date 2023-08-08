@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> { } }:
 let
-  lib = pkgs.lib;
-  python3 = pkgs.python3;
+  inherit (pkgs) lib python3;
   package = import ./default.nix {
     inherit lib pkgs python3;
   };
