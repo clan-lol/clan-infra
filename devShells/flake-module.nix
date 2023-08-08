@@ -8,6 +8,9 @@
         packages = [
           pkgs.bashInteractive
           pkgs.sops
+
+          inputs'.clan-core.packages.clan-cli
+
           (pkgs.terraform.withPlugins (p: [
             p.hetznerdns
             p.hcloud
