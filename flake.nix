@@ -43,7 +43,6 @@
         ./targets/flake-module.nix
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
-        ./pkgs/clan-merge/flake-module.nix
       ];
       perSystem = { ... }: {
         treefmt = {
