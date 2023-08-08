@@ -1,4 +1,4 @@
-{ ... }: {
+{
   imports = [
     ./clan-merge/flake-module.nix
   ];

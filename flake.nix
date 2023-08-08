@@ -32,7 +32,7 @@
   };
 
   outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } ({ ... }: {
+    flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -44,7 +44,7 @@
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
-      perSystem = { ... }: {
+      perSystem = {
         treefmt = {
           projectRootFile = "flake.nix";
           programs.terraform.enable = true;
@@ -57,5 +57,5 @@
           ];
         };
       };
-    });
+    };
 }
