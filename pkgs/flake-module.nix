@@ -1,4 +1,7 @@
 { ... }: {
+  imports = [
+    ./clan-merge/flake-module.nix
+  ];
   perSystem = { pkgs, config, ... }: {
     packages =
       let
