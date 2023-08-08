@@ -39,7 +39,6 @@
       ];
       imports = [
         inputs.treefmt-nix.flakeModule
-        inputs.clan-core.modules.flake-parts.writers
         ./devShells/flake-module.nix
         ./targets/flake-module.nix
         ./modules/flake-module.nix
