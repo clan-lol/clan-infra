@@ -1,4 +1,4 @@
-From f06e0e1aaa9bb0602e6944d0dd4370e24b66b4e3 Mon Sep 17 00:00:00 2001
+From b8b32773b6d12b7f2f8804f7e18548fffc4a8456 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=B6rg=20Thalheim?= <joerg@thalheim.io>
 Date: Wed, 5 Jul 2023 15:02:03 +0200
 Subject: [PATCH] add bot check
@@ -14,14 +14,14 @@ Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
  3 files changed, 11 insertions(+)
 
 diff --git a/routers/web/auth/auth.go b/routers/web/auth/auth.go
-index 9f1395225..2f7f434a5 100644
+index 3bf133f56..1c37dca09 100644
 --- a/routers/web/auth/auth.go
 +++ b/routers/web/auth/auth.go
 @@ -411,6 +411,11 @@ func SignUpPost(ctx *context.Context) {
  	context.SetCaptchaData(ctx)
  	ctx.Data["PageIsSignUp"] = true
  
-+	if form.Notabot != "Notabot" {
++	if strings.ToLower(form.Notabot) != "clan" {
 +		ctx.Error(http.StatusForbidden)
 +		return
 +	}
@@ -42,7 +42,7 @@ index 1f5abf94e..196300a14 100644
  }
  
 diff --git a/templates/user/auth/signup_inner.tmpl b/templates/user/auth/signup_inner.tmpl
-index 8dfcb7b7d..0316163c5 100644
+index 8dfcb7b7d..3e5ced297 100644
 --- a/templates/user/auth/signup_inner.tmpl
 +++ b/templates/user/auth/signup_inner.tmpl
 @@ -24,6 +24,11 @@
@@ -50,8 +50,8 @@ index 8dfcb7b7d..0316163c5 100644
  				</div>
  
 +				<div class="required inline field">
-+					<input type="checkbox" id="notabot" name="notabot" value="Notabot">
-+					<label for="notabot">Confirm that you are not a bot</label><br>
++					<input type="text" id="notabot" name="notabot" required>
++					<label for="notabot">Enter name of the project to prove you are not a bot</label><br>
 +				</div>
 +
  				{{if not .DisablePassword}}
