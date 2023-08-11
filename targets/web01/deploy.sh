@@ -3,12 +3,4 @@
 
 set -euo pipefail
 
-path=$(nix flake metadata --json '.#' | jq -r .path)
-ip=clan.lol
-rsync --checksum -vaF --delete -e ssh "${path}/" "root@${ip}:/etc/nixos"
-
-ssh "root@$ip" nixos-rebuild switch \
-    --fast \
-    --option keep-going true \
-    --option accept-flake-config true \
-    --flake '/etc/nixos#web01'
+clan update clan.lol
