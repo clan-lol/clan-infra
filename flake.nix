@@ -28,6 +28,7 @@
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
+    clan-core.inputs.sops-nix.follows = "sops-nix";
   };
 
   outputs = inputs@{ flake-parts, ... }:
