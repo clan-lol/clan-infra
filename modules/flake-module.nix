@@ -5,7 +5,7 @@
       inputs.srvos.nixosModules.mixins-telegraf
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
-      inputs.sops-nix.nixosModules.default
+      inputs.clan-core.nixosModules.secrets
     ];
 
     hcloud.imports = [

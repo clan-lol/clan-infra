@@ -25,19 +25,15 @@ let
     '';
 in
 {
-  # $ nix-shell -p dendrite --run 'generate-keys --private-key /tmp/key'
-  sops.secrets.matrix-server-key = { };
-  # $ echo "REGISTRATION_SHARED_SECRET=$(openssl rand -base64 32)"
-
-  # To create a user:
-  # $ password=$(nix run "nixpkgs#xkcdpass" -- -n 3 -d-)
-  # $ shared_secret=$(sops -d --extract '["registration-secret"]' ./secrets.yaml| sed s/REGISTRATION_SHARED_SECRET=//)
-  # $ nix shell "nixpkgs#matrix-synapse" -c register_new_matrix_user --password "${password}" --shared-secret "${shared_secret}" "https://matrix.clan.lol:443"
-  sops.secrets.registration-secret = { };
-
   services.dendrite = {
     enable = true;
     httpPort = 8043;
+    # $ echo "REGISTRATION_SHARED_SECRET=$(openssl rand -base64 32)"
+
+    # To create a user:
+    # $ password=$(nix run "nixpkgs#xkcdpass" -- -n 3 -d-)
+    # $ shared_secret=$(sops -d --extract '["registration-secret"]' ./secrets.yaml| sed s/REGISTRATION_SHARED_SECRET=//)
+    # $ nix shell "nixpkgs#matrix-synapse" -c register_new_matrix_user --password "${password}" --shared-secret "${shared_secret}" "https://matrix.clan.lol:443"
     environmentFile = config.sops.secrets.registration-secret.path;
 
     settings = {
@@ -122,6 +118,7 @@ in
   };
 
   systemd.services.dendrite.serviceConfig.LoadCredential = [
+    # $ nix-shell -p dendrite --run 'generate-keys --private-key /tmp/key'
     "matrix-server-key:${config.sops.secrets.matrix-server-key.path}"
   ];
 

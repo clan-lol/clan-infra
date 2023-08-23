@@ -19,11 +19,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1692792260,
-        "narHash": "sha256-jrQeZqD/KsCioCTQt91gW0egvRG9duxPeTuCsSLVXVc=",
+        "lastModified": 1692795513,
+        "narHash": "sha256-0W1GmoRI8Q0YKvhfuz9885YGuDkbzzzKLWfbdlcnMMw=",
         "ref": "refs/heads/main",
-        "rev": "7365df338bb75782703be633976ca6add6002e88",
-        "revCount": 374,
+        "rev": "a642ecfda5e3472af521bfd6f4f466201f4f3ccb",
+        "revCount": 378,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -206,11 +206,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1692709311,
-        "narHash": "sha256-juBtQW2dKn8fWc9XbrYqfeq5hIjDZ33fcyzXPqkNueg=",
+        "lastModified": 1692792425,
+        "narHash": "sha256-l8mloOMPXPAqVoz0EajpWvZ7XD8jSV1/yQIeNNc3SM8=",
         "owner": "numtide",
         "repo": "srvos",
-        "rev": "1fdce805f65f8d44856b5af1340de0fd6d0811a9",
+        "rev": "46145a1cc93d00ced71c903ec3f9d492af857e2e",
         "type": "github"
       },
       "original": {
@@ -226,11 +226,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1692524468,
-        "narHash": "sha256-wJffwu1deOgc3c/cBIZQ52dfWfPWBzjOamYBX121hcw=",
+        "lastModified": 1692792358,
+        "narHash": "sha256-yqKPLUvl9lFTy43+GvVRwT39k1qu7Yd0HNktZjRbUP4=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "e2761d701581d8dcc4e0e88aecfde317ddf6f0cd",
+        "rev": "b070c28bf9d7d3ef93084aa47c01b4b6c16cdce4",
         "type": "github"
       },
       "original": {

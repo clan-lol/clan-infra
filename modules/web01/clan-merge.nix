@@ -1,7 +1,4 @@
 { config, self, pkgs, ... }: {
-
-  sops.secrets.merge-bot-gitea-token = { };
-
   # service to for automatic merge bot
   systemd.services.clan-merge = {
     description = "Merge clan.lol PRs automatically";

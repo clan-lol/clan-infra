@@ -1,16 +1,5 @@
 { config, self, pkgs, lib, ... }:
 let
-
-  allFlakePackages = [
-    "job-flake-update-clan-core"
-    "job-flake-update-clan-homepage"
-    "job-flake-update-clan-infra"
-  ];
-
-  allFlakeJobs = lib.filter (lib.hasPrefix "job-") allFlakePackages;
-
-  allSystemdConfigs = map configForJob allFlakeJobs;
-
   configForJob = name: {
     systemd.timers.${name} = {
       description = "Time for flake update workflow";
@@ -55,16 +44,11 @@ let
       };
     };
   };
-
 in
 {
-  config = lib.mkMerge (
-    allSystemdConfigs
-    ++ [
-      {
-        sops.secrets.clan-bot-gitea-token = { };
-        sops.secrets.clan-bot-ssh-key = { };
-      }
-    ]
-  );
+  config = lib.mkMerge (map configForJob [
+    "job-flake-update-clan-core"
+    "job-flake-update-clan-homepage"
+    "job-flake-update-clan-infra"
+  ]);
 }

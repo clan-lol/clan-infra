@@ -1,14 +1,6 @@
 { config, ... }: {
   # 100GB storagebox is under the nix-community hetzner account
 
-  # $ nix run nixpkgs#xkcdpass -- -d '-' -n 3 -C capitalize "$@"
-  sops.secrets.hetzner-borgbackup-ssh = { };
-  # Also enable ssh support in the storagebox web interface.
-  # By default the storage box is only accessible from the hetzner network.
-  # $ ssh-keygen -t ed25519 -N "" -f /tmp/ssh_host_ed25519_key
-  # $ cat /tmp/ssh_host_ed25519_key.pub | ssh -p23 u359378@u359378.your-storagebox.de install-ssh-key
-  sops.secrets.hetzner-borgbackup-passphrase = { };
-
   systemd.services.borgbackup-job-clan-lol.serviceConfig.ReadWritePaths = [
     "/var/log/telegraf"
   ];
@@ -62,10 +54,16 @@
     doInit = true;
     encryption = {
       mode = "repokey-blake2";
+      # $ nix run nixpkgs#xkcdpass -- -d '-' -n 3 -C capitalize "$@"
       passCommand = "cat ${config.sops.secrets.hetzner-borgbackup-passphrase.path}";
     };
     compression = "auto,zstd";
     startAt = "daily";
+
+    # Also enable ssh support in the storagebox web interface.
+    # By default the storage box is only accessible from the hetzner network.
+    # $ ssh-keygen -t ed25519 -N "" -f /tmp/ssh_host_ed25519_key
+    # $ cat /tmp/ssh_host_ed25519_key.pub | ssh -p23 u359378@u359378.your-storagebox.de install-ssh-key
     environment.BORG_RSH = "ssh -oPort=23 -i ${config.sops.secrets.hetzner-borgbackup-ssh.path}";
     preHook = ''
       set -x
