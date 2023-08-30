@@ -9,7 +9,6 @@ in
   ];
   networking.hostName = "web01";
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:3080:282a::1";
-  sops.defaultSopsFile = ./secrets.yaml;
   users.users.root.openssh.authorizedKeys.keys = builtins.attrValues admins;
 
   clan.networking.ipv4.address = "65.109.103.5";

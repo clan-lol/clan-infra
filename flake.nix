@@ -46,7 +46,7 @@
       ];
       perSystem = {
         treefmt = {
-          projectRootFile = "flake.nix";
+          projectRootFile = ".git/config";
           programs.terraform.enable = true;
           programs.nixpkgs-fmt.enable = true;
           settings.formatter.nixpkgs-fmt.excludes = [
