@@ -7,8 +7,9 @@
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 
       inputs.clan-core.nixosModules.clanCore
-      { # TODO: use buildClan
-        clanCore.clanDir = toString ./..; 
+      {
+        # TODO: use buildClan
+        clanCore.clanDir = "${./..}";
         clanCore.machineName = "web01";
       }
     ];
