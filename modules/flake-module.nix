@@ -5,7 +5,12 @@
       inputs.srvos.nixosModules.mixins-telegraf
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
-      inputs.clan-core.nixosModules.secrets
+
+      inputs.clan-core.nixosModules.clanCore
+      { # TODO: use buildClan
+        clanCore.clanDir = toString ./..; 
+        clanCore.machineName = "web01";
+      }
     ];
 
     hcloud.imports = [

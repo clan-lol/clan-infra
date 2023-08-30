@@ -13,5 +13,4 @@
   ];
 
   services.cloud-init.xfs.enable = true;
-  clan.sops.sopsDirectory = ../../sops;
 }
