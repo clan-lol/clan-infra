@@ -61,6 +61,7 @@ in
     boot.initrd.kernelModules = [
       "e1000e" # older hetzner machines, 1 GbE nics
       "igc" # newer herzner machines, 2.5 GbE nics
+      "igb"
       # for debugging installation in vms
       "virtio_pci"
       "virtio_net"
