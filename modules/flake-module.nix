@@ -19,10 +19,9 @@
       ./single-disk.nix
     ];
 
-    hetzner-ex101.imports = [
-      inputs.srvos.nixosModules.hardware-hetzner-online-intel
-      ./xfs-lvm-crypto-raid.nix
-      ./hetzner-ex101.nix
+    hetzner-ax102.imports = [
+      inputs.srvos.nixosModules.hardware-hetzner-online-amd
+      ./zfs-crypto-raid.nix
       ./initrd-networking.nix
     ];
 

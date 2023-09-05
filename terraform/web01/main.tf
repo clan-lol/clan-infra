@@ -1,28 +1,18 @@
 locals {
 }
 
-resource "null_resource" "nixos-anywhere" {
-  triggers = {
-    instance_id = var.ipv4_address
-  }
-  connection {
-    type = "ssh"
-    user = "root"
-    host = var.ipv4_address
-  }
-  provisioner "remote-exec" {
-    # needed because kexec is broken
-    # https://github.com/numtide/nixos-anywhere/issues/136
-    script = "${path.module}/nixosify.sh"
-  }
-  provisioner "local-exec" {
-    environment = {
-      HOST              = var.ipv4_address
-      FLAKE_ATTR        = var.nixos_flake_attr
-      SOPS_SECRETS_FILE = var.sops_secrets_file
-    }
-    command = "bash -x ${path.module}/install.sh"
-  }
+module "deploy" {
+  source                 = "github.com/numtide/nixos-anywhere//terraform/all-in-one?ref=extra-files"
+  nixos_system_attr      = ".#nixosConfigurations.web01.config.system.build.toplevel"
+  nixos_partitioner_attr = ".#nixosConfigurations.web01.config.system.build.diskoScript"
+  target_host            = var.ipv4_address
+  instance_id            = "web01"
+  debug_logging          = true
+  extra_files_script     = "${path.module}/decrypt-ssh-secrets.sh"
+  disk_encryption_key_scripts = [{
+    path   = "/tmp/secret.key"
+    script = "${path.module}/decrypt-zfs-key.sh"
+  }]
 }
 
 locals {
