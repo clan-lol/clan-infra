@@ -7,6 +7,7 @@
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 
       inputs.clan-core.nixosModules.clanCore
+      ./admins.nix
       {
         # TODO: use buildClan
         clanCore.clanDir = "${./..}";

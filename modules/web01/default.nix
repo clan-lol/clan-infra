@@ -10,6 +10,7 @@
     ./jobs.nix
     ../zerotier
     ../zerotier/ctrl.nix
+    ../dev.nix
   ];
 
   services.cloud-init.xfs.enable = true;
