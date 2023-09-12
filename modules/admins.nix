@@ -5,7 +5,7 @@ in
   users.users = {
     mic92 = {
       isNormalUser = true;
-      home = "/home/joerg";
+      home = "/home/mic92";
       extraGroups = [ "wheel" ];
       shell = "/run/current-system/sw/bin/zsh";
       uid = 1000;
@@ -26,6 +26,14 @@ in
       shell = "/run/current-system/sw/bin/fish";
       uid = 1002;
       openssh.authorizedKeys.keys = [ admins.dave ];
+    };
+    qubasa = {
+      isNormalUser = true;
+      home = "/home/qubasa";
+      extraGroups = [ "wheel" ];
+      shell = "/run/current-system/sw/bin/zsh";
+      uid = 1003;
+      openssh.authorizedKeys.keys = [ admins.qubasa ];
     };
 
     root.openssh.authorizedKeys.keys = builtins.attrValues admins;
