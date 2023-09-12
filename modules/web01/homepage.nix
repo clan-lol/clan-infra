@@ -10,8 +10,10 @@
         # ssh-homepage-key
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
       ];
-    isNormalUser = true;
+    isSystemUser = true;
+    group = "www";
   };
+  users.groups.www = { };
 
   # ensure /var/www can be accessed by nginx and www user
   systemd.tmpfiles.rules = [
