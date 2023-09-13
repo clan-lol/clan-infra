@@ -15,11 +15,6 @@
       }
     ];
 
-    hcloud.imports = [
-      inputs.srvos.nixosModules.hardware-hetzner-cloud
-      ./single-disk.nix
-    ];
-
     hetzner-ax102.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./zfs-crypto-raid.nix

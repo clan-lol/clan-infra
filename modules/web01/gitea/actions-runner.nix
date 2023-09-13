@@ -19,7 +19,7 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [ "podman.service" ];
     requires = [ "podman.service" ];
-    path = [ pkgs.podman pkgs.gnutar pkgs.shadow pkgs.getent ];
+    path = [ config.virtualisation.podman.package pkgs.gnutar pkgs.shadow pkgs.getent ];
     # we also include etc here because the cleanup job also wants the nixuser to be present
     script = ''
       set -eux -o pipefail
@@ -94,7 +94,17 @@ in
   };
 
   # Format of the token file:
-  virtualisation.podman.enable = true;
+  virtualisation = {
+    podman.enable = true;
+    podman.extraPackages = [ pkgs.zfs ];
+  };
+  virtualisation.containers.storage.settings = {
+    storage.driver = "zfs";
+    storage.graphroot = "/var/lib/containers/storage";
+    storage.runroot = "/run/containers/storage";
+    storage.options.zfs.fsname = "zroot/root/podman";
+  };
+
   virtualisation.containers.containersConf.settings = {
     # podman seems to not work with systemd-resolved
     containers.dns_servers = [ "8.8.8.8" "8.8.4.4" ];
