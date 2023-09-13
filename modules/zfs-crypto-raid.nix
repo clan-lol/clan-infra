@@ -82,6 +82,10 @@ in
             options.mountpoint = "/home";
             mountpoint = "/home";
           };
+          "root/podman" = {
+            type = "zfs_fs";
+            options.mountpoint = "none";
+          };
         };
       };
     };
