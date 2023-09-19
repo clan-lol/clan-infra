@@ -19,15 +19,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1694874693,
-        "narHash": "sha256-xMqT5csfPAbLghUr6OXCpOTM9Fk/Azwg7xYnEYCEsaQ=",
-        "ref": "refs/heads/main",
-        "rev": "4a1dcc16395a5423023ac10d4be3640d1bb88fdc",
-        "revCount": 690,
+        "lastModified": 1694703716,
+        "narHash": "sha256-J1nyeRArZlQPAnmJ1suKrhYOgVEixNGeqbpVTI+gilE=",
+        "ref": "lassulus-pass-secrets",
+        "rev": "1c07f990a89edfd3f268cad4155f29b86a554484",
+        "revCount": 665,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
       "original": {
+        "ref": "lassulus-pass-secrets",
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       }

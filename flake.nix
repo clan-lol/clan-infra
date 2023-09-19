@@ -24,7 +24,7 @@
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=lassulus-pass-secrets";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
@@ -44,7 +44,7 @@
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
-      perSystem = {
+      perSystem = ({ lib, self', ... }: {
         treefmt = {
           projectRootFile = ".git/config";
           programs.terraform.enable = true;
@@ -56,6 +56,14 @@
             "composition.nix"
           ];
         };
-      };
+        checks =
+          let
+            nixosMachines = lib.mapAttrs' (name: config: lib.nameValuePair "nixos-${name}" config.config.system.build.toplevel) ((lib.filterAttrs (_: config: config.pkgs.system == system)) self.nixosConfigurations);
+            packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
+            devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
+            homeConfigurations = lib.mapAttrs' (name: config: lib.nameValuePair "home-manager-${name}" config.activation-script) (self'.legacyPackages.homeConfigurations or { });
+          in
+          nixosMachines // packages // devShells // homeConfigurations;
+      });
     };
 }
