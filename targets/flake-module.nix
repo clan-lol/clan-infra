@@ -1,24 +1,17 @@
-{ lib, self, ... }:
-let
-  entries = builtins.attrNames (builtins.readDir ./.);
-  configs = builtins.filter (dir: builtins.pathExists (./. + "/${dir}/configuration.nix")) entries;
-in
+{ self, inputs, ... }:
 {
-  flake.nixosConfigurations = lib.listToAttrs
-    (builtins.map
-      (name:
-        lib.nameValuePair
-          (builtins.replaceStrings [ "." ] [ "-" ] name)
-          (lib.nixosSystem {
-            system = "x86_64-linux";
-            # Make flake available in modules
-            specialArgs = {
-              self = {
-                inherit (self) inputs nixosModules packages;
-              };
-            };
-
-            modules = [ (./. + "/${name}/configuration.nix") ];
-          }))
-      configs);
+  flake.nixosConfigurations = inputs.clan-core.lib.buildClan {
+    directory = self;
+    # Make flake available in modules
+    specialArgs = {
+      self = {
+        inherit (self) inputs nixosModules packages;
+      };
+    };
+    machines = {
+      web01 = { modulesPath, ... }: {
+        imports = [ (./web01/configuration.nix) ];
+      };
+    };
+  };
 }

@@ -41,7 +41,9 @@
       "/var/tmp"
       "/var/log"
     ];
-    repo = "u359378@u359378.your-storagebox.de:/./borgbackup";
+    # $ ssh-keygen -y -f /run/secrets/hetzner-borgbackup-ssh > /tmp/hetzner-borgbackup-ssh.pub
+    # $ cat /tmp/hetzner-borgbackup-ssh.pub | ssh -p23 u366395@u366395.your-storagebox.de install-ssh-key
+    repo = "u366395@u366395.your-storagebox.de:/./borgbackup";
 
     # Disaster recovery:
     # get the backup passphrase and ssh key from the sops and store them in /tmp

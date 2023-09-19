@@ -6,13 +6,7 @@
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 
-      inputs.clan-core.nixosModules.clanCore
       ./admins.nix
-      {
-        # TODO: use buildClan
-        clanCore.clanDir = "${./..}";
-        clanCore.machineName = "web01";
-      }
     ];
 
     hetzner-ax102.imports = [
