@@ -24,7 +24,7 @@
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=lassulus-pass-secrets";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
@@ -32,7 +32,7 @@
   };
 
   outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    flake-parts.lib.mkFlake { inherit inputs; } ({ self, ... }: {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -44,7 +44,7 @@
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
-      perSystem = ({ lib, self', ... }: {
+      perSystem = ({ lib, self', system, ... }: {
         treefmt = {
           projectRootFile = ".git/config";
           programs.terraform.enable = true;
@@ -65,5 +65,5 @@
           in
           nixosMachines // packages // devShells // homeConfigurations;
       });
-    };
+    });
 }
