@@ -30,7 +30,8 @@ in
       groupid=$(cut -d: -f3 < <(getent group nixuser))
       userid=$(cut -d: -f3 < <(getent passwd nixuser))
       groupadd --prefix $(pwd) --gid "$groupid" nixuser
-      useradd --prefix $(pwd) -m -d /tmp -u "$userid" -g "$groupid" -G nixuser nixuser
+      emptypassword='$6$1ero.LwbisiU.h3D$GGmnmECbPotJoPQ5eoSTD6tTjKnSWZcjHoVTkxFLZP17W9hRi/XkmCiAMOfWruUwy8gMjINrBMNODc7cYEo4K.'
+      useradd --prefix $(pwd) -p "$emptypassword" -m -d /tmp -u "$userid" -g "$groupid" -G nixuser nixuser
 
       cat <<NIX_CONFIG > etc/nix/nix.conf
       accept-flake-config = true
