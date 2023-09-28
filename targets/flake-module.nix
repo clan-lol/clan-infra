@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.nixosConfigurations = inputs.clan-core.lib.buildClan {
+  flake = inputs.clan-core.lib.buildClan {
     directory = self;
     # Make flake available in modules
     specialArgs = {
