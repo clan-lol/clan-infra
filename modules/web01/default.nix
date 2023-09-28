@@ -8,8 +8,6 @@
     ./homepage.nix
     ./postfix.nix
     ./jobs.nix
-    ../zerotier
-    ../zerotier/ctrl.nix
     ../dev.nix
   ];
 
