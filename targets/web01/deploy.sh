@@ -3,4 +3,4 @@
 
 set -euo pipefail
 
-clan machines update clan.lol
+clan machines update web01
