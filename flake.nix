@@ -3,7 +3,7 @@
 
   nixConfig = {
     extra-substituters = [ "https://cache.clan.lol" ];
-    extra-trusted-public-keys = [ "cache.clan.lol-1:j83TYLUVsrSXZvQdMoY+Ms81Xd/nO8GNuQQHqphzRSg=" ];
+    extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
   };
 
   inputs = {
@@ -25,6 +25,7 @@
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    #clan-core.url = "git+file:///home/joerg/work/clan/clan-core?ref=kvm-fix";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
