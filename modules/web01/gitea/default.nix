@@ -29,6 +29,7 @@
       ROOT_URL = "https://git.clan.lol";
       HTTP_PORT = 3002;
       DOMAIN = "git.clan.lol";
+      LANDING_PAGE = "explore";
     };
   };
 
