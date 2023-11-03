@@ -48,7 +48,7 @@
       perSystem = ({ lib, self', system, ... }: {
         treefmt = {
           projectRootFile = ".git/config";
-          programs.terraform.enable = true;
+          programs.hcl.enable = true;
           programs.nixpkgs-fmt.enable = true;
           settings.formatter.nixpkgs-fmt.excludes = [
             # generated files
