@@ -13,7 +13,7 @@ def test_no_args(capsys: pytest.CaptureFixture) -> None:
 
 def test_decide_merge_allowed(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(clan_merge, "is_ci_green", lambda x: True)
-    allowed_users = ["foo"]
+    monkeypatch.setattr(clan_merge, "is_org_member", lambda y, x: True)
     bot_name = "some-bot-name"
     pr = dict(
         id=1,
@@ -23,12 +23,12 @@ def test_decide_merge_allowed(monkeypatch: pytest.MonkeyPatch) -> None:
         state="open",
         assignees=[dict(login=bot_name)],
     )
-    assert clan_merge.decide_merge(pr, allowed_users, bot_name=bot_name) is True
+    assert clan_merge.merge_allowed(pr, bot_name=bot_name, token="test") is True
 
 
 def test_decide_merge_not_allowed(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(clan_merge, "is_ci_green", lambda x: True)
-    allowed_users = ["foo"]
+    monkeypatch.setattr(clan_merge, "is_org_member", lambda y, x: True)
     pr1 = dict(
         id=1,
         user=dict(login="bar"),
@@ -69,15 +69,16 @@ def test_decide_merge_not_allowed(monkeypatch: pytest.MonkeyPatch) -> None:
         state="open",
         assignees=[dict(login="clan-bot")],
     )
-    assert clan_merge.decide_merge(pr1, allowed_users, bot_name="some-bot") is False
-    assert clan_merge.decide_merge(pr2, allowed_users, bot_name="some-bot") is False
-    assert clan_merge.decide_merge(pr3, allowed_users, bot_name="some-bot") is False
-    assert clan_merge.decide_merge(pr4, allowed_users, bot_name="some-bot") is False
-    assert clan_merge.decide_merge(pr5, allowed_users, bot_name="some-bot") is False
+    assert not clan_merge.merge_allowed(pr1, bot_name="some-bot", token="test")
+    assert not clan_merge.merge_allowed(pr2, bot_name="some-bot", token="test")
+    assert not clan_merge.merge_allowed(pr3, bot_name="some-bot", token="test")
+    assert not clan_merge.merge_allowed(pr4, bot_name="some-bot", token="test")
+    assert not clan_merge.merge_allowed(pr5, bot_name="some-bot", token="test")
 
 
 def test_list_prs_to_merge(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(clan_merge, "is_ci_green", lambda x: True)
+    monkeypatch.setattr(clan_merge, "is_org_member", lambda user, x: user == "foo")
     bot_name = "some-bot-name"
     prs = [
         dict(
@@ -111,4 +112,4 @@ def test_list_prs_to_merge(monkeypatch: pytest.MonkeyPatch) -> None:
             assignees=[dict(login=bot_name)],
         ),
     ]
-    assert clan_merge.list_prs_to_merge(prs, ["foo"], bot_name=bot_name) == [prs[0]]
+    assert clan_merge.list_prs_to_merge(prs, bot_name=bot_name, gitea_token="test") == [prs[0]]

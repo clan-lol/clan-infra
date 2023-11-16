@@ -1,6 +1,7 @@
 import argparse
 import json
 import urllib.request
+import urllib.error
 from os import environ
 from typing import Optional
 
@@ -37,11 +38,23 @@ def is_ci_green(pr: dict) -> bool:
             return False
     return True
 
+def is_org_member(user: str, token: str) -> bool:
+    url = "https://git.clan.lol/api/v1/orgs/clan/members/" + user + f"?token={token}"
+    try:
+        urllib.request.urlopen(url)
+        return True
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return False
+        else:
+            raise
 
-def decide_merge(pr: dict, allowed_users: list[str], bot_name: str) -> bool:
+
+
+def merge_allowed(pr: dict, bot_name: str, token: str) -> bool:
     assignees = pr["assignees"] if pr["assignees"] else []
     if (
-        pr["user"]["login"] in allowed_users
+        is_org_member(pr["user"]["login"], token)
         and pr["mergeable"] is True
         and not pr["title"].startswith("WIP:")
         and pr["state"] == "open"
@@ -61,10 +74,10 @@ def list_prs(repo: str) -> list:
     return data
 
 
-def list_prs_to_merge(prs: list, allowed_users: list[str], bot_name: str) -> list:
+def list_prs_to_merge(prs: list, bot_name: str, gitea_token: str) -> list:
     prs_to_merge = []
     for pr in prs:
-        if decide_merge(pr, allowed_users, bot_name) is True:
+        if merge_allowed(pr, bot_name, gitea_token):
             prs_to_merge.append(pr)
     return prs_to_merge
 
@@ -72,12 +85,6 @@ def list_prs_to_merge(prs: list, allowed_users: list[str], bot_name: str) -> lis
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Merge PRs on clan.lol")
     # parse a list of allowed users
-    parser.add_argument(
-        "--allowed-users",
-        nargs="+",
-        help="list of users allowed to merge",
-        required=True,
-    )
     # option for bot-name
     parser.add_argument(
         "--bot-name",
@@ -107,13 +114,12 @@ def clan_merge(
         gitea_token = load_token()
     if args is None:
         args = parse_args()
-    allowed_users = args.allowed_users
     repos = args.repos
     dry_run = args.dry_run
     bot_name = args.bot_name
     for repo in repos:
         prs = list_prs(repo)
-        prs_to_merge = list_prs_to_merge(prs, allowed_users, bot_name)
+        prs_to_merge = list_prs_to_merge(prs, bot_name, gitea_token)
         for pr in prs_to_merge:
             url = (
                 "https://git.clan.lol/api/v1/repos/clan/"
