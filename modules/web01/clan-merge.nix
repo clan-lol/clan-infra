@@ -14,17 +14,7 @@
       while sleep 10; do
         ${self.packages.${pkgs.system}.clan-merge}/bin/clan-merge \
           --bot-name clan-bot \
-          --allowed-users \
-              clan-bot \
-              hsjobeki \
-              DavHau \
-              lassulus \
-              Mic92 \
-              Qubasa \
-          --repos\
-              clan-infra \
-              clan-core \
-              clan-homepage
+          --repos clan-infra clan-core clan-homepage
       done
     '';
   };

@@ -11,6 +11,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
       ];
     isSystemUser = true;
+    shell = "/run/current-system/sw/bin/bash";
     group = "www";
   };
   users.groups.www = { };
