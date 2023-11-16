@@ -35,6 +35,14 @@ in
       uid = 1003;
       openssh.authorizedKeys.keys = [ admins.qubasa ];
     };
+    kenji = {
+      isNormalUser = true;
+      home = "/home/kenji";
+      extraGroups = [ "wheel" ];
+      shell = "/run/current-system/sw/bin/zsh";
+      uid = 1004;
+      openssh.authorizedKeys.keys = [ admins.kenji ];
+    };
 
     root.openssh.authorizedKeys.keys = builtins.attrValues admins;
   };
