@@ -125,12 +125,10 @@ in
   systemd.services.dendrite.after = [ "postgresql.service" ];
   services.postgresql = {
     ensureDatabases = [ "dendrite" ];
-    ensureUsers = [
-      {
-        name = "dendrite";
-        ensurePermissions."DATABASE dendrite" = "ALL PRIVILEGES";
-      }
-    ];
+    ensureUsers = [{
+      name = "dendrite";
+      ensureDBOwnership = true;
+    }];
   };
 
   services.nginx.virtualHosts.${nginx-vhost} = {
