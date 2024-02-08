@@ -1,4 +1,4 @@
-From b8b32773b6d12b7f2f8804f7e18548fffc4a8456 Mon Sep 17 00:00:00 2001
+From 743dc2e00bfd4d611dcccb2cb4f2ca266ea34a0e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=B6rg=20Thalheim?= <joerg@thalheim.io>
 Date: Wed, 5 Jul 2023 15:02:03 +0200
 Subject: [PATCH] add bot check
@@ -14,11 +14,11 @@ Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
  3 files changed, 11 insertions(+)
 
 diff --git a/routers/web/auth/auth.go b/routers/web/auth/auth.go
-index 3bf133f56..1c37dca09 100644
+index 007e790b8..a8f3ba7dc 100644
 --- a/routers/web/auth/auth.go
 +++ b/routers/web/auth/auth.go
-@@ -411,6 +411,11 @@ func SignUpPost(ctx *context.Context) {
- 	context.SetCaptchaData(ctx)
+@@ -434,6 +434,11 @@ func SignUpPost(ctx *context.Context) {
+ 
  	ctx.Data["PageIsSignUp"] = true
  
 +	if strings.ToLower(form.Notabot) != "clan" {
@@ -30,7 +30,7 @@ index 3bf133f56..1c37dca09 100644
  	if setting.Service.DisableRegistration || setting.Service.AllowOnlyExternalRegistration {
  		ctx.Error(http.StatusForbidden)
 diff --git a/services/forms/user_form.go b/services/forms/user_form.go
-index 1f5abf94e..196300a14 100644
+index cbab27423..4d0f221f4 100644
 --- a/services/forms/user_form.go
 +++ b/services/forms/user_form.go
 @@ -94,6 +94,7 @@ type RegisterForm struct {
@@ -42,7 +42,7 @@ index 1f5abf94e..196300a14 100644
  }
  
 diff --git a/templates/user/auth/signup_inner.tmpl b/templates/user/auth/signup_inner.tmpl
-index 8dfcb7b7d..3e5ced297 100644
+index 068ccbc61..160f7e3a1 100644
 --- a/templates/user/auth/signup_inner.tmpl
 +++ b/templates/user/auth/signup_inner.tmpl
 @@ -24,6 +24,11 @@
@@ -56,7 +56,7 @@ index 8dfcb7b7d..3e5ced297 100644
 +
  				{{if not .DisablePassword}}
  					<div class="required inline field {{if and (.Err_Password) (or (not .LinkAccountMode) (and .LinkAccountMode .LinkAccountModeRegister))}}error{{end}}">
- 						<label for="password">{{.locale.Tr "password"}}</label>
+ 						<label for="password">{{ctx.Locale.Tr "password"}}</label>
 -- 
-2.41.0
+2.43.0
 
