@@ -41,7 +41,7 @@ in
       extraGroups = [ "wheel" ];
       shell = "/run/current-system/sw/bin/zsh";
       uid = 1004;
-      openssh.authorizedKeys.keys = [ admins.kenji ];
+      openssh.authorizedKeys.keys = [ admins.kenji admins.kenji-remote ];
     };
 
     root.openssh.authorizedKeys.keys = builtins.attrValues admins;
