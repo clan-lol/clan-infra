@@ -31,6 +31,7 @@
         charset utf-8;
         source_charset utf-8;
       '';
+      locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
     };
 
     virtualHosts."www.clan.lol" = {
