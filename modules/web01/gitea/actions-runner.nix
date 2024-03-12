@@ -12,7 +12,7 @@ let
     mkdir -p $out/etc/ssl/certs
     cp -a "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" $out/etc/ssl/certs/ca-bundle.crt
   '';
-  numInstances = 10;
+  numInstances = 2;
 in
 lib.mkMerge [{
   # everything here has no dependencies on the store
