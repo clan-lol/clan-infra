@@ -14,5 +14,5 @@ cleanup() {
 }
 
 trap "cleanup" EXIT
-terraform init
-terraform "$@"
+tofu init
+tofu "$@"

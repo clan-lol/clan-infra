@@ -4,7 +4,13 @@
     , pkgs
     , lib
     , ...
-    }: {
+    }:
+    let
+      convert2Tofu = provider: provider.override (prev: {
+        homepage = builtins.replaceStrings [ "registry.terraform.io/providers" ] [ "registry.opentofu.org" ] prev.homepage;
+      });
+    in
+    {
       devShells.default = pkgs.mkShellNoCC {
         packages = [
           pkgs.bashInteractive
@@ -12,15 +18,13 @@
 
           inputs'.clan-core.packages.clan-cli
 
-          ((pkgs.terraform.withPlugins (p: [
+          (pkgs.opentofu.withPlugins (p: builtins.map convert2Tofu [
             p.hetznerdns
             p.hcloud
             p.null
             p.external
             p.local
-          ])).overrideAttrs (old: {
-            meta = old.meta // { license = lib.licenses.free; };
-          }))
+          ]))
         ];
         inputsFrom = [
           inputs'.clan-core.devShells.default
