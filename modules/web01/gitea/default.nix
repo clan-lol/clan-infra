@@ -36,8 +36,10 @@
   services.nginx.virtualHosts."git.clan.lol" = {
     forceSSL = true;
     enableACME = true;
+    # The add_header directive is used to set the Content-Security-Policy header to allow embedding the Gitea instance in an iframe on the pad.lassul.us instance.
     locations."/".extraConfig = ''
       proxy_pass http://localhost:3002;
+      add_header Content-Security-Policy "frame-ancestors 'self' https://pad.lassul.us";
     '';
   };
 }
