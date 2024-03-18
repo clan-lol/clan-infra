@@ -12,6 +12,7 @@
       host = "/run/postgresql";
       port = 5432;
     };
+    lfs.enable = true;
     package = self.packages.${pkgs.hostPlatform.system}.gitea;
 
     settings.actions.ENABLED = true;
