@@ -31,6 +31,7 @@
       DOMAIN = "git.clan.lol";
       LANDING_PAGE = "explore";
     };
+    settings.session.COOKIE_SECURE = true;
   };
 
   services.nginx.virtualHosts."git.clan.lol" = {
