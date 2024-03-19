@@ -31,6 +31,11 @@
         charset utf-8;
         source_charset utf-8;
       '';
+
+      # Make sure to expire the cache after 1 hour
+      locations."/".extraConfig = ''
+        add_header Cache-Control "public, max-age=3600";
+      '';
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
     };
 
