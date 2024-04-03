@@ -9,13 +9,13 @@ let
         Persistent = true;
         OnCalendar = "weekly";
       };
-      after = [ "network-online.target" ];
+      after = [ "network.target" ];
     };
 
     # service to for automatic merge bot
     systemd.services.${name} = {
       description = "Automatically update flake inputs for clan-repos";
-      after = [ "network-online.target" ];
+      after = [ "network.target" ];
       environment = {
         # secrets
         GITEA_TOKEN_FILE = "%d/GITEA_TOKEN_FILE";
