@@ -43,6 +43,14 @@ in
       uid = 1004;
       openssh.authorizedKeys.keys = [ admins.kenji admins.kenji-remote ];
     };
+    johannes = {
+      isNormalUser = true;
+      home = "/home/johannes";
+      extraGroups = [ "wheel" ];
+      shell = "/run/current-system/sw/bin/zsh";
+      uid = 1005;
+      openssh.authorizedKeys.keys = [ admins.johannes ];
+    };
 
     root.openssh.authorizedKeys.keys = builtins.attrValues admins;
   };
