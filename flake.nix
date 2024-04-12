@@ -1,10 +1,10 @@
 {
   description = "Dependencies to deploy a clan";
 
-  nixConfig = {
-    extra-substituters = [ "https://cache.clan.lol" ];
-    extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
-  };
+  #nixConfig = {
+  #  extra-substituters = [ "https://cache.clan.lol" ];
+  #  extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
+  #};
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -24,7 +24,7 @@
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=synapse";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
