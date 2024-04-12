@@ -36,6 +36,9 @@
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=3600";
       '';
+      locations."^~ /docs".extraConfig = ''
+        rewrite ^/docs(.*)$ https://docs.clan.lol permanent;
+      '';
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
     };
 
@@ -53,8 +56,6 @@
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=3600";
       '';
-      locations."/docs".return = "301 https://docs.clan.lol";
-      locations."/docs/thevision".return = "301 https://docs.clan.lol";
     };
 
     virtualHosts."www.clan.lol" = {
