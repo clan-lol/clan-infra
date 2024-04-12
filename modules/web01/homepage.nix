@@ -53,6 +53,8 @@
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=3600";
       '';
+      locations."/docs".return = "301 https://docs.clan.lol";
+      locations."/docs/thevision".return = "301 https://docs.clan.lol";
     };
 
     virtualHosts."www.clan.lol" = {

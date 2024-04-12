@@ -5,7 +5,8 @@ locals {
     "mail",
     "cache",
     "matrix",
-    "www"
+    "www",
+    "docs"
   ]
   hostnames = [
     var.hostname,
