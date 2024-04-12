@@ -26,7 +26,7 @@
       forceSSL = true;
       enableACME = true;
       # to be deployed via rsync
-      root = "/var/www";
+      root = "/var/www/clan.lol";
       extraConfig = ''
         charset utf-8;
         source_charset utf-8;
