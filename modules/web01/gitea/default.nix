@@ -1,4 +1,6 @@
-{ pkgs, self, ... }: {
+{ pkgs, lib, publog, self, ... }:
+
+{
 
   imports = [
     ./postgresql.nix
@@ -35,7 +37,7 @@
     settings.session.COOKIE_SECURE = true;
   };
 
-  services.nginx.virtualHosts."git.clan.lol" = {
+  services.nginx.virtualHosts."git.clan.lol" = publog.publog {
     forceSSL = true;
     enableACME = true;
     # The add_header directive is used to set the Content-Security-Policy header to allow embedding the Gitea instance in an iframe on the pad.lassul.us instance.

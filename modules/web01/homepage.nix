@@ -1,4 +1,6 @@
-{ config, pkgs, self, ... }: {
+{ config, lib, pkgs, self, ... }:
+
+{
   security.acme.defaults.email = "admins@clan.lol";
   security.acme.acceptTerms = true;
 
@@ -22,6 +24,7 @@
   ];
 
   services.nginx = {
+
     virtualHosts."clan.lol" = {
       forceSSL = true;
       enableACME = true;
