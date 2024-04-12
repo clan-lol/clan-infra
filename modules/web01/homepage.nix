@@ -39,6 +39,22 @@
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
     };
 
+    virtualHosts."docs.clan.lol" = {
+      forceSSL = true;
+      enableACME = true;
+      # to be deployed via rsync
+      root = "/var/www/docs.clan.lol";
+      extraConfig = ''
+        charset utf-8;
+        source_charset utf-8;
+      '';
+
+      # Make sure to expire the cache after 1 hour
+      locations."/".extraConfig = ''
+        add_header Cache-Control "public, max-age=3600";
+      '';
+    };
+
     virtualHosts."www.clan.lol" = {
       forceSSL = true;
       enableACME = true;
