@@ -1,5 +1,13 @@
-{ pkgs, lib, publog, self, ... }:
+{ config, pkgs, lib, publog, self, ... }:
 
+let
+  # make the logs for this host "public" so that they show up in e.g. metrics
+  publog = vhost: lib.attrsets.unionOfDisjoint vhost {
+    extraConfig = (vhost.extraConfig or "") + ''
+      access_log /var/log/nginx/public.log vcombined;
+    '';
+  };
+in
 {
 
   imports = [
@@ -37,7 +45,7 @@
     settings.session.COOKIE_SECURE = true;
   };
 
-  services.nginx.virtualHosts."git.clan.lol" = publog.publog {
+  services.nginx.virtualHosts."git.clan.lol" = publog {
     forceSSL = true;
     enableACME = true;
     # The add_header directive is used to set the Content-Security-Policy header to allow embedding the Gitea instance in an iframe on the pad.lassul.us instance.

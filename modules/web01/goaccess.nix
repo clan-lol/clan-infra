@@ -1,15 +1,16 @@
 { stdenv, lib, pkgs, ... }:
+
 let
-  # make the logs for this host "public" so that they show up in e.g. metrics
-  publog = vhost: lib.attrsets.unionOfDisjoint vhost {
-    extraConfig = (vhost.extraConfig or "") + ''
-      access_log /var/log/nginx/public.log vcombined;
-    '';
-  };
+  domain = "metrics.gchq.icu";
 in
 {
-
-  publog.publog = publog;
+  users.users.goaccess = {
+    isSystemUser = true;
+    group = "nginx";
+    createHome = true;
+    home = "/var/www/goaccess";
+    homeMode = "0774";
+  };
 
   services.nginx.commonHttpConfig = ''
     log_format vcombined '$host:$server_port $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referrer" "$http_user_agent"';
@@ -19,6 +20,8 @@ in
   systemd.services.goaccess = {
     description = "GoAccess server monitoring";
     serviceConfig = {
+      User = "goaccess";
+      Group = "nginx";
       ExecStart = ''
         ${pkgs.goaccess}/bin/goaccess \
           -f /var/log/nginx/public.log \
@@ -28,9 +31,9 @@ in
           --no-query-string \
           --anonymize-ip \
           --ignore-panel=HOSTS \
-          --ws-url=wss://metrics.clan.lol:443/ws \
+          --ws-url=wss://${domain}:443/ws \
           --port=7890 \
-          -o /var/www/goaccess/index.html
+          -o index.html
       '';
       ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
       Type = "simple";
@@ -38,7 +41,7 @@ in
       RestartSec = "10s";
 
       # hardening
-      WorkingDirectory = "/tmp";
+      WorkingDirectory = "/var/www/goaccess";
       NoNewPrivileges = true;
       PrivateTmp = true;
       ProtectHome = "read-only";
@@ -54,16 +57,14 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  # server statistics
-  services.nginx.virtualHosts."metrics.clan.lol" = {
+
+  services.nginx.virtualHosts."${domain}" = {
     addSSL = true;
     enableACME = true;
-    # inherit kTLS;
     root = "/var/www/goaccess";
 
     locations."/ws" = {
       proxyPass = "http://127.0.0.1:7890";
-      # XXX not sure how much of this is necessary
       extraConfig = ''
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
