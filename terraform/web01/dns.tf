@@ -1,20 +1,13 @@
 locals {
-  subhostnames = [
+  hostnames = [
     "@",
     "git",
     "mail",
     "cache",
     "matrix",
     "www",
-    "docs"
-  ]
-  hostnames = [
-    var.hostname,
-    "www.${var.hostname}",
-    "git.${var.hostname}",
-    "mail.${var.hostname}",
-    "cache.${var.hostname}",
-    "matrix.${var.hostname}",
+    "docs",
+    "metrics"
   ]
 }
 
@@ -24,7 +17,7 @@ resource "hetznerdns_zone" "server" {
 }
 
 resource "hetznerdns_record" "server_a" {
-  for_each = toset(local.subhostnames)
+  for_each = toset(local.hostnames)
   zone_id  = hetznerdns_zone.server.id
   name     = each.value
   type     = "A"
@@ -32,7 +25,7 @@ resource "hetznerdns_record" "server_a" {
 }
 
 resource "hetznerdns_record" "server_aaaa" {
-  for_each = toset(local.subhostnames)
+  for_each = toset(local.hostnames)
   zone_id  = hetznerdns_zone.server.id
   name     = each.value
   type     = "AAAA"
