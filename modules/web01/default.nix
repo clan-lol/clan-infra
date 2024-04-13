@@ -3,6 +3,7 @@
     ./borgbackup.nix
     ./clan-merge.nix
     ./gitea
+    ./goaccess.nix
     ./harmonia.nix
     ./homepage.nix
     ./postfix.nix
