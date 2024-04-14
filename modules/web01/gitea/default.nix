@@ -4,7 +4,7 @@ let
   # make the logs for this host "public" so that they show up in e.g. metrics
   publog = vhost: lib.attrsets.unionOfDisjoint vhost {
     extraConfig = (vhost.extraConfig or "") + ''
-      access_log /var/log/nginx/public.log vcombined;
+      access_log /var/log/nginx/public.log vcombined compression;
     '';
   };
 in
