@@ -10,7 +10,7 @@ let
         # e.g., WORD delimited by tab(s) \t TYPE
         # TYPE can be any type and it's not limited to the ones below.
         matrix	Matrix-Preview
-    		slack   Slack
+    		slack	Slack
         github-actions-checkout	GitHubActions
         git	Git
         connect-go	Go
