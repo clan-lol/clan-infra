@@ -6,15 +6,16 @@ let
   pub_goaccess = "/var/www/goaccess";
 
   user-agent-list = pkgs.writeText "browsers.list" ''
-    # List of browsers and their categories
-    # e.g., WORD delimited by tab(s) \t TYPE
-    # TYPE can be any type and it's not limited to the ones below.
-    matrix-org	Matrix-Preview
-    github-actions-checkout	GitHubActions
-    git	Git
-    connect-go	Go
-    Go-http-client	Go
-    curl	Curl
+        # List of browsers and their categories
+        # e.g., WORD delimited by tab(s) \t TYPE
+        # TYPE can be any type and it's not limited to the ones below.
+        matrix	Matrix-Preview
+    		slack   Slack
+        github-actions-checkout	GitHubActions
+        git	Git
+        connect-go	Go
+        Go-http-client	Go
+        curl	Curl
   '';
 in
 {
@@ -42,7 +43,9 @@ in
   # https://raw.githubusercontent.com/allinurl/goaccess/master/config/browsers.list
   systemd.services.goaccess = {
     description = "GoAccess server monitoring";
-
+    preStart = ''
+      			rm -f ${pub_goaccess}/index.html
+      		'';
     serviceConfig = {
       User = "goaccess";
       Group = "nginx";
