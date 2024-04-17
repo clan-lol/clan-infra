@@ -9,6 +9,7 @@ let
     # List of browsers and their categories
     # e.g., WORD delimited by tab(s) \t TYPE
     # TYPE can be any type and it's not limited to the ones below.
+    matrix-org	Matrix-Preview
     github-actions-checkout	GitHubActions
     git	Git
     connect-go	Go
