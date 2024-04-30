@@ -1,5 +1,31 @@
 {
   "nodes": {
+    "buildbot-nix": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1714469730,
+        "narHash": "sha256-jdTHiOGnqo9S4lzSPsGZECUIePrOE0/COCCP4lzBW9A=",
+        "owner": "Mic92",
+        "repo": "buildbot-nix",
+        "rev": "508ceb885636a0a949793f5c7924091b532fa10f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "buildbot-nix",
+        "type": "github"
+      }
+    },
     "clan-core": {
       "inputs": {
         "disko": "disko",
@@ -148,6 +174,7 @@
     },
     "root": {
       "inputs": {
+        "buildbot-nix": "buildbot-nix",
         "clan-core": "clan-core",
         "disko": "disko_2",
         "flake-parts": "flake-parts",

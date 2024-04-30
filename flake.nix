@@ -24,11 +24,16 @@
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=synapse";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=error-handling";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
     clan-core.inputs.sops-nix.follows = "sops-nix";
+
+    buildbot-nix.url = "github:Mic92/buildbot-nix";
+    buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
+    buildbot-nix.inputs.flake-parts.follows = "flake-parts";
+    buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
   };
 
   outputs = inputs@{ flake-parts, ... }:
