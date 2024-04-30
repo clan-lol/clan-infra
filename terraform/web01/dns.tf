@@ -7,7 +7,8 @@ locals {
     "matrix",
     "www",
     "docs",
-    "metrics"
+    "metrics",
+    "buildbot"
   ]
 }
 
