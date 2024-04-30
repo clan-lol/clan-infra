@@ -29,7 +29,9 @@ in
     settings.mailer = {
       ENABLED = true;
       FROM = "gitea@clan.lol";
-      HOST = "localhost:25";
+      SMTP_ADDR = "localhost";
+      SMTP_PORT = 25;
+      PROTOCOL = "smtps";
     };
     settings.log.LEVEL = "Error";
     settings.service.DISABLE_REGISTRATION = false;
