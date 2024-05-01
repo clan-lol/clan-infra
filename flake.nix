@@ -13,13 +13,6 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    sops-nix.inputs.nixpkgs-stable.follows = "";
-
     srvos.url = "github:numtide/srvos";
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +21,6 @@
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
-    clan-core.inputs.sops-nix.follows = "sops-nix";
 
     buildbot-nix.url = "github:Mic92/buildbot-nix";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
