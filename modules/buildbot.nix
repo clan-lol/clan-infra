@@ -12,11 +12,18 @@
     # The number must match as otherwise potentially not enought buildbot-workers are created.
     workersFile = config.sops.secrets.buildbot-workers-file.path;
 
+    authBackend = "gitea";
+
+    admins = [ "joerg@thalheim.io" ];
+
     gitea = {
       enable = true;
       instanceUrl = "https://git.clan.lol";
-      oauthSecretFile = config.sops.secrets.oauth-secret-file.path;
+      # Redirect URIs. Please use a new line for every URI: https://buildbot.clan.lol/auth/login
       oauthId = "adb3425c-490f-4558-9487-8f8940d2925b";
+      oauthSecretFile = config.sops.secrets.buildbot-oauth-secret-file.path;
+      webhookSecretFile = config.sops.secrets.buildbot-webhook-secret-file.path;
+      tokenFile = config.sops.secrets.buildbot-token-file.path;
       topic = "buildbot-clan";
     };
 
@@ -28,7 +35,7 @@
   # Optional: Enable acme/TLS in nginx (recommended)
   services.nginx.virtualHosts.${config.services.buildbot-nix.master.domain} = {
     forceSSL = true;
-    useACME = true;
+    enableACME = true;
   };
 
   services.buildbot-nix.worker = {
@@ -36,7 +43,8 @@
     workerPasswordFile = config.sops.secrets.buildbot-worker-password-file.path;
   };
 
-  sops.secrets.oauth-secret-file = { };
-  sops.secrets.workers-file = { };
-  sops.secrets.worker-password-file = { };
+  sops.secrets.buildbot-oauth-secret-file = { };
+  sops.secrets.buildbot-workers-file = { };
+  sops.secrets.buildbot-worker-password-file = { };
+  sops.secrets.buildbot-token-file = { };
 }
