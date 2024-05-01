@@ -15,8 +15,15 @@
       ./initrd-networking.nix
     ];
 
+    buildbot.imports = [
+      inputs.buildbot-nix.nixosModules.buildbot-master
+      inputs.buildbot-nix.nixosModules.buildbot-worker
+      ./buildbot.nix
+    ];
+
     web01.imports = [
       self.nixosModules.server
+      self.nixosModules.buildbot
       inputs.srvos.nixosModules.mixins-nginx
       inputs.srvos.nixosModules.mixins-nix-experimental
       ./web01

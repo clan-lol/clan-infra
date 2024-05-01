@@ -21,7 +21,7 @@ index 007e790b8..a8f3ba7dc 100644
  
  	ctx.Data["PageIsSignUp"] = true
  
-+	if strings.ToLower(form.Notabot) != "clan" {
++	if !strings.Contains(strings.ToLower(form.Notabot), "clan") {
 +		ctx.Error(http.StatusForbidden)
 +		return
 +	}
