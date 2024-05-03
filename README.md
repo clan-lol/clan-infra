@@ -23,3 +23,8 @@ $ ./tf.sh apply
 $ cd ./targets/web01
 $ ./tf.sh apply
 ```
+
+## To add a new project to CI
+
+1. Add the 'buildbot-clan' topic to the repository using the "Manage topics" button below the project description
+2. Go to https://buildbot.clan.lol/#/builders/2 and press "Update projects" after you have logged in.
