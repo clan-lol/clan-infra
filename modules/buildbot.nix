@@ -14,7 +14,14 @@
 
     authBackend = "gitea";
 
-    admins = [ "joerg@thalheim.io" ];
+    admins = [
+      "Mic92"
+      "Qubasa"
+      "DavHau"
+      "kenji"
+      "hsjobeki"
+      "lassulus"
+    ];
 
     gitea = {
       enable = true;
