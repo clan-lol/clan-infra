@@ -30,7 +30,7 @@
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
     clan-core.inputs.sops-nix.follows = "sops-nix";
 
-    buildbot-nix.url = "github:Mic92/buildbot-nix/gitea-fixes";
+    buildbot-nix.url = "github:Mic92/buildbot-nix";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";

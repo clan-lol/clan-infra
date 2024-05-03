@@ -13,16 +13,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1714557645,
-        "narHash": "sha256-iCbmdbJULi4reK8qfkvvc3U9T/yKawBA3pbwA4y5kRQ=",
+        "lastModified": 1714731655,
+        "narHash": "sha256-l1CBL6Opxoay8H3rxRb9aD6Y0WJU/rNMbIjkAMqegGk=",
         "owner": "Mic92",
         "repo": "buildbot-nix",
-        "rev": "4f78c6e7f79b936c8169c0ec4ad379a9d304a208",
+        "rev": "a36953b52d6bb9a52da2f5edce9abba18bd595c5",
         "type": "github"
       },
       "original": {
         "owner": "Mic92",
-        "ref": "gitea-fixes",
         "repo": "buildbot-nix",
         "type": "github"
       }
