@@ -11,7 +11,7 @@
       ++ [
         # ssh-homepage-key
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKCKKLgoJOAxxeNANpotQS9bOyvE486km7Uq4E4riIv gitea-ci-key"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
       ];
     isSystemUser = true;
     shell = "/run/current-system/sw/bin/bash";
