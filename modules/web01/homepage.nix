@@ -36,9 +36,38 @@
         source_charset utf-8;
       '';
 
-      # Make sure to expire the cache after 1 hour
       locations."/".extraConfig = ''
-        add_header Cache-Control "public, max-age=3600";
+        set $cors "false";
+
+        # Allow cross-origin requests from docs.clan.lol
+        if ($http_origin = "https://docs.clan.lol") {
+            set $cors "true";
+        }
+
+        # Allow cross-origin requests from localhost IPs with port 8000
+        if ($http_origin = "http://localhost:8000") {
+            set $cors "true";
+        }
+
+        if ($http_origin = "http://127.0.0.1:8000") {
+            set $cors "true";
+        }
+
+        if ($http_origin = "http://[::1]:8000") {
+            set $cors "true";
+        }
+
+        if ($cors = "true") {
+            add_header 'Access-Control-Allow-Origin' "$http_origin" always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'Origin, X-Requested-With, Content-Type, Accept, Authorization' always;
+        }
+
+        if ($cors = "true") {
+            add_header 'Access-Control-Allow-Origin' "$http_origin" always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'Origin, X-Requested-With, Content-Type, Accept, Authorization' always;
+        }
       '';
       locations."^~ /docs".extraConfig = ''
         rewrite ^/docs(.*)$ https://docs.clan.lol permanent;
@@ -56,9 +85,9 @@
         source_charset utf-8;
       '';
 
-      # Make sure to expire the cache after 1 hour
+      # Make sure to expire the cache after 12 hour
       locations."/".extraConfig = ''
-        add_header Cache-Control "public, max-age=3600";
+        add_header Cache-Control "public, max-age=43200";
       '';
     };
 
