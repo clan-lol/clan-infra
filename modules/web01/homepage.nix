@@ -72,6 +72,9 @@
       locations."^~ /docs".extraConfig = ''
         rewrite ^/docs(.*)$ https://docs.clan.lol permanent;
       '';
+      locations."^~ /blog".extraConfig = ''
+        rewrite ^/blog(.*)$ https://docs.clan.lol/blog permanent;
+      '';
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
     };
 
