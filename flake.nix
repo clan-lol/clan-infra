@@ -8,6 +8,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -17,7 +18,7 @@
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
