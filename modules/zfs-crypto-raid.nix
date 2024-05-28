@@ -27,10 +27,6 @@ let
   };
 in
 {
-  imports = [
-    self.inputs.disko.nixosModules.disko
-  ];
-
   networking.hostId = "8425e349";
 
   boot.initrd.postDeviceCommands = ''
