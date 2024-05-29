@@ -44,6 +44,7 @@ in
       DOMAIN = "git.clan.lol";
       LANDING_PAGE = "explore";
     };
+    settings.session.PROVIDER = "db";
     settings.session.COOKIE_SECURE = true;
   };
 
