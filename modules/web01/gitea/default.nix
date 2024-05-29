@@ -1,4 +1,4 @@
-{ config, pkgs, lib, publog, self, ... }:
+{ config, pkgs, lib, self, ... }:
 
 let
   # make the logs for this host "public" so that they show up in e.g. metrics
@@ -13,6 +13,7 @@ in
   imports = [
     ./postgresql.nix
     ./actions-runner.nix
+    ./installer.nix
   ];
 
   services.gitea = {
