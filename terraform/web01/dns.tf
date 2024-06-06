@@ -1,34 +1,32 @@
-locals {
-  hostnames = [
-    "@",
-    "git",
-    "mail",
-    "cache",
-    "matrix",
-    "www",
-    "docs",
-    "metrics",
-    "buildbot"
-  ]
-}
-
 resource "hetznerdns_zone" "server" {
   name = var.dns_zone
   ttl  = 3600
 }
 
-resource "hetznerdns_record" "server_a" {
-  for_each = toset(local.hostnames)
+resource "hetznerdns_record" "root_a" {
   zone_id  = hetznerdns_zone.server.id
-  name     = each.value
+  name     = "@"
   type     = "A"
   value    = var.ipv4_address
 }
 
-resource "hetznerdns_record" "server_aaaa" {
-  for_each = toset(local.hostnames)
+resource "hetznerdns_record" "root_aaaa" {
   zone_id  = hetznerdns_zone.server.id
-  name     = each.value
+  name     = "@"
+  type     = "AAAA"
+  value    = var.ipv6_address
+}
+
+resource "hetznerdns_record" "wildcard_a" {
+  zone_id  = hetznerdns_zone.server.id
+  name     = "*"
+  type     = "A"
+  value    = var.ipv4_address
+}
+
+resource "hetznerdns_record" "wildcard_aaaa" {
+  zone_id  = hetznerdns_zone.server.id
+  name     = "*"
   type     = "AAAA"
   value    = var.ipv6_address
 }
