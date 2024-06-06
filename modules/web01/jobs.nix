@@ -1,4 +1,10 @@
-{ config, self, pkgs, lib, ... }:
+{
+  config,
+  self,
+  pkgs,
+  lib,
+  ...
+}:
 let
   configForJob = name: {
     systemd.timers.${name} = {
@@ -46,9 +52,11 @@ let
   };
 in
 {
-  config = lib.mkMerge (map configForJob [
-    "job-flake-update-clan-core"
-    "job-flake-update-clan-homepage"
-    "job-flake-update-clan-infra"
-  ]);
+  config = lib.mkMerge (
+    map configForJob [
+      "job-flake-update-clan-core"
+      "job-flake-update-clan-homepage"
+      "job-flake-update-clan-infra"
+    ]
+  );
 }

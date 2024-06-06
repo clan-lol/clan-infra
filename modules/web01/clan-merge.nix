@@ -1,10 +1,18 @@
-{ config, self, pkgs, ... }: {
+{
+  config,
+  self,
+  pkgs,
+  ...
+}:
+{
   # service to for automatic merge bot
   systemd.services.clan-merge = {
     description = "Merge clan.lol PRs automatically";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-    environment = { GITEA_TOKEN_FILE = "%d/GITEA_TOKEN_FILE"; };
+    environment = {
+      GITEA_TOKEN_FILE = "%d/GITEA_TOKEN_FILE";
+    };
     serviceConfig = {
       LoadCredential = [ "GITEA_TOKEN_FILE:${config.sops.secrets.merge-bot-gitea-token.path}" ];
       Restart = "on-failure";

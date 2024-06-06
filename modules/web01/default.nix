@@ -1,4 +1,5 @@
-{ self, ... }: {
+{ self, ... }:
+{
   imports = [
     ./borgbackup.nix
     ./clan-merge.nix

@@ -1,12 +1,13 @@
-{ lib
-, bash
-, coreutils
-, gawk
-, path
-, # nixpkgs path
-  writeScript
-, writeScriptBin
-, ...
+{
+  lib,
+  bash,
+  coreutils,
+  gawk,
+  path,
+  # nixpkgs path
+  writeScript,
+  writeScriptBin,
+  ...
 }:
 let
   # Create a script that runs in a `pure` environment, in the sense that:
@@ -18,12 +19,12 @@ let
   #   - all environment variables are unset, except:
   #     - the ones listed in `keepVars` defined in ./default.nix
   #     - the ones listed via the `KEEP_VARS` variable
-  writePureShellScript = PATH: script:
-    writeScript "script.sh" (mkScript PATH script);
+  writePureShellScript = PATH: script: writeScript "script.sh" (mkScript PATH script);
 
   # Creates a script in a `bin/` directory in the output; suitable for use with `lib.makeBinPath`, etc.
   # See {option}`writers.writePureShellScript`
-  writePureShellScriptBin = binName: PATH: script:
+  writePureShellScriptBin =
+    binName: PATH: script:
     writeScriptBin binName (mkScript PATH script);
 
   mkScript = PATH: scriptText: ''
@@ -91,8 +92,5 @@ let
   '';
 in
 {
-  inherit
-    writePureShellScript
-    writePureShellScriptBin
-    ;
+  inherit writePureShellScript writePureShellScriptBin;
 }

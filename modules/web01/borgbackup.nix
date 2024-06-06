@@ -1,9 +1,8 @@
-{ config, ... }: {
+{ config, ... }:
+{
   # 100GB storagebox is under the nix-community hetzner account
 
-  systemd.services.borgbackup-job-clan-lol.serviceConfig.ReadWritePaths = [
-    "/var/log/telegraf"
-  ];
+  systemd.services.borgbackup-job-clan-lol.serviceConfig.ReadWritePaths = [ "/var/log/telegraf" ];
 
   # Run this from the hetzner network:
   # ssh-keyscan -p 23 u359378.your-storagebox.de

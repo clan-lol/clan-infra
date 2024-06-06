@@ -1,4 +1,9 @@
-{ pkgs, system, nodejs-18_x, makeWrapper }:
+{
+  pkgs,
+  system,
+  nodejs-18_x,
+  makeWrapper,
+}:
 let
   nodePackages = import ./composition.nix {
     inherit pkgs system;

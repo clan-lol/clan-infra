@@ -1,9 +1,9 @@
-{ pkgs ? import <nixpkgs> { }
-, lib ? pkgs.lib
-, python3 ? pkgs.python3
-, ruff ? pkgs.ruff
-, runCommand ? pkgs.runCommand
-,
+{
+  pkgs ? import <nixpkgs> { },
+  lib ? pkgs.lib,
+  python3 ? pkgs.python3,
+  ruff ? pkgs.ruff,
+  runCommand ? pkgs.runCommand,
 }:
 let
   pyproject = builtins.fromTOML (builtins.readFile ./pyproject.toml);
@@ -32,13 +32,11 @@ let
   package = python3.pkgs.buildPythonPackage {
     inherit name src;
     format = "pyproject";
-    nativeBuildInputs = [
-      python3.pkgs.setuptools
-    ];
-    propagatedBuildInputs =
-      dependencies
-      ++ [ ];
-    passthru.tests = { inherit check; };
+    nativeBuildInputs = [ python3.pkgs.setuptools ];
+    propagatedBuildInputs = dependencies ++ [ ];
+    passthru.tests = {
+      inherit check;
+    };
     passthru.devDependencies = devDependencies;
   };
 

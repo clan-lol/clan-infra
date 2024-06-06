@@ -1,4 +1,4 @@
-{ stdenv, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   domain = "metrics.clan.lol";
@@ -38,14 +38,13 @@ in
     "d ${pub_goaccess} 0755 goaccess nginx -"
   ];
 
-
   # --browsers-file=/etc/goaccess/browsers.list
   # https://raw.githubusercontent.com/allinurl/goaccess/master/config/browsers.list
   systemd.services.goaccess = {
     description = "GoAccess server monitoring";
     preStart = ''
-      			rm -f ${pub_goaccess}/index.html
-      		'';
+      rm -f ${pub_goaccess}/index.html
+    '';
     serviceConfig = {
       User = "goaccess";
       Group = "nginx";
@@ -83,7 +82,11 @@ in
       ProtectSystem = "strict";
       SystemCallFilter = "~@clock @cpu-emulation @debug @keyring @memlock @module @mount @obsolete @privileged @reboot @resources @setuid @swap @raw-io";
       ReadOnlyPaths = "/";
-      ReadWritePaths = [ "/proc/self" "${pub_goaccess}" "${priv_goaccess}" ];
+      ReadWritePaths = [
+        "/proc/self"
+        "${pub_goaccess}"
+        "${priv_goaccess}"
+      ];
       PrivateDevices = "yes";
       ProtectKernelModules = "yes";
       ProtectKernelTunables = "yes";
@@ -91,7 +94,6 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
   };
-
 
   services.nginx.virtualHosts."${domain}" = {
     addSSL = true;
