@@ -21,10 +21,11 @@ let
     };
 in
 {
-  mailserver = rec {
+  mailserver = {
     enable = true;
     fqdn = "mail.clan.lol";
     domains = [ "clan.lol" ];
+    enablePop3 = true;
 
     loginAccounts."golem@clan.lol".hashedPasswordFile =
       config.clanCore.facts.services.golem-mail.secret.golem-password-hash.path;
