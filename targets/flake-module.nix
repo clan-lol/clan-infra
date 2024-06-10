@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
   flake = inputs.clan-core.lib.buildClan {
-    clanName = "infra";
+    meta.name = "infra";
     directory = self;
     # Make flake available in modules
     specialArgs = {
