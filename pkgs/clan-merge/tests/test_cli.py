@@ -112,4 +112,6 @@ def test_list_prs_to_merge(monkeypatch: pytest.MonkeyPatch) -> None:
             assignees=[dict(login=bot_name)],
         ),
     ]
-    assert clan_merge.list_prs_to_merge(prs, bot_name=bot_name, gitea_token="test") == [prs[0]]
+    assert clan_merge.list_prs_to_merge(prs, bot_name=bot_name, gitea_token="test") == [
+        prs[0]
+    ]

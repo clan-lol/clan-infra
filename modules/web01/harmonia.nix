@@ -1,17 +1,18 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   services.harmonia.enable = true;
   # $ nix-store --generate-binary-cache-key cache.yourdomain.tld-1 harmonia.secret harmonia.pub
   services.harmonia.signKeyPath = config.sops.secrets.harmonia-secret.path;
 
   services.nginx = {
-    package = pkgs.nginxStable.override {
-      modules = [ pkgs.nginxModules.zstd ];
-    };
+    package = pkgs.nginxStable.override { modules = [ pkgs.nginxModules.zstd ]; };
   };
 
   # trust our own cache
   nix.settings.trusted-substituters = [ "https://cache.clan.lol" ];
-  nix.settings.trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
+  nix.settings.trusted-public-keys = [
+    "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28="
+  ];
 
   services.nginx.virtualHosts."cache.clan.lol" = {
     forceSSL = true;

@@ -1,5 +1,6 @@
 {
-  perSystem = { pkgs, ... }:
+  perSystem =
+    { pkgs, ... }:
     let
       package = pkgs.callPackage ./default.nix { inherit pkgs; };
     in

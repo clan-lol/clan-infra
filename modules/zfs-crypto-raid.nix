@@ -1,4 +1,3 @@
-{ self, ... }:
 let
   mirrorBoot = idx: {
     type = "disk";
@@ -41,8 +40,14 @@ in
     efiSupport = true;
     efiInstallAsRemovable = true;
     mirroredBoots = [
-      { path = "/boot0"; devices = [ "nodev" ]; }
-      { path = "/boot1"; devices = [ "nodev" ]; }
+      {
+        path = "/boot0";
+        devices = [ "nodev" ];
+      }
+      {
+        path = "/boot1";
+        devices = [ "nodev" ];
+      }
     ];
   };
 

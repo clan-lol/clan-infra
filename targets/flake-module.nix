@@ -4,13 +4,11 @@
     meta.name = "infra";
     directory = self;
     # Make flake available in modules
-    specialArgs = {
-      self = {
-        inherit (self) inputs nixosModules packages;
-      };
+    specialArgs.self = {
+      inherit (self) inputs nixosModules packages;
     };
     machines = {
-      web01 = { modulesPath, ... }: {
+      web01 = {
         imports = [ (./web01/configuration.nix) ];
       };
     };

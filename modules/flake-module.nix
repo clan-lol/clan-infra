@@ -1,4 +1,5 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+{
   flake.nixosModules = {
     server.imports = [
       inputs.srvos.nixosModules.server

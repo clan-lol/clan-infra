@@ -37,39 +37,55 @@
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } ({ self, ... }: {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-      imports = [
-        inputs.treefmt-nix.flakeModule
-        ./devShells/flake-module.nix
-        ./targets/flake-module.nix
-        ./modules/flake-module.nix
-        ./pkgs/flake-module.nix
-      ];
-      perSystem = ({ lib, self', system, ... }: {
-        treefmt = {
-          projectRootFile = ".git/config";
-          programs.hclfmt.enable = true;
-          programs.nixpkgs-fmt.enable = true;
-          settings.formatter.nixpkgs-fmt.excludes = [
-            # generated files
-            "node-env.nix"
-            "node-packages.nix"
-            "composition.nix"
-          ];
-        };
-        checks =
-          let
-            nixosMachines = lib.mapAttrs' (name: config: lib.nameValuePair "nixos-${name}" config.config.system.build.toplevel) ((lib.filterAttrs (_: config: config.pkgs.system == system)) self.nixosConfigurations);
-            packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
-            devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
-            homeConfigurations = lib.mapAttrs' (name: config: lib.nameValuePair "home-manager-${name}" config.activation-script) (self'.legacyPackages.homeConfigurations or { });
-          in
-          nixosMachines // packages // devShells // homeConfigurations;
-      });
-    });
+  outputs =
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { self, ... }:
+      {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+        ];
+        imports = [
+          inputs.treefmt-nix.flakeModule
+          ./devShells/flake-module.nix
+          ./targets/flake-module.nix
+          ./modules/flake-module.nix
+          ./pkgs/flake-module.nix
+        ];
+        perSystem = (
+          {
+            lib,
+            self',
+            system,
+            ...
+          }:
+          {
+            treefmt = {
+              projectRootFile = ".git/config";
+              programs.hclfmt.enable = true;
+              programs.nixfmt-rfc-style.enable = true;
+              settings.formatter.nixfmt-rfc-style.excludes = [
+                # generated files
+                "node-env.nix"
+                "node-packages.nix"
+                "composition.nix"
+              ];
+            };
+            checks =
+              let
+                nixosMachines = lib.mapAttrs' (
+                  name: config: lib.nameValuePair "nixos-${name}" config.config.system.build.toplevel
+                ) ((lib.filterAttrs (_: config: config.pkgs.system == system)) self.nixosConfigurations);
+                packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
+                devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
+                homeConfigurations = lib.mapAttrs' (
+                  name: config: lib.nameValuePair "home-manager-${name}" config.activation-script
+                ) (self'.legacyPackages.homeConfigurations or { });
+              in
+              nixosMachines // packages // devShells // homeConfigurations;
+          }
+        );
+      }
+    );
 }

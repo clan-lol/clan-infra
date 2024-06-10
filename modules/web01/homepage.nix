@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, ... }:
 
 {
   security.acme.defaults.email = "admins@clan.lol";
@@ -6,13 +6,11 @@
 
   # www user to push website artifacts via ssh
   users.users.www = {
-    openssh.authorizedKeys.keys =
-      config.users.users.root.openssh.authorizedKeys.keys
-      ++ [
-        # ssh-homepage-key
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
-      ];
+    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [
+      # ssh-homepage-key
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
+    ];
     isSystemUser = true;
     shell = "/run/current-system/sw/bin/bash";
     group = "www";
@@ -20,9 +18,7 @@
   users.groups.www = { };
 
   # ensure /var/www can be accessed by nginx and www user
-  systemd.tmpfiles.rules = [
-    "d /var/www 0755 www nginx"
-  ];
+  systemd.tmpfiles.rules = [ "d /var/www 0755 www nginx" ];
 
   services.nginx = {
 

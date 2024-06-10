@@ -1,7 +1,7 @@
 import argparse
 import json
-import urllib.request
 import urllib.error
+import urllib.request
 from os import environ
 from typing import Optional
 
@@ -38,6 +38,7 @@ def is_ci_green(pr: dict) -> bool:
             return False
     return True
 
+
 def is_org_member(user: str, token: str) -> bool:
     url = "https://git.clan.lol/api/v1/orgs/clan/members/" + user + f"?token={token}"
     try:
@@ -48,7 +49,6 @@ def is_org_member(user: str, token: str) -> bool:
             return False
         else:
             raise
-
 
 
 def merge_allowed(pr: dict, bot_name: str, token: str) -> bool:

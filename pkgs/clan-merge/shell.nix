@@ -1,16 +1,11 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 let
   inherit (pkgs) lib python3;
-  package = import ./default.nix {
-    inherit lib pkgs python3;
-  };
+  package = import ./default.nix { inherit lib pkgs python3; };
   pythonWithDeps = python3.withPackages (
-    ps:
-    package.propagatedBuildInputs
-    ++ package.devDependencies
-    ++ [
-      ps.pip
-    ]
+    ps: package.propagatedBuildInputs ++ package.devDependencies ++ [ ps.pip ]
   );
   checkScript = pkgs.writeScriptBin "check" ''
     nix build -f . tests -L "$@"

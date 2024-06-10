@@ -41,7 +41,10 @@ in
       extraGroups = [ "wheel" ];
       shell = "/run/current-system/sw/bin/zsh";
       uid = 1004;
-      openssh.authorizedKeys.keys = [ admins.kenji admins.kenji-remote ];
+      openssh.authorizedKeys.keys = [
+        admins.kenji
+        admins.kenji-remote
+      ];
     };
     johannes = {
       isNormalUser = true;
