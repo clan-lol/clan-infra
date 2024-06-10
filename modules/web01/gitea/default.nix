@@ -34,7 +34,8 @@ in
       ENABLED = true;
       FROM = "gitea@clan.lol";
       USER = "gitea@clan.lol";
-      HOST = "mail.thalheim.io:587";
+      SMTP_ADDR = "mail.clan.lol";
+      SMTP_PORT = "587";
     };
 
     settings.log.LEVEL = "Error";
