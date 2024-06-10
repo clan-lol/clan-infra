@@ -43,10 +43,10 @@ resource "hetznerdns_record" "spf" {
 
 resource "hetznerdns_record" "dkim" {
   zone_id = hetznerdns_zone.server.id
-  name    = "v1._hostnamekey"
+  name    = "mail._domainkey"
   type    = "TXT"
   # take from `systemctl status opendkim`
-  value = "\"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDpQeJirqh8VFGHRQBemqF5CeicC/5qHJn3vqKkVIOQNqkgp7IE+EZDg+MXoxMQZEJ0RbO0JpZZgYpOf3jf8o5w56WbE4dbpbi+9112R57k5w41R16Q0EUjf7MbrLJqcF6mtf+3bPklF9ngdcWhgN024YfhR9SlebCOapCVYqVt8QIDAQAB\""
+  value = "\"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCdw2gyAg5TW2/OO2u8sbzlI6vfLkPycr4ufpfFQVvpd31hb6ctvpWXlzVHUDi9KyaWRydB7cAmYvPuZ7KFi1XPzQ213vy0S0AEbnXOJsTyT5FR8cmiuHPhiWGSMrSlB/l78kG6xK6A1x2lWCm2r7z/dzkLyCgAqI79YaUTcYO0eQIDAQAB\""
 }
 
 resource "hetznerdns_record" "adsp" {

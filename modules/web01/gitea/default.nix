@@ -27,13 +27,17 @@ in
     package = self.packages.${pkgs.hostPlatform.system}.gitea;
 
     settings.actions.ENABLED = true;
+
+    mailerPasswordFile = config.clanCore.facts.services.gitea-mail.secret.gitea-password.path;
+
     settings.mailer = {
       ENABLED = true;
       FROM = "gitea@clan.lol";
-      SMTP_ADDR = "localhost";
-      SMTP_PORT = 25;
-      PROTOCOL = "smtps";
+      USER = "gitea@clan.lol";
+      SMTP_ADDR = "mail.clan.lol";
+      SMTP_PORT = "587";
     };
+
     settings.log.LEVEL = "Error";
     settings.service.DISABLE_REGISTRATION = false;
     settings.metrics.ENABLED = true;
@@ -48,6 +52,8 @@ in
     settings.session.PROVIDER = "db";
     settings.session.COOKIE_SECURE = true;
   };
+
+  sops.secrets.web01-gitea-password.owner = config.systemd.services.gitea.serviceConfig.User;
 
   services.nginx.virtualHosts."git.clan.lol" = publog {
     forceSSL = true;
