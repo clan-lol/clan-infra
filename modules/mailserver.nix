@@ -22,6 +22,7 @@ in
     fqdn = "mail.clan.lol";
     domains = [ "clan.lol" ];
     enablePop3 = true;
+    certificateScheme = "acme-nginx";
     # kresd sucks unfortunally (fails when one NS server is not working, instead of trying other ones)
     localDnsResolver = false;
 
