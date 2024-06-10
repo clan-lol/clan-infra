@@ -8,7 +8,6 @@
           writers = pkgs.callPackage ./writers.nix { };
         in
         {
-          inherit (pkgs.callPackage ./renovate { }) renovate;
           gitea = pkgs.callPackage ./gitea { };
 
           action-create-pr = pkgs.callPackage ./action-create-pr {
