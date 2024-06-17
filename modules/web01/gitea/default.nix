@@ -38,7 +38,7 @@ in
 
     settings.actions.ENABLED = true;
 
-    mailerPasswordFile = config.clanCore.facts.services.gitea-mail.secret.gitea-password.path;
+    mailerPasswordFile = config.clan.core.facts.services.gitea-mail.secret.gitea-password.path;
 
     settings.mailer = {
       ENABLED = true;

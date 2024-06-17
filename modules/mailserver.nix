@@ -27,9 +27,9 @@ in
     localDnsResolver = false;
 
     loginAccounts."golem@clan.lol".hashedPasswordFile =
-      config.clanCore.facts.services.golem-mail.secret.golem-password-hash.path;
+      config.clan.core.facts.services.golem-mail.secret.golem-password-hash.path;
     loginAccounts."gitea@clan.lol".hashedPasswordFile =
-      config.clanCore.facts.services.gitea-mail.secret.gitea-password-hash.path;
+      config.clan.core.facts.services.gitea-mail.secret.gitea-password-hash.path;
   };
 
   services.unbound = {
@@ -49,6 +49,6 @@ in
 
   security.acme.acceptTerms = true;
 
-  clanCore.facts.services.golem-mail = mailPassword { service = "golem"; };
-  clanCore.facts.services.gitea-mail = mailPassword { service = "gitea"; };
+  clan.core.facts.services.golem-mail = mailPassword { service = "golem"; };
+  clan.core.facts.services.gitea-mail = mailPassword { service = "gitea"; };
 }
