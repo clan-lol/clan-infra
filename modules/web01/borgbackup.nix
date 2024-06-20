@@ -5,10 +5,10 @@
   # 100GB storagebox is under the nix-community hetzner account
   clan.borgbackup.destinations.${config.networking.hostName} = {
     repo = "u366395@u366395.your-storagebox.de:/./borgbackup";
-    rsh = "ssh -oPort=23 -i ${config.clanCore.facts.services.borgbackup.secret."borgbackup.ssh".path}";
+    rsh = "ssh -oPort=23 -i ${config.clan.core.facts.services.borgbackup.secret."borgbackup.ssh".path}";
   };
 
-  clanCore.state.system.folders = [
+  clan.core.state.system.folders = [
     "/home"
     "/etc"
     "/var"
