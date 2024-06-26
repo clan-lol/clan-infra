@@ -7,4 +7,5 @@
     admin = true;
   };
   clan.matrix-synapse.users.monitoring = { };
+  clan.matrix-synapse.users.clan-bot = { };
 }

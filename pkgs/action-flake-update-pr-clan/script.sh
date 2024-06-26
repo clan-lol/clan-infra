@@ -5,8 +5,10 @@ set -euo pipefail
 export KEEP_VARS="GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GITEA_URL GITEA_USER PR_TITLE REMOTE_BRANCH REPO_DIR${KEEP_VARS:+ $KEEP_VARS}"
 
 # configure variables for actions
-export PR_TITLE="Automatic flake update - $(date --iso-8601=minutes)"
-export REMOTE_BRANCH="flake-update-$(date --iso-8601)"
+PR_TITLE="Automatic flake update - $(date --iso-8601=minutes)"
+export PR_TITLE 
+REMOTE_BRANCH="flake-update-$(date --iso-8601)"
+export REMOTE_BRANCH
 export REPO_DIR=$TMPDIR/repo
 export GIT_AUTHOR_NAME="Clan Merge Bot"
 export GIT_AUTHOR_EMAIL="clan-bot@git.clan.lol"
