@@ -1,5 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p coreutils sops openssh nix
+
+# shellcheck disable=SC1008,SC1128
 set -euox pipefail
 
 if [[ -z "${HOST:-}" ]]; then
