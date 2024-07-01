@@ -12,7 +12,7 @@
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.url = "github:numtide/treefmt-nix/opentofu";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver = {
@@ -63,7 +63,7 @@
           {
             treefmt = {
               projectRootFile = ".git/config";
-              programs.hclfmt.enable = true;
+              programs.terraform.enable = true;
               programs.nixfmt-rfc-style.enable = true;
               settings.formatter.nixfmt-rfc-style.excludes = [
                 # generated files
