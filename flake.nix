@@ -58,16 +58,21 @@
             lib,
             self',
             system,
+            pkgs,
             ...
           }:
           {
             treefmt = {
+              package = pkgs.treefmt.overrideAttrs (_old: {
+                # https://github.com/numtide/treefmt/pull/325
+                patches = [ ./treefmt-config.patch ];
+              });
               projectRootFile = ".git/config";
               programs.terraform.enable = true;
               programs.shellcheck.enable = true;
 
               programs.deno.enable = true;
-              settings.formatter.deno.excludes = [
+              settings.global.excludes = [
                 # generated files
                 "sops/*"
                 "terraform.tfstate"
