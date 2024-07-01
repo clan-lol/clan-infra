@@ -64,6 +64,18 @@
             treefmt = {
               projectRootFile = ".git/config";
               programs.terraform.enable = true;
+              programs.shellcheck.enable = true;
+
+              programs.deno.enable = true;
+              settings.formatter.deno.excludes = [
+                # generated files
+                "sops/*"
+                "terraform.tfstate"
+                "*.tfvars.sops.json"
+                "*nixos-vars.json"
+                "secrets.yaml"
+              ];
+
               programs.nixfmt-rfc-style.enable = true;
               settings.formatter.nixfmt-rfc-style.excludes = [
                 # generated files
