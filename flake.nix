@@ -12,13 +12,13 @@
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.url = "github:numtide/treefmt-nix/opentofu";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
+      inputs.nixpkgs-24_05.follows = "";
       inputs.flake-compat.follows = "flake-compat";
     };
 
@@ -58,12 +58,29 @@
             lib,
             self',
             system,
+            pkgs,
             ...
           }:
           {
             treefmt = {
+              package = pkgs.treefmt.overrideAttrs (_old: {
+                # https://github.com/numtide/treefmt/pull/325
+                patches = [ ./treefmt-config.patch ];
+              });
               projectRootFile = ".git/config";
-              programs.hclfmt.enable = true;
+              programs.terraform.enable = true;
+              programs.shellcheck.enable = true;
+
+              programs.deno.enable = true;
+              settings.global.excludes = [
+                # generated files
+                "sops/*"
+                "terraform.tfstate"
+                "*.tfvars.sops.json"
+                "*nixos-vars.json"
+                "secrets.yaml"
+              ];
+
               programs.nixfmt-rfc-style.enable = true;
               settings.formatter.nixfmt-rfc-style.excludes = [
                 # generated files

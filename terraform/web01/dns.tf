@@ -4,31 +4,31 @@ resource "hetznerdns_zone" "server" {
 }
 
 resource "hetznerdns_record" "root_a" {
-  zone_id  = hetznerdns_zone.server.id
-  name     = "@"
-  type     = "A"
-  value    = var.ipv4_address
+  zone_id = hetznerdns_zone.server.id
+  name    = "@"
+  type    = "A"
+  value   = var.ipv4_address
 }
 
 resource "hetznerdns_record" "root_aaaa" {
-  zone_id  = hetznerdns_zone.server.id
-  name     = "@"
-  type     = "AAAA"
-  value    = var.ipv6_address
+  zone_id = hetznerdns_zone.server.id
+  name    = "@"
+  type    = "AAAA"
+  value   = var.ipv6_address
 }
 
 resource "hetznerdns_record" "wildcard_a" {
-  zone_id  = hetznerdns_zone.server.id
-  name     = "*"
-  type     = "A"
-  value    = var.ipv4_address
+  zone_id = hetznerdns_zone.server.id
+  name    = "*"
+  type    = "A"
+  value   = var.ipv4_address
 }
 
 resource "hetznerdns_record" "wildcard_aaaa" {
-  zone_id  = hetznerdns_zone.server.id
-  name     = "*"
-  type     = "AAAA"
-  value    = var.ipv6_address
+  zone_id = hetznerdns_zone.server.id
+  name    = "*"
+  type    = "AAAA"
+  value   = var.ipv6_address
 }
 
 # for sending emails
