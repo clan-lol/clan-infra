@@ -163,13 +163,15 @@ async def changelog_bot(
     log.info(f"Generating changelog from {fromdate} to {todate}")
 
     system_prompt = f"""
-Create a concise changelog for the past week from {fromdate} to {todate}.
+Create a concise changelog for the {matrix.changelog_frequency}.
 Follow these guidelines:
 
+- The header should include the date range from {fromdate} to {todate}
 - Use present tense
 - Keep the summary brief
 - Follow commit message format: "scope: message (#number)"
 - Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pulls/<number>'
+    - Use markdown links to make the pull request number clickable
 - Mention each scope and pull request number only once
 - Have these headers in the changelog if applicable:
     - New Features
