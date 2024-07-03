@@ -1,5 +1,8 @@
 {
-  imports = [ ./clan-merge/flake-module.nix ];
+  imports = [
+    ./clan-merge/flake-module.nix
+    ./matrix-bot/flake-module.nix
+  ];
   perSystem =
     { pkgs, config, ... }:
     {
