@@ -9,6 +9,15 @@ let
   name = "matrix-bot";
 in
 {
+  users.groups.matrix-bot-user = { };
+  users.users.matrix-bot-user = {
+    group = "matrix-bot-user";
+    isSystemUser = true;
+    description = "User for matrix-bot service";
+    home = "/var/lib/matrix-bot";
+    createHome = true;
+  };
+
   systemd.services.${name} = {
     path = [ self.packages.${pkgs.system}.matrix-bot ];
     description = "Matrix bot for changelog and reviews";
@@ -17,7 +26,7 @@ in
     environment = {
       MATRIX_PASSWORD_FILE = "%d/MATRIX_PASSWORD_FILE";
       OPENAI_API_KEY_FILE = "%d/OPENAI_API_KEY_FILE";
-      HOME = "/run/${name}";
+      HOME = "/var/lib/${name}";
     };
 
     serviceConfig = {
@@ -25,9 +34,10 @@ in
         "MATRIX_PASSWORD_FILE:${config.sops.secrets.web01-matrix-password-clan-bot.path}"
         "OPENAI_API_KEY_FILE:${config.sops.secrets.qubasas-openai-api-key.path}"
       ];
-      DynamicUser = true;
-      RuntimeDirectory = "${name}";
-      WorkingDirectory = "/run/${name}";
+      User = "matrix-bot-user";
+      Group = "matrix-bot-user";
+      WorkingDirectory = "/var/lib/${name}";
+      RuntimeDirectory = "/var/lib/${name}";
     };
 
     script = ''

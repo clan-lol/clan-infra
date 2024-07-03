@@ -175,10 +175,9 @@ Follow these guidelines:
 - Mention each scope and pull request number only once
 - Have these headers in the changelog if applicable:
     - New Features
-    - Bug Fixes
-    - Refactoring
     - Documentation
-    - Removed Features
+    - Refactoring
+    - Bug Fixes
     - Other Changes
 
 Changelog:
