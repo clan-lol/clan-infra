@@ -119,6 +119,9 @@ def create_parser(prog: str | None = None) -> argparse.ArgumentParser:
 
 
 def matrix_password() -> str:
+    matrix_password = environ.get("MATRIX_PASSWORD")
+    if matrix_password is not None:
+        return matrix_password
     matrix_password_file = environ.get("MATRIX_PASSWORD_FILE", default=None)
     if matrix_password_file is None:
         raise Exception("MATRIX_PASSWORD_FILE environment variable is not set")

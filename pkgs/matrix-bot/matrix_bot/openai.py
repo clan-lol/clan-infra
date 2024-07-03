@@ -12,6 +12,10 @@ url: str = "https://api.openai.com/v1/chat/completions"
 
 
 def api_key() -> str:
+    openapi_key = environ.get("OPENAI_API_KEY")
+    if openapi_key is not None:
+        return openapi_key
+
     openai_key_file = environ.get("OPENAI_API_KEY_FILE", default=None)
     if openai_key_file is None:
         raise Exception("OPENAI_API_KEY_FILE environment variable is not set")

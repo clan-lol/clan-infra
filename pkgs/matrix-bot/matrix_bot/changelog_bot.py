@@ -133,7 +133,7 @@ async def changelog_bot(
             return
 
     # If you made a new room and haven't joined as that user, you can use
-    room: JoinResponse = await client.join(matrix.review_room)
+    room: JoinResponse = await client.join(matrix.changelog_room)
 
     if not room.transport_response.ok:
         log.error("This can happen if the room doesn't exist or the bot isn't invited")
@@ -160,17 +160,17 @@ async def changelog_bot(
     log.info(f"Generating changelog from {fromdate} to {todate}")
 
     system_prompt = f"""
-Generate a concise changelog for the past week from {fromdate} to {todate},
-focusing only on new features and summarizing bug fixes into a single entry.
-Ensure the following:
+Create a concise changelog for the past week from {fromdate} to {todate}, focusing on new features and summarizing bug fixes into a single entry. Follow these guidelines:
 
-- Deduplicate entries
+- Discard duplicate entries
 - Discard uninteresting changes
-- Keep the summary as brief as possible
 - Use present tense
-- Our commit messages are in the format: "scope: message". For example: "changelog: Add a new feature"
-- Only ever mention the same feature once
-The changelog is as follows:
+- Keep the summary brief
+- Follow commit message format: "scope: message (#number)"
+- Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pull/<number>'
+- Mention each feature only once
+
+Changelog:
 ---
     """
 
