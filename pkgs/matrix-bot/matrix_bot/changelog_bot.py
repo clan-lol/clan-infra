@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import json
 import logging
+import shlex
 import subprocess
 from pathlib import Path
 
@@ -65,6 +66,7 @@ def write_file_with_date_prefix(
 
 async def git_pull(repo_path: Path) -> None:
     cmd = ["git", "pull"]
+    log.debug(f"Running command: {shlex.join(cmd)}")
     process = await asyncio.create_subprocess_exec(
         *cmd,
         cwd=str(repo_path),
@@ -81,6 +83,7 @@ async def git_log(repo_path: str, ndays: int) -> str:
         "--stat",
         "--patch",
     ]
+    log.debug(f"Running command: {shlex.join(cmd)}")
     process = await asyncio.create_subprocess_exec(
         *cmd,
         cwd=repo_path,
@@ -133,7 +136,7 @@ async def changelog_bot(
             return
 
     # If you made a new room and haven't joined as that user, you can use
-    room: JoinResponse = await client.join(matrix.review_room)
+    room: JoinResponse = await client.join(matrix.changelog_room)
 
     if not room.transport_response.ok:
         log.error("This can happen if the room doesn't exist or the bot isn't invited")
@@ -160,17 +163,23 @@ async def changelog_bot(
     log.info(f"Generating changelog from {fromdate} to {todate}")
 
     system_prompt = f"""
-Generate a concise changelog for the past week from {fromdate} to {todate},
-focusing only on new features and summarizing bug fixes into a single entry.
-Ensure the following:
+Create a concise changelog for the past week from {fromdate} to {todate}.
+Follow these guidelines:
 
-- Deduplicate entries
-- Discard uninteresting changes
-- Keep the summary as brief as possible
 - Use present tense
-- Our commit messages are in the format: "scope: message". For example: "changelog: Add a new feature"
-- Only ever mention the same feature once
-The changelog is as follows:
+- Keep the summary brief
+- Follow commit message format: "scope: message (#number)"
+- Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pulls/<number>'
+- Mention each scope and pull request number only once
+- Have these headers in the changelog if applicable:
+    - New Features
+    - Bug Fixes
+    - Refactoring
+    - Documentation
+    - Removed Features
+    - Other Changes
+
+Changelog:
 ---
     """
 

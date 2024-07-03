@@ -33,7 +33,7 @@ in
     script = ''
       set -euxo pipefail
 
-      mbot
+      mbot --changelog-room "!FdCwyKsRlfooNYKYzx:matrix.org" --review-room "!tmSRJlbsVXFUKAddiM:gchq.icu"
     '';
   };
 }
