@@ -168,6 +168,8 @@ Ensure the following:
 - Discard uninteresting changes
 - Keep the summary as brief as possible
 - Use present tense
+- Our commit messages are in the format: "scope: message". For example: "changelog: Add a new feature"
+- Only ever mention the same feature once
 The changelog is as follows:
 ---
     """

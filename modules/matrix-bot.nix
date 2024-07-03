@@ -15,15 +15,15 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     environment = {
-      MATRIX_PASSWORD = "%d/MATRIX_PASSWORD";
-      OPENAI_API_KEY = "%d/OPENAI_API_KEY";
+      MATRIX_PASSWORD_FILE = "%d/MATRIX_PASSWORD_FILE";
+      OPENAI_API_KEY_FILE = "%d/OPENAI_API_KEY_FILE";
       HOME = "/run/${name}";
     };
 
     serviceConfig = {
       LoadCredential = [
-        "MATRIX_PASSWORD:${config.sops.secrets.web01-matrix-password-clan-bot.path}"
-        "OPENAI_API_KEY:${config.sops.secrets.qubasas-openai-api-key.path}"
+        "MATRIX_PASSWORD_FILE:${config.sops.secrets.web01-matrix-password-clan-bot.path}"
+        "OPENAI_API_KEY_FILE:${config.sops.secrets.qubasas-openai-api-key.path}"
       ];
       DynamicUser = true;
       RuntimeDirectory = "${name}";

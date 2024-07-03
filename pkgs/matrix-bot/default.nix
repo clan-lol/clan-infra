@@ -5,6 +5,7 @@
   aiofiles,
   aiohttp,
   markdown2,
+  git,
   ...
 }:
 
@@ -17,7 +18,7 @@ let
     markdown2
   ];
 
-  runtimeDependencies = [ ];
+  runtimeDependencies = [ git ];
 
   testDependencies = pythonDependencies ++ runtimeDependencies ++ [ ];
 in
@@ -28,7 +29,7 @@ python3.pkgs.buildPythonApplication {
 
   nativeBuildInputs = [ setuptools ];
 
-  propagatedBuildInputs = pythonDependencies;
+  propagatedBuildInputs = pythonDependencies ++ runtimeDependencies;
 
   passthru.testDependencies = testDependencies;
 
