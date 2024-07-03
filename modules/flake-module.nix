@@ -27,6 +27,7 @@
       self.nixosModules.buildbot
       inputs.srvos.nixosModules.mixins-nginx
       inputs.srvos.nixosModules.mixins-nix-experimental
+      ./matrix-bot.nix
       ./web01
       inputs.nixos-mailserver.nixosModules.mailserver
       ./mailserver.nix
