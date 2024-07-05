@@ -1,21 +1,21 @@
 { config, lib, ... }:
 let
-  cfg = config.clan.networking;
+  cfg = config.clan-infra.networking;
 in
 {
   options = {
-    clan.networking.ipv4.address = lib.mkOption { type = lib.types.str; };
+    clan-infra.networking.ipv4.address = lib.mkOption { type = lib.types.str; };
 
-    clan.networking.ipv4.cidr = lib.mkOption {
+    clan-infra.networking.ipv4.cidr = lib.mkOption {
       type = lib.types.str;
       default = "26";
     };
 
-    clan.networking.ipv4.gateway = lib.mkOption { type = lib.types.str; };
+    clan-infra.networking.ipv4.gateway = lib.mkOption { type = lib.types.str; };
 
-    clan.networking.ipv6.address = lib.mkOption { type = lib.types.str; };
+    clan-infra.networking.ipv6.address = lib.mkOption { type = lib.types.str; };
 
-    clan.networking.ipv6.cidr = lib.mkOption {
+    clan-infra.networking.ipv6.cidr = lib.mkOption {
       type = lib.types.str;
       default = "64";
     };
