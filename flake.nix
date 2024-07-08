@@ -63,10 +63,6 @@
           }:
           {
             treefmt = {
-              package = pkgs.treefmt.overrideAttrs (_old: {
-                # https://github.com/numtide/treefmt/pull/325
-                patches = [ ./treefmt-config.patch ];
-              });
               projectRootFile = ".git/config";
               programs.terraform.enable = true;
               programs.shellcheck.enable = true;
@@ -81,8 +77,9 @@
                 "secrets.yaml"
               ];
 
-              programs.nixfmt-rfc-style.enable = true;
-              settings.formatter.nixfmt-rfc-style.excludes = [
+              programs.nixfmt.enable = true;
+              programs.nixfmt.package = pkgs.nixfmt-rfc-style;
+              settings.formatter.nixfmt.excludes = [
                 # generated files
                 "node-env.nix"
                 "node-packages.nix"
