@@ -68,6 +68,11 @@
               programs.shellcheck.enable = true;
 
               programs.deno.enable = true;
+
+              programs.ruff.check = true;
+              programs.ruff.format = true;
+              programs.yamlfmt.enable = true;
+
               settings.global.excludes = [
                 # generated files
                 "sops/*"
