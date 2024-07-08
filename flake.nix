@@ -7,7 +7,7 @@
   #};
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -63,15 +63,16 @@
           }:
           {
             treefmt = {
-              package = pkgs.treefmt.overrideAttrs (_old: {
-                # https://github.com/numtide/treefmt/pull/325
-                patches = [ ./treefmt-config.patch ];
-              });
               projectRootFile = ".git/config";
               programs.terraform.enable = true;
               programs.shellcheck.enable = true;
 
               programs.deno.enable = true;
+
+              programs.ruff.check = true;
+              programs.ruff.format = true;
+              programs.yamlfmt.enable = true;
+
               settings.global.excludes = [
                 # generated files
                 "sops/*"
@@ -81,8 +82,9 @@
                 "secrets.yaml"
               ];
 
-              programs.nixfmt-rfc-style.enable = true;
-              settings.formatter.nixfmt-rfc-style.excludes = [
+              programs.nixfmt.enable = true;
+              programs.nixfmt.package = pkgs.nixfmt-rfc-style;
+              settings.formatter.nixfmt.excludes = [
                 # generated files
                 "node-env.nix"
                 "node-packages.nix"
