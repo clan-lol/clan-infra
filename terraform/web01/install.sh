@@ -12,10 +12,6 @@ if [[ -z "${FLAKE_ATTR:-}" ]]; then
   echo "FLAKE_ATTR is not set"
   exit 1
 fi
-if [[ -z "${SOPS_SECRETS_FILE:-}" ]]; then
-  echo "SOPS_SECRETS_FILE is not set"
-  exit 1
-fi
 
 tmp=$(mktemp -d)
 trap 'rm -rf $tmp' EXIT
@@ -28,11 +24,11 @@ for keyname in ssh_host_rsa_key ssh_host_rsa_key.pub ssh_host_ed25519_key ssh_ho
   else
     umask 0177
   fi
-  sops --extract '["'$keyname'"]' -d "$SOPS_SECRETS_FILE" > "$tmp/etc/ssh/$keyname"
+  clan secrets get "$keyname" > "$tmp/etc/ssh/$keyname"
 done
 
 umask 0177
-sops --extract '["initrd_ssh_key"]' -d "$SOPS_SECRETS_FILE" > "$tmp/var/lib/secrets/initrd_ssh_key"
+clan secrets get "initrd_ssh_key" > "$tmp/var/lib/secrets/initrd_ssh_key"
 # restore umask
 umask 0022
 
@@ -40,7 +36,7 @@ ssh "root@$HOST" "modprobe dm-raid && modprobe dm-integrity"
 
 nix run --refresh github:numtide/nixos-anywhere -- \
    --debug \
-   --disk-encryption-keys /tmp/secret.key <(sops --extract '["cryptsetup_key"]' --decrypt "$SOPS_SECRETS_FILE") \
+   --disk-encryption-keys /tmp/secret.key <(clan secrets get cryptsetup_key) \
    --extra-files "$tmp" \
    --flake "$FLAKE_ATTR" \
    "root@$HOST"
