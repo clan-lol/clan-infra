@@ -2,8 +2,10 @@ import asyncio
 import json
 import logging
 from os import environ
+from typing import Any
 
 import aiohttp
+import tiktoken
 
 log = logging.getLogger(__name__)
 
@@ -23,15 +25,12 @@ def api_key() -> str:
         return f.read().strip()
 
 
-from typing import Any
-
-
 async def create_jsonl_data(
     *,
     user_prompt: str,
     system_prompt: str,
     model: str = "gpt-4o",
-    max_tokens: int = 1000,
+    max_tokens: int = 2046,
 ) -> bytes:
     summary_request = {
         "custom_id": "request-1",
@@ -46,8 +45,34 @@ async def create_jsonl_data(
             "max_tokens": max_tokens,
         },
     }
+    dumped = json.dumps(summary_request)
+    num_tokens = count_tokens(dumped)
+    log.debug(f"Number of tokens in the JSONL data: {num_tokens}")
+    if model == "gtp-4o" and num_tokens > 90_000:
+        raise ValueError(f"Number of tokens {num_tokens} exceeds the limit of 90,000")
 
-    return json.dumps(summary_request).encode("utf-8")
+    return dumped.encode("utf-8")
+
+
+def count_tokens(string: str, model: str = "gpt-4") -> int:
+    """
+    Count the number of tokens in a string using the specified model's tokenizer.
+
+    Parameters:
+    - string (str): The input string to tokenize.
+    - model (str): The model to use for tokenization. Default is "gpt-4".
+
+    Returns:
+    - int: The number of tokens in the string.
+    """
+    # Get the encoder for the specified model
+    encoder = tiktoken.encoding_for_model(model)
+
+    # Encode the string to get the tokens
+    tokens = encoder.encode(string)
+
+    # Return the number of tokens
+    return len(tokens)
 
 
 async def upload_and_process_file(
@@ -118,7 +143,7 @@ async def upload_and_process_file(
     async with session.get(output_url, headers=headers) as response:
         if response.status != 200:
             raise Exception(
-                f"Failed to retrieve batch results with status code {response.status}"
+                f"Failed to retrieve batch results with status code {response.status} reason {response.reason}"
             )
 
         # Read content as text
