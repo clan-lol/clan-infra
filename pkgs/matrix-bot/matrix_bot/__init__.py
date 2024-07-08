@@ -36,6 +36,11 @@ def create_parser(prog: str | None = None) -> argparse.ArgumentParser:
         help="The matrix server to connect to",
         default="https://matrix.clan.lol",
     )
+    parser.add_argument(
+        "--admin",
+        help="The matrix user to ping on error",
+        default="@qubasa:gchq.icu",
+    )
 
     parser.add_argument(
         "--user",
@@ -148,6 +153,7 @@ def main() -> None:
         publish_day=args.publish_day,
         review_room=args.review_room,
         password=matrix_password(),
+        admin=args.admin,
     )
 
     gitea = GiteaData(

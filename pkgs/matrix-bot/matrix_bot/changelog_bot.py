@@ -81,7 +81,6 @@ async def git_log(repo_path: str, ndays: int) -> str:
         f"--since={ndays} days ago",
         "--pretty=format:%h - %an, %ar : %s",
         "--stat",
-        "--patch",
     ]
     log.debug(f"Running command: {shlex.join(cmd)}")
     process = await asyncio.create_subprocess_exec(
@@ -163,25 +162,35 @@ async def changelog_bot(
     log.info(f"Generating changelog from {fromdate} to {todate}")
 
     system_prompt = f"""
-Create a concise changelog for the {matrix.changelog_frequency}.
+Create a concise changelog
 Follow these guidelines:
 
-- The header should include the date range from {fromdate} to {todate}
-- Use present tense
 - Keep the summary brief
 - Follow commit message format: "scope: message (#number)"
 - Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pulls/<number>'
     - Use markdown links to make the pull request number clickable
-- Mention each scope and pull request number only once
-- Have these headers in the changelog if applicable:
-    - New Features
-    - Documentation
-    - Refactoring
-    - Bug Fixes
-    - Other Changes
+- Mention each scope and pull request number at most once
+- Focus on the most interesting changes for end users
 
-Changelog:
 ---
+Example Changelog:
+### Changelog:
+For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
+#### New Features
+- `secrets`: added settings and generator submodules, improved tests [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)
+- `sshd`: added a workaround for CVE-2024-6387 [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)
+...
+#### Refactoring
+...
+#### Documentation
+...
+#### Bug Fixes
+...
+#### Other Changes
+...
+
+---
+### Changelog:
     """
 
     # Step 1: Create the JSONL file

@@ -6,6 +6,7 @@
   aiohttp,
   markdown2,
   git,
+  tiktoken,
   ...
 }:
 
@@ -16,6 +17,7 @@ let
     aiofiles
     aiohttp
     markdown2
+    tiktoken
   ];
 
   runtimeDependencies = [ git ];

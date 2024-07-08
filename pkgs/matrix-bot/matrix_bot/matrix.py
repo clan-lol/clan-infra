@@ -86,3 +86,4 @@ class MatrixData:
     review_room: str
     changelog_frequency: int
     publish_day: str
+    admin: str

@@ -11,7 +11,7 @@ from nio import AsyncClient, ClientConfig, ProfileGetAvatarResponse, RoomMessage
 from .changelog_bot import changelog_bot
 from .gitea import GiteaData
 from .matrix import MatrixData, set_avatar, upload_image
-from .review_bot import message_callback, review_requested_bot
+from .review_bot import message_callback, review_requested_bot, send_error
 
 
 async def bot_main(
@@ -45,8 +45,20 @@ async def bot_main(
     try:
         async with aiohttp.ClientSession() as session:
             while True:
-                await changelog_bot(client, session, matrix, gitea, data_dir)
-                await review_requested_bot(client, session, matrix, gitea, data_dir)
+                try:
+                    await changelog_bot(client, session, matrix, gitea, data_dir)
+                except Exception as e:
+                    log.exception(e)
+                    await send_error(client, matrix, f"Changelog bot failed: {e}")
+
+                try:
+                    await review_requested_bot(client, session, matrix, gitea, data_dir)
+                except Exception as e:
+                    log.exception(e)
+                    await send_error(
+                        client, matrix, f"Review requested bot failed: {e}"
+                    )
+
                 await asyncio.sleep(60 * 5)
     except Exception as e:
         log.exception(e)

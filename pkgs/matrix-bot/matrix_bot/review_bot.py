@@ -30,6 +30,15 @@ async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
     )
 
 
+async def send_error(client: AsyncClient, matrix: MatrixData, msg: str) -> None:
+    # If you made a new room and haven't joined as that user, you can use
+    room: JoinResponse = await client.join(matrix.review_room)
+    if not room.transport_response.ok:
+        log.error("This can happen if the room doesn't exist or the bot isn't invited")
+        raise Exception(f"Failed to join room {room}")
+    await send_message(client, room, msg, user_ids=[matrix.admin])
+
+
 async def review_requested_bot(
     client: AsyncClient,
     http: aiohttp.ClientSession,
