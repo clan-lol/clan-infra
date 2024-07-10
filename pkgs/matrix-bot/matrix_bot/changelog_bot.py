@@ -109,30 +109,31 @@ async def changelog_bot(
     last_run_path = data_dir / "last_changelog_run.json"
     last_run = read_locked_file(last_run_path)
 
+    today = datetime.datetime.now()
+    today_weekday = today.strftime("%A")
+
+    if today_weekday != matrix.publish_day:
+        log.debug(f"Changelog not due yet. Due on {matrix.publish_day}")
+        return
+
     if last_run == {}:
-        fromdate, todate = last_ndays_to_today(matrix.changelog_frequency)
-        last_run = {
-            "fromdate": fromdate,
-            "todate": todate,
-            "ndays": matrix.changelog_frequency,
-        }
         log.debug(f"First run. Setting last_run to {last_run}")
-        today = datetime.datetime.now()
-        today_weekday = today.strftime("%A")
-        if today_weekday != matrix.publish_day:
-            log.debug(f"Changelog not due yet. Due on {matrix.publish_day}")
-            return
     else:
         last_date = datetime.datetime.strptime(last_run["todate"], "%Y-%m-%d")
-        today = datetime.datetime.now()
-        today_weekday = today.strftime("%A")
-        delta = datetime.timedelta(days=matrix.changelog_frequency)
-        if today - last_date <= delta:
-            log.debug(f"Changelog not due yet. Due in {delta.days} days")
+        upper_bound = datetime.timedelta(days=matrix.changelog_frequency)
+        delta = today - last_date
+        if delta <= upper_bound:
+            log.debug(
+                f"Changelog not due yet. Due in {upper_bound.days - delta.days} days"
+            )
             return
-        elif today_weekday != matrix.publish_day:
-            log.debug(f"Changelog not due yet. Due on {matrix.publish_day}")
-            return
+
+    fromdate, todate = last_ndays_to_today(matrix.changelog_frequency)
+    last_run = {
+        "fromdate": fromdate,
+        "todate": todate,
+        "ndays": matrix.changelog_frequency,
+    }
 
     # If you made a new room and haven't joined as that user, you can use
     room: JoinResponse = await client.join(matrix.changelog_room)
@@ -160,6 +161,11 @@ async def changelog_bot(
 
     fromdate, todate = last_ndays_to_today(matrix.changelog_frequency)
     log.info(f"Generating changelog from {fromdate} to {todate}")
+
+    # Write the last run to the file before processing the changelog
+    # This ensures that the changelog is only generated once per period
+    # even if openai fails
+    write_locked_file(last_run_path, last_run)
 
     system_prompt = f"""
 Create a concise changelog
@@ -216,8 +222,6 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
         all_changelogs.append(changelog)
     full_changelog = "\n\n".join(all_changelogs)
 
-    # Write the last run to the file
-    write_locked_file(last_run_path, last_run)
     log.info(f"Changelog generated:\n{full_changelog}")
 
     await send_message(client, room, full_changelog)
