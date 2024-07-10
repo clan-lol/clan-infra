@@ -14,7 +14,8 @@ class GiteaData:
     url: str
     owner: str
     repo: str
-    access_token: str | None = None
+    poll_frequency: float
+    access_token: str | None
 
 
 def endpoint_url(gitea: GiteaData, endpoint: str) -> str:

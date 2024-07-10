@@ -59,7 +59,8 @@ async def bot_main(
                         client, matrix, f"Review requested bot failed: {e}"
                     )
 
-                await asyncio.sleep(60 * 5)
+                log.debug(f"Sleeping for {60 * gitea.poll_frequency / 60} minutes")
+                await asyncio.sleep(60 * gitea.poll_frequency)
     except Exception as e:
         log.exception(e)
     finally:

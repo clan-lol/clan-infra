@@ -120,6 +120,13 @@ def create_parser(prog: str | None = None) -> argparse.ArgumentParser:
         type=Path,
     )
 
+    parser.add_argument(
+        "--poll-frequency",
+        help="The frequency to poll for new reviews in minutes",
+        default=10,
+        type=float,
+    )
+
     return parser
 
 
@@ -161,6 +168,7 @@ def main() -> None:
         owner=args.repo_owner,
         repo=args.repo_name,
         access_token=os.getenv("GITEA_ACCESS_TOKEN"),
+        poll_frequency=args.poll_frequency,
     )
 
     args.data_dir.mkdir(parents=True, exist_ok=True)
