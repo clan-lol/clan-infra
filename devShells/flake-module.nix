@@ -1,6 +1,11 @@
 {
   perSystem =
-    { inputs', pkgs, ... }:
+    {
+      config,
+      inputs',
+      pkgs,
+      ...
+    }:
     let
       convert2Tofu =
         provider:
@@ -16,7 +21,14 @@
           pkgs.bashInteractive
           pkgs.sops
 
+          pkgs.nixVersions.latest
+
+          inputs'.clan-core.packages.tea-create-pr
+          inputs'.clan-core.packages.merge-after-ci
           inputs'.clan-core.packages.clan-cli
+
+          # treefmt with config defined in ./flake.nix
+          config.treefmt.build.wrapper
 
           (pkgs.opentofu.withPlugins (
             p:
@@ -29,7 +41,6 @@
             ]
           ))
         ];
-        inputsFrom = [ inputs'.clan-core.devShells.default ];
       };
     };
 }

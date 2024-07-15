@@ -47,6 +47,7 @@
           "aarch64-linux"
         ];
         imports = [
+          inputs.clan-core.flakeModules.default
           inputs.treefmt-nix.flakeModule
           ./devShells/flake-module.nix
           ./targets/flake-module.nix

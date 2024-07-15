@@ -22,7 +22,7 @@
       while sleep 10; do
         ${self.packages.${pkgs.system}.clan-merge}/bin/clan-merge \
           --bot-name clan-bot \
-          --repos clan-infra clan-core clan-homepage
+          --repos clan-infra clan-core clan-homepage data-mesher
       done
     '';
   };

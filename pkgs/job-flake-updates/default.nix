@@ -13,4 +13,5 @@ in
   job-flake-update-clan-core = job-flake-update "clan-core";
   job-flake-update-clan-homepage = job-flake-update "clan-homepage";
   job-flake-update-clan-infra = job-flake-update "clan-infra";
+  job-flake-update-data-mesher = job-flake-update "data-mesher";
 }
