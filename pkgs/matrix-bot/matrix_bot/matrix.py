@@ -16,7 +16,7 @@ from nio import (
 )
 
 
-async def upload_image(client: AsyncClient, image_path: str) -> str:
+async def upload_image(client: AsyncClient, image_path: Path) -> str:
     with open(image_path, "rb") as image_file:
         response: UploadResponse
         response, _ = await client.upload(image_file, content_type="image/png")
