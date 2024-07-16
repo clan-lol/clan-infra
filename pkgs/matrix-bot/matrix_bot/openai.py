@@ -30,9 +30,9 @@ async def create_jsonl_data(
     user_prompt: str,
     system_prompt: str,
     model: str = "gpt-4o",
-    max_tokens: int = 2046,
+    max_tokens: int = 4096,
 ) -> bytes:
-    summary_request = {
+    summary_request: dict[str, Any] = {
         "custom_id": "request-1",
         "method": "POST",
         "url": "/v1/chat/completions",
@@ -45,39 +45,43 @@ async def create_jsonl_data(
             "max_tokens": max_tokens,
         },
     }
+
     dumped = json.dumps(summary_request)
-    num_tokens = count_tokens(dumped)
-    log.debug(f"Number of tokens in the JSONL data: {num_tokens}")
-    if model == "gtp-4o" and num_tokens > 90_000:
-        raise ValueError(f"Number of tokens {num_tokens} exceeds the limit of 90,000")
+    encoder = tiktoken.encoding_for_model(model)
+    count_tokens: int = len(encoder.encode(dumped))
+    used_tokens = max_tokens + count_tokens + 1000
+    log.debug(f"Number of tokens in the JSONL data: {used_tokens}")
+
+    if used_tokens > 128_000:
+        # Cut off the excess tokens
+        tokens_to_remove: int = used_tokens - 128_000
+        message = summary_request["body"]["messages"][1]
+        content = message["content"]
+
+        content_tokens = encoder.encode(content)
+
+        if len(content_tokens) > tokens_to_remove:
+            # Remove the excess tokens
+            encoded_content = content_tokens[:-tokens_to_remove]
+            log.debug(f"Removed {tokens_to_remove} tokens from the content")
+            # Decode the tokens back to string
+            content = encoder.decode(encoded_content)
+            summary_request["body"]["messages"][1]["content"] = content
+
+            dumped = json.dumps(summary_request)
+        else:
+            raise Exception("Not enough tokens to remove")
+
+    new_count_tokens: int = len(encoder.encode(dumped))
+    if new_count_tokens > 128_000:
+        raise Exception(f"Too many tokens in the JSONL data {new_count_tokens}")
 
     return dumped.encode("utf-8")
 
 
-def count_tokens(string: str, model: str = "gpt-4") -> int:
-    """
-    Count the number of tokens in a string using the specified model's tokenizer.
-
-    Parameters:
-    - string (str): The input string to tokenize.
-    - model (str): The model to use for tokenization. Default is "gpt-4".
-
-    Returns:
-    - int: The number of tokens in the string.
-    """
-    # Get the encoder for the specified model
-    encoder = tiktoken.encoding_for_model(model)
-
-    # Encode the string to get the tokens
-    tokens = encoder.encode(string)
-
-    # Return the number of tokens
-    return len(tokens)
-
-
 async def upload_and_process_file(
     *, session: aiohttp.ClientSession, jsonl_data: bytes, api_key: str = api_key()
-) -> dict[str, Any]:
+) -> list[dict[str, Any]]:
     """
     Upload a JSONL file to OpenAI's Batch API and process it asynchronously.
     """

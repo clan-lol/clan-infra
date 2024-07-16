@@ -52,6 +52,14 @@ ignore_missing_imports = true
 module = "setuptools.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "nio.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "markdown2.*"
+ignore_missing_imports = true
+
 [tool.ruff]
 target-version = "py311"
 line-length = 88

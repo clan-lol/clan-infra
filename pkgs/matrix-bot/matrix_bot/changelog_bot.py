@@ -23,7 +23,7 @@ from .openai import create_jsonl_data, upload_and_process_file
 log = logging.getLogger(__name__)
 
 
-def last_ndays_to_today(ndays: int) -> (str, str):
+def last_ndays_to_today(ndays: int) -> tuple[str, str]:
     # Get today's date
     today = datetime.datetime.now()
 
@@ -74,18 +74,19 @@ async def git_pull(repo_path: Path) -> None:
     await process.wait()
 
 
-async def git_log(repo_path: str, ndays: int) -> str:
+async def git_log(repo_path: Path, ndays: int) -> str:
     cmd = [
         "git",
         "log",
         f"--since={ndays} days ago",
         "--pretty=format:%h - %an, %ar : %s",
         "--stat",
+        "--patch",
     ]
     log.debug(f"Running command: {shlex.join(cmd)}")
     process = await asyncio.create_subprocess_exec(
         *cmd,
-        cwd=repo_path,
+        cwd=str(repo_path),
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
@@ -172,19 +173,22 @@ Create a concise changelog
 Follow these guidelines:
 
 - Keep the summary brief
-- Follow commit message format: "scope: message (#number)"
+- Follow commit message format: "scope: message (#number1, #number2)"
 - Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pulls/<number>'
     - Use markdown links to make the pull request number clickable
-- Mention each scope and pull request number at most once
+- Mention each pull request number at most once
 - Focus on the most interesting changes for end users
+- Explain the impact of the changes in a user-friendly way
 
 ---
 Example Changelog:
 ### Changelog:
 For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
 #### New Features
-- `secrets`: added settings and generator submodules, improved tests [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)
-- `sshd`: added a workaround for CVE-2024-6387 [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)
+- `secrets`: added settings and generator submodules, improved tests [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)  
+    > Users can now generate secrets and manage settings in the new submodules
+- `sshd`: added a workaround for CVE-2024-6387 [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)  
+    > A workaround has been added to mitigate the security vulnerability
 ...
 #### Refactoring
 ...
