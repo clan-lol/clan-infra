@@ -30,129 +30,160 @@ async def create_jsonl_data(
     user_prompt: str,
     system_prompt: str,
     model: str = "gpt-4o",
-    max_tokens: int = 4096,
-) -> bytes:
-    summary_request: dict[str, Any] = {
-        "custom_id": "request-1",
-        "method": "POST",
-        "url": "/v1/chat/completions",
-        "body": {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            "max_tokens": max_tokens,
-        },
-    }
-
-    dumped = json.dumps(summary_request)
-    encoder = tiktoken.encoding_for_model(model)
-    count_tokens: int = len(encoder.encode(dumped))
-    used_tokens = max_tokens + count_tokens + 1000
-    log.debug(f"Number of tokens in the JSONL data: {used_tokens}")
-
-    if used_tokens > 128_000:
-        # Cut off the excess tokens
-        tokens_to_remove: int = used_tokens - 128_000
-        message = summary_request["body"]["messages"][1]
-        content = message["content"]
-
+    max_response_tokens: int = 4096,
+) -> list[bytes]:
+    def split_message(content: str, max_tokens: int) -> list[str]:
+        # Split the content into chunks of max_tokens
         content_tokens = encoder.encode(content)
+        chunks = []
+        for i in range(0, len(content_tokens), max_tokens):
+            chunk = content_tokens[i : i + max_tokens]
+            chunks.append(encoder.decode(chunk))
+            log.debug(f"Chunk {i/max_tokens}: {len(chunk)} tokens")
+        return chunks
 
-        if len(content_tokens) > tokens_to_remove:
-            # Remove the excess tokens
-            encoded_content = content_tokens[:-tokens_to_remove]
-            log.debug(f"Removed {tokens_to_remove} tokens from the content")
-            # Decode the tokens back to string
-            content = encoder.decode(encoded_content)
-            summary_request["body"]["messages"][1]["content"] = content
+    encoder = tiktoken.encoding_for_model(model)
+    max_message_tokens = 127_000 - max_response_tokens
 
-            dumped = json.dumps(summary_request)
-        else:
-            raise Exception("Not enough tokens to remove")
+    # Split user_prompt into multiple user messages if it exceeds the max_message_tokens
+    user_messages = []
+    for message_chunk in split_message(user_prompt, max_message_tokens):
+        if len(message_chunk) == 0:
+            raise Exception("Empty message chunk")
+        user_messages.append({"role": "user", "content": message_chunk})
 
-    new_count_tokens: int = len(encoder.encode(dumped))
-    if new_count_tokens > 128_000:
-        raise Exception(f"Too many tokens in the JSONL data {new_count_tokens}")
+    ## count number of tokens for every user message
+    count_tokens: int = 0
+    for i, message in enumerate(user_messages):
+        count_tokens = len(encoder.encode(message["content"]))
+        log.debug(f"Number of tokens in the user messages: {count_tokens}")
+        if count_tokens > max_message_tokens:
+            raise Exception(f"Too many tokens in the user message[{i}] {count_tokens}")
 
-    return dumped.encode("utf-8")
+    batch_jobs: list[bytes] = []
+    for message in user_messages:
+        summary_request: dict[str, Any] = {
+            "custom_id": "request-1",
+            "method": "POST",
+            "url": "/v1/chat/completions",
+            "body": {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    message,
+                ],
+                "max_tokens": max_response_tokens,
+            },
+        }
+
+        dumped = json.dumps(summary_request)
+        batch_jobs.append(dumped.encode("utf-8"))
+
+    return batch_jobs
 
 
-async def upload_and_process_file(
-    *, session: aiohttp.ClientSession, jsonl_data: bytes, api_key: str = api_key()
+async def upload_and_process_files(
+    *,
+    session: aiohttp.ClientSession,
+    jsonl_files: list[bytes],
+    api_key: str = api_key(),
 ) -> list[dict[str, Any]]:
     """
-    Upload a JSONL file to OpenAI's Batch API and process it asynchronously.
+    Upload multiple JSONL files to OpenAI's Batch API and process them asynchronously.
     """
-
-    upload_url = "https://api.openai.com/v1/files"
     headers = {
         "Authorization": f"Bearer {api_key}",
     }
-    data = aiohttp.FormData()
-    data.add_field(
-        "file", jsonl_data, filename="changelog.jsonl", content_type="application/jsonl"
-    )
-    data.add_field("purpose", "batch")
 
-    async with session.post(upload_url, headers=headers, data=data) as response:
-        if response.status != 200:
-            raise Exception(f"File upload failed with status code {response.status}")
-        upload_response = await response.json()
-        file_id = upload_response.get("id")
+    async def upload_file(jsonl_data: bytes) -> str:
+        upload_url = "https://api.openai.com/v1/files"
 
-    if not file_id:
-        raise Exception("File ID not returned from upload")
+        data = aiohttp.FormData()
+        data.add_field(
+            "file",
+            jsonl_data,
+            filename="changelog.jsonl",
+            content_type="application/jsonl",
+        )
+        data.add_field("purpose", "batch")
 
-    # Step 2: Create a batch using the uploaded file ID
-    batch_url = "https://api.openai.com/v1/batches"
-    batch_data = {
-        "input_file_id": file_id,
-        "endpoint": "/v1/chat/completions",
-        "completion_window": "24h",
-    }
-
-    async with session.post(batch_url, headers=headers, json=batch_data) as response:
-        if response.status != 200:
-            raise Exception(f"Batch creation failed with status code {response.status}")
-        batch_response = await response.json()
-        batch_id = batch_response.get("id")
-
-    if not batch_id:
-        raise Exception("Batch ID not returned from creation")
-
-    # Step 3: Check the status of the batch until completion
-    status_url = f"https://api.openai.com/v1/batches/{batch_id}"
-
-    while True:
-        async with session.get(status_url, headers=headers) as response:
+        async with session.post(upload_url, headers=headers, data=data) as response:
             if response.status != 200:
                 raise Exception(
-                    f"Failed to check batch status with status code {response.status}"
+                    f"File upload failed with status code {response.status}"
                 )
-            status_response = await response.json()
-            status = status_response.get("status")
-            if status in ["completed", "failed", "expired"]:
-                break
-            await asyncio.sleep(10)  # Wait before checking again
+            upload_response = await response.json()
+            file_id = upload_response.get("id")
 
-    if status != "completed":
-        raise Exception(f"Batch processing failed with status: {status}")
+        if not file_id:
+            raise Exception("File ID not returned from upload")
 
-    # Step 4: Retrieve the results
-    output_file_id = status_response.get("output_file_id")
-    output_url = f"https://api.openai.com/v1/files/{output_file_id}/content"
+        return file_id
 
-    async with session.get(output_url, headers=headers) as response:
-        if response.status != 200:
-            raise Exception(
-                f"Failed to retrieve batch results with status code {response.status} reason {response.reason}"
-            )
+    async def create_batch(file_id: str) -> str:
+        batch_url = "https://api.openai.com/v1/batches"
+        batch_data = {
+            "input_file_id": file_id,
+            "endpoint": "/v1/chat/completions",
+            "completion_window": "24h",
+        }
 
-        # Read content as text
-        content = await response.text()
+        async with session.post(
+            batch_url, headers=headers, json=batch_data
+        ) as response:
+            if response.status != 200:
+                raise Exception(
+                    f"Batch creation failed with status code {response.status}"
+                )
+            batch_response = await response.json()
+            batch_id = batch_response.get("id")
 
-    # Parse the content as JSONL
-    results = [json.loads(line) for line in content.splitlines()]
-    return results
+        if not batch_id:
+            raise Exception("Batch ID not returned from creation")
+
+        return batch_id
+
+    async def check_batch_status(batch_id: str) -> str:
+        status_url = f"https://api.openai.com/v1/batches/{batch_id}"
+        while True:
+            async with session.get(status_url, headers=headers) as response:
+                if response.status != 200:
+                    raise Exception(
+                        f"Failed to check batch status with status code {response.status}"
+                    )
+                status_response = await response.json()
+                status = status_response.get("status")
+                if status in ["completed", "failed", "expired"]:
+                    if status != "completed":
+                        raise Exception(
+                            f"Batch processing failed with status: {status}"
+                        )
+                    return status_response.get("output_file_id")
+            await asyncio.sleep(10)
+
+    async def retrieve_results(output_file_id: str) -> list[dict[str, Any]]:
+        output_url = f"https://api.openai.com/v1/files/{output_file_id}/content"
+        async with session.get(output_url, headers=headers) as response:
+            if response.status != 200:
+                raise Exception(
+                    f"Failed to retrieve batch results with status code {response.status} reason {response.reason}"
+                )
+            content = await response.text()
+        results = [json.loads(line) for line in content.splitlines()]
+        return results
+
+    file_ids = await asyncio.gather(
+        *[upload_file(jsonl_data) for jsonl_data in jsonl_files]
+    )
+    batch_ids = await asyncio.gather(*[create_batch(file_id) for file_id in file_ids])
+    output_file_ids = await asyncio.gather(
+        *[check_batch_status(batch_id) for batch_id in batch_ids]
+    )
+    all_results = await asyncio.gather(
+        *[retrieve_results(output_file_id) for output_file_id in output_file_ids]
+    )
+
+    # Flatten the list of results
+    combined_results = [item for sublist in all_results for item in sublist]
+
+    return combined_results

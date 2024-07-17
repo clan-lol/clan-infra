@@ -18,7 +18,7 @@ from matrix_bot.gitea import (
 
 from .locked_open import read_locked_file, write_locked_file
 from .matrix import MatrixData, send_message
-from .openai import create_jsonl_data, upload_and_process_file
+from .openai import create_jsonl_data, upload_and_process_files
 
 log = logging.getLogger(__name__)
 
@@ -173,22 +173,20 @@ Create a concise changelog
 Follow these guidelines:
 
 - Keep the summary brief
-- Follow commit message format: "scope: message (#number1, #number2)"
+- Follow the pull request format: "scope: message (#number1, #number2)"
+    - Don't use the commit messages tied to a pull request as is and instead explain the change in a user-friendly way
 - Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pulls/<number>'
     - Use markdown links to make the pull request number clickable
 - Mention each pull request number at most once
-- Focus on the most interesting changes for end users
-- Explain the impact of the changes in a user-friendly way
-
+- Focus on new clan modules if any
+- Always use four '#' for headings never less than that. Example: `####New Features`
 ---
 Example Changelog:
-### Changelog:
+#### Changelog:
 For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
 #### New Features
-- `secrets`: added settings and generator submodules, improved tests [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)  
-    > Users can now generate secrets and manage settings in the new submodules
-- `sshd`: added a workaround for CVE-2024-6387 [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)  
-    > A workaround has been added to mitigate the security vulnerability
+- `secrets`: Users can now generate secrets and manage settings in the new submodules [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)  
+- `sshd`: A workaround has been added to mitigate the security vulnerability [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)  
 ...
 #### Refactoring
 ...
@@ -196,27 +194,19 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
 ...
 #### Bug Fixes
 ...
-#### Other Changes
+#### Additional Notes
 ...
-
 ---
-### Changelog:
+#### Changelog:
+For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
+#### New Features
     """
 
     # Step 1: Create the JSONL file
-    jsonl_data = await create_jsonl_data(user_prompt=diff, system_prompt=system_prompt)
+    jsonl_files = await create_jsonl_data(user_prompt=diff, system_prompt=system_prompt)
 
     # Step 2: Upload the JSONL file and process it
-    results = await upload_and_process_file(session=http, jsonl_data=jsonl_data)
-
-    # Write the results to a file in the changelogs directory
-    result_file = write_file_with_date_prefix(
-        json.dumps(results, indent=4),
-        data_dir / "changelogs",
-        ndays=matrix.changelog_frequency,
-        suffix="result",
-    )
-    log.info(f"LLM result written to: {result_file}")
+    results = await upload_and_process_files(session=http, jsonl_files=jsonl_files)
 
     # Join responses together
     all_changelogs = []
@@ -226,6 +216,57 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
         all_changelogs.append(changelog)
     full_changelog = "\n\n".join(all_changelogs)
 
-    log.info(f"Changelog generated:\n{full_changelog}")
+    combine_prompt = """
+Please combine the following changelogs into a single markdown changelog.
+- Merge the sections and remove any duplicates.
+- Make sure the changelog is concise and easy to read.
+---
+Example Changelog:
+#### Changelog:
+For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
+#### New Features
+- **inventory**:
+  - Initial support for deployment info for machines [#1767](https://git.clan.lol/clan/clan-core/pulls/1767)
+  - Automatic inventory schema checks and runtime assertions [#1753](https://git.clan.lol/clan/clan-core/pulls/1753)
+- **webview**:
+  - Introduced block devices view and machine flashing UI [#1745](https://git.clan.lol/clan/clan-core/pulls/1745), [#1768](https://git.clan.lol/clan/clan-core/pulls/1768)
+  - Migration to solid-query for improved resource fetching & caching [#1755](https://git.clan.lol/clan/clan-core/pulls/1755)
+...
+#### Refactoring
+...
+#### Documentation
+...
+#### Bug Fixes
+...
+#### Additional Notes
+...
+---
+#### Changelog:
+For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
+#### New Features
+"""
+    new_jsonl_files = await create_jsonl_data(
+        user_prompt=full_changelog, system_prompt=combine_prompt
+    )
+    new_results = await upload_and_process_files(
+        session=http, jsonl_files=new_jsonl_files
+    )
 
-    await send_message(client, room, full_changelog)
+    new_all_changelogs = []
+    for result in new_results:
+        choices = result["response"]["body"]["choices"]
+        changelog = "\n".join(choice["message"]["content"] for choice in choices)
+        new_all_changelogs.append(changelog)
+    new_full_changelog = "\n\n".join(new_all_changelogs)
+    log.info(f"Changelog generated:\n{new_full_changelog}")
+
+    # Write the results to a file in the changelogs directory
+    new_result_file = write_file_with_date_prefix(
+        json.dumps(new_results, indent=4),
+        data_dir / "changelogs",
+        ndays=matrix.changelog_frequency,
+        suffix="result",
+    )
+    log.info(f"LLM result written to: {new_result_file}")
+
+    await send_message(client, room, new_full_changelog)
