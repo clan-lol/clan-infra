@@ -68,30 +68,49 @@ async def review_requested_bot(
     # and if the pull request is newer than the last updated pull request
     for pull in pulls:
         requested_reviewers = pull["requested_reviewers"]
-        pid = str(pull["id"])
-        if requested_reviewers and pull["mergeable"]:
-            last_time_updated = ping_hist.get(pid, {}).get(
+        assigned_users = pull["assignees"]
+        mentioned_users = []
+        if assigned_users:
+            mentioned_users.extend(assigned_users)
+        if requested_reviewers:
+            mentioned_users.extend(requested_reviewers)
+
+        mentioned_users = list(map(lambda x: x["login"].lower(), mentioned_users))
+        mentioned_users = list(
+            filter(lambda name: name not in matrix.user, mentioned_users)
+        )
+        pull_id = str(pull["id"])
+        needs_review_label = any(x["name"] == "needs-review" for x in pull["labels"])
+        if (
+            len(mentioned_users) > 0
+            and pull["mergeable"]
+            or needs_review_label
+            and pull["mergeable"]
+        ):
+            last_time_updated = ping_hist.get(pull_id, {}).get(
                 "updated_at", datetime.datetime.min.isoformat()
             )
             if ping_hist == {} or pull["updated_at"] > last_time_updated:
-                ping_hist[pid] = pull
+                ping_hist[pull_id] = pull
             else:
                 continue
 
             # Check if the requested reviewers are in the room
-            requested_reviewers = [r["login"].lower() for r in requested_reviewers]
             ping_users = []
             for user in users:
-                if user.display_name.lower() in requested_reviewers:
+                if user.display_name.lower() in mentioned_users:
                     ping_users.append(user.user_id)
 
             # Send a message to the room and mention the users
             log.info(f"Pull request {pull['title']} needs review")
+            log.debug(
+                f"Mentioned users: {mentioned_users}, has needs-review label: {needs_review_label}"
+            )
             message = f"Review Requested:\n[{pull['title']}]({pull['html_url']})"
             await send_message(client, room, message, user_ids=ping_users)
 
-            # Write the new last updated pull request
-            write_locked_file(ping_hist_path, ping_hist)
+    # Write the new last updated pull request
+    write_locked_file(ping_hist_path, ping_hist)
 
     # Time taken
     tend = time.time()
