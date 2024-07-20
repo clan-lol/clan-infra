@@ -15,6 +15,9 @@
     pkgs.tig
     pkgs.tmux
     pkgs.direnv
+
+    # for flokli
+    pkgs.kitty.terminfo
   ];
 
   programs.bash = {
