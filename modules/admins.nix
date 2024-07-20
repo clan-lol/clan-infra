@@ -54,6 +54,18 @@ in
       uid = 1005;
       openssh.authorizedKeys.keys = [ admins.johannes ];
     };
+    flokli = {
+      isNormalUser = true;
+      home = "/home/flokli";
+      extraGroups = [ "wheel" ];
+      shell = "/run/current-system/sw/bin/zsh";
+      uid = 1006;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPTVTXOutUZZjXLB0lUSgeKcSY/8mxKkC0ingGK1whD2 flokli"
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIP7rdJ1klzK8nx74QQA8jYdFwznM1klLS0C7M5lHiu+IAAAABHNzaDo= flokli 20240617 28772765"
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA34k0FVKDGNdJ8uk0Ytbvh6J8v+H86F4t6BXAIoW/7xAAAABHNzaDo= flokli 20240704 14321691"
+      ];
+    };
 
     root.openssh.authorizedKeys.keys = builtins.attrValues admins;
   };
