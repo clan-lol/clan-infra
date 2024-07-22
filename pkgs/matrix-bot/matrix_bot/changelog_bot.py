@@ -172,21 +172,26 @@ async def changelog_bot(
 Create a concise changelog
 Follow these guidelines:
 
-- Keep the summary brief
 - Follow the pull request format: "scope: message (#number1, #number2)"
     - Don't use the commit messages tied to a pull request as is and instead explain the change in a user-friendly way
 - Link pull requests as: '{gitea.url}/{gitea.owner}/{gitea.repo}/pulls/<number>'
     - Use markdown links to make the pull request number clickable
 - Mention each pull request number at most once
-- Focus on new clan modules if any
+- Group similar changes / pull requests together
+- Explain changes in a user-friendly way
 - Always use four '#' for headings never less than that. Example: `####New Features`
 ---
 Example Changelog:
 #### Changelog:
 For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
 #### New Features
-- `secrets`: Users can now generate secrets and manage settings in the new submodules [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)  
-- `sshd`: A workaround has been added to mitigate the security vulnerability [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)  
+- `secrets`: [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)  
+    > Users can now generate secrets and manage settings in the new submodules  
+    > This feature is available to all users with the 'admin' role  
+    > ...
+- `sshd`: [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)  
+    > A workaround has been added to mitigate the security vulnerability in the sshd module  
+    > This workaround is temporary and will be replaced with a permanent fix in the next release  
 ...
 #### Refactoring
 ...
@@ -216,21 +221,19 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
         all_changelogs.append(changelog)
     full_changelog = "\n\n".join(all_changelogs)
 
+    log.debug(f"Changelog generated:\n{full_changelog}")
+
     combine_prompt = """
 Please combine the following changelogs into a single markdown changelog.
-- Merge the sections and remove any duplicates.
+- Merge duplicates sections.
 - Make sure the changelog is concise and easy to read.
+- Always use four '#' for headings never less than that. Example: `####New Features`
+- WRITE IN THE STYLE OF THE NEW YORK TIMES, PLEASE!
 ---
 Example Changelog:
 #### Changelog:
 For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
 #### New Features
-- **inventory**:
-  - Initial support for deployment info for machines [#1767](https://git.clan.lol/clan/clan-core/pulls/1767)
-  - Automatic inventory schema checks and runtime assertions [#1753](https://git.clan.lol/clan/clan-core/pulls/1753)
-- **webview**:
-  - Introduced block devices view and machine flashing UI [#1745](https://git.clan.lol/clan/clan-core/pulls/1745), [#1768](https://git.clan.lol/clan/clan-core/pulls/1768)
-  - Migration to solid-query for improved resource fetching & caching [#1755](https://git.clan.lol/clan/clan-core/pulls/1755)
 ...
 #### Refactoring
 ...
