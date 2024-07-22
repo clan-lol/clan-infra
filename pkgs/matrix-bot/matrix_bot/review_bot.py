@@ -54,7 +54,7 @@ async def review_requested_bot(
         raise Exception(f"Failed to join room {room}")
 
     # Get the members of the room
-    users = await get_room_members(client, room)
+    room_users = await get_room_members(client, room)
 
     # Fetch the pull requests
     tstart = time.time()
@@ -97,8 +97,11 @@ async def review_requested_bot(
 
             # Check if the requested reviewers are in the room
             ping_users = []
-            for user in users:
-                if user.display_name.lower() in mentioned_users:
+            for user in room_users:
+                user_name = user.display_name.lower()
+                if any(
+                    user_name in mentioned_user for mentioned_user in mentioned_users
+                ):
                     ping_users.append(user.user_id)
 
             # Send a message to the room and mention the users
