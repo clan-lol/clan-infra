@@ -169,7 +169,6 @@ async def changelog_bot(
     write_locked_file(last_run_path, last_run)
 
     system_prompt = f"""
-Create a concise changelog
 Follow these guidelines:
 
 - Follow the pull request format: "scope: message (#number1, #number2)"
@@ -178,8 +177,9 @@ Follow these guidelines:
     - Use markdown links to make the pull request number clickable
 - Mention each pull request number at most once
 - Group similar changes / pull requests together
-- Explain changes in a user-friendly way
+- Explain changes in a user-friendly way (be detailed if necessary)
 - Always use four '#' for headings never less than that. Example: `####New Features`
+- WRITE IN THE STYLE OF THE NEW YORK TIMES, PLEASE!
 ---
 Example Changelog:
 #### Changelog:
@@ -188,7 +188,6 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
 - `secrets`: [#1679]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1679)  
     > Users can now generate secrets and manage settings in the new submodules  
     > This feature is available to all users with the 'admin' role  
-    > ...
 - `sshd`: [#1674]({gitea.url}/{gitea.owner}/{gitea.repo}/pulls/1674)  
     > A workaround has been added to mitigate the security vulnerability in the sshd module  
     > This workaround is temporary and will be replaced with a permanent fix in the next release  
@@ -222,6 +221,19 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
     full_changelog = "\n\n".join(all_changelogs)
 
     log.debug(f"Changelog generated:\n{full_changelog}")
+
+    if len(results) == 1:
+        # Write the results to a file in the changelogs directory
+        new_result_file = write_file_with_date_prefix(
+            json.dumps(results, indent=4),
+            data_dir / "changelogs",
+            ndays=matrix.changelog_frequency,
+            suffix="result",
+        )
+        log.info(f"LLM result written to: {new_result_file}")
+
+        await send_message(client, room, full_changelog)
+        return
 
     combine_prompt = """
 Please combine the following changelogs into a single markdown changelog.

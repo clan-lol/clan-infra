@@ -87,6 +87,7 @@ async def upload_and_process_files(
     session: aiohttp.ClientSession,
     jsonl_files: list[bytes],
     api_key: str = api_key(),
+    completion_window: str = "24h",
 ) -> list[dict[str, Any]]:
     """
     Upload multiple JSONL files to OpenAI's Batch API and process them asynchronously.
@@ -94,6 +95,10 @@ async def upload_and_process_files(
     headers = {
         "Authorization": f"Bearer {api_key}",
     }
+
+    log.debug(
+        f"Uploading {len(jsonl_files)} files to OpenAI, completion window: {completion_window}"
+    )
 
     async def upload_file(jsonl_data: bytes) -> str:
         upload_url = "https://api.openai.com/v1/files"
@@ -125,7 +130,7 @@ async def upload_and_process_files(
         batch_data = {
             "input_file_id": file_id,
             "endpoint": "/v1/chat/completions",
-            "completion_window": "24h",
+            "completion_window": f"{completion_window}",
         }
 
         async with session.post(
