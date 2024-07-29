@@ -100,7 +100,8 @@ async def review_requested_bot(
             for user in room_users:
                 user_name = user.display_name.lower()
                 if any(
-                    user_name in mentioned_user for mentioned_user in mentioned_users
+                    user_name in mentioned_user or mentioned_user in user_name
+                    for mentioned_user in mentioned_users
                 ):
                     ping_users.append(user.user_id)
 
