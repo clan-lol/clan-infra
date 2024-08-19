@@ -15,10 +15,11 @@ export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_NAME"
 export GITEA_USER="clan-bot"
 export GITEA_URL="https://git.clan.lol"
 
-inputs=$(nix flake info --json | jq '.locks.nodes | keys[]' | grep -v "root")
 
 git clone --depth 1 --branch main "$REPO" "$REPO_DIR"
 cd "$REPO_DIR"
+
+inputs=$(nix flake metadata --json | jq '.locks.nodes | keys[]' | grep -v "root")
 
 for input in $inputs;
 do
