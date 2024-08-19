@@ -13,5 +13,5 @@ writePureShellScriptBin "action-flake-update"
     nix
   ]
   ''
-    bash ${./script.sh}
+    bash ${./script.sh} "$@"
   ''
