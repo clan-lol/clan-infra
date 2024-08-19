@@ -2,6 +2,9 @@
   bash,
   coreutils,
   git,
+  gnugrep,
+  jq,
+  nix,
   openssh,
   action-ensure-tea-login,
   action-create-pr,
@@ -13,9 +16,12 @@ writePureShellScriptBin "action-flake-update-pr-clan-individual"
     bash
     coreutils
     git
+    gnugrep
+    jq
+    nix
     openssh
-    action-ensure-tea-login
     action-create-pr
+    action-ensure-tea-login
     action-flake-update
   ]
   ''
