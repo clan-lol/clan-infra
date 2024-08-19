@@ -26,12 +26,17 @@
             inherit (writers) writePureShellScriptBin;
             inherit (config.packages) action-ensure-tea-login action-create-pr action-flake-update;
           };
+          action-flake-update-pr-clan-individual = pkgs.callPackage ./action-flake-update-pr-clan-individual {
+            inherit (writers) writePureShellScriptBin;
+            inherit (config.packages) action-ensure-tea-login action-create-pr action-flake-update;
+          };
           inherit
             (pkgs.callPackages ./job-flake-updates {
               inherit (writers) writePureShellScriptBin;
-              inherit (config.packages) action-flake-update-pr-clan;
+              inherit (config.packages) action-flake-update-pr-clan action-flake-update-pr-clan-individual;
             })
             job-flake-update-clan-core
+            job-flake-update-clan-core-individual
             job-flake-update-clan-homepage
             job-flake-update-clan-infra
             job-flake-update-data-mesher

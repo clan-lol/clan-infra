@@ -55,6 +55,7 @@ in
   config = lib.mkMerge (
     map configForJob [
       "job-flake-update-clan-core"
+      "job-flake-update-clan-core-individual"
       "job-flake-update-clan-homepage"
       "job-flake-update-clan-infra"
       "job-flake-update-data-mesher"
