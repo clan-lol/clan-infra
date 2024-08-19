@@ -14,7 +14,7 @@ let
     '';
   job-flake-update-individual =
     repo:
-    writePureShellScriptBin "job-flake-update-individual-${repo}"
+    writePureShellScriptBin "job-flake-update-${repo}-individual"
       [ action-flake-update-pr-clan-individual ]
       ''
         export REPO="gitea@git.clan.lol:clan/${repo}.git"
