@@ -23,11 +23,16 @@ inputs=$(nix flake metadata --json | jq '.locks.nodes | keys[]' | grep -v "root"
 
 for input in $inputs;
 do
+	echo "updating input: ${input}"
+	echo "checking out main"
 	git checkout main
 	export PR_TITLE="Automatic flake update - ${input} - ${today_minutes}"
 	export REMOTE_BRANCH="flake-update-${input}-${today}"
+	echo "action-ensure-tea-login"
 	action-ensure-tea-login
+	echo "action-flake-update: ${input}"
 	action-flake-update "$input"
+	echo "action-create-pr"
 	action-create-pr --assignees clan-bot
 done
 
