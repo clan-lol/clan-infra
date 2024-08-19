@@ -19,7 +19,7 @@ export GITEA_URL="https://git.clan.lol"
 git clone --depth 1 --branch main "$REPO" "$REPO_DIR"
 cd "$REPO_DIR"
 
-inputs=$(nix flake metadata --json | jq '.locks.nodes | keys[]' | grep -v "root")
+inputs=$(nix flake metadata --json | jq '.locks.nodes | keys[]' --raw-output | grep -v "root")
 
 for input in $inputs;
 do
