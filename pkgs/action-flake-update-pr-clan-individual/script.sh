@@ -23,16 +23,25 @@ inputs=$(nix flake metadata --json | jq '.locks.nodes | keys[]' --raw-output | g
 
 for input in $inputs;
 do
+	target_branch="update-${input}"
+
 	echo "updating input: ${input}"
-	echo "checking out main"
+	echo "checking out: git checkout main"
 	git checkout main
+	git checkout -b "$target_branch"
+	echo "checking out: git checkout -b update-${input}"
 	export PR_TITLE="Automatic flake update - ${input} - ${today_minutes}"
 	export REMOTE_BRANCH="flake-update-${input}-${today}"
 	echo "action-ensure-tea-login"
 	action-ensure-tea-login
 	echo "action-flake-update: ${input}"
 	action-flake-update "$input"
-	echo "action-create-pr"
-	action-create-pr --assignees clan-bot
+	echo "check diff"
+	if git diff --quiet main.."$target_branch" --;then
+		echo "No lockfile changes for input: ${input}"
+	else
+		echo "action-create-pr"
+		action-create-pr --assignees clan-bot
+	fi
 done
 
