@@ -10,6 +10,7 @@ let
     ++ (with python3.pkgs; [
       rope
       setuptools
+      mypy
       wheel
       ipdb
       pip

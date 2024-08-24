@@ -3,7 +3,6 @@ import logging
 log = logging.getLogger(__name__)
 import datetime
 import time
-from pathlib import Path
 
 import aiohttp
 from nio import (
@@ -19,6 +18,7 @@ from matrix_bot.gitea import (
     fetch_pull_requests,
 )
 
+from . import BotConfig
 from .locked_open import read_locked_file, write_locked_file
 from .matrix import MatrixData, get_room_members, send_message
 
@@ -44,7 +44,7 @@ async def review_requested_bot(
     http: aiohttp.ClientSession,
     matrix: MatrixData,
     gitea: GiteaData,
-    data_dir: Path,
+    bot_conf: BotConfig,
 ) -> None:
     # If you made a new room and haven't joined as that user, you can use
     room: JoinResponse = await client.join(matrix.review_room)
@@ -61,7 +61,7 @@ async def review_requested_bot(
     pulls = await fetch_pull_requests(gitea, http, limit=50, state=PullState.ALL)
 
     # Read the last updated pull request
-    ping_hist_path = data_dir / "last_review_run.json"
+    ping_hist_path = bot_conf.data_dir / "last_review_run.json"
     ping_hist = read_locked_file(ping_hist_path)
 
     # Check if the pull request is mergeable and needs review
@@ -80,20 +80,29 @@ async def review_requested_bot(
             filter(lambda name: name not in matrix.user, mentioned_users)
         )
         pull_id = str(pull["id"])
-        needs_review_label = any(x["name"] == "needs-review" for x in pull["labels"])
+        needs_review_label = any(
+            x["name"] in gitea.mention_labels for x in pull["labels"]
+        )
         if (
             len(mentioned_users) > 0
             and pull["mergeable"]
             or needs_review_label
             and pull["mergeable"]
         ):
-            last_time_updated = ping_hist.get(pull_id, {}).get(
-                "updated_at", datetime.datetime.min.isoformat()
-            )
-            if ping_hist == {} or pull["updated_at"] > last_time_updated:
-                ping_hist[pull_id] = pull
+            # Mention the pull request again if it has been updated
+            if gitea.mention_on_update:
+                last_time_updated = ping_hist.get(pull_id, {}).get(
+                    "updated_at", datetime.datetime.min.isoformat()
+                )
+                if ping_hist == {} or pull["updated_at"] > last_time_updated:
+                    ping_hist[pull_id] = pull
+                else:
+                    continue
             else:
-                continue
+                if ping_hist == {} or pull_id not in ping_hist:
+                    ping_hist[pull_id] = pull
+                else:
+                    continue
 
             # Check if the requested reviewers are in the room
             ping_users = []

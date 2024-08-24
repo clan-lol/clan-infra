@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 url: str = "https://api.openai.com/v1/chat/completions"
 
 
-def api_key() -> str:
+def get_api_key() -> str:
     openapi_key = environ.get("OPENAI_API_KEY")
     if openapi_key is not None:
         return openapi_key
@@ -86,12 +86,14 @@ async def upload_and_process_files(
     *,
     session: aiohttp.ClientSession,
     jsonl_files: list[bytes],
-    api_key: str = api_key(),
+    api_key: str | None = None,
     completion_window: str = "24h",
 ) -> list[dict[str, Any]]:
     """
     Upload multiple JSONL files to OpenAI's Batch API and process them asynchronously.
     """
+    if api_key is None:
+        api_key = get_api_key()
     headers = {
         "Authorization": f"Bearer {api_key}",
     }

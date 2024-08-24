@@ -15,6 +15,8 @@ class GiteaData:
     owner: str
     repo: str
     poll_frequency: float
+    mention_on_update: bool
+    mention_labels: list[dict]
     access_token: str | None
 
 

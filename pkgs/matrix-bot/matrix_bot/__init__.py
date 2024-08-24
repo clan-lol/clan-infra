@@ -6,6 +6,7 @@ import sys
 from os import environ
 from pathlib import Path
 
+from matrix_bot.bot_conf import BotConfig
 from matrix_bot.custom_logger import setup_logging
 from matrix_bot.gitea import GiteaData
 from matrix_bot.main import bot_main
@@ -127,6 +128,28 @@ def create_parser(prog: str | None = None) -> argparse.ArgumentParser:
         type=float,
     )
 
+    parser.add_argument(
+        "--disable-pr-bot",
+        help="Disable the PR bot",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--disable-changelog-bot",
+        help="Disable the changelog bot",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--pull-mention-every-update",
+        help="Mention the user every time the PR is updated",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--mention-labels",
+        help="The labels that trigger a mention",
+        nargs="+",
+        default=["needs-review"],
+    )
+
     return parser
 
 
@@ -151,6 +174,12 @@ def main() -> None:
     else:
         setup_logging(logging.INFO, root_log_name=__name__.split(".")[0])
 
+    bot_conf = BotConfig(
+        data_dir=args.data_dir,
+        disable_pr_bot=args.disable_pr_bot,
+        disable_changelog_bot=args.disable_changelog_bot,
+    )
+
     matrix = MatrixData(
         server=args.server,
         user=args.user,
@@ -169,12 +198,14 @@ def main() -> None:
         repo=args.repo_name,
         access_token=os.getenv("GITEA_ACCESS_TOKEN"),
         poll_frequency=args.poll_frequency,
+        mention_on_update=args.pull_mention_every_update,
+        mention_labels=args.mention_labels,
     )
 
-    args.data_dir.mkdir(parents=True, exist_ok=True)
+    bot_conf.data_dir.mkdir(parents=True, exist_ok=True)
 
     try:
-        asyncio.run(bot_main(matrix, gitea, args.data_dir))
+        asyncio.run(bot_main(matrix, gitea, bot_conf))
     except KeyboardInterrupt:
         print("User Interrupt", file=sys.stderr)
 

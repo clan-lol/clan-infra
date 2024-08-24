@@ -16,6 +16,7 @@ from matrix_bot.gitea import (
     GiteaData,
 )
 
+from . import BotConfig
 from .locked_open import read_locked_file, write_locked_file
 from .matrix import MatrixData, send_message
 from .openai import create_jsonl_data, upload_and_process_files
@@ -105,9 +106,9 @@ async def changelog_bot(
     http: aiohttp.ClientSession,
     matrix: MatrixData,
     gitea: GiteaData,
-    data_dir: Path,
+    bot_conf: BotConfig,
 ) -> None:
-    last_run_path = data_dir / "last_changelog_run.json"
+    last_run_path = bot_conf.data_dir / "last_changelog_run.json"
     last_run = read_locked_file(last_run_path)
 
     today = datetime.datetime.now()
@@ -143,7 +144,7 @@ async def changelog_bot(
         log.error("This can happen if the room doesn't exist or the bot isn't invited")
         raise Exception(f"Failed to join room {room}")
 
-    repo_path = data_dir / gitea.repo
+    repo_path = bot_conf.data_dir / gitea.repo
 
     if not repo_path.exists():
         cmd = [
@@ -152,7 +153,7 @@ async def changelog_bot(
             f"{gitea.url}/{gitea.owner}/{gitea.repo}.git",
             gitea.repo,
         ]
-        subprocess.run(cmd, cwd=data_dir, check=True)
+        subprocess.run(cmd, cwd=bot_conf.data_dir, check=True)
 
     # git pull
     await git_pull(repo_path)
@@ -226,7 +227,7 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
         # Write the results to a file in the changelogs directory
         new_result_file = write_file_with_date_prefix(
             json.dumps(results, indent=4),
-            data_dir / "changelogs",
+            bot_conf.data_dir / "changelogs",
             ndays=matrix.changelog_frequency,
             suffix="result",
         )
@@ -278,7 +279,7 @@ For the last {matrix.changelog_frequency} days from {fromdate} to {todate}
     # Write the results to a file in the changelogs directory
     new_result_file = write_file_with_date_prefix(
         json.dumps(new_results, indent=4),
-        data_dir / "changelogs",
+        bot_conf.data_dir / "changelogs",
         ndays=matrix.changelog_frequency,
         suffix="result",
     )

@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from pathlib import Path
 
 import aiohttp
 
@@ -8,6 +7,7 @@ log = logging.getLogger(__name__)
 
 from nio import AsyncClient, ClientConfig, ProfileGetAvatarResponse, RoomMessageText
 
+from . import BotConfig
 from .changelog_bot import changelog_bot
 from .gitea import GiteaData
 from .matrix import MatrixData, set_avatar, upload_image
@@ -17,7 +17,7 @@ from .review_bot import message_callback, review_requested_bot, send_error
 async def bot_main(
     matrix: MatrixData,
     gitea: GiteaData,
-    data_dir: Path,
+    bot_conf: BotConfig,
 ) -> None:
     # Setup client configuration to handle encryption
     client_config = ClientConfig(
@@ -45,19 +45,23 @@ async def bot_main(
     try:
         async with aiohttp.ClientSession() as session:
             while True:
-                try:
-                    await changelog_bot(client, session, matrix, gitea, data_dir)
-                except Exception as e:
-                    log.exception(e)
-                    await send_error(client, matrix, f"Changelog bot failed: {e}")
+                if not bot_conf.disable_changelog_bot:
+                    try:
+                        await changelog_bot(client, session, matrix, gitea, bot_conf)
+                    except Exception as e:
+                        log.exception(e)
+                        await send_error(client, matrix, f"Changelog bot failed: {e}")
 
-                try:
-                    await review_requested_bot(client, session, matrix, gitea, data_dir)
-                except Exception as e:
-                    log.exception(e)
-                    await send_error(
-                        client, matrix, f"Review requested bot failed: {e}"
-                    )
+                if not bot_conf.disable_pr_bot:
+                    try:
+                        await review_requested_bot(
+                            client, session, matrix, gitea, bot_conf
+                        )
+                    except Exception as e:
+                        log.exception(e)
+                        await send_error(
+                            client, matrix, f"Review requested bot failed: {e}"
+                        )
 
                 log.debug(f"Sleeping for {60 * gitea.poll_frequency / 60} minutes")
                 await asyncio.sleep(60 * gitea.poll_frequency)
