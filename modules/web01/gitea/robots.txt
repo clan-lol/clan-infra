@@ -1,0 +1,114 @@
+# sane defaults for a Forgejo instance
+# contributing sources:
+# - https://code.forgejo.org/robots.txt
+# - https://github.com/robots.txt
+# - https://codeberg.org/robots.txt
+
+User-agent: *
+Disallow: /api/*
+Disallow: /avatars
+Disallow: /user/*
+Disallow: /*/*/src/commit/*
+Disallow: /*/*/commit/*
+Disallow: /*/*/*/refs/*
+Disallow: /*/*/*/star
+Disallow: /*/*/*/watch
+Disallow: /*/*/labels
+Disallow: /*/*/activity/*
+Disallow: /vendor/*
+Disallow: /swagger.*.json
+
+# Language spam
+Disallow: /*?lang=
+
+Disallow: /explore/*?*
+Disallow: /*q=
+
+Disallow: /repo/create
+Disallow: /repo/migrate
+Disallow: /org/create
+
+Disallow: /*/*/activity
+Disallow: /*/*/projects
+Disallow: /*/*/forks
+Disallow: /*/*/commits/
+Disallow: /*/*/branches
+Disallow: /*/*/contributors
+Disallow: /*/*/tags
+Disallow: /*/*/stargazers
+Disallow: /*/*/watchers
+Disallow: /*/*/network
+Disallow: /*/*/graphs
+Disallow: /*/*/compare
+
+Disallow: /*/*/issues/new
+Disallow: /*/*/issues/?*
+Disallow: /*/*/pulls/?*
+
+Disallow: /*/tree/
+Disallow: /*/download
+Disallow: /*/revisions
+Disallow: /*/commits/*?author
+Disallow: /*/commits/*?path
+Disallow: /*/comments
+Disallow: /*/blame/
+Disallow: /*/raw/
+Disallow: /*/cache/
+Disallow: /.git/
+Disallow: */.git/
+Disallow: /*.git
+Disallow: /*.atom
+Disallow: /*.rss
+
+Disallow: /*/*/archive/
+Disallow: *.bundle
+Disallow: */commit/*.pacth
+Disallow: */commit/*.diff
+
+Disallow: /*source=*
+Disallow: /*ref_cta=*
+Disallow: /*plan=*
+Disallow: /*return_to=*
+Disallow: /*ref_loc=*
+Disallow: /*setup_organization=*
+Disallow: /*source_repo=*
+Disallow: /*ref_page=*
+Disallow: /*source=*
+Disallow: /*referrer=*
+Disallow: /*report=*
+Disallow: /*author=*
+Disallow: /*since=*
+Disallow: /*until=*
+Disallow: /*commits?author=*
+Disallow: /*tab=*
+Disallow: /*q=*
+Disallow: /*repo-search-archived=*
+
+Crawl-delay: 2
+
+## ChatGPT - See: https://platform.openai.com/docs/plugins/bot
+User-agent: GPTBot
+Disallow: /
+
+## Google AI Bots - See: https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers?hl=en#google-extended
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+## Amazon, e.g. Alexa - See: https://developer.amazon.com/amazonbot
+User-agent: Amazonbot
+Disallow: /
