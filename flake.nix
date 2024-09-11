@@ -7,7 +7,7 @@
   #};
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=nixos-unstable-small&shallow=1";
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
