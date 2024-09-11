@@ -1,8 +1,7 @@
 { config, ... }:
 
 {
-  security.acme.defaults.email = "admins@clan.lol";
-  security.acme.acceptTerms = true;
+  clan.nginx.acme.email = "admins@clan.lol";
 
   # www user to push website artifacts via ssh
   users.users.www = {
