@@ -2,7 +2,7 @@
 {
   services.harmonia.enable = true;
   # $ nix-store --generate-binary-cache-key cache.yourdomain.tld-1 harmonia.secret harmonia.pub
-  services.harmonia.signKeyPath = config.sops.secrets.harmonia-secret.path;
+  services.harmonia.signKeyPaths = [ config.sops.secrets.harmonia-secret.path ];
 
   services.nginx = {
     package = pkgs.nginxStable.override { modules = [ pkgs.nginxModules.zstd ]; };
