@@ -83,11 +83,8 @@ async def review_requested_bot(
         needs_review_label = any(
             x["name"] in gitea.mention_labels for x in pull["labels"]
         )
-        if (
-            len(mentioned_users) > 0
-            and pull["mergeable"]
-            or needs_review_label
-            and pull["mergeable"]
+        if (len(mentioned_users) > 0 and pull["mergeable"]) or (
+            needs_review_label and pull["mergeable"]
         ):
             # Mention the pull request again if it has been updated
             if gitea.mention_on_update:
