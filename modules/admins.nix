@@ -66,6 +66,14 @@ in
         "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIA34k0FVKDGNdJ8uk0Ytbvh6J8v+H86F4t6BXAIoW/7xAAAABHNzaDo= flokli 20240704 14321691"
       ];
     };
+    timo = {
+      isNormalUser = true;
+      home = "/home/timo";
+      extraGroups = [ "wheel" ];
+      shell = "/run/current-system/sw/bin/zsh";
+      uid = 1007;
+      openssh.authorizedKeys.keys = [ admins.timo ];
+    };
 
     root.openssh.authorizedKeys.keys = builtins.attrValues admins;
   };
