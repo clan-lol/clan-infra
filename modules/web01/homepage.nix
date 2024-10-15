@@ -8,7 +8,9 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [
       # ssh-homepage-key
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
+      # disable automatic deployment for now so timos changes don't get deleted
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
+
     ];
     isSystemUser = true;
     shell = "/run/current-system/sw/bin/bash";
@@ -67,12 +69,8 @@
       locations."^~ /docs".extraConfig = ''
         rewrite ^/docs(.*)$ https://docs.clan.lol permanent;
       '';
-      locations."^~ /blog".extraConfig = ''
-        rewrite ^/blog(.*)$ https://docs.clan.lol/blog permanent;
-      '';
-      locations."^~ /wclan".extraConfig = ''
-        rewrite ^/wclan(.*)$ https://clan.lol/what-is-clan.html permanent;
-      '';
+      locations."/wclan".return = "307 https://clan.lol/";
+      locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
     };
 
@@ -89,6 +87,14 @@
       # Make sure to expire the cache after 12 hour
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=43200";
+      '';
+      locations."/blog/2024/03/19/introducing-clan-full-stack-computing-redefined/".return = "307 https://clan.lol/blog/introduction-clan/";
+      locations."/blog/2024/05/25/jsonschema-converter/".return = "307 https://clan.lol/blog/json-schema-converter/";
+      locations."/blog/2024/06/24/backups/".return = "307 https://clan.lol/blog/declarative-backups-and-restore/";
+      locations."/blog/2024/07/19/nixos-facter/".return = "307 https://clan.lol/blog/nixos-facter/";
+      locations."/blog/2024/09/11/interfaces/".return = "307 https://clan.lol/blog/interfaces/";
+      locations."^~ /blog".extraConfig = ''
+        rewrite ^/wclan(.*)$ https://clan.lol/blog permanent;
       '';
     };
 
