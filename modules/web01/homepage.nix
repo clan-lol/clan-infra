@@ -8,7 +8,9 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [
       # ssh-homepage-key
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxZ3Av30M6Sh6NU1mnCskB16bYtNP8vskc/+ud0AU1C ssh-homepage-key"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
+      # disable automatic deployment for now so timos changes don't get deleted
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuYyfSuETSrwqCsWHeeClqjcsFlMEmiJN6Rr8/DwrU0 gitea-ci"
+
     ];
     isSystemUser = true;
     shell = "/run/current-system/sw/bin/bash";
