@@ -7,6 +7,8 @@
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 
+      { nixpkgs.pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; }
+
       ./admins.nix
     ];
 
