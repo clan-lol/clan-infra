@@ -59,7 +59,6 @@
             lib,
             self',
             system,
-            pkgs,
             ...
           }:
           {
@@ -84,7 +83,6 @@
               ];
 
               programs.nixfmt.enable = true;
-              programs.nixfmt.package = pkgs.nixfmt-rfc-style;
               settings.formatter.nixfmt.excludes = [
                 # generated files
                 "node-env.nix"
@@ -94,9 +92,16 @@
             };
             checks =
               let
-                nixosMachines = lib.mapAttrs' (
-                  name: config: lib.nameValuePair "nixos-${name}" config.config.system.build.toplevel
-                ) ((lib.filterAttrs (_: config: config.pkgs.system == system)) self.nixosConfigurations);
+                machinesPerSystem = {
+                  x86_64-linux = [
+                    "web01"
+                  ];
+                };
+                nixosMachines = lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
+                  lib.genAttrs (machinesPerSystem.${system} or [ ]) (
+                    name: self.nixosConfigurations.${name}.config.system.build.toplevel
+                  )
+                );
                 packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
                 devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
                 homeConfigurations = lib.mapAttrs' (
