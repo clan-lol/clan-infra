@@ -68,6 +68,7 @@
       locations."/wclan".return = "307 https://clan.lol/";
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
+      locations."/blog/hello-world/".return = "307 https://clan.lol/blog/introduction-clan/";
     };
 
     virtualHosts."docs.clan.lol" = {
@@ -89,6 +90,7 @@
       locations."/blog/2024/06/24/backups/".return = "307 https://clan.lol/blog/declarative-backups-and-restore/";
       locations."/blog/2024/07/19/nixos-facter/".return = "307 https://clan.lol/blog/nixos-facter/";
       locations."/blog/2024/09/11/interfaces/".return = "307 https://clan.lol/blog/interfaces/";
+
       locations."^~ /blog".extraConfig = ''
         rewrite ^/wclan(.*)$ https://clan.lol/blog permanent;
       '';
