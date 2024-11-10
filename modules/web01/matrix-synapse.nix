@@ -9,6 +9,7 @@
   };
   clan.matrix-synapse.users.monitoring = { };
   clan.matrix-synapse.users.clan-bot = { };
+  clan.matrix-synapse.users.w = { };
 
   # Rate limiting settings
   # we need to up this to be able to support matrix bots
