@@ -12,13 +12,6 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
   - RAM: 64GB DDR5
   - Drives: 2 x 1.92 TB NVME
 
-## To deploy new ssh keys on hcloud:
-
-```
-$ cd ./targets/admins
-$ ./tf.sh apply
-```
-
 ## To deploy a server i.e. web01:
 
 ```
