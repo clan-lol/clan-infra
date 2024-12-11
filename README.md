@@ -15,8 +15,7 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
 ## To deploy a server i.e. web01:
 
 ```
-$ cd ./targets/web01
-$ ./tf.sh apply
+$ clan machines update
 ```
 
 ## To add a new project to CI
