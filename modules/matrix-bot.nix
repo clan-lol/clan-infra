@@ -32,7 +32,7 @@ in
     serviceConfig = {
       LoadCredential = [
         "MATRIX_PASSWORD_FILE:${config.sops.secrets.web01-matrix-password-clan-bot.path}"
-        "OPENAI_API_KEY_FILE:${config.sops.secrets.qubasas-openai-api-key.path}"
+        #"OPENAI_API_KEY_FILE:${config.sops.secrets.qubasas-openai-api-key.path}"
       ];
       User = "matrix-bot-user";
       Group = "matrix-bot-user";
