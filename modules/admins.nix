@@ -76,7 +76,7 @@
     root.openssh.authorizedKeys.keys = builtins.concatMap (user: user.openssh.authorizedKeys.keys) (
       builtins.attrValues (
         lib.filterAttrs (
-          name: value: value.isNormalUser && builtins.elem "wheel" value.extraGroups
+          _name: value: value.isNormalUser && builtins.elem "wheel" value.extraGroups
         ) config.users.users
       )
     );
