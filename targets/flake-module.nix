@@ -10,5 +10,11 @@
     machines.web01 = {
       imports = [ ./web01/configuration.nix ];
     };
+    inventory.services = {
+      sshd.clan = {
+        roles.server.tags = [ "all" ];
+        roles.client.tags = [ "all" ];
+      };
+    };
   };
 }

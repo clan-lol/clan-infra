@@ -15,7 +15,6 @@
     authBackend = "gitea";
 
     admins = [
-      "Mic92"
       "Qubasa"
       "DavHau"
       "kenji"
