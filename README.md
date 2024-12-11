@@ -22,6 +22,13 @@ $ clan machines update
 
 Add them in the [configuration](modules/admins.nix).
 
+## Update DNS
+
+```
+$ cd ./targets/web01
+$ ./tf.sh apply
+```
+
 ## To add a new project to CI
 
 1. Add the 'buildbot-clan' topic to the repository using the "Manage topics"
