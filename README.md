@@ -18,6 +18,10 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
 $ clan machines update
 ```
 
+## Adding new users
+
+Add them in the [configuration](modules/admins.nix).
+
 ## To add a new project to CI
 
 1. Add the 'buildbot-clan' topic to the repository using the "Manage topics"
