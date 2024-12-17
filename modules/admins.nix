@@ -63,7 +63,7 @@
     };
     timo = {
       isNormalUser = true;
-      extraGroups = [ "el" ];
+      extraGroups = [ "wheel" ];
       shell = pkgs.zsh;
       uid = 1007;
       openssh.authorizedKeys.keys = [
