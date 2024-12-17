@@ -12,6 +12,27 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
   - RAM: 64GB DDR5
   - Drives: 2 x 1.92 TB NVME
 
+## Install a new server
+
+First you need to run `clan machines install` to `kexec` into the NixOS
+installer:
+
+```
+$ clan machines install --update-hardware-config nixos-facter <host>
+```
+
+This will fail without the ZFS key so you can run the following script:
+
+```
+$ ./targets/web01/copy-zfs-key.sh
+```
+
+Then we can run `clan machines install` which should succeed:
+
+```
+$ clan machines install <host>
+```
+
 ## To deploy a server i.e. web01:
 
 ```
