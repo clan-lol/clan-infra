@@ -20,7 +20,29 @@ $ clan machines update
 
 ## Adding new users
 
-Add them in the [configuration](modules/admins.nix).
+Add them to the [configuration](modules/admins.nix).
+
+The user can create an age key:
+
+```
+$ clan secrets key generate
+```
+
+The private key (identity in age terms) and public key (recipient in age terms)
+are stored in `~/.config/sops/age/keys.txt`
+(`~/Library/Application Support/sops/age/keys.txt` on macOS).
+
+Add the new user's age key:
+
+```
+$ clan secrets users add <user> <age-key>
+```
+
+Add the new user as an admin:
+
+```
+$ clan secrets groups add-user admins <user>
+```
 
 ## Update DNS
 
