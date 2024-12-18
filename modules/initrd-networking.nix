@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.clan-infra.networking;
 in
@@ -26,15 +31,25 @@ in
     boot.kernelParams = [ "ip=127.0.0.1:::::lo:none" ];
     boot.initrd.systemd.enable = false;
 
+    clan.core.vars.generators.initrd-ssh = {
+      files."id_ed25519" = { };
+      files."id_ed25519.pub".secret = false;
+      runtimeInputs = [
+        pkgs.coreutils
+        pkgs.openssh
+      ];
+      script = ''
+        ssh-keygen -t ed25519 -N "" -f $out/id_ed25519
+      '';
+    };
+
     boot.initrd.network = {
       enable = true;
       ssh = {
         enable = true;
         port = 2222;
         hostKeys = [
-          # not using sops here because we cannot reliable deploy this secret
-          #config.sops.secrets.initrd-ssh-key.path
-          "/var/lib/secrets/initrd_ssh_key"
+          config.clan.core.vars.generators.initrd-ssh.files.id_ed25519.path
         ];
         authorizedKeys = config.users.users.root.openssh.authorizedKeys.keys;
       };
