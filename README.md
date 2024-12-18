@@ -30,7 +30,14 @@ $ ./targets/web01/copy-zfs-key.sh
 Then we can run `clan machines install` which should succeed:
 
 ```
-$ clan machines install <host>
+$ clan machines install <host> --no-reboot
+```
+
+Then you can run the following script to reboot the machine and unlock the
+encrypted root filesystem:
+
+```
+$ ./targets/web01/reboot.sh
 ```
 
 ## To deploy a server i.e. web01:
