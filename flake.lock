@@ -59,15 +59,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1734750053,
-        "narHash": "sha256-w4RfLzY6Jt9oI82NuLHWiWNFwJzILtlo9lycV7hEt6I=",
-        "rev": "f2c8660705222db88bef15eac75bd5cf3781f098",
+        "lastModified": 1734841657,
+        "narHash": "sha256-0HvnMaUrVNOxZ0e/8BGEmvd/OaiEiPRH42olm66iKpY=",
+        "rev": "f19317e9f5809e8032106dea58a5aedbfead39f7",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/Enzime/clan-core/archive/f2c8660705222db88bef15eac75bd5cf3781f098.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/Enzime/clan-core/archive/f19317e9f5809e8032106dea58a5aedbfead39f7.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.clan.lol/Enzime/clan-core/archive/push-yvpxptntlmuy.tar.gz"
+        "url": "https://git.clan.lol/Enzime/clan-core/archive/test-branch.tar.gz"
       }
     },
     "disko": {
@@ -78,11 +78,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734088167,
-        "narHash": "sha256-OIitVU+IstPbX/NWn2jLF+/sT9dVKcO2FKeRAzlyX6c=",
+        "lastModified": 1734701201,
+        "narHash": "sha256-hk0roBX10j/hospoWIJIJj3i2skd7Oml6yKQBx7mTFk=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "d32f2d1750d61a476a236526b725ec5a32e16342",
+        "rev": "2ee76c861af3b895b3b104bae04777b61397485b",
         "type": "github"
       },
       "original": {

@@ -8,4 +8,4 @@ set -euox pipefail
 
 HOST="23.88.17.207"
 
-clan secrets get zfs-key | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@${HOST}" "cat > /tmp/secret.key && zfs load-key -a"
+clan secrets get zfs-key | ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@${HOST}" "cat > /tmp/secret.key"
