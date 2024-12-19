@@ -1,4 +1,4 @@
-{ self, config, ... }:
+{ self, ... }:
 {
   imports = [
     self.nixosModules.web01
@@ -10,10 +10,6 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   clan.core.networking.targetHost = "root@23.88.17.207";
-  clan-infra.networking.ipv4.address = "23.88.17.207";
-  clan-infra.networking.ipv4.gateway = "23.88.17.193";
-  clan-infra.networking.ipv6.address =
-    config.systemd.network.networks."10-uplink".networkConfig.Address;
 
   system.stateVersion = "23.05";
 }
