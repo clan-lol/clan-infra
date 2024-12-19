@@ -24,7 +24,6 @@
       ];
       authorizedKeys = config.users.users.root.openssh.authorizedKeys.keys;
     };
-    udhcpc.enable = true;
   };
   boot.initrd.kernelModules = [
     # for debugging installation in vms
