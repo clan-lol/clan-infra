@@ -27,19 +27,6 @@ This will fail without the ZFS key so you can run the following script:
 $ ./targets/web01/copy-zfs-key.sh
 ```
 
-As activation won't fail even if the `initrd` SSH host keys are missing, you'll
-need to run `clan machines install` with `--no-reboot`:
-
-```
-$ clan machines install <host> --no-reboot
-```
-
-Now we can load in the `initrd` SSH host key:
-
-```
-$ ./targets/web01/copy-initrd-secrets.sh
-```
-
 Then we can run `clan machines install` which should finally succeed:
 
 ```

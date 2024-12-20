@@ -3,7 +3,7 @@
   boot.initrd.systemd.enable = false;
 
   clan.core.vars.generators.initrd-ssh = {
-    files."id_ed25519" = { };
+    files."id_ed25519".neededFor = "activation";
     files."id_ed25519.pub".secret = false;
     runtimeInputs = [
       pkgs.coreutils
