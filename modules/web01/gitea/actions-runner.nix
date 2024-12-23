@@ -1,4 +1,5 @@
 {
+  options,
   config,
   self,
   pkgs,
@@ -125,6 +126,16 @@ lib.mkMerge [
     # Format of the token file:
     virtualisation = {
       podman.enable = true;
+      podman.package = options.virtualisation.podman.package.default.overrideAttrs (old: {
+        patches = old.patches ++ [
+          (pkgs.fetchpatch2 {
+            url = "https://github.com/containers/storage/commit/99b0d2d423c8093807d8a1464437152cd04d7d95.diff?full_index=1";
+            hash = "sha256-aahYXnDf3qCOlb6MfVDqFKCcQG257r5sbh5qnL0T40I=";
+            stripLen = 1;
+            extraPrefix = "vendor/github.com/containers/storage/";
+          })
+        ];
+      });
       podman.extraPackages = [ pkgs.zfs ];
     };
 
