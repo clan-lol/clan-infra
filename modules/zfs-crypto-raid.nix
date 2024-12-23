@@ -29,13 +29,6 @@ in
 {
   networking.hostId = "8425e349";
 
-  boot.initrd.postDeviceCommands = ''
-    while ! test -f /tmp/decrypted; do
-      echo "wait for zfs to be decrypted"
-      sleep 1
-    done
-  '';
-
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
@@ -61,6 +54,21 @@ in
     script = ''
       dd if=/dev/urandom bs=32 count=1 | xxd -c32 -p > $out/key
     '';
+  };
+
+  boot.initrd.systemd.services.zfs-import-zroot = {
+    preStart = ''
+      while [ ! -f ${config.clan.core.vars.generators.zfs.files.key.path} ]; do
+        sleep 1
+      done
+    '';
+    unitConfig = {
+      StartLimitIntervalSec = 0;
+    };
+    serviceConfig = {
+      RestartSec = "1s";
+      Restart = "on-failure";
+    };
   };
 
   disko.devices = {

@@ -15,4 +15,4 @@ while ! timeout 10 ssh -p 2222 "root@$HOST" true; do
   sleep 1
 done
 
-clan vars get web01 zfs/key | ssh -p 2222 "root@${HOST}" "zpool import -f -a || (mkdir -p /tmp/zfs && cat > /tmp/zfs/key && zfs load-key -a && touch /tmp/decrypted)"
+clan vars get web01 zfs/key | ssh -p 2222 "root@${HOST}" "mkdir -p /tmp/zfs && cat > /tmp/zfs/key"
