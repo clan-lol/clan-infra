@@ -1,3 +1,4 @@
+{ config, pkgs, ... }:
 let
   mirrorBoot = idx: {
     type = "disk";
@@ -51,6 +52,17 @@ in
     ];
   };
 
+  clan.core.vars.generators.zfs = {
+    files.key.neededFor = "partitioning";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.xxd
+    ];
+    script = ''
+      dd if=/dev/urandom bs=32 count=1 | xxd -c32 -p > $out/key
+    '';
+  };
+
   disko.devices = {
     disk = {
       x = mirrorBoot "0";
@@ -70,7 +82,7 @@ in
               mountpoint = "none";
               encryption = "aes-256-gcm";
               keyformat = "hex";
-              keylocation = "file:///tmp/secret.key";
+              keylocation = "file://${config.clan.core.vars.generators.zfs.files.key.path}";
             };
           };
           "root/nixos" = {

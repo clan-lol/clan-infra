@@ -14,23 +14,10 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
 
 ## Install a new server
 
-First you need to run `clan machines install` to `kexec` into the NixOS
-installer:
+To install the system, you can run the following command:
 
 ```
-$ clan machines install --update-hardware-config nixos-facter <host>
-```
-
-This will fail without the ZFS key so you can run the following script:
-
-```
-$ ./targets/web01/copy-zfs-key.sh
-```
-
-Then we can run `clan machines install` which should finally succeed:
-
-```
-$ clan machines install <host> --no-reboot
+$ clan machines install <host> --update-hardware-config nixos-facter --no-reboot
 ```
 
 Then you can run the following script to reboot the machine and unlock the
