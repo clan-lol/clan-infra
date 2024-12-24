@@ -15,4 +15,4 @@ while ! timeout 10 ssh -p 2222 "root@$HOST" true; do
   sleep 1
 done
 
-clan vars get web01 zfs/key | ssh -p 2222 "root@${HOST}" "mkdir -p /tmp/zfs && cat > /tmp/zfs/key"
+clan vars get web01 zfs/key | ssh -p 2222 "root@${HOST}" "mkdir -p /run/secrets/zfs && cat > /run/secrets/zfs/key"
