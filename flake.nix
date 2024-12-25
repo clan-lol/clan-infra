@@ -26,7 +26,7 @@
     # Use the version of nixpkgs that has been tested to work with SrvOS
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
