@@ -1,10 +1,10 @@
 {
   description = "Dependencies to deploy a clan";
 
-  #nixConfig = {
-  #  extra-substituters = [ "https://cache.clan.lol" ];
-  #  extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
-  #};
+  nixConfig = {
+    extra-substituters = [ "https://cache.clan.lol" ];
+    extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
+  };
 
   inputs = {
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=nixos-unstable-small&shallow=1";
