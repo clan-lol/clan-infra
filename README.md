@@ -12,6 +12,21 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
   - RAM: 64GB DDR5
   - Drives: 2 x 1.92 TB NVME
 
+## Install a new server
+
+To install the system, you can run the following command:
+
+```
+$ clan machines install <host> --update-hardware-config nixos-facter --no-reboot
+```
+
+Then you can run the following script to reboot the machine and unlock the
+encrypted root filesystem:
+
+```
+$ ./targets/web01/reboot.sh
+```
+
 ## To deploy a server i.e. web01:
 
 ```

@@ -22,11 +22,10 @@
       inputs.flake-compat.follows = "flake-compat";
     };
 
-    srvos.url = "github:numtide/srvos";
-    # Use the version of nixpkgs that has been tested to work with SrvOS
+    srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
+    clan-core.url = "https://git.clan.lol/Enzime/clan-core/archive/push-uztzsrkssnzq.tar.gz";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
@@ -45,6 +44,7 @@
         systems = [
           "x86_64-linux"
           "aarch64-linux"
+          "aarch64-darwin"
         ];
         imports = [
           inputs.clan-core.flakeModules.default

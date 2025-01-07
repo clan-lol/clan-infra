@@ -6,13 +6,13 @@
 
 set -euox pipefail
 
-HOST="clan.lol"
+HOST="23.88.17.207"
 
-while ! ping -4 -W 1 -c 1 "$HOST"; do
+while ! ping -W 1 -c 1 "$HOST"; do
   sleep 1
 done
-while ! timeout 4 ssh -p 2222 "root@$HOST" true; do
+while ! timeout 10 ssh -p 2222 "root@$HOST" true; do
   sleep 1
 done
 
-clan secrets get zfs-key | ssh -p 2222 "root@${HOST}" "zpool import -f -a; cat > /tmp/secret.key && zfs load-key -a && touch /tmp/decrypted"
+clan vars get web01 zfs/key | ssh -p 2222 "root@${HOST}" "mkdir -p /run/secrets/zfs && cat > /run/secrets/zfs/key"

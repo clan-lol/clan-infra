@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 
-HOST=clan.lol
+HOST=23.88.17.207
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-ssh "root@$HOST" reboot
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOST" reboot
 # wait till shutdown
-while ping -4 -W 1 -c 1 "$HOST"; do
+while ping -W 1 -c 1 "$HOST"; do
   sleep 1
 done
 
