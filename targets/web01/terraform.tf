@@ -3,8 +3,8 @@ terraform {
 }
 
 locals {
-  ipv4_address = "65.21.12.51"
-  ipv6_address = "2a01:4f9:3080:418b::1"
+  ipv4_address = "23.88.17.207"
+  ipv6_address = "2a01:4f8:2220:1565::1"
 }
 
 terraform {
