@@ -7,7 +7,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=nixos-unstable-small&shallow=1";
+    # Switched to master because of https://github.com/NixOS/nixpkgs/commit/1d862bb44eb607a59e4698f2afcf99698db94a26
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=master&shallow=1";
+    #nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=nixpkgs-unstable&shallow=1";
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
