@@ -1,13 +1,15 @@
 {
   description = "Dependencies to deploy a clan";
 
-  #nixConfig = {
-  #  extra-substituters = [ "https://cache.clan.lol" ];
-  #  extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
-  #};
+  nixConfig = {
+    extra-substituters = [ "https://cache.clan.lol" ];
+    extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
+  };
 
   inputs = {
-    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=nixos-unstable-small&shallow=1";
+    # Switched to master because of https://github.com/NixOS/nixpkgs/commit/1d862bb44eb607a59e4698f2afcf99698db94a26
+    nixpkgs.url = "git+https://github.com/Mic92/nixpkgs?ref=matrix-synapse&shallow=1";
+    #nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?ref=nixpkgs-unstable&shallow=1";
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -18,7 +20,7 @@
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-24_05.follows = "";
+      inputs.nixpkgs-24_11.follows = "";
       inputs.flake-compat.follows = "flake-compat";
     };
 
