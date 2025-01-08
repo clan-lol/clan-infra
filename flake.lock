@@ -30,15 +30,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1736093208,
-        "narHash": "sha256-4oe8aOk/3xC5SZta4saSVW1GP5uFWwBEBXvDb2Um+rA=",
-        "owner": "Mic92",
+        "lastModified": 1736345397,
+        "narHash": "sha256-f8cYPLu4D5xvM/+hwOUabOe186rui0J/L9on2TXdHYc=",
+        "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "194d97c82d5165738a8431e05c1fdd99e2642934",
+        "rev": "caff2493be58b39c16973f80ed7624e40c669043",
         "type": "github"
       },
       "original": {
-        "owner": "Mic92",
+        "owner": "nix-community",
+        "ref": "buildbot-gitea",
         "repo": "buildbot-nix",
         "type": "github"
       }
