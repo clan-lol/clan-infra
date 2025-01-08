@@ -200,6 +200,7 @@ lib.mkMerge [
               "~setdomainname"
               "~sethostname"
             ];
+            SupplementaryGroups = [ "podman" ];
             RestrictAddressFamilies = [
               "AF_INET"
               "AF_INET6"
