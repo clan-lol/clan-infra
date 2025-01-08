@@ -85,9 +85,12 @@
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=43200";
       '';
-      locations."/blog/2024/03/19/introducing-clan-full-stack-computing-redefined/".return = "307 https://clan.lol/blog/introduction-clan/";
-      locations."/blog/2024/05/25/jsonschema-converter/".return = "307 https://clan.lol/blog/json-schema-converter/";
-      locations."/blog/2024/06/24/backups/".return = "307 https://clan.lol/blog/declarative-backups-and-restore/";
+      locations."/blog/2024/03/19/introducing-clan-full-stack-computing-redefined/".return =
+        "307 https://clan.lol/blog/introduction-clan/";
+      locations."/blog/2024/05/25/jsonschema-converter/".return =
+        "307 https://clan.lol/blog/json-schema-converter/";
+      locations."/blog/2024/06/24/backups/".return =
+        "307 https://clan.lol/blog/declarative-backups-and-restore/";
       locations."/blog/2024/07/19/nixos-facter/".return = "307 https://clan.lol/blog/nixos-facter/";
       locations."/blog/2024/09/11/interfaces/".return = "307 https://clan.lol/blog/interfaces/";
 
