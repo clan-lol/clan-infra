@@ -212,19 +212,19 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1736258168,
-        "narHash": "sha256-iz3ci/xh0ABYgAo/MQnJtLzjNM0YFlD2cnnG5I/x7GU=",
-        "ref": "master",
-        "rev": "1d862bb44eb607a59e4698f2afcf99698db94a26",
+        "lastModified": 1736331458,
+        "narHash": "sha256-sHrVn57OSZ0ABStuxevVrfgmZKTamKwNW/0G+FUpgvo=",
+        "ref": "matrix-synapse",
+        "rev": "7b2d7afbcc73cb0719e0bae137ad16a5e8b9f746",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
+        "url": "https://github.com/Mic92/nixpkgs"
       },
       "original": {
-        "ref": "master",
+        "ref": "matrix-synapse",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
+        "url": "https://github.com/Mic92/nixpkgs"
       }
     },
     "root": {
