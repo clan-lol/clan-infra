@@ -82,6 +82,8 @@
                 "*.tfvars.sops.json"
                 "*nixos-vars.json"
                 "secrets.yaml"
+                "facter.json"
+                "secrets.auto.tfvars.sops.json"
               ];
 
               programs.nixfmt.enable = true;
