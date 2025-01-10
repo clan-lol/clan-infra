@@ -10,6 +10,7 @@
     ./postfix.nix
     ./jobs.nix
     ./matrix-synapse.nix
+    ./remote-builder.nix
     ../dev.nix
     self.inputs.clan-core.clanModules.zt-tcp-relay
   ];
