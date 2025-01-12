@@ -45,20 +45,9 @@ in
     ];
   };
 
-  clan.core.vars.generators.zfs = {
-    files.key.neededFor = "partitioning";
-    runtimeInputs = [
-      pkgs.coreutils
-      pkgs.xxd
-    ];
-    script = ''
-      dd if=/dev/urandom bs=32 count=1 | xxd -c32 -p > $out/key
-    '';
-  };
-
   boot.initrd.systemd.services.zfs-import-zroot = {
     preStart = ''
-      while [ ! -f ${config.clan.core.vars.generators.zfs.files.key.path} ]; do
+      while [ ! -f /tmp/secret.key ]; do
         sleep 1
       done
     '';
@@ -90,7 +79,7 @@ in
               mountpoint = "none";
               encryption = "aes-256-gcm";
               keyformat = "hex";
-              keylocation = "file://${config.clan.core.vars.generators.zfs.files.key.path}";
+              keylocation = "file:///tmp/secret.key";
             };
           };
           "root/nixos" = {
