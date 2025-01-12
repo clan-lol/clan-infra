@@ -27,7 +27,7 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "https://git.clan.lol/Enzime/clan-core/archive/push-uztzsrkssnzq.tar.gz";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
