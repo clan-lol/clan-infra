@@ -18,6 +18,7 @@
 
     # for flokli
     pkgs.kitty.terminfo
+    pkgs.ghostty.terminfo
   ];
 
   programs.bash = {
