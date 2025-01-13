@@ -1,23 +1,24 @@
 # clan-infra
 
-This repository contains nixos modules and terraform code that powers clan.lol.
-The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
+This repository contains nixos modules and terraform code that powers
+[clan.lol](https://clan.lol/). The website, git and Jitsi are currently hosted
+on [Hetzner](https://www.hetzner.com/).
 
 ## Servers
 
-- web01:
-  - Instance type:
-    [ax162-r](https://www.hetzner.com/dedicated-rootserver/ax162-r)
-  - CPU: AMD EPYC™ 9454P
-  - RAM: 256 GB DDR5 ECC
-  - Drives: 2 x 1.92 TB NVME
+## web01
 
-## Install a new server
+- Instance type: [ax162-r](https://www.hetzner.com/dedicated-rootserver/ax162-r)
+- CPU: AMD EPYC™ 9454P
+- RAM: 256 GB DDR5 ECC
+- Drives: 2 x 1.92 TB NVME
+
+### Initial setup
 
 To install the system, you can run the following command:
 
 ```
-$ clan machines install <host> --update-hardware-config nixos-facter --no-reboot
+$ clan machines install web01 --update-hardware-config nixos-facter --no-reboot
 ```
 
 Then you can run the following script to reboot the machine and unlock the
@@ -27,10 +28,29 @@ encrypted root filesystem:
 $ ./targets/web01/reboot.sh
 ```
 
-## To deploy a server i.e. web01:
+### Deploy new configuration
 
 ```
-$ clan machines update
+$ clan machines update web01
+```
+
+## jitsi01
+
+- Instance type: [cpx21](https://www.hetzner.com/cloud/)
+- CPU: 3 AMD vCPU cores
+- RAM: 4 GB
+- SSD: 80 GB
+
+### Initial setup
+
+```
+$ nix run clan-infra#jitsi01
+```
+
+### Deploy new configuration
+
+```
+$ clan machines update jitsi01
 ```
 
 ## Adding new users

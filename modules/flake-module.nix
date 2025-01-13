@@ -7,14 +7,18 @@
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 
-      { nixpkgs.pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; }
-
       ./admins.nix
     ];
 
     hetzner-ax162r.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./zfs-crypto-raid.nix
+      ./initrd-networking.nix
+    ];
+
+    hetzner-cpx21.imports = [
+      inputs.srvos.nixosModules.hardware-hetzner-cloud
+      ./zfs-single-disk.nix
       ./initrd-networking.nix
     ];
 
@@ -34,5 +38,13 @@
       inputs.nixos-mailserver.nixosModules.mailserver
       ./mailserver.nix
     ];
+
+    jitsi01.imports = [
+      self.nixosModules.server
+      ./jitsi.nix
+      ./dev.nix
+    ];
   };
+
+  flake.modules.terranix.base = ./terranix.nix;
 }

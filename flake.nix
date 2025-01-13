@@ -34,6 +34,16 @@
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
+
+    # OpenTofu support
+    # https://github.com/pedorich-n/terranix/pull/1
+    # https://github.com/terranix/terranix/pull/115
+    terranix.url = "github:Enzime/terranix/push-wwonultkklvl";
+    terranix.inputs.bats-assert.follows = "";
+    terranix.inputs.bats-support.follows = "";
+    terranix.inputs.flake-parts.follows = "flake-parts";
+    terranix.inputs.nixpkgs.follows = "nixpkgs";
+    terranix.inputs.terranix-examples.follows = "";
   };
 
   outputs =

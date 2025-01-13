@@ -3,10 +3,15 @@
 .terraform.lock.hcl
 secrets.auto.tfvars.json
 
-# git is our backup
-*.tfstate.backup
-
 # nix
 .direnv
 result*
 .pre-commit-config.yaml
+
+# terraform
+.terraform
+*.tfstate.backup
+*.tfstate.lock.info
+
+# terranix
+config.tf.json
