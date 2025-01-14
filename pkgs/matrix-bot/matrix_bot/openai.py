@@ -39,7 +39,7 @@ async def create_jsonl_data(
         for i in range(0, len(content_tokens), max_tokens):
             chunk = content_tokens[i : i + max_tokens]
             chunks.append(encoder.decode(chunk))
-            log.debug(f"Chunk {i/max_tokens}: {len(chunk)} tokens")
+            log.debug(f"Chunk {i / max_tokens}: {len(chunk)} tokens")
         return chunks
 
     encoder = tiktoken.encoding_for_model(model)
