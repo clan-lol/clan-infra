@@ -60,10 +60,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1736864179,
-        "narHash": "sha256-7yO5Dine5Cdf2O7hI7iROaK1kivhAWGVjRPFiWJ4S2c=",
+        "lastModified": 1737029797,
+        "narHash": "sha256-op/CtJjvdIVaK3V82DXmPvFy4c0jcMnk3WymvG2i+Q8=",
         "ref": "main",
-        "rev": "4bc84542e47f131a69b3f6f3564424b0618089e2",
+        "rev": "72ca99e2c7ce4f99d6b19db430a3a291cfb9d880",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
@@ -83,11 +83,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736437680,
-        "narHash": "sha256-9Sy17XguKdEU9M5peTrkWSlI/O5IAqjHzdzxbXnc30g=",
+        "lastModified": 1736711425,
+        "narHash": "sha256-8hKhPQuMtXfJi+4lPvw3FBk/zSJVHeb726Zo0uF1PP8=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "4d5d07d37ff773338e40a92088f45f4f88e509c8",
+        "rev": "f720e64ec37fa16ebba6354eadf310f81555cc07",
         "type": "github"
       },
       "original": {
@@ -176,11 +176,11 @@
     },
     "nixos-facter-modules": {
       "locked": {
-        "lastModified": 1734596637,
-        "narHash": "sha256-MRqwVAe3gsb88u4ME1UidmZFVCx+FEnoob0zkpO9DMY=",
+        "lastModified": 1736931726,
+        "narHash": "sha256-aY55yiifyo1XPPpbpH0kWlV1g2dNGBlx6622b7OK8ks=",
         "owner": "numtide",
         "repo": "nixos-facter-modules",
-        "rev": "536472754982bf03079b4b4e0261838a760587c0",
+        "rev": "fa11d87b61b2163efbb9aed7b7a5ae0299e5ab9c",
         "type": "github"
       },
       "original": {
@@ -252,15 +252,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1736515725,
-        "narHash": "sha256-4P99yL8vGehwzytkpP87eklBePt6aqeEC5JFsIzhfUs=",
-        "owner": "Mic92",
+        "lastModified": 1736953253,
+        "narHash": "sha256-shJxzy7qypjq9hpETQ3gJsBZXO5E3KR0INca/xwiVp4=",
+        "owner": "pinpox",
         "repo": "sops-nix",
-        "rev": "f214c1b76c347a4e9c8fb68c73d4293a6820d125",
+        "rev": "a7c6e64401b6dde13c0de90230cb64087c9d9693",
         "type": "github"
       },
       "original": {
-        "owner": "Mic92",
+        "owner": "pinpox",
+        "ref": "lazy-assertions",
         "repo": "sops-nix",
         "type": "github"
       }
