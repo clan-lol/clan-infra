@@ -12,7 +12,7 @@
       ./admins.nix
     ];
 
-    hetzner-ax102.imports = [
+    hetzner-ax162r.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./zfs-crypto-raid.nix
       ./initrd-networking.nix

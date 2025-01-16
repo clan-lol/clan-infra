@@ -7,9 +7,9 @@ The website and git hosting is currently on [hetzner](https://www.hetzner.com/).
 
 - web01:
   - Instance type:
-    [ex101](https://www.hetzner.com/de/dedicated-rootserver/ex101)
-  - CPU: Intel Core i9-13900 (24 cores / 32 threads)
-  - RAM: 64GB DDR5
+    [ax162-r](https://www.hetzner.com/dedicated-rootserver/ax162-r)
+  - CPU: AMD EPYC™ 9454P
+  - RAM: 256 GB DDR5 ECC
   - Drives: 2 x 1.92 TB NVME
 
 ## Install a new server
