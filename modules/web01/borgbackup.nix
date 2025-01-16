@@ -17,7 +17,6 @@ in
 
   clan.core.state.system.folders = [
     "/home"
-    "/etc"
     "/var"
     "/root"
   ];
