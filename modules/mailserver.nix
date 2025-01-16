@@ -3,14 +3,15 @@ let
   mailPassword =
     { service }:
     {
-      secret."${service}-password" = { };
-      secret."${service}-password-hash" = { };
-      generator.path = with pkgs; [
+      files."${service}-password" = { };
+      files."${service}-password-hash" = { };
+      migrateFact = "${service}-mail";
+      runtimeInputs = with pkgs; [
         coreutils
         xkcdpass
         mkpasswd
       ];
-      generator.script = ''
+      script = ''
         xkcdpass -n 4 -d - > $secrets/${service}-password
         cat $secrets/${service}-password | mkpasswd -s -m bcrypt > $secrets/${service}-password-hash
       '';
@@ -27,13 +28,13 @@ in
     localDnsResolver = false;
 
     loginAccounts."golem@clan.lol".hashedPasswordFile =
-      config.clan.core.facts.services.golem-mail.secret.golem-password-hash.path;
+      config.clan.core.vars.generators.golem-mail.files.golem-password-hash.path;
 
     loginAccounts."w@clan.lol".hashedPasswordFile =
-      config.clan.core.facts.services.w-mail.secret.w-password-hash.path;
+      config.clan.core.vars.generators.w-mail.files.w-password-hash.path;
 
     loginAccounts."gitea@clan.lol".hashedPasswordFile =
-      config.clan.core.facts.services.gitea-mail.secret.gitea-password-hash.path;
+      config.clan.core.vars.generators.gitea-mail.files.gitea-password-hash.path;
   };
 
   services.unbound = {
@@ -53,7 +54,7 @@ in
 
   security.acme.acceptTerms = true;
 
-  clan.core.facts.services.golem-mail = mailPassword { service = "golem"; };
-  clan.core.facts.services.w-mail = mailPassword { service = "w"; };
-  clan.core.facts.services.gitea-mail = mailPassword { service = "gitea"; };
+  clan.core.vars.generators.golem-mail = mailPassword { service = "golem"; };
+  clan.core.vars.generators.w-mail = mailPassword { service = "w"; };
+  clan.core.vars.generators.gitea-mail = mailPassword { service = "gitea"; };
 }
