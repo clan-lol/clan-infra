@@ -1,6 +1,6 @@
 { config, self, ... }:
 let
-  user = "u366395";
+  user = "u443083";
   host = "${user}.your-storagebox.de";
 in
 # Run this from the hetzner network
@@ -12,7 +12,7 @@ in
   # 100GB storagebox is under the nix-community hetzner account
   clan.borgbackup.destinations.${config.networking.hostName} = {
     repo = "${user}@${host}:/./borgbackup";
-    rsh = "ssh -oPort=23 -i ${config.clan.core.facts.services.borgbackup.secret."borgbackup.ssh".path}";
+    rsh = "ssh -oPort=23 -i ${config.clan.core.vars.generators.borgbackup.files."borgbackup.ssh".path}";
   };
 
   clan.core.state.system.folders = [
@@ -54,9 +54,8 @@ in
     # $ borg mount u359378@u359378.your-storagebox.de:/./borgbackup::web01-clan-lol-2023-07-21T14:12:22 /tmp/backup
 
     # Also enable ssh support in the storagebox web interface.
-    # By default the storage box is only accessible from the hetzner network.
-    # $ clan facts generate
-    # $ clan facts list web01 | jq .borgbackup.ssh.pub | ssh -p23 u359378@u359378.your-storagebox.de install-ssh-key
+    # By default the storage box is only accessible from the hetzner network, but you can temporarily enable ssh access from the internet.
+    # $ clan vars get web01 borgbackup/borgbackup.ssh.pub | ssh -p23 u359378@u359378.your-storagebox.de install-ssh-key
     preHook = ''
       set -x
     '';
