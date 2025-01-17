@@ -134,7 +134,7 @@ def clan_merge(
             else:
                 print(f"Merging {pr_message(pr)}")
                 data = dict(
-                    Do="merge",
+                    Do="rebase",
                 )
                 data_encoded = json.dumps(data).encode("utf8")
                 req = urllib.request.Request(
