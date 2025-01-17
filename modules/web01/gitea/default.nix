@@ -63,7 +63,8 @@ in
     settings.session.COOKIE_SECURE = true;
   };
 
-  sops.secrets."vars/gitea-mail/gitea-password".owner = lib.mkForce config.systemd.services.gitea.serviceConfig.User;
+  sops.secrets."vars/gitea-mail/gitea-password".owner =
+    lib.mkForce config.systemd.services.gitea.serviceConfig.User;
 
   services.nginx.virtualHosts."git.clan.lol" = publog {
     forceSSL = true;
