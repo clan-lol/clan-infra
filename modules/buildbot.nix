@@ -21,6 +21,8 @@
       "kenji"
       "hsjobeki"
       "lassulus"
+      "pinpox"
+      "brianmcgee"
     ];
 
     gitea = {
