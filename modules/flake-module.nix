@@ -16,8 +16,8 @@
       ./initrd-networking.nix
     ];
 
-    hetzner-cpx21.imports = [
-      inputs.srvos.nixosModules.hardware-hetzner-cloud
+    vultr-vc2.imports = [
+      inputs.srvos.nixosModules.hardware-vultr-vm
       ./zfs-single-disk.nix
       ./initrd-networking.nix
     ];

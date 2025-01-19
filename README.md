@@ -1,8 +1,9 @@
 # clan-infra
 
 This repository contains nixos modules and terraform code that powers
-[clan.lol](https://clan.lol/). The website, git and Jitsi are currently hosted
-on [Hetzner](https://www.hetzner.com/).
+[clan.lol](https://clan.lol/). The website and git are currently hosted on
+[Hetzner](https://www.hetzner.com/). The Jitsi server is hosted on
+[Vultr](https://www.vultr.com/).
 
 ## Servers
 
@@ -36,10 +37,10 @@ $ clan machines update web01
 
 ## jitsi01
 
-- Instance type: [cpx21](https://www.hetzner.com/cloud/)
-- CPU: 3 AMD vCPU cores
-- RAM: 4 GB
-- SSD: 80 GB
+- Instance type: [vc2-2c-2gb](https://www.vultr.com/pricing/#cloud-compute)
+- CPU: 2 Intel vCPU cores
+- RAM: 2 GB
+- SSD: 65 GB
 
 ### Initial setup
 

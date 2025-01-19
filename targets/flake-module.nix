@@ -43,9 +43,10 @@
           ];
           terraformWrapper.package = pkgs.opentofu.withPlugins (p: [
             p.external
-            p.hcloud
             p.local
             p.null
+            p.tls
+            p.vultr
           ]);
           terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
           terraformWrapper.prefixText = ''

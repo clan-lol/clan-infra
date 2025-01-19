@@ -1,11 +1,16 @@
-{ self, ... }:
+{ self, lib, ... }:
 {
   imports = [
     self.nixosModules.jitsi01
-    self.nixosModules.hetzner-cpx21
+    self.nixosModules.vultr-vc2
   ];
+  disabledModules = [
+    self.inputs.srvos.nixosModules.mixins-cloud-init
+  ];
+
   networking.hostName = "jitsi01";
-  systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4ff:1f0:9308::1/64";
+
+  boot.loader.grub.enable = lib.mkForce false;
 
   clan.core.sops.defaultGroups = [ "admins" ];
 

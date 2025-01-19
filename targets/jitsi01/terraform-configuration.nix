@@ -1,19 +1,24 @@
 { config, ... }:
 
 {
-  resource.hcloud_ssh_key.enzime = {
-    name = "enzime";
-    public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE";
+  resource.tls_private_key.ssh_deploy_key = {
+    algorithm = "ED25519";
   };
 
-  resource.hcloud_server.jitsi01 = {
-    name = "jitsi01";
-    image = "debian-12";
-    server_type = "cpx21";
-    location = "sin";
-    ssh_keys = [ (config.resource.hcloud_ssh_key.enzime "id") ];
-    shutdown_before_deletion = true;
-    backups = false;
+  resource.vultr_ssh_key.terraform = {
+    name = "clan-infra Terraform";
+    ssh_key = config.resource.tls_private_key.ssh_deploy_key "public_key_openssh";
+  };
+
+  resource.vultr_instance.jitsi01 = {
+    label = "jitsi01";
+    region = "sgp";
+    plan = "vc2-2c-2gb";
+    # Debian 12
+    os_id = 2136;
+    enable_ipv6 = true;
+    ssh_key_ids = [ (config.resource.vultr_ssh_key.terraform "id") ];
+    backups = "disabled";
   };
 
   resource.null_resource.nixos-remote = {
@@ -21,7 +26,7 @@
       instance_id = null;
     };
     provisioner.local-exec = {
-      command = "clan machines install jitsi01 --target-host root@${config.resource.hcloud_server.jitsi01 "ipv4_address"} --yes";
+      command = "clan machines install jitsi01 --update-hardware-config nixos-facter --target-host root@${config.resource.vultr_instance.jitsi01 "main_ip"} --yes";
     };
   };
 }
