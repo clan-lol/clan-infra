@@ -27,8 +27,6 @@ let
   };
 in
 {
-  networking.hostId = "8425e349";
-
   boot.loader.grub = {
     enable = true;
     efiSupport = true;

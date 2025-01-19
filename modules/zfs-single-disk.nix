@@ -1,7 +1,5 @@
 { config, pkgs, ... }:
 {
-  networking.hostId = "87fa8a2a";
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
