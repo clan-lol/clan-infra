@@ -5,6 +5,11 @@
     algorithm = "ED25519";
   };
 
+  resource.vultr_ssh_key.enzime = {
+    name = "Enzime";
+    ssh_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE";
+  };
+
   resource.vultr_ssh_key.terraform = {
     name = "clan-infra Terraform";
     ssh_key = config.resource.tls_private_key.ssh_deploy_key "public_key_openssh";
@@ -17,7 +22,10 @@
     # Debian 12
     os_id = 2136;
     enable_ipv6 = true;
-    ssh_key_ids = [ (config.resource.vultr_ssh_key.terraform "id") ];
+    ssh_key_ids = [
+      (config.resource.vultr_ssh_key.terraform "id")
+      (config.resource.vultr_ssh_key.enzime "id")
+    ];
     backups = "disabled";
   };
 
