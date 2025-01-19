@@ -54,6 +54,17 @@ $ nix run clan-infra#jitsi01
 $ clan machines update jitsi01
 ```
 
+### Redeploy server
+
+To redeploy the server without running `terraform destroy` which will take down
+the `clan.lol` DNS:
+
+```
+# Run `apply` script first to ensure `terraform init` gets run
+$ nix run clan-infra#jitsi01
+$ nix run clan-infra#jitsi01.terraform -- apply -replace "vultr_instance.jitsi01" -replace "null_resource.nixos-remote"
+```
+
 ## Adding new users
 
 Add them to the [configuration](modules/admins.nix).

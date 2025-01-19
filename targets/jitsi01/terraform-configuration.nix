@@ -40,8 +40,6 @@
     ttl = 3600;
   };
 
-  # TODO: terraform import hetznerdns_zone.clan_lol <id from web01>
-
   resource.hetznerdns_record.jitsi_a = {
     zone_id = config.resource.hetznerdns_zone.clan_lol "id";
     name = "jitsi";
