@@ -11,7 +11,7 @@ HOST="23.88.17.207"
 while ! ping -W 1 -c 1 "$HOST"; do
   sleep 1
 done
-while ! timeout 10 ssh -p 2222 "root@$HOST" true; do
+while ! timeout --foreground 10 ssh -p 2222 "root@$HOST" true; do
   sleep 1
 done
 
