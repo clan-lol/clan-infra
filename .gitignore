@@ -12,6 +12,7 @@ result*
 .terraform
 *.tfstate.backup
 *.tfstate.lock.info
+.terraform-deploy-key
 
 # terranix
 config.tf.json

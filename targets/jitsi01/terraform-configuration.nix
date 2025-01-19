@@ -1,8 +1,14 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   resource.tls_private_key.ssh_deploy_key = {
     algorithm = "ED25519";
+  };
+
+  resource.local_sensitive_file.ssh_deploy_key = {
+    filename = "${lib.tf.ref "path.module"}/.terraform-deploy-key";
+    file_permission = "600";
+    content = config.resource.tls_private_key.ssh_deploy_key "private_key_openssh";
   };
 
   resource.vultr_ssh_key.enzime = {
@@ -34,7 +40,7 @@
       instance_id = null;
     };
     provisioner.local-exec = {
-      command = "clan machines install jitsi01 --update-hardware-config nixos-facter --target-host root@${config.resource.vultr_instance.jitsi01 "main_ip"} --yes";
+      command = "clan machines install jitsi01 --update-hardware-config nixos-facter --target-host root@${config.resource.vultr_instance.jitsi01 "main_ip"} -i '${config.resource.local_sensitive_file.ssh_deploy_key "filename"}' --yes";
     };
   };
 }
