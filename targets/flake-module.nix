@@ -44,6 +44,7 @@
           terraformWrapper.package = pkgs.opentofu.withPlugins (p: [
             p.external
             p.local
+            p.hetznerdns
             p.null
             p.tls
             p.vultr

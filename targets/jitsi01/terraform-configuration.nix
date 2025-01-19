@@ -35,6 +35,27 @@
     backups = "disabled";
   };
 
+  resource.hetznerdns_zone.clan_lol = {
+    name = "clan.lol";
+    ttl = 3600;
+  };
+
+  # TODO: terraform import hetznerdns_zone.clan_lol <id from web01>
+
+  resource.hetznerdns_record.jitsi_a = {
+    zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+    name = "jitsi";
+    type = "A";
+    value = config.resource.vultr_instance.jitsi01 "main_ip";
+  };
+
+  resource.hetznerdns_record.jitsi_aaaa = {
+    zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+    name = "jitsi";
+    type = "AAAA";
+    value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
+  };
+
   resource.null_resource.nixos-remote = {
     triggers = {
       instance_id = null;
