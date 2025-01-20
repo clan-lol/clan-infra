@@ -1,6 +1,9 @@
 { config, lib, ... }:
 
 {
+  terraform.required_providers.local.source = "hashicorp/local";
+  terraform.required_providers.tls.source = "hashicorp/tls";
+
   resource.tls_private_key.ssh_deploy_key = {
     algorithm = "ED25519";
   };
@@ -33,11 +36,6 @@
       (config.resource.vultr_ssh_key.enzime "id")
     ];
     backups = "disabled";
-  };
-
-  resource.hetznerdns_zone.clan_lol = {
-    name = "clan.lol";
-    ttl = 3600;
   };
 
   resource.hetznerdns_record.jitsi_a = {

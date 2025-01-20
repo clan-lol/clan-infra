@@ -94,8 +94,7 @@ $ clan secrets groups add-user admins <user>
 ## Update DNS
 
 ```
-$ cd ./targets/web01
-$ ./tf.sh apply
+$ nix run clan-infra#dns
 ```
 
 ## To add a new project to CI
