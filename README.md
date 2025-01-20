@@ -62,7 +62,7 @@ the `clan.lol` DNS:
 ```
 # Run `apply` script first to ensure `terraform init` gets run
 $ nix run clan-infra#jitsi01
-$ nix run clan-infra#jitsi01.terraform -- apply -replace "vultr_instance.jitsi01" -replace "null_resource.nixos-remote"
+$ nix run clan-infra#jitsi01.terraform -- apply -replace "vultr_instance.jitsi01"
 ```
 
 ## Adding new users

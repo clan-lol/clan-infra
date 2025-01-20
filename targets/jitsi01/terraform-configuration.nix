@@ -73,7 +73,7 @@
 
   resource.null_resource.nixos-remote = {
     triggers = {
-      instance_id = null;
+      instance_id = config.resource.vultr_instance.jitsi01 "id";
     };
     provisioner.local-exec = {
       command = "clan machines install jitsi01 --update-hardware-config nixos-facter --target-host root@${config.resource.vultr_instance.jitsi01 "main_ip"} -i '${config.resource.local_sensitive_file.ssh_deploy_key "filename"}' --yes";
