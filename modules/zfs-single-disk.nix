@@ -29,6 +29,8 @@
     };
   };
 
+  boot.zfs.devNodes = "/dev/disk/by-path";
+
   disko.devices = {
     disk = {
       primary = {
