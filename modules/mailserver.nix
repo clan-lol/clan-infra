@@ -18,6 +18,10 @@ let
     };
 in
 {
+  imports = [
+    ./acme.nix
+  ];
+
   mailserver = {
     enable = true;
     fqdn = "mail.clan.lol";
@@ -51,8 +55,6 @@ in
 
   # use local unbound as dns resolver
   networking.nameservers = [ "127.0.0.1" ];
-
-  security.acme.acceptTerms = true;
 
   clan.core.vars.generators.golem-mail = mailPassword { service = "golem"; };
   clan.core.vars.generators.w-mail = mailPassword { service = "w"; };
