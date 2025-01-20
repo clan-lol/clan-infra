@@ -1,8 +1,15 @@
-{ config, lib, ... }:
+{
+  config',
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   terraform.required_providers.local.source = "hashicorp/local";
   terraform.required_providers.tls.source = "hashicorp/tls";
+  terraform.required_providers.hetznerdns.source = "timohirt/hetznerdns";
 
   resource.tls_private_key.ssh_deploy_key = {
     algorithm = "ED25519";
@@ -38,15 +45,27 @@
     backups = "disabled";
   };
 
+  module.dns = {
+    source = toString (
+      pkgs.linkFarm "dns-module" [
+        {
+          name = "config.tf.json";
+          path = config'.terranix.terranixConfigurations.dns.result.terraformConfiguration;
+        }
+      ]
+    );
+    passphrase = lib.tf.ref "var.passphrase";
+  };
+
   resource.hetznerdns_record.jitsi_a = {
-    zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
     name = "jitsi";
     type = "A";
     value = config.resource.vultr_instance.jitsi01 "main_ip";
   };
 
   resource.hetznerdns_record.jitsi_aaaa = {
-    zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
     name = "jitsi";
     type = "AAAA";
     value = config.resource.vultr_instance.jitsi01 "v6_main_ip";

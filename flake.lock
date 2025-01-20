@@ -346,16 +346,16 @@
         "terranix-examples": []
       },
       "locked": {
-        "lastModified": 1736990583,
-        "narHash": "sha256-/44sxLAR8IPBod8vUn5OgMIlRnj61NcMkgs2p3Iv1SM=",
+        "lastModified": 1737337241,
+        "narHash": "sha256-gBtoYWlV79ocXsXFZIH9I+J0rmBtCz8NPwynG9LbHkc=",
         "owner": "Enzime",
         "repo": "terranix",
-        "rev": "c49b18807efacb70e179eb09b17816cf67c8e93f",
+        "rev": "df8728ace8ce6692a33fc87439b915260f857dee",
         "type": "github"
       },
       "original": {
         "owner": "Enzime",
-        "ref": "push-wwonultkklvl",
+        "ref": "terranix-plus",
         "repo": "terranix",
         "type": "github"
       }

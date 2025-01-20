@@ -93,8 +93,10 @@ $ clan secrets groups add-user admins <user>
 
 ## Update DNS
 
+Currently DNS can't be updated separately to `jitsi01`
+
 ```
-$ nix run clan-infra#dns
+$ nix run clan-infra#jitsi01
 ```
 
 ## To add a new project to CI

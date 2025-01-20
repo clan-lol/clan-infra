@@ -1,32 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, ... }:
 let
   base_ipv4 = "23.88.17.207";
   base_ipv6 = "2a01:4f8:2220:1565::1";
 in
 {
-  terraform.required_providers.external.source = "hashicorp/external";
-  terraform.required_providers.hetznerdns.source = "timohirt/hetznerdns";
-
-  data.external.hetznerdns-token = {
-    program = [
-      (lib.getExe (
-        pkgs.writeShellApplication {
-          name = "get-clan-secret";
-          text = ''
-            jq -n --arg secret "$(clan secrets get hetznerdns-token)" '{"secret":$secret}'
-          '';
-        }
-      ))
-    ];
-  };
-
-  provider.hetznerdns.apitoken = config.data.external.hetznerdns-token "result.secret";
-
   resource.hetznerdns_zone.clan_lol = {
     name = "clan.lol";
     ttl = 3600;
@@ -95,5 +72,9 @@ in
     name = "_dmarc";
     type = "TXT";
     value = "\"v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerc.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100\"";
+  };
+
+  output.clan_lol_zone_id = {
+    value = config.resource.hetznerdns_zone.clan_lol "id";
   };
 }

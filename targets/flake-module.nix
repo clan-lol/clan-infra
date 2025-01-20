@@ -27,42 +27,18 @@
 
   perSystem =
     {
+      self',
       inputs',
+      config,
       system,
       pkgs,
       lib,
       ...
     }:
     {
-      terranix = {
-        terranixConfigurations.dns = {
-          workdir = "targets/jitsi01";
-          modules = [
-            self.modules.terranix.base
-            self.modules.terranix.dns
-          ];
-          terraformWrapper.package = pkgs.opentofu.withPlugins (p: [
-            p.external
-            p.local
-            p.hetznerdns
-            p.null
-          ]);
-          terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
-          terraformWrapper.prefixText = ''
-            TF_VAR_passphrase=$(clan secrets get tf-passphrase)
-            export TF_VAR_passphrase
-          '';
-        };
-
-        terranixConfigurations.jitsi01 = {
-          workdir = "targets/jitsi01";
-          modules = [
-            self.modules.terranix.base
-            self.modules.terranix.dns
-            self.modules.terranix.vultr
-            ./jitsi01/terraform-configuration.nix
-          ];
-          terraformWrapper.package = pkgs.opentofu.withPlugins (p: [
+      terranix =
+        let
+          package = pkgs.opentofu.withPlugins (p: [
             p.external
             p.local
             p.hetznerdns
@@ -70,12 +46,38 @@
             p.tls
             p.vultr
           ]);
-          terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
-          terraformWrapper.prefixText = ''
-            TF_VAR_passphrase=$(clan secrets get tf-passphrase)
-            export TF_VAR_passphrase
-          '';
+        in
+        {
+          terranixConfigurations.dns = {
+            workdir = "targets/jitsi01";
+            modules = [
+              self.modules.terranix.base
+              self.modules.terranix.dns
+            ];
+            terraformWrapper.package = package;
+            terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
+            terraformWrapper.prefixText = ''
+              TF_VAR_passphrase=$(clan secrets get tf-passphrase)
+              export TF_VAR_passphrase
+            '';
+          };
+
+          terranixConfigurations.jitsi01 = {
+            workdir = "targets/jitsi01";
+            modules = [
+              self.modules.terranix.base
+              ./jitsi01/terraform-configuration.nix
+            ];
+            extraArgs = {
+              config' = config;
+            };
+            terraformWrapper.package = package;
+            terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
+            terraformWrapper.prefixText = ''
+              TF_VAR_passphrase=$(clan secrets get tf-passphrase)
+              export TF_VAR_passphrase
+            '';
+          };
         };
-      };
     };
 }
