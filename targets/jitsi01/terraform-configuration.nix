@@ -34,7 +34,7 @@
   resource.vultr_instance.jitsi01 = {
     label = "jitsi01";
     region = "sgp";
-    plan = "vc2-2c-2gb";
+    plan = "vc2-2c-4gb";
     # Debian 12
     os_id = 2136;
     enable_ipv6 = true;

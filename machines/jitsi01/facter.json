@@ -1716,7 +1716,7 @@
         },
         "unix_device_names": [
           "/dev/cdrom",
-          "/dev/disk/by-diskseq/12",
+          "/dev/disk/by-diskseq/11",
           "/dev/disk/by-id/ata-QEMU_DVD-ROM_QM00005",
           "/dev/disk/by-path/pci-0000:00:1f.2-ata-3",
           "/dev/disk/by-path/pci-0000:00:1f.2-ata-3.0",
@@ -1897,7 +1897,7 @@
         "resources": [
           {
             "type": "disk_geo",
-            "cylinders": 135233,
+            "cylinders": 166440,
             "heads": 16,
             "sectors": 63,
             "size": 0,
@@ -1906,7 +1906,7 @@
           {
             "type": "size",
             "unit": "sectors",
-            "value_1": 136314880,
+            "value_1": 167772160,
             "value_2": 512
           }
         ],
@@ -2046,7 +2046,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.9 xhci-hcd",
+          "name": "Linux 6.12.10 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -2060,7 +2060,7 @@
           "value": 0
         },
         "serial": "0000:04:00.0",
-        "model": "Linux 6.12.9 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.12.10 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:02.2/0000:04:00.0/usb1/1-0:1.0",
         "sysfs_bus_id": "1-0:1.0",
         "resources": [
@@ -2129,7 +2129,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.9 xhci-hcd",
+          "name": "Linux 6.12.10 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -2143,7 +2143,7 @@
           "value": 0
         },
         "serial": "0000:04:00.0",
-        "model": "Linux 6.12.9 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.12.10 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:02.2/0000:04:00.0/usb2/2-0:1.0",
         "sysfs_bus_id": "2-0:1.0",
         "detail": {
@@ -2202,14 +2202,14 @@
           {
             "type": "mem",
             "base": 0,
-            "range": 2061656064,
+            "range": 4104531968,
             "enabled": true,
             "access": "read_write",
             "prefetch": "unknown"
           },
           {
             "type": "phys_mem",
-            "range": 2013265920
+            "range": 4026531840
           }
         ]
       }
@@ -3555,7 +3555,7 @@
           "name": "Multi-bit",
           "value": 6
         },
-        "max_size": 2097152,
+        "max_size": 4194304,
         "error_handle": 65534,
         "slots": 1
       }
@@ -3566,6 +3566,13 @@
         "array_handle": 4096,
         "start_address": 0,
         "end_address": 2147483648,
+        "part_width": 1
+      },
+      {
+        "handle": 4865,
+        "array_handle": 4096,
+        "start_address": 4294967296,
+        "end_address": 6442450944,
         "part_width": 1
       }
     ],
@@ -3580,7 +3587,7 @@
         "error_handle": 65534,
         "width": 0,
         "ecc_bits": 0,
-        "size": 2097152,
+        "size": 4194304,
         "form_factor": {
           "hex": "0009",
           "name": "DIMM",
