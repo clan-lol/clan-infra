@@ -65,6 +65,16 @@ $ nix run clan-infra#jitsi01
 $ nix run clan-infra#jitsi01.terraform -- apply -replace "vultr_instance.jitsi01"
 ```
 
+### Destroy server
+
+To destroy just the server without taking down the `clan.lol` DNS:
+
+```
+# Run `apply` script first to ensure `terraform init` gets run
+$ nix run clan-infra#jitsi01
+$ nix run clan-infra#jitsi01.terraform -- destroy -target "vultr_instance.jitsi01"
+```
+
 ## Adding new users
 
 Add them to the [configuration](modules/admins.nix).
