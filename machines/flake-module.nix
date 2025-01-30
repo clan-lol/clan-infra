@@ -11,9 +11,6 @@
       inherit (self) inputs nixosModules packages;
     };
     directory = self;
-    machines.jitsi01 = {
-      imports = [ ./jitsi01/configuration.nix ];
-    };
     inventory.services = {
       sshd.clan = {
         roles.server.tags = [ "all" ];

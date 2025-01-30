@@ -61,7 +61,7 @@
           inputs.clan-core.flakeModules.default
           inputs.treefmt-nix.flakeModule
           ./devShells/flake-module.nix
-          ./targets/flake-module.nix
+          ./machines/flake-module.nix
           ./modules/flake-module.nix
           ./pkgs/flake-module.nix
         ];
