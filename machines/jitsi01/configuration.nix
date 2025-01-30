@@ -8,8 +8,6 @@
     self.inputs.srvos.nixosModules.mixins-cloud-init
   ];
 
-  networking.hostName = "jitsi01";
-
   boot.loader.grub.enable = lib.mkForce false;
 
   clan.core.sops.defaultGroups = [ "admins" ];
