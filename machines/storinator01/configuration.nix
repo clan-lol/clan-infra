@@ -12,5 +12,5 @@
 
   clan.core.sops.defaultGroups = [ "admins" ];
 
-  clan.core.networking.targetHost = "root@jitsi.clan.lol";
+  clan.core.networking.targetHost = "root@10.0.200.23";
 }
