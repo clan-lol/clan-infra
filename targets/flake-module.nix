@@ -11,9 +11,6 @@
       inherit (self) inputs nixosModules packages;
     };
     directory = self;
-    machines.web01 = {
-      imports = [ ./web01/configuration.nix ];
-    };
     machines.jitsi01 = {
       imports = [ ./jitsi01/configuration.nix ];
     };
