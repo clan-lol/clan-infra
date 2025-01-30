@@ -44,6 +44,10 @@
       ./jitsi.nix
       ./dev.nix
     ];
+
+    storinator.imports = [
+      self.nixosModules.server
+    ];
   };
 
   flake.modules.terranix.base = ./terranix/base.nix;
