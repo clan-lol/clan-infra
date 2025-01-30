@@ -15,6 +15,7 @@
       sshd.clan = {
         roles.server.tags = [ "all" ];
         roles.client.tags = [ "all" ];
+        config.certificate.searchDomains = [ "clan.lol" ];
       };
     };
   };
