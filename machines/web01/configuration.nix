@@ -9,6 +9,4 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   clan.core.networking.targetHost = "root@23.88.17.207";
-
-  system.stateVersion = "23.05";
 }

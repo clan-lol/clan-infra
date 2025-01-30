@@ -13,6 +13,4 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   clan.core.networking.targetHost = "root@jitsi.clan.lol";
-
-  system.stateVersion = "25.05";
 }
