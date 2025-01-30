@@ -57,6 +57,6 @@
       muc_component = "conference.jitsi.clan.lol"
       breakout_component = "breakout.jitsi.clan.lol"
 
-      api_prefix = "http://matrixpresence.0cx.de:8227"
+      api_prefix = "http://matrixpresence.0cx.de:8228"
   '';
 }
