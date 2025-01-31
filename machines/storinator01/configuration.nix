@@ -3,6 +3,7 @@
   imports = [
     self.nixosModules.jitsi01
     self.nixosModules.vultr-vc2
+    ./disko.nix
   ];
   disabledModules = [
     self.inputs.srvos.nixosModules.mixins-cloud-init
