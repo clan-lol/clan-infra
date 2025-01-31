@@ -29,16 +29,30 @@ let
     "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LGG06AF"
     "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_8LGNBZKN"
   ];
+  spares = [
+    "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_8LGNEXMK"
+  ];
 in
-# TODO do something with those
-# spares = [
-#   "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_8LGNEXMK"
-# ];
 {
+
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    mirroredBoots = lib.imap0 (
+      i: disk: {
+        path = "/boot${builtins.toString i}";
+        devices = [ "nodev" ];
+      }
+    );
+  };
+
+  boot.loader.efi.canTouchEfiVariables = true;
+
   disko.devices = {
     disk =
       (lib.listToAttrs (
-        map (disk: {
+        lib.imap0 (i: disk: {
           name = "os-${hashDisk disk}";
           value = {
             type = "disk";
@@ -52,7 +66,7 @@ in
                   content = {
                     type = "filesystem";
                     format = "vfat";
-                    mountpoint = "/boot";
+                    mountpoint = "/boot${builtins.toString i}";
                     mountOptions = [ "nofail" ];
                   };
                 };
@@ -80,6 +94,19 @@ in
             };
           };
         }) (vdev1 ++ vdev2 ++ vdev3)
+      ))
+      // (lib.listToAttrs (
+        map (disk: {
+          name = "spare-${hashDisk disk}";
+          value = {
+            type = "disk";
+            device = disk;
+            content = {
+              type = "zfs";
+              pool = "zdata";
+            };
+          };
+        }) spares
       ));
     zpool = {
       zroot = {
@@ -141,6 +168,7 @@ in
                 members = vdev3;
               }
             ];
+            spare = [ "spare" ];
           };
         };
         datasets = {

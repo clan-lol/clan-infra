@@ -1,8 +1,7 @@
 { self, lib, ... }:
 {
   imports = [
-    self.nixosModules.jitsi01
-    self.nixosModules.vultr-vc2
+    self.nixosModules.storinator
     ./disko.nix
   ];
   disabledModules = [
