@@ -14,6 +14,7 @@
   # Rate limiting settings
   # we need to up this to be able to support matrix bots
   services.matrix-synapse.settings = {
+    max_upload_size = "150M";
     rc_login = {
       address = {
         per_second = 20;
