@@ -9,7 +9,7 @@
     users.users = lib.mkOption {
       type = lib.types.attrsOf (
         lib.types.submodule (
-          { name, config, ... }:
+          { name, ... }:
           {
             options.gitea.username = lib.mkOption {
               type = lib.types.str;
@@ -27,6 +27,7 @@
   };
 
   config = {
+
     users.users = {
       mic92 = {
         isNormalUser = true;
@@ -126,6 +127,7 @@
       );
     };
 
+    programs.zsh.enable = true;
     security.sudo.wheelNeedsPassword = false;
   };
 }
