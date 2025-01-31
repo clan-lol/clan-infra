@@ -13,13 +13,11 @@
 
     hetzner-ax162r.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
-      ./zfs-crypto-raid.nix
       ./initrd-networking.nix
     ];
 
     vultr-vc2.imports = [
       inputs.srvos.nixosModules.hardware-vultr-vm
-      ./zfs-single-disk.nix
       ./initrd-networking.nix
     ];
 
