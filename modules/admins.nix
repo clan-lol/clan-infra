@@ -80,6 +80,15 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXQJb6ZOU2OxSYOXZRKMNo66rbytOvm2Xi7uFzK8x3y" # builder key
       ];
     };
+    pinpox = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      shell = pkgs.zsh;
+      uid = 1009;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILSJJs01RqXS6YE5Jf8LUJoJVBxFev3R18FWXJyLeYJE"
+      ];
+    };
 
     root.openssh.authorizedKeys.keys = builtins.concatMap (user: user.openssh.authorizedKeys.keys) (
       builtins.attrValues (
