@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   services.buildbot-nix.master = {
     enable = true;
@@ -15,15 +15,13 @@
 
     authBackend = "gitea";
 
-    admins = [
-      "Qubasa"
-      "DavHau"
-      "kenji"
-      "hsjobeki"
-      "lassulus"
-      "pinpox"
-      "brianmcgee"
-    ];
+    admins =
+      lib.mapAttrsToList (_: user: user.gitea.username) (
+        lib.filterAttrs (_: user: user.isNormalUser) config.users.users
+      )
+      ++ [
+        "brianmcgee"
+      ];
 
     gitea = {
       enable = true;
