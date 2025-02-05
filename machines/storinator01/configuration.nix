@@ -4,6 +4,9 @@
     self.nixosModules.storinator
     ./disko.nix
   ];
+
+  systemd.services."serial-getty@ttyS0".enable = true;
+
   disabledModules = [
     self.inputs.srvos.nixosModules.mixins-cloud-init
   ];
