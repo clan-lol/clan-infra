@@ -39,15 +39,11 @@ in
     enable = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
-    mirroredBoots = lib.imap0 (
-      i: disk: {
-        path = "/boot${builtins.toString i}";
-        devices = [ "nodev" ];
-      }
-    );
+    mirroredBoots = lib.imap0 (i: disk: {
+      path = "/boot${builtins.toString i}";
+      devices = [ "nodev" ];
+    }) os;
   };
-
-  boot.loader.efi.canTouchEfiVariables = true;
 
   disko.devices = {
     disk =
@@ -168,7 +164,7 @@ in
                 members = vdev3;
               }
             ];
-            spare = [ "spare" ];
+            spare = spares;
           };
         };
         datasets = {
