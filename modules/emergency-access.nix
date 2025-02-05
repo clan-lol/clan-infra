@@ -3,7 +3,7 @@
   boot.initrd.systemd.emergencyAccess =
     config.clan.core.vars.generators.emergency-access.files.password-hash.value;
 
-  clan.core.vars.generators.emergency-password = {
+  clan.core.vars.generators.emergency-access = {
     runtimeInputs = [
       pkgs.coreutils
       pkgs.mkpasswd
