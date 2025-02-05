@@ -4,7 +4,10 @@
     server.imports = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.mixins-telegraf
+
+      inputs.clan-core.clanModules.root-password
       inputs.clan-core.clanModules.state-version
+
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 

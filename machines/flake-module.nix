@@ -22,12 +22,9 @@
 
   perSystem =
     {
-      self',
       inputs',
       config,
-      system,
       pkgs,
-      lib,
       ...
     }:
     {
