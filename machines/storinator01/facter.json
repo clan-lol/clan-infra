@@ -1061,7 +1061,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/8",
+          "/dev/disk/by-diskseq/6",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LGG06AF",
           "/dev/disk/by-id/wwn-0x5000cca2b3c65df6",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy2-lun-0",
@@ -1144,7 +1144,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/17",
+          "/dev/disk/by-diskseq/15",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT0BV94",
           "/dev/disk/by-id/wwn-0x5000c500e48d1e67",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy1-lun-0",
@@ -1227,7 +1227,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/6",
+          "/dev/disk/by-diskseq/4",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT6C0TP",
           "/dev/disk/by-id/wwn-0x5000c500e5e7d6c6",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy0-lun-0",
@@ -1310,7 +1310,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/15",
+          "/dev/disk/by-diskseq/13",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT8ML92",
           "/dev/disk/by-id/wwn-0x5000c500e66b4106",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy19-lun-0",
@@ -1398,7 +1398,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/23",
+          "/dev/disk/by-diskseq/29",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LGD7M5N",
           "/dev/disk/by-id/wwn-0x5000cca2b3c5910d",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy7-lun-0",
@@ -1570,7 +1570,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/13",
+          "/dev/disk/by-diskseq/11",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT1D6LS",
           "/dev/disk/by-id/wwn-0x5000c500e549d958",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy7-lun-0",
@@ -1653,7 +1653,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/21",
+          "/dev/disk/by-diskseq/27",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT2D5MZ",
           "/dev/disk/by-id/wwn-0x5000c500e514f1cd",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy5-lun-0",
@@ -1741,7 +1741,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/11",
+          "/dev/disk/by-diskseq/9",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LG8LEXK",
           "/dev/disk/by-id/wwn-0x5000cca2b3c3e839",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy5-lun-0",
@@ -1829,7 +1829,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/19",
+          "/dev/disk/by-diskseq/17",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_8LGNBZKN",
           "/dev/disk/by-id/wwn-0x5000cca2c7c9446a",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy3-lun-0",
@@ -1912,7 +1912,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/9",
+          "/dev/disk/by-diskseq/7",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT1MVDX",
           "/dev/disk/by-id/wwn-0x5000c500e4ccb180",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy3-lun-0",
@@ -2000,7 +2000,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/7",
+          "/dev/disk/by-diskseq/5",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LGBP47K",
           "/dev/disk/by-id/wwn-0x5000cca2b3c54f6d",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy1-lun-0",
@@ -2088,7 +2088,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/16",
+          "/dev/disk/by-diskseq/14",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LG7KE5K",
           "/dev/disk/by-id/wwn-0x5000cca2b3c37002",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy0-lun-0",
@@ -2171,7 +2171,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/24",
+          "/dev/disk/by-diskseq/30",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT09C24",
           "/dev/disk/by-id/wwn-0x5000c500e54af8d9",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy18-lun-0",
@@ -2260,7 +2260,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/5",
+          "/dev/disk/by-diskseq/3",
           "/dev/disk/by-id/usb-Samsung_Flash_Drive_FIT_0345024100001585-0:0",
           "/dev/disk/by-path/pci-0000:00:14.0-usb-0:1:1.0-scsi-0:0:0:0",
           "/dev/disk/by-path/pci-0000:00:14.0-usbv3-0:1:1.0-scsi-0:0:0:0",
@@ -2356,7 +2356,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/14",
+          "/dev/disk/by-diskseq/12",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LG5EBDK",
           "/dev/disk/by-id/wwn-0x5000cca2b3c27809",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy18-lun-0",
@@ -2439,7 +2439,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/22",
+          "/dev/disk/by-diskseq/28",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT0HC29",
           "/dev/disk/by-id/wwn-0x5000c500e4bf9fc9",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy6-lun-0",
@@ -2616,7 +2616,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/12",
+          "/dev/disk/by-diskseq/10",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_2LG9U7JK",
           "/dev/disk/by-id/wwn-0x5000cca2b3c47619",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy6-lun-0",
@@ -2704,7 +2704,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/20",
+          "/dev/disk/by-diskseq/23",
           "/dev/disk/by-id/ata-WDC_WD201KFGX-68BKJN0_8LGNEXMK",
           "/dev/disk/by-id/wwn-0x5000cca2c7c94bb0",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy4-lun-0",
@@ -2787,7 +2787,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/10",
+          "/dev/disk/by-diskseq/8",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT8LKJK",
           "/dev/disk/by-id/wwn-0x5000c500e66affe2",
           "/dev/disk/by-path/pci-0000:17:00.0-sas-phy4-lun-0",
@@ -2870,7 +2870,7 @@
           "range": 16
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/18",
+          "/dev/disk/by-diskseq/16",
           "/dev/disk/by-id/ata-ST20000NE000-3G5101_ZVT0G6YB",
           "/dev/disk/by-id/wwn-0x5000c500e54afbdd",
           "/dev/disk/by-path/pci-0000:65:00.0-sas-phy2-lun-0",
@@ -3406,7 +3406,7 @@
           {
             "type": "mem",
             "base": 0,
-            "range": 134701129728,
+            "range": 134701133824,
             "enabled": true,
             "access": "read_write",
             "prefetch": "unknown"
@@ -3603,7 +3603,7 @@
           },
           {
             "type": "irq",
-            "base": 60,
+            "base": 63,
             "triggered": 0,
             "enabled": true
           },
@@ -3649,7 +3649,7 @@
           "command": 1350,
           "header_type": 0,
           "secondary_bus": 0,
-          "irq": 60,
+          "irq": 63,
           "prog_if": 0
         },
         "driver": "bnxt_en",
@@ -3724,7 +3724,7 @@
           },
           {
             "type": "irq",
-            "base": 110,
+            "base": 78,
             "triggered": 0,
             "enabled": true
           },
@@ -3770,7 +3770,7 @@
           "command": 1350,
           "header_type": 0,
           "secondary_bus": 0,
-          "irq": 110,
+          "irq": 78,
           "prog_if": 0
         },
         "driver": "bnxt_en",
@@ -4010,49 +4010,7 @@
     ],
     "network_interface": [
       {
-        "index": 204,
-        "attached_to": 151,
-        "class_list": [
-          "network_interface"
-        ],
-        "base_class": {
-          "hex": "0107",
-          "name": "Network Interface",
-          "value": 263
-        },
-        "sub_class": {
-          "hex": "0001",
-          "name": "Ethernet",
-          "value": 1
-        },
-        "model": "Ethernet network interface",
-        "sysfs_id": "/class/net/eno1",
-        "sysfs_device_link": "/devices/pci0000:00/0000:00:1c.6/0000:04:00.0",
-        "unix_device_name": "eno1",
-        "unix_device_names": [
-          "eno1"
-        ],
-        "resources": [
-          {
-            "type": "hwaddr",
-            "address": 55
-          },
-          {
-            "type": "phwaddr",
-            "address": 55
-          }
-        ],
-        "driver": "igb",
-        "driver_module": "igb",
-        "drivers": [
-          "igb"
-        ],
-        "driver_modules": [
-          "igb"
-        ]
-      },
-      {
-        "index": 205,
+        "index": 203,
         "attached_to": 71,
         "class_list": [
           "network_interface"
@@ -4094,7 +4052,7 @@
         ]
       },
       {
-        "index": 206,
+        "index": 205,
         "attached_to": 125,
         "class_list": [
           "network_interface"
@@ -4136,6 +4094,48 @@
         ]
       },
       {
+        "index": 206,
+        "attached_to": 129,
+        "class_list": [
+          "network_interface"
+        ],
+        "base_class": {
+          "hex": "0107",
+          "name": "Network Interface",
+          "value": 263
+        },
+        "sub_class": {
+          "hex": "0001",
+          "name": "Ethernet",
+          "value": 1
+        },
+        "model": "Ethernet network interface",
+        "sysfs_id": "/class/net/eno2",
+        "sysfs_device_link": "/devices/pci0000:00/0000:00:1c.7/0000:05:00.0",
+        "unix_device_name": "eno2",
+        "unix_device_names": [
+          "eno2"
+        ],
+        "resources": [
+          {
+            "type": "hwaddr",
+            "address": 55
+          },
+          {
+            "type": "phwaddr",
+            "address": 55
+          }
+        ],
+        "driver": "igb",
+        "driver_module": "igb",
+        "drivers": [
+          "igb"
+        ],
+        "driver_modules": [
+          "igb"
+        ]
+      },
+      {
         "index": 207,
         "attached_to": 0,
         "class_list": [
@@ -4160,7 +4160,7 @@
       },
       {
         "index": 208,
-        "attached_to": 129,
+        "attached_to": 151,
         "class_list": [
           "network_interface"
         ],
@@ -4175,11 +4175,11 @@
           "value": 1
         },
         "model": "Ethernet network interface",
-        "sysfs_id": "/class/net/eno2",
-        "sysfs_device_link": "/devices/pci0000:00/0000:00:1c.7/0000:05:00.0",
-        "unix_device_name": "eno2",
+        "sysfs_id": "/class/net/eno1",
+        "sysfs_device_link": "/devices/pci0000:00/0000:00:1c.6/0000:04:00.0",
+        "unix_device_name": "eno1",
         "unix_device_names": [
-          "eno2"
+          "eno1"
         ],
         "resources": [
           {
@@ -12065,7 +12065,7 @@
           },
           {
             "type": "irq",
-            "base": 55,
+            "base": 69,
             "triggered": 0,
             "enabled": true
           },
@@ -12091,7 +12091,7 @@
           "command": 1351,
           "header_type": 0,
           "secondary_bus": 0,
-          "irq": 55,
+          "irq": 69,
           "prog_if": 0
         },
         "driver": "mpt3sas",
