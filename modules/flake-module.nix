@@ -8,6 +8,7 @@
       # FIXME: switch to VPN later
       { networking.firewall.allowedTCPPorts = [ 9273 ]; }
 
+      ./emergency-access.nix
       ./admins.nix
     ];
 
