@@ -12,6 +12,20 @@
     };
     directory = self;
     inventory.services = {
+      zerotier.claninfra = {
+        roles.controller.machines = [ "web01" ];
+        roles.moon.machines = [
+          "jitsi01"
+        ];
+        machines.jitsi01.config = {
+          # jitsi.clan.lol
+          moon.stableEndpoints = [
+            "207.148.120.82"
+            "2401:c080:1400:5439:5400:5ff:fe43:3de5"
+          ];
+        };
+        roles.peer.tags = [ "all" ];
+      };
       sshd.clan = {
         roles.server.tags = [ "all" ];
         roles.client.tags = [ "all" ];
