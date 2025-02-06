@@ -14,6 +14,9 @@
     inventory.services = {
       zerotier.claninfra = {
         roles.controller.machines = [ "web01" ];
+        roles.controller.extraModules = [
+          "modules/zerotier.nix"
+        ];
         roles.moon.machines = [
           "jitsi01"
         ];
