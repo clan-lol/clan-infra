@@ -117,6 +117,17 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILSJJs01RqXS6YE5Jf8LUJoJVBxFev3R18FWXJyLeYJE"
         ];
       };
+      berwn = {
+        # Alex - Chiang Mai
+        isNormalUser = true;
+        extraGroups = [ "wheel" ];
+        shell = pkgs.bash;
+        uid = 1010;
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAB/raxJR8gASmquP63weHelbi+da2WBJR1DgzHPNz/f"
+        ];
+        gitea.username = "berwn";
+      };
 
       root.openssh.authorizedKeys.keys = builtins.concatMap (user: user.openssh.authorizedKeys.keys) (
         builtins.attrValues (
