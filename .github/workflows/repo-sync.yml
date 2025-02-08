@@ -23,6 +23,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
-          source_repo: "https://git.clan.lol/clan/clan-core.git"
+          source_repo: "https://git.clan.lol/clan/clan-infra.git"
           source_branch: "main"
           destination_branch: "main"
