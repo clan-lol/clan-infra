@@ -11,7 +11,10 @@
     # "cores" is the number of cpu cores the worker has.
     # The number must match as otherwise potentially not enought buildbot-workers are created.
     workersFile = config.sops.secrets.buildbot-workers-file.path;
-    buildSystems = [ "x86_64-linux" ];
+    buildSystems = [
+      "x86_64-linux"
+      "aarch64-darwin"
+    ];
 
     authBackend = "gitea";
 
