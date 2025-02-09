@@ -108,6 +108,8 @@
                 machinesPerSystem = {
                   x86_64-linux = [
                     "web01"
+                    "jitsi01"
+                    "storinator01"
                   ];
                 };
                 nixosMachines = lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
