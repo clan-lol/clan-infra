@@ -65,8 +65,10 @@
           ]);
         in
         {
+          # `nix run .#dns` will fail
+          # This is used as a module from the `terraform` terranix config
           terranixConfigurations.dns = {
-            workdir = "targets/jitsi01";
+            workdir = "terraform";
             modules = [
               self.modules.terranix.base
               self.modules.terranix.dns
@@ -79,8 +81,8 @@
             '';
           };
 
-          terranixConfigurations.jitsi01 = {
-            workdir = "targets/jitsi01";
+          terranixConfigurations.terraform = {
+            workdir = "terraform";
             modules = [
               self.modules.terranix.base
               ./jitsi01/terraform-configuration.nix
