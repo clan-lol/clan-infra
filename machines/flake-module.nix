@@ -86,6 +86,7 @@
             modules = [
               self.modules.terranix.base
               self.modules.terranix.vultr
+              ./demo01/terraform-configuration.nix
               ./jitsi01/terraform-configuration.nix
             ];
             extraArgs = {
