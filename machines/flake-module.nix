@@ -85,6 +85,7 @@
             workdir = "terraform";
             modules = [
               self.modules.terranix.base
+              self.modules.terranix.vultr
               ./jitsi01/terraform-configuration.nix
             ];
             extraArgs = {
