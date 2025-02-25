@@ -71,7 +71,7 @@
     value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
   };
 
-  resource.null_resource.nixos-remote = {
+  resource.null_resource.install-jitsi01 = {
     triggers = {
       instance_id = config.resource.vultr_instance.jitsi01 "id";
     };
