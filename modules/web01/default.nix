@@ -4,6 +4,7 @@
     ./borgbackup.nix
     ./clan-merge.nix
     ./gitea
+    ./outline.nix
     ./goaccess.nix
     ./harmonia.nix
     ./homepage.nix
