@@ -12,5 +12,5 @@
 
   clan.core.sops.defaultGroups = [ "admins" ];
 
-  clan.core.networking.targetHost = "root@demo01";
+  clan.core.networking.targetHost = "root@45.77.34.53";
 }

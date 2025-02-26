@@ -6,7 +6,7 @@
 
 set -euox pipefail
 
-HOST="clan.lol"
+HOST="45.77.34.53"
 
 while ! ping -W 1 -c 1 "$HOST"; do
   sleep 1
