@@ -21,7 +21,7 @@
 
     oidcAuthentication = {
       authUrl = "https://git.clan.lol/login/oauth/authorize";
-      clientId = "bd55e893-2720-4603-ac65-12229003147d";
+      clientId = "9df8407c-f03d-4f69-a31f-311df2789b8a";
       clientSecretFile = config.clan.core.vars.generators.outline.files.oidc-secret.path;
       displayName = "Gitea";
       tokenUrl = "https://git.clan.lol/login/oauth/access_token";
