@@ -1,4 +1,9 @@
-{ self, lib, ... }:
+{
+  self,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     self.nixosModules.jitsi01
@@ -13,4 +18,8 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   clan.core.networking.targetHost = "root@jitsi.clan.lol";
+
+  environment.systemPackages = [
+    pkgs.python3 # for sshuttle tunneling
+  ];
 }
