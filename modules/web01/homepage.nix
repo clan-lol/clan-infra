@@ -7,6 +7,7 @@
   users.users.www = {
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyHjnmRUbCw8EP350+4K0KOHPiTzTpTBrOQUzNINOrx gitea-ci"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGmAw62wkSAvzAKwZn3xFvCj+jUkOgp2arABA6PEbc8 clan-www2" # key for git.clan.lol/clan/data-mesher gitea-ci
     ];
     isSystemUser = true;
     shell = "/run/current-system/sw/bin/bash";
@@ -69,6 +70,22 @@
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
       locations."/blog/hello-world/".return = "307 https://clan.lol/blog/introduction-clan/";
+    };
+
+    virtualHosts."data-mesher.docs.clan.lol" = {
+      forceSSL = true;
+      enableACME = true;
+      # to be deployed via rsync
+      root = "/var/www/data-mesher.docs.clan.lol";
+      extraConfig = ''
+        charset utf-8;
+        source_charset utf-8;
+      '';
+
+      # Make sure to expire the cache after 12 hour
+      locations."/".extraConfig = ''
+        add_header Cache-Control "public, max-age=43200";
+      '';
     };
 
     virtualHosts."docs.clan.lol" = {
