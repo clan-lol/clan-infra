@@ -28,7 +28,7 @@
       userinfoUrl = "https://git.clan.lol/login/oauth/userinfo";
     };
 
-    publicUrl = "http://outline.clan.lol";
+    publicUrl = "https://outline.clan.lol";
     storage.storageType = "local";
   };
 
