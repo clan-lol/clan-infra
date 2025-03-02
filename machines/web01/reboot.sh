@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-HOST=23.88.17.207
+HOST=clan.lol
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOST" reboot
 # wait till shutdown
