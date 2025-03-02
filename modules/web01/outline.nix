@@ -35,8 +35,10 @@
   services.nginx.virtualHosts."outline.clan.lol" = {
     forceSSL = true;
     enableACME = true;
-    locations."/".extraConfig = ''
-      proxy_pass http://127.0.0.1:3000;
-    '';
+    locations."/" = {
+      proxyPass = "http://localhost:3000";
+      recommendedProxySettings = true;
+      proxyWebsockets = true;
+    };
   };
 }
