@@ -16,4 +16,4 @@ while ! timeout --foreground 10 ssh -p 2222 "root@$HOST" true; do
 done
 
 # Ensure that /run/partitioning-secrets/zfs/key only ever exists with the full key
-clan secrets get zfs-key | ssh -p 2222 "root@${HOST}" "mkdir -p /run/partitioning-secrets/zfs && cat > /run/partitioning-secrets/zfs/key.tmp && mv /run/partitioning-secrets/zfs/key.tmp /run/partitioning-secrets/zfs/key"
+clan vars get web01 zfs/key | ssh -p 2222 "root@${HOST}" "mkdir -p /run/partitioning-secrets/zfs && cat > /run/partitioning-secrets/zfs/key.tmp && mv /run/partitioning-secrets/zfs/key.tmp /run/partitioning-secrets/zfs/key"
