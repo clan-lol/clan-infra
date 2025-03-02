@@ -9,9 +9,4 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   clan.core.networking.targetHost = "root@23.88.17.207";
-
-  nix.settings.system-features = [
-    "kvm"
-    "nixos-test"
-  ];
 }
