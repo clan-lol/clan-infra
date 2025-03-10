@@ -49,7 +49,12 @@ in
     };
 
     settings.log.LEVEL = "Error";
-    settings.service.DISABLE_REGISTRATION = false;
+
+    settings.service = {
+      DISABLE_REGISTRATION = false;
+      ENABLE_NOTIFY_MAIL = true;
+    };
+
     settings.metrics.ENABLED = true;
     settings.server = {
       APP_DATA_PATH = "/var/lib/gitea/data";
