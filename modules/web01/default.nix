@@ -8,7 +8,6 @@
     ./harmonia.nix
     ./homepage.nix
     ./postfix.nix
-    ./jobs.nix
     ./matrix-synapse.nix
     ./remote-builder.nix
     ../dev.nix
