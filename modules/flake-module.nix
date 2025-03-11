@@ -40,6 +40,7 @@
       ./web01
       inputs.nixos-mailserver.nixosModules.mailserver
       ./mailserver.nix
+      ./renovate.nix
     ];
 
     jitsi01.imports = [

@@ -2,14 +2,12 @@
 {
   imports = [
     ./borgbackup.nix
-    ./clan-merge.nix
     ./gitea
     ./outline.nix
     ./goaccess.nix
     ./harmonia.nix
     ./homepage.nix
     ./postfix.nix
-    ./jobs.nix
     ./matrix-synapse.nix
     ./remote-builder.nix
     ../dev.nix
