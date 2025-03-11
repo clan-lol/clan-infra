@@ -22,7 +22,7 @@
       inputs.flake-compat.follows = "flake-compat";
     };
 
-    srvos.url = "github:nix-community/srvos/pull/617/head";
+    srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
