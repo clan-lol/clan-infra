@@ -2,7 +2,6 @@
 {
   imports = [
     ./borgbackup.nix
-    ./clan-merge.nix
     ./gitea
     ./outline.nix
     ./goaccess.nix

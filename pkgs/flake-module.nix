@@ -1,6 +1,5 @@
 {
   imports = [
-    ./clan-merge/flake-module.nix
     ./matrix-bot/flake-module.nix
   ];
   perSystem =
