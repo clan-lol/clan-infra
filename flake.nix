@@ -107,9 +107,10 @@
               let
                 machinesPerSystem = {
                   x86_64-linux = [
-                    "web01"
+                    "demo01"
                     "jitsi01"
                     "storinator01"
+                    "web01"
                   ];
                 };
                 nixosMachines = lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
