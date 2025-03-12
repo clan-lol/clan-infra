@@ -19,12 +19,20 @@
         ];
         roles.moon.machines = [
           "jitsi01"
+          "web01"
         ];
         machines.jitsi01.config = {
           # jitsi.clan.lol
           moon.stableEndpoints = [
             "207.148.120.82"
             "2401:c080:1400:5439:5400:5ff:fe43:3de5"
+          ];
+        };
+        machines.web01.config = {
+          # clan.lol
+          moon.stableEndpoints = [
+            "23.88.17.207"
+            "2a01:4f8:2220:1565::1"
           ];
         };
         roles.peer.tags = [ "all" ];
