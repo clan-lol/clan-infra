@@ -37,10 +37,10 @@ $ clan machines update web01
 
 ## jitsi01
 
-- Instance type: [vc2-2c-2gb](https://www.vultr.com/pricing/#cloud-compute)
+- Instance type: [vc2-2c-4gb](https://www.vultr.com/pricing/#cloud-compute)
 - CPU: 2 Intel vCPU cores
-- RAM: 2 GB
-- SSD: 65 GB
+- RAM: 4 GB
+- SSD: 80 GB
 
 ### Initial setup
 
@@ -72,7 +72,7 @@ To destroy just the server without taking down the `clan.lol` DNS:
 ```
 # Run `apply` script first to ensure `terraform init` gets run
 $ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.terraform"
+$ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.jitsi01"
 ```
 
 ## Adding new users
