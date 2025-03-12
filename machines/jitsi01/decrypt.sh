@@ -1,5 +1,5 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i bash -p coreutils sops openssh
+#!/usr/bin/env nix
+#! nix shell --inputs-from ../.. nixpkgs#bash nixpkgs#coreutils nixpkgs#sops nixpkgs#openssh clan-core --command bash
 # shellcheck shell=bash
 
 # shellcheck disable=SC1008,SC1128
