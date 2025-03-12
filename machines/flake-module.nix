@@ -65,8 +65,10 @@
           ]);
         in
         {
+          # `nix run .#dns` will fail
+          # This is used as a module from the `terraform` terranix config
           terranixConfigurations.dns = {
-            workdir = "targets/jitsi01";
+            workdir = "terraform";
             modules = [
               self.modules.terranix.base
               self.modules.terranix.dns
@@ -79,10 +81,12 @@
             '';
           };
 
-          terranixConfigurations.jitsi01 = {
-            workdir = "targets/jitsi01";
+          terranixConfigurations.terraform = {
+            workdir = "terraform";
             modules = [
               self.modules.terranix.base
+              self.modules.terranix.vultr
+              ./demo01/terraform-configuration.nix
               ./jitsi01/terraform-configuration.nix
             ];
             extraArgs = {
@@ -93,6 +97,22 @@
             terraformWrapper.prefixText = ''
               TF_VAR_passphrase=$(clan secrets get tf-passphrase)
               export TF_VAR_passphrase
+              TF_ENCRYPTION=$(cat <<EOF
+              key_provider "pbkdf2" "state_encryption_password" {
+                passphrase = "$TF_VAR_passphrase"
+              }
+              method "aes_gcm" "encryption_method" {
+                keys = "\''${key_provider.pbkdf2.state_encryption_password}"
+              }
+              state {
+                enforced = true
+                method = "\''${method.aes_gcm.encryption_method}"
+              }
+              EOF
+              )
+
+              # shellcheck disable=SC2090
+              export TF_ENCRYPTION
             '';
           };
         };

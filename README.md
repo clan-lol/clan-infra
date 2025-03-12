@@ -26,7 +26,7 @@ Then you can run the following script to reboot the machine and unlock the
 encrypted root filesystem:
 
 ```
-$ ./targets/web01/reboot.sh
+$ ./machines/web01/reboot.sh
 ```
 
 ### Deploy new configuration
@@ -45,7 +45,7 @@ $ clan machines update web01
 ### Initial setup
 
 ```
-$ nix run clan-infra#jitsi01
+$ nix run clan-infra#terraform
 ```
 
 ### Deploy new configuration
@@ -61,8 +61,8 @@ the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#jitsi01
-$ nix run clan-infra#jitsi01.terraform -- apply -replace "vultr_instance.jitsi01"
+$ nix run clan-infra#terraform
+$ nix run clan-infra#terraform.terraform -- apply -replace "vultr_instance.jitsi01"
 ```
 
 ### Destroy server
@@ -71,8 +71,8 @@ To destroy just the server without taking down the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#jitsi01
-$ nix run clan-infra#jitsi01.terraform -- destroy -target "vultr_instance.jitsi01"
+$ nix run clan-infra#terraform
+$ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.terraform"
 ```
 
 ## Adding new users
@@ -106,7 +106,7 @@ $ clan secrets groups add-user admins <user>
 Currently DNS can't be updated separately to `jitsi01`
 
 ```
-$ nix run clan-infra#jitsi01
+$ nix run clan-infra#terraform
 ```
 
 ## To add a new project to CI
