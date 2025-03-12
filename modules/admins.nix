@@ -27,7 +27,6 @@
   };
 
   config = {
-
     users.users = {
       mic92 = {
         isNormalUser = true;
