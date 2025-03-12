@@ -32,6 +32,7 @@
     #  "^tslint --[a-z]+$"
     #];
   };
+  services.renovate.schedule = "*:0/10";
   services.renovate.credentials.RENOVATE_TOKEN =
     config.clan.core.vars.generators.renovate-token.files.token.path;
   services.renovate.credentials.GITHUB_COM_TOKEN =
