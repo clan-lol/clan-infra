@@ -31,6 +31,17 @@
       ./buildbot.nix
     ];
 
+    demo01.imports = [
+      self.nixosModules.server
+      ./dev.nix
+    ];
+
+    jitsi01.imports = [
+      self.nixosModules.server
+      ./jitsi.nix
+      ./dev.nix
+    ];
+
     web01.imports = [
       self.nixosModules.server
       self.nixosModules.buildbot
@@ -41,12 +52,6 @@
       inputs.nixos-mailserver.nixosModules.mailserver
       ./mailserver.nix
       ./renovate.nix
-    ];
-
-    jitsi01.imports = [
-      self.nixosModules.server
-      ./jitsi.nix
-      ./dev.nix
     ];
 
     storinator.imports = [

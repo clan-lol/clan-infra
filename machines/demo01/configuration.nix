@@ -1,7 +1,7 @@
 { self, lib, ... }:
 {
   imports = [
-    self.nixosModules.jitsi01
+    self.nixosModules.demo01
     self.nixosModules.vultr-vc2
   ];
   disabledModules = [
