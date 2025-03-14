@@ -174,6 +174,26 @@
         "type": "github"
       }
     },
+    "jitsi-matrix-presence": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737894973,
+        "narHash": "sha256-a9uJXhH9oFfZOlm3opTxCcZbV3RzaAtYbODMl4aXiDg=",
+        "owner": "pinpox",
+        "repo": "jitsi-matrix-presence",
+        "rev": "046069e9d3ab35716f0938d7d9dda62062dc498b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "jitsi-matrix-presence",
+        "type": "github"
+      }
+    },
     "nixos-facter-modules": {
       "locked": {
         "lastModified": 1738752252,
@@ -238,6 +258,7 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "jitsi-matrix-presence": "jitsi-matrix-presence",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
         "srvos": "srvos",
