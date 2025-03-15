@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  self,
+  ...
+}:
 {
   imports = [
     ./acme.nix
@@ -57,6 +62,38 @@
       muc_component = "conference.jitsi.clan.lol"
       breakout_component = "breakout.jitsi.clan.lol"
 
-      api_prefix = "http://matrixpresence.0cx.de:8228"
+      api_prefix = "http://127.0.0.1:8228"
   '';
+
+  clan.core.vars.generators."jitsi-presence" = {
+    files.envfile = { };
+    runtimeInputs = [ pkgs.coreutils ];
+    prompts.ACCESS_TOKEN.persist = false;
+    script = ''
+      echo "ACCESS_TOKEN=$(cat $prompts/ACCESS_TOKEN)" > $out/envfile
+    '';
+  };
+
+  systemd.services.jitsi-matrix-presence-clan-lol = {
+
+    wantedBy = [ "multi-user.target" ];
+    environment = {
+      JITSI_ROOMS = "space,standup,clan.lol";
+      JITSI_SERVER = "https://jitsi.clan.lol";
+      ROOM_ID = "!HlSSgpBfhsKrEmqAtE:matrix.org";
+      HOMESERVER_URL = "https://matrix.org";
+      USER_ID = "@alertus-maximus:matrix.org";
+      LISTEN_ADDRESS = "127.0.0.1:8228";
+    };
+
+    serviceConfig = {
+      EnvironmentFile = [
+        config.clan.core.vars.generators."jitsi-presence".files."envfile".path
+      ];
+      DynamicUser = true;
+      ExecStart = "${self.inputs.jitsi-matrix-presence.packages.x86_64-linux.default}/bin/jitsi-presence";
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+  };
 }

@@ -45,6 +45,10 @@
     terranix.inputs.flake-parts.follows = "flake-parts";
     terranix.inputs.nixpkgs.follows = "nixpkgs";
     terranix.inputs.terranix-examples.follows = "";
+
+    jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
+    jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs =
