@@ -60,10 +60,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1741695839,
-        "narHash": "sha256-k0PFpyr4adPPXqvvjecGv4kyO0riZzdJVtPk9+LjXbs=",
+        "lastModified": 1741791684,
+        "narHash": "sha256-SGa+9UA5k8fh90nvfS1FwoaMn25bvis9v35LpK6sOkg=",
         "ref": "main",
-        "rev": "9ac8a45f1da095d7d9ad9c9175fd44e2d0b7ef28",
+        "rev": "5ac30a767ba0cc065fc7046452c466f8923e698a",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
@@ -221,25 +221,26 @@
         "nixpkgs-24_11": []
       },
       "locked": {
-        "lastModified": 1740437053,
-        "narHash": "sha256-exPTta4qI1ka9sk+jPcLogGffJ1OVXnAsTRqpeAXeNw=",
+        "lastModified": 1741987028,
+        "narHash": "sha256-VYkJHZ45lmDucnJ4qYBMxzKjdEGYMFE32D04JDZ/F44=",
         "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "c8ec4d5e432f5df4838eacd39c11828d23ce66ec",
+        "rev": "4668b71d0928305f3cef28437e571934d8d96545",
         "type": "gitlab"
       },
       "original": {
         "owner": "simple-nixos-mailserver",
+        "ref": "merge-requests/370/merge",
         "repo": "nixos-mailserver",
         "type": "gitlab"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1741525272,
-        "narHash": "sha256-gJvX2PFMucrxcP6dE3amhZVtySASO5wAX5hBBOkHcL8=",
+        "lastModified": 1741865919,
+        "narHash": "sha256-4thdbnP6dlbdq+qZWTsm4ffAwoS8Tiq1YResB+RP6WE=",
         "ref": "nixpkgs-unstable",
-        "rev": "212518a3623f5451efad314323e2c6b847eab45a",
+        "rev": "573c650e8a14b2faa0041645ab18aed7e60f0c9a",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -295,11 +296,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741636056,
-        "narHash": "sha256-YYqTwGHpbeHs3m9jfqJJv6qO6fV6vXyB2cOVefINRTg=",
+        "lastModified": 1741906120,
+        "narHash": "sha256-li20Fq8t7IPlQJI/NRcLXa2Us1Dmoo+11lKGvZs+t3E=",
         "owner": "nix-community",
         "repo": "srvos",
-        "rev": "037690b00101fe635e83963dd965f04d5dad0a68",
+        "rev": "7d337b5a3735ec7702fc30ebcb34c116bb8a3784",
         "type": "github"
       },
       "original": {

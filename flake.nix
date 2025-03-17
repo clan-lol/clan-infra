@@ -16,7 +16,9 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      # Fixes usage of removed option `services.dovecot2.modules`
+      # Remove when https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/merge_requests/370 is merged
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/merge-requests/370/merge";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-24_11.follows = "";
       inputs.flake-compat.follows = "flake-compat";
