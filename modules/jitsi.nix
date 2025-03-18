@@ -78,9 +78,9 @@
 
     wantedBy = [ "multi-user.target" ];
     environment = {
-      JITSI_ROOMS = "space,standup,clan.lol";
+      JITSI_ROOMS = "space,space2,standup,clan.lol,nixos";
       JITSI_SERVER = "https://jitsi.clan.lol";
-      ROOM_ID = "!HlSSgpBfhsKrEmqAtE:matrix.org";
+      ROOM_ID = "!36gU7xj73xzjlVoD:thalheim.io";
       HOMESERVER_URL = "https://matrix.org";
       USER_ID = "@alertus-maximus:matrix.org";
       LISTEN_ADDRESS = "127.0.0.1:8228";
