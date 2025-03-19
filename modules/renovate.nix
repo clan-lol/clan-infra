@@ -33,6 +33,20 @@
     #];
   };
   services.renovate.schedule = "*:0/10";
+  services.renovate.package = pkgs.renovate.overrideAttrs (
+    {
+      patches ? [ ],
+      ...
+    }:
+    {
+      patches = patches ++ [
+        (pkgs.fetchpatch {
+          url = "https://github.com/renovatebot/renovate/pull/33991.diff";
+          hash = "sha256-6ME048IiptweOkJhnK9QvQqfJ6QaXWX23SlY5TAmsFE=";
+        })
+      ];
+    }
+  );
   services.renovate.credentials.RENOVATE_TOKEN =
     config.clan.core.vars.generators.renovate-token.files.token.path;
   services.renovate.credentials.GITHUB_COM_TOKEN =
