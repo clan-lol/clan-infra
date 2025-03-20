@@ -1,4 +1,5 @@
 {
+  options,
   self,
   lib,
   pkgs,
@@ -16,6 +17,13 @@
   boot.loader.grub.enable = lib.mkForce false;
 
   clan.core.sops.defaultGroups = [ "admins" ];
+
+  # Once `networking.fqdn` is no longer readonly, we can just set `networking.fqdn` directly
+  programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames =
+    assert options.networking.fqdn.readOnly;
+    [
+      "jitsi.clan.lol"
+    ];
 
   clan.core.networking.targetHost = "root@jitsi.clan.lol";
 
