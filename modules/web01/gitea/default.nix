@@ -66,6 +66,9 @@ in
     };
     settings.session.PROVIDER = "db";
     settings.session.COOKIE_SECURE = true;
+
+    # Expose WebFinger for Tailscale OIDC
+    settings.federation.ENABLED = true;
   };
 
   sops.secrets."vars/gitea-mail/gitea-password".owner =
