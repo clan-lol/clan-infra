@@ -15,5 +15,8 @@
       "clan.lol"
     ];
 
-  clan.core.networking.targetHost = "root@clan.lol";
+  # Once `networking.fqdn` is no longer readonly, this will be inherited from `networking.fqdn`
+  clan.core.networking.targetHost =
+    assert options.networking.fqdn.readOnly;
+    "root@clan.lol";
 }

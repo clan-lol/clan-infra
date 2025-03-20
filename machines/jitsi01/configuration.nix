@@ -25,7 +25,10 @@
       "jitsi.clan.lol"
     ];
 
-  clan.core.networking.targetHost = "root@jitsi.clan.lol";
+  # Once `networking.fqdn` is no longer readonly, this will be inherited from `networking.fqdn`
+  clan.core.networking.targetHost =
+    assert options.networking.fqdn.readOnly;
+    "root@jitsi.clan.lol";
 
   environment.systemPackages = [
     pkgs.python3 # for sshuttle tunneling
