@@ -12,5 +12,7 @@
 
   clan.core.sops.defaultGroups = [ "admins" ];
 
+  programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames = [ "45.77.34.53" ];
+
   clan.core.networking.targetHost = "root@45.77.34.53";
 }
