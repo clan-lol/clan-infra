@@ -30,7 +30,8 @@
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    buildbot-nix.url = "github:nix-community/buildbot-nix";
+    # Use Nix 2.26 inside buildbot-worker
+    buildbot-nix.url = "github:nix-community/buildbot-nix/pull/404/merge";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
