@@ -39,6 +39,7 @@
     build01.imports = [
       self.nixosModules.server
       inputs.srvos.nixosModules.mixins-nix-experimental
+      ./dev.nix
     ];
 
     demo01.imports = [
