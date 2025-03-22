@@ -117,6 +117,9 @@
                     "storinator01"
                     "web01"
                   ];
+                  aarch64-linux = [
+                    "build01"
+                  ];
                 };
                 nixosMachines = lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
                   lib.genAttrs (machinesPerSystem.${system} or [ ]) (

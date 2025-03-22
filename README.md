@@ -5,14 +5,12 @@ This repository contains nixos modules and terraform code that powers
 [Hetzner](https://www.hetzner.com/). The demo server and Jitsi server are hosted
 on [Vultr](https://www.vultr.com/).
 
-## Servers
-
 ## web01
 
 - Instance type: [ax162-r](https://www.hetzner.com/dedicated-rootserver/ax162-r)
 - CPU: AMD EPYC™ 9454P
 - RAM: 256 GB DDR5 ECC
-- Drives: 2 x 1.92 TB NVME
+- Drives: 2 x 1.92 TB NVMe
 
 ### Initial setup
 
@@ -115,6 +113,27 @@ $ nix run clan-infra#terraform
 $ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.demo01"
 ```
 
+## build01
+
+- Instance type: [rx170](https://www.hetzner.com/dedicated-rootserver/rx170)
+- CPU: Ampere® Altra® Q80-30
+- RAM: 128 GB DDR4 ECC
+- Drives: 2 x 960 GB NVMe
+
+### Initial setup
+
+To install the system, you can run the following command:
+
+```
+$ nix run clan-infra#terraform
+```
+
+### Deploy new configuration
+
+```
+$ clan machines update build01
+```
+
 ## Adding new users
 
 Add them to the [configuration](modules/admins.nix).
@@ -148,6 +167,20 @@ Currently DNS can't be updated separately to `jitsi01`
 ```
 $ nix run clan-infra#terraform
 ```
+
+## Adding a new machine
+
+1. Copy an existing machine
+2. Run `clan vars generate <machine>`
+3. If you aren't using Terraform to provision the server, make sure to add the
+   Terraform deployment SSH key to your server which you can find by running:
+
+```
+$ nix run clan-infra#terraform.terraform -- init
+$ nix run clan-infra#terraform.terraform -- state show tls_private_key.ssh_deploy_key
+```
+
+4. `nix run clan-infra#terraform` to run the initial deploy
 
 ## To add a new project to CI
 
