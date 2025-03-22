@@ -5,14 +5,12 @@ This repository contains nixos modules and terraform code that powers
 [Hetzner](https://www.hetzner.com/). The demo server and Jitsi server are hosted
 on [Vultr](https://www.vultr.com/).
 
-## Servers
-
 ## web01
 
 - Instance type: [ax162-r](https://www.hetzner.com/dedicated-rootserver/ax162-r)
 - CPU: AMD EPYC™ 9454P
 - RAM: 256 GB DDR5 ECC
-- Drives: 2 x 1.92 TB NVME
+- Drives: 2 x 1.92 TB NVMe
 
 ### Initial setup
 
@@ -113,6 +111,27 @@ To destroy just the server without taking down the `clan.lol` DNS:
 # Run `apply` script first to ensure `terraform init` gets run
 $ nix run clan-infra#terraform
 $ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.demo01"
+```
+
+## build01
+
+- Instance type: [rx170](https://www.hetzner.com/dedicated-rootserver/rx170)
+- CPU: Ampere® Altra® Q80-30
+- RAM: 128 GB DDR4 ECC
+- Drives: 2 x 960 GB NVMe
+
+### Initial setup
+
+To install the system, you can run the following command:
+
+```
+$ nix run clan-infra#terraform
+```
+
+### Deploy new configuration
+
+```
+$ clan machines update build01
 ```
 
 ## Adding new users

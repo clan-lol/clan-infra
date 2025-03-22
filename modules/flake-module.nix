@@ -20,6 +20,11 @@
       ./initrd-networking.nix
     ];
 
+    hetzner-rx170.imports = [
+      inputs.srvos.nixosModules.hardware-hetzner-online-arm
+      ./initrd-networking.nix
+    ];
+
     vultr-vc2.imports = [
       inputs.srvos.nixosModules.hardware-vultr-vm
       ./initrd-networking.nix
@@ -29,6 +34,11 @@
       inputs.buildbot-nix.nixosModules.buildbot-master
       inputs.buildbot-nix.nixosModules.buildbot-worker
       ./buildbot.nix
+    ];
+
+    build01.imports = [
+      self.nixosModules.server
+      inputs.srvos.nixosModules.mixins-nix-experimental
     ];
 
     demo01.imports = [
