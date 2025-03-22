@@ -149,6 +149,20 @@ Currently DNS can't be updated separately to `jitsi01`
 $ nix run clan-infra#terraform
 ```
 
+## Adding a new machine
+
+1. Copy an existing machine
+2. Run `clan vars generate <machine>`
+3. If you aren't using Terraform to provision the server, make sure to add the
+   Terraform deployment SSH key to your server which you can find by running:
+
+```
+$ nix run clan-infra#terraform.terraform -- init
+$ nix run clan-infra#terraform.terraform -- state show tls_private_key.ssh_deploy_key
+```
+
+4. `nix run clan-infra#terraform` to run the initial deploy
+
 ## To add a new project to CI
 
 1. Add the 'buildbot-clan' topic to the repository using the "Manage topics"
