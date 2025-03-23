@@ -7,9 +7,7 @@
   clan = {
     meta.name = "infra";
     # Make flake available in modules
-    specialArgs.self = {
-      inherit (self) inputs nixosModules packages;
-    };
+    specialArgs = { inherit self; };
     directory = self;
     inventory.services = {
       zerotier.claninfra = {
