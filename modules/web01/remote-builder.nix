@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, self, ... }:
 {
   services.tailscale.enable = true;
 
@@ -14,5 +14,23 @@
       maxJobs = 10;
       supportedFeatures = [ "big-parallel" ];
     }
+    {
+      hostName = "fda9:b487:2919:3547:3699:9336:90ec:cb59";
+      sshUser = "builder";
+      protocol = "ssh-ng";
+      sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
+      systems = [ "aarch64-linux" ];
+      maxJobs = 80;
+      supportedFeatures = [
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+        "uid-range"
+      ];
+    }
+  ];
+
+  nix.settings.trusted-public-keys = [
+    self.nixosConfigurations.build01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
   ];
 }

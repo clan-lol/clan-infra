@@ -13,6 +13,7 @@
 
       ./emergency-access.nix
       ./admins.nix
+      ./signing.nix
     ];
 
     hetzner-ax162r.imports = [
@@ -39,6 +40,7 @@
     build01.imports = [
       self.nixosModules.server
       inputs.srvos.nixosModules.mixins-nix-experimental
+      ./builder.nix
       ./dev.nix
     ];
 

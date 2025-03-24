@@ -8,12 +8,6 @@
     package = pkgs.nginxStable.override { modules = [ pkgs.nginxModules.zstd ]; };
   };
 
-  # trust our own cache
-  nix.settings.trusted-substituters = [ "https://cache.clan.lol" ];
-  nix.settings.trusted-public-keys = [
-    "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28="
-  ];
-
   services.nginx.virtualHosts."cache.clan.lol" = {
     forceSSL = true;
     enableACME = true;
