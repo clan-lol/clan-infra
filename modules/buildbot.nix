@@ -13,6 +13,7 @@
     workersFile = config.sops.secrets.buildbot-workers-file.path;
     buildSystems = [
       "x86_64-linux"
+      "aarch64-linux"
       "aarch64-darwin"
     ];
 
