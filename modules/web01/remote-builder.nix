@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, self, ... }:
 {
   services.tailscale.enable = true;
 
@@ -28,5 +28,9 @@
         "uid-range"
       ];
     }
+  ];
+
+  nix.settings.trusted-public-keys = [
+    self.nixosConfigurations.build01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
   ];
 }
