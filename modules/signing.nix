@@ -1,4 +1,7 @@
-{ config, ... }:
+{ config, self, ... }:
+let
+  flake = import "${self}/flake.nix";
+in
 {
   clan.core.vars.generators.nix-signing-key = {
     files."key" = { };
@@ -15,4 +18,11 @@
   nix.settings.secret-key-files = [
     config.clan.core.vars.generators.nix-signing-key.files."key".path
   ];
+
+  nix.settings.trusted-public-keys = [
+    # trust our own key, this is useful if we reinstall the machine and someone sends us back our own package
+    config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
+  ] ++ flake.nixConfig.extra-trusted-public-keys;
+
+  nix.settings.substituters = flake.nixConfig.extra-substituters;
 }
