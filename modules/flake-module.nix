@@ -72,6 +72,8 @@
     ];
   };
 
+  flake.darwinModules.deploy = ./darwin/deploy.nix;
+
   flake.modules.terranix.base = ./terranix/base.nix;
   flake.modules.terranix.dns = ./terranix/dns.nix;
   flake.modules.terranix.vultr = ./terranix/vultr.nix;
