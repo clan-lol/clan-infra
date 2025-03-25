@@ -13,6 +13,9 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,9 +26,10 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
+    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/pull/3115/head.tar.gz";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
+    clan-core.inputs.nix-darwin.follows = "nix-darwin";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
     # Use Nix 2.26 inside buildbot-worker
@@ -47,7 +51,6 @@
 
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
-
   };
 
   outputs =
@@ -72,6 +75,7 @@
           {
             lib,
             self',
+            pkgs,
             system,
             ...
           }:
@@ -118,19 +122,35 @@
                   aarch64-linux = [
                     "build01"
                   ];
+                  aarch64-darwin = [
+                    "build02"
+                  ];
                 };
-                nixosMachines = lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
-                  lib.genAttrs (machinesPerSystem.${system} or [ ]) (
-                    name: self.nixosConfigurations.${name}.config.system.build.toplevel
+                nixosMachines = lib.optionalAttrs pkgs.hostPlatform.isLinux (
+                  lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
+                    lib.genAttrs (machinesPerSystem.${system} or [ ]) (
+                      name: self.nixosConfigurations.${name}.config.system.build.toplevel
+                    )
                   )
                 );
+                darwinMachines = lib.optionalAttrs pkgs.hostPlatform.isDarwin (
+                  lib.mapAttrs' (n: lib.nameValuePair "nix-darwin-${n}") (
+                    lib.genAttrs (machinesPerSystem.${system} or [ ]) (
+                      name: self.darwinConfigurations.${name}.config.system.build.toplevel
+                    )
+                  )
+                );
+                homeConfigurations =
+                  lib.mapAttrs' (name: config: lib.nameValuePair "home-manager-${name}" config.activationPackage)
+                    (
+                      lib.filterAttrs (_: config: config.pkgs.hostPlatform.system == system) (
+                        self.homeConfigurations or { }
+                      )
+                    );
                 packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
                 devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
-                homeConfigurations = lib.mapAttrs' (
-                  name: config: lib.nameValuePair "home-manager-${name}" config.activation-script
-                ) (self'.legacyPackages.homeConfigurations or { });
               in
-              nixosMachines // packages // devShells // homeConfigurations;
+              nixosMachines // darwinMachines // homeConfigurations // packages // devShells;
           }
         );
       }
