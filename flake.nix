@@ -75,6 +75,7 @@
           {
             lib,
             self',
+            pkgs,
             system,
             ...
           }:
@@ -121,19 +122,35 @@
                   aarch64-linux = [
                     "build01"
                   ];
+                  aarch64-darwin = [
+                    "build02"
+                  ];
                 };
-                nixosMachines = lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
-                  lib.genAttrs (machinesPerSystem.${system} or [ ]) (
-                    name: self.nixosConfigurations.${name}.config.system.build.toplevel
+                nixosMachines = lib.optionalAttrs pkgs.hostPlatform.isLinux (
+                  lib.mapAttrs' (n: lib.nameValuePair "nixos-${n}") (
+                    lib.genAttrs (machinesPerSystem.${system} or [ ]) (
+                      name: self.nixosConfigurations.${name}.config.system.build.toplevel
+                    )
                   )
                 );
+                darwinMachines = lib.optionalAttrs pkgs.hostPlatform.isDarwin (
+                  lib.mapAttrs' (n: lib.nameValuePair "nix-darwin-${n}") (
+                    lib.genAttrs (machinesPerSystem.${system} or [ ]) (
+                      name: self.darwinConfigurations.${name}.config.system.build.toplevel
+                    )
+                  )
+                );
+                homeConfigurations =
+                  lib.mapAttrs' (name: config: lib.nameValuePair "home-manager-${name}" config.activationPackage)
+                    (
+                      lib.filterAttrs (_: config: config.pkgs.hostPlatform.system == system) (
+                        self.homeConfigurations or { }
+                      )
+                    );
                 packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
                 devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
-                homeConfigurations = lib.mapAttrs' (
-                  name: config: lib.nameValuePair "home-manager-${name}" config.activation-script
-                ) (self'.legacyPackages.homeConfigurations or { });
               in
-              nixosMachines // packages // devShells // homeConfigurations;
+              nixosMachines // darwinMachines // homeConfigurations // packages // devShells;
           }
         );
       }
