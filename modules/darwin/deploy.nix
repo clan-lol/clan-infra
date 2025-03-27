@@ -35,7 +35,7 @@
         done
 
         if [[ $(hostname) != "${hostname}" || $USER != "${user}" ]]; then
-          nix copy --to ssh-ng://root@${dest} ${self} "''${overriddenInputs[@]}"
+          nix copy --to ssh-ng://${user}@${dest} ${self} "''${overriddenInputs[@]}"
           ssh -t ${user}@${dest} nix run \
             ${self}#darwinConfigurations.${hostname}.config.system.build.darwin-rebuild \
             "''${flags[@]}" \
