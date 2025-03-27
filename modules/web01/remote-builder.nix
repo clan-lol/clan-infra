@@ -12,7 +12,10 @@
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
       systems = [ "aarch64-darwin" ];
       maxJobs = 10;
-      supportedFeatures = [ "big-parallel" ];
+      supportedFeatures = [
+        "big-parallel"
+        "recursive-nix"
+      ];
     }
     {
       hostName = "fda9:b487:2919:3547:3699:9336:90ec:cb59";
@@ -26,6 +29,7 @@
         "kvm"
         "nixos-test"
         "uid-range"
+        "recursive-nix"
       ];
     }
   ];
