@@ -1,5 +1,5 @@
 # Mostly used by web01.numtide.com
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   environment.systemPackages = [
     pkgs.bat
@@ -20,6 +20,8 @@
     pkgs.kitty.terminfo
     pkgs.ghostty.terminfo
   ];
+
+  programs.nix-ld.enable = lib.mkDefault true; # for my sanity
 
   programs.bash = {
     loginShellInit = ''
