@@ -20,7 +20,7 @@ in
           security = "user";
           workgroup = "WORKGROUP";
           "server string" = "Storiantor01";
-          interfaces = "enp* eth* end*";
+          interfaces = "eth* en*";
           "max log size" = "50";
           "dns proxy" = false;
           "syslog only" = true;
