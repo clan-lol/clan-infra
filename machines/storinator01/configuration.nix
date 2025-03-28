@@ -25,7 +25,7 @@
       # https://github.com/MatthewCroughan/
       isNormalUser = true;
       extraGroups = [
-        "backup"
+        "samba"
         "wheel"
       ];
       uid = 2001;
@@ -38,7 +38,7 @@
     w = {
       isNormalUser = true;
       extraGroups = [
-        "backup"
+        "samba"
         "wheel"
       ];
       uid = 2002;
@@ -49,7 +49,7 @@
     vi = {
       isNormalUser = true;
       extraGroups = [
-        "backup"
+        "samba"
         "wheel"
       ];
       uid = 2003;

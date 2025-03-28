@@ -5,9 +5,19 @@
   ...
 }:
 let
-  backupUser = lib.filterAttrs (
-    name: user: user.isNormalUser && builtins.elem "backup" user.extraGroups
+  sambaUser = lib.filterAttrs (
+    name: user: user.isNormalUser && builtins.elem "samba" user.extraGroups
   ) config.users.users;
+
+  sharedFolders = {
+    B4L.users = [
+      "berwn"
+      "janik"
+      "arjen"
+      "w"
+    ];
+    GLOM.users = [ "berwn" ];
+  };
 in
 {
   services.samba = {
@@ -25,36 +35,23 @@ in
           "dns proxy" = false;
           "syslog only" = true;
         };
-        B4L = {
-          comment = "B4L";
-          path = "/mnt/hdd/samba/B4L";
-          "force group" = "users";
-          public = "yes";
-          "guest ok" = "no";
-          #"only guest" = "yes";
-          "create mask" = "0644";
-          "directory mask" = "2777";
-          writable = "yes";
-          browseable = "yes";
-          printable = "no";
-          "valid users" = "berwn janik arjen w";
-        };
-        GLOM = {
-          comment = "GLOM";
-          path = "/mnt/hdd/samba/GLOM";
-          "force group" = "users";
-          public = "yes";
-          "guest ok" = "no";
-          #"only guest" = "yes";
-          "create mask" = "0644";
-          "directory mask" = "2777";
-          writable = "yes";
-          browseable = "yes";
-          printable = "no";
-          # TODO
-          #"valid users" = "";
-        };
       }
+      // lib.mapAttrs (share: opts: {
+        path = "/mnt/hdd/samba/${share}";
+        comment = share;
+        "force user" = share;
+        "force group" = share;
+        public = "yes";
+        "guest ok" = "no";
+        #"only guest" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "2777";
+        writable = "yes";
+        browseable = "yes";
+        printable = "no";
+        # TODO
+        "valid users" = toString opts.users;
+      }) sharedFolders
       // lib.mapAttrs (user: opts: {
         comment = user;
         path = "/mnt/hdd/samba/${user}";
@@ -70,17 +67,26 @@ in
         printable = "no";
         "valid users" = user;
 
-      }) backupUser;
+      }) sambaUser;
   };
 
-  # B4L
-  users.users.backup.isNormalUser = true;
-  users.users.backup.extraGroups = [ "backup" ];
-  users.users.arjen.isNormalUser = true;
-  users.users.arjen.extraGroups = [ "backup" ];
-  users.users.janik.isNormalUser = true;
-  users.users.janik.extraGroups = [ "backup" ];
-  users.users.berwn.extraGroups = [ "backup" ];
+  users.users =
+    {
+      # B4L
+      backup.isNormalUser = true;
+      backup.extraGroups = [ "samba" ];
+      arjen.isNormalUser = true;
+      arjen.extraGroups = [ "samba" ];
+      janik.isNormalUser = true;
+      janik.extraGroups = [ "samba" ];
+      berwn.extraGroups = [ "samba" ];
+    }
+    // lib.mapAttrs (share: opts: {
+      isSystemUser = true;
+      group = share;
+    }) sharedFolders;
+
+  users.groups = lib.mapAttrs (share: opts: { }) sharedFolders;
 
   clan.core.vars.generators = lib.mapAttrs' (
     user: opts:
@@ -95,16 +101,25 @@ in
         xkcdpass --numwords 3 --delimiter - --count 1 > $out/password
       '';
     }
-  ) backupUser;
+  ) sambaUser;
 
-  systemd.services.samba-smbd.postStart = lib.concatMapStrings (user: let
-    password = config.clan.core.vars.generators."${user}-smb-password".files.password.path;
-  in ''
-    mkdir -p /mnt/hdd/samba/${user}
-    chown ${user}:users /mnt/hdd/samba/${user}
-    # if a password is unchanged, this will error
-    (echo $(<${password}); echo $(<${password})) | ${config.services.samba.package}/bin/smbpasswd -s -a ${user}
-  '') (lib.attrNames backupUser);
+  systemd.services.samba-smbd.postStart =
+    lib.concatMapStrings (
+      user:
+      let
+        password = config.clan.core.vars.generators."${user}-smb-password".files.password.path;
+      in
+      ''
+        mkdir -p /mnt/hdd/samba/${user}
+        chown ${user}:users /mnt/hdd/samba/${user}
+        # if a password is unchanged, this will error
+        (echo $(<${password}); echo $(<${password})) | ${config.services.samba.package}/bin/smbpasswd -s -a ${user}
+      ''
+    ) (lib.attrNames sambaUser)
+    + lib.concatMapStrings (share: ''
+      mkdir -p /mnt/hdd/samba/${share}
+      chown ${share}:${share} /mnt/hdd/samba/${share}
+    '') (lib.attrNames sharedFolders);
 
   services.samba-wsdd = {
     enable = true;
