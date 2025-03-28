@@ -22,7 +22,6 @@
           "flake-parts"
         ],
         "hercules-ci-effects": "hercules-ci-effects",
-        "nix-eval-jobs": "nix-eval-jobs",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -31,16 +30,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1742696605,
-        "narHash": "sha256-KC0ruOhKAzAsVDFt5FPFgAcWimUMlTRZ1K+3eJILn1s=",
+        "lastModified": 1743168893,
+        "narHash": "sha256-FuZP30GlJ87Hac8q48OHyctllXRFKEjsCtAPnYJQW1U=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "582bd5c69f43cc358067ccfdf459f870b199f0d7",
+        "rev": "474d5e49962363ea69d6388dd308292a13874068",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "pull/404/merge",
         "repo": "buildbot-nix",
         "type": "github"
       }
@@ -212,58 +210,6 @@
       "original": {
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
-    "nix-eval-jobs": {
-      "inputs": {
-        "flake-parts": [
-          "buildbot-nix",
-          "flake-parts"
-        ],
-        "nix-github-actions": "nix-github-actions",
-        "nixpkgs": [
-          "buildbot-nix",
-          "nixpkgs"
-        ],
-        "treefmt-nix": [
-          "buildbot-nix",
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1741973191,
-        "narHash": "sha256-iUccMDDwfc/cIRVtyoi9xtoYbdA33fIkS+nTpb/lqqo=",
-        "owner": "nix-community",
-        "repo": "nix-eval-jobs",
-        "rev": "ca94443b9621c610af09ff1806434bd84cd817e6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-eval-jobs",
-        "type": "github"
-      }
-    },
-    "nix-github-actions": {
-      "inputs": {
-        "nixpkgs": [
-          "buildbot-nix",
-          "nix-eval-jobs",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1731952509,
-        "narHash": "sha256-p4gB3Rhw8R6Ak4eMl8pqjCPOLCZRqaehZxdZ/mbFClM=",
-        "owner": "nix-community",
-        "repo": "nix-github-actions",
-        "rev": "7b5f051df789b6b20d259924d349a9ba3319b226",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-github-actions",
         "type": "github"
       }
     },
