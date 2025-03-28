@@ -6,7 +6,7 @@
   users.users.tunnel = {
     isNormalUser = true;
     home = "/var/empty";
-    shell = "/usr/sbin/nologin";
+    shell = "/run/current-system/sw/bin/nologin";
     openssh.authorizedKeys.keys = builtins.concatLists (
       lib.mapAttrsToList (_: user: user.openssh.authorizedKeys.keys) (
         lib.filterAttrs (name: user: user.isNormalUser && name != "tunnel") config.users.users
