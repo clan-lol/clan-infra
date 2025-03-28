@@ -12,6 +12,7 @@
     ./remote-builder.nix
     ../dev.nix
     ./iperf3.nix
+    ./jumphost.nix
     self.inputs.clan-core.clanModules.zt-tcp-relay
   ];
 

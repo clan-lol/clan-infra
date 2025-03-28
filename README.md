@@ -130,6 +130,16 @@ $ nix run clan-infra#terraform
 
 ### Deploy new configuration
 
+Add this to your ssh config:
+
+```nix
+programs.ssh.extraConfig = ''
+  Host build02
+    ProxyJump tunnel@clan.lol
+    Hostname 100.98.54.8
+'';
+```
+
 ```
 $ clan machines update build01
 ```
@@ -227,6 +237,24 @@ Currently DNS can't be updated separately to `jitsi01`
 
 ```
 $ nix run clan-infra#terraform
+```
+
+## Storinator01
+
+### Deploy new configuration
+
+Add this to your local ssh config:
+
+```nix
+programs.ssh.extraConfig = ''
+  Host storinator01
+    ProxyJump tunnel@clan.lol
+    Hostname fda9:b487:2919:3547:3699:9336:90ec:cb59
+'';
+```
+
+```
+$ clan machines update storinator01
 ```
 
 ## Adding a new machine
