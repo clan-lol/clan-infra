@@ -19,7 +19,5 @@
     "fda9:b487:2919:3547:3699:9393:7f57:6e6b"
   ];
 
-  clan.core.networking.targetHost = "root@[fda9:b487:2919:3547:3699:9393:7f57:6e6b]";
-
-
+  clan.core.networking.targetHost = "root@storinator01";
 }

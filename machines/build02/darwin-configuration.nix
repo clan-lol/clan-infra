@@ -75,7 +75,7 @@
   ];
 
   system.build.targetUser = "admin";
-  system.build.targetHost = "clan-mac-mini.tailfc885e.ts.net";
+  system.build.targetHost = "build02";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
