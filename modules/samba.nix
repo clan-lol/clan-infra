@@ -39,6 +39,21 @@ in
           printable = "no";
           "valid users" = "berwn janik arjen w";
         };
+        GLOM = {
+          comment = "GLOM";
+          path = "/mnt/hdd/samba/GLOM";
+          "force group" = "users";
+          public = "yes";
+          "guest ok" = "no";
+          #"only guest" = "yes";
+          "create mask" = "0644";
+          "directory mask" = "2777";
+          writable = "yes";
+          browseable = "yes";
+          printable = "no";
+          # TODO
+          #"valid users" = "";
+        };
       }
       // lib.mapAttrs (user: opts: {
         comment = user;
