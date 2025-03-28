@@ -39,6 +39,14 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINpWOqoN29X9v/2NisR2yFaazGLsEvG6oE+VLlOOIrxB w-main"
       ];
     };
+    vi = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      uid = 2003;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAmgyEGuY/r7SDlJgrzYmQqpcWS5W+fCzRi3OS59ne4W openpgp:0xFF687387"
+      ];
+    };
   };
 
 }
