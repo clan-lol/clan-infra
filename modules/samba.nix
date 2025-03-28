@@ -44,8 +44,8 @@ in
         public = "yes";
         "guest ok" = "no";
         #"only guest" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "2777";
+        "create mask" = "0640";
+        "directory mask" = "0750";
         writable = "yes";
         browseable = "yes";
         printable = "no";
@@ -60,8 +60,8 @@ in
         public = "yes";
         "guest ok" = "no";
         #"only guest" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "2777";
+        "create mask" = "0640";
+        "directory mask" = "0750";
         writable = "yes";
         browseable = "yes";
         printable = "no";
