@@ -1,28 +1,35 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
+let
+  backupUser = lib.filterAttrs (
+    name: user: user.isNormalUser && builtins.elem "backup" user.extraGroups
+  ) config.users.users;
+in
 {
   services.samba = {
     enable = true;
     package = pkgs.samba;
     openFirewall = true;
-    settings = {
-      global = {
-        security = "user";
-        workgroup = "WORKGROUP";
-        "server string" = "Raspberry Pi";
-        "hosts allow" = "192.168.178.0/255.255.255.0 2000::/3";
-        interfaces = "enp* eth* end*";
-        "max log size" = "50";
-        "dns proxy" = false;
-        "syslog only" = true;
-      };
-      backup = {
-        comment = "Netzlaufwerk";
-        path = "/mnt/hdd/public";
-        "force user" = "backup";
+    settings =
+      {
+        global = {
+          security = "user";
+          workgroup = "WORKGROUP";
+          "server string" = "Storiantor01";
+          interfaces = "enp* eth* end*";
+          "max log size" = "50";
+          "dns proxy" = false;
+          "syslog only" = true;
+        };
+      }
+      // lib.mapAttrs (user: opts: {
+        comment = user;
+        path = "/mnt/hdd/samba/${user}";
+        "force user" = user;
         "force group" = "users";
         public = "yes";
         "guest ok" = "no";
@@ -32,32 +39,36 @@
         writable = "yes";
         browseable = "yes";
         printable = "no";
-        "valid users" = "backup";
-      };
-    };
+        "valid users" = user;
+
+      }) backupUser;
   };
 
-  users.users.thalheim.isNormalUser = true;
+  users.users.backup.isNormalUser = true;
+  users.users.backup.extraGroups = [ "backup" ];
 
-  clan.core.vars.generators.backup-password = {
-    files.password = { };
-    runtimeInputs = with pkgs; [
-      coreutils
-      xkcdpass
-      mkpasswd
-    ];
-    script = ''
-      xkcdpass --numwords 3 --delimiter - --count 1 > $out/password
-    '';
-  };
+  clan.core.vars.generators = lib.mapAttrs' (
+    user: opts:
+    lib.nameValuePair "${user}-smb-password" {
+      files.password = { };
+      runtimeInputs = with pkgs; [
+        coreutils
+        xkcdpass
+        mkpasswd
+      ];
+      script = ''
+        xkcdpass --numwords 3 --delimiter - --count 1 > $out/password
+      '';
+    }
+  ) backupUser;
 
-  systemd.services.samba-smbd.postStart =
-    let
-      password = config.clan.core.vars.generators.thalheim-password.files.password.path;
-    in
-    ''
-      (echo $(< ${password}); echo $(< ${password})) | ${config.services.samba.package}/bin/smbpasswd -s -a backup
-    '';
+  systemd.services.samba-smbd.postStart = lib.concatMapStrings (user: ''
+    mkdir -p /mnt/hdd/samba/${user}
+    chown ${user}:users /mnt/hdd/samba/${user}
+    (p=$(<${
+      config.clan.core.vars.generators."${user}-smb-password".files.password.path
+    }); echo $p; echo $p}) | ${config.services.samba.package}/bin/smbpasswd -s -a ${user}
+  '') (lib.attrNames backupUser);
 
   services.samba-wsdd = {
     enable = true;
@@ -73,6 +84,4 @@
     enable = true;
     openFirewall = true;
   };
-
-  systemd.tmpfiles.rules = [ "d /var/spool/samba 1777 root root -" ];
 }

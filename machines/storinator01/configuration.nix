@@ -3,7 +3,7 @@
   imports = [
     self.nixosModules.storinator
     ./disko.nix
-    ../../modules/storinator
+    ../../modules/samba.nix
   ];
 
   systemd.services."serial-getty@ttyS0".enable = true;
@@ -24,7 +24,10 @@
     matthew = {
       # https://github.com/MatthewCroughan/
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "backup"
+        "wheel"
+      ];
       uid = 2001;
       openssh.authorizedKeys.keys = [
         "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIOJDRQfb1+7VK5tOe8W40iryfBWYRO6Uf1r2viDjmsJtAAAABHNzaDo= backup-yubikey"
@@ -34,7 +37,10 @@
     };
     w = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "backup"
+        "wheel"
+      ];
       uid = 2002;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINpWOqoN29X9v/2NisR2yFaazGLsEvG6oE+VLlOOIrxB w-main"
@@ -42,7 +48,10 @@
     };
     vi = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "backup"
+        "wheel"
+      ];
       uid = 2003;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAmgyEGuY/r7SDlJgrzYmQqpcWS5W+fCzRi3OS59ne4W openpgp:0xFF687387"
