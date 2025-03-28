@@ -3,6 +3,7 @@
   imports = [
     self.nixosModules.storinator
     ./disko.nix
+    ../../modules/storinator
   ];
 
   systemd.services."serial-getty@ttyS0".enable = true;
