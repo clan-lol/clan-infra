@@ -11,6 +11,7 @@
     pkgs.hub
     pkgs.gh
     pkgs.lazygit
+    pkgs.nix-output-monitor
     pkgs.ripgrep
     pkgs.tig
     pkgs.tmux
