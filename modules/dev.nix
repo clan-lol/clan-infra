@@ -1,6 +1,14 @@
-# Mostly used by web01.numtide.com
-{ pkgs, lib, ... }:
 {
+  self,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [
+    self.inputs.nix-index-database.nixosModules.nix-index
+  ];
+
   environment.systemPackages = [
     pkgs.bat
     pkgs.delta
@@ -23,6 +31,8 @@
   ];
 
   programs.nix-ld.enable = lib.mkDefault true; # for my sanity
+
+  programs.nix-index-database.comma.enable = true;
 
   programs.bash = {
     loginShellInit = ''
@@ -56,7 +66,6 @@
   services.eternal-terminal.enable = true;
   networking.firewall.allowedTCPPorts = [ 2022 ];
 
-  # Enable mosh
   programs.mosh.enable = true;
 
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
