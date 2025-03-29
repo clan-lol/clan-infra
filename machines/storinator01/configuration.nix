@@ -4,6 +4,7 @@
     self.nixosModules.storinator
     ./disko.nix
     ./users.nix
+    ./incus.nix
     ../../modules/samba.nix
   ];
 
