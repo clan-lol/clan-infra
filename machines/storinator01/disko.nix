@@ -155,12 +155,15 @@ in
             type = "topology";
             vdev = [
               {
+                mode = "raidz2";
                 members = vdev1;
               }
               {
+                mode = "raidz2";
                 members = vdev2;
               }
               {
+                mode = "raidz2";
                 members = vdev3;
               }
             ];
