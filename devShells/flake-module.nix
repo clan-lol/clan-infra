@@ -22,7 +22,7 @@
     {
       devShells.default = pkgs.mkShellNoCC {
         packages = [
-          pkgs.bashInteractive
+          pkgs.bash
           pkgs.sops
 
           pkgs.nixVersions.latest

@@ -61,5 +61,5 @@
   programs.mosh.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
-  users.users.root.shell = pkgs.bashInteractive;
+  users.users.root.shell = pkgs.bash;
 }
