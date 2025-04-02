@@ -34,12 +34,7 @@
 
   programs.nix-index-database.comma.enable = true;
 
-  programs.bash = {
-    loginShellInit = ''
-      # Initialize direnv shell integration
-      eval "$(direnv hook bash)"
-    '';
-  };
+  programs.direnv.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -48,9 +43,6 @@
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     loginShellInit = ''
-      # Initialize direnv shell integration
-      eval "$(direnv hook zsh)"
-
       # if the user do not have a zshrc yet, create it
       if [[ ! -f ~/.zshrc ]]; then
         touch ~/.zshrc
@@ -68,6 +60,6 @@
 
   programs.mosh.enable = true;
 
-  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
-  users.users.root.shell = "/run/current-system/sw/bin/bash";
+  users.defaultUserShell = pkgs.zsh;
+  users.users.root.shell = pkgs.bashInteractive;
 }
