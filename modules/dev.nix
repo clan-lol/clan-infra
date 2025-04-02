@@ -1,6 +1,14 @@
-# Mostly used by web01.numtide.com
-{ pkgs, lib, ... }:
 {
+  self,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [
+    self.inputs.nix-index-database.nixosModules.nix-index
+  ];
+
   environment.systemPackages = [
     pkgs.bat
     pkgs.delta
@@ -11,6 +19,7 @@
     pkgs.hub
     pkgs.gh
     pkgs.lazygit
+    pkgs.nix-output-monitor
     pkgs.ripgrep
     pkgs.tig
     pkgs.tmux
@@ -23,12 +32,9 @@
 
   programs.nix-ld.enable = lib.mkDefault true; # for my sanity
 
-  programs.bash = {
-    loginShellInit = ''
-      # Initialize direnv shell integration
-      eval "$(direnv hook bash)"
-    '';
-  };
+  programs.nix-index-database.comma.enable = true;
+
+  programs.direnv.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -37,9 +43,6 @@
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     loginShellInit = ''
-      # Initialize direnv shell integration
-      eval "$(direnv hook zsh)"
-
       # if the user do not have a zshrc yet, create it
       if [[ ! -f ~/.zshrc ]]; then
         touch ~/.zshrc
@@ -55,9 +58,8 @@
   services.eternal-terminal.enable = true;
   networking.firewall.allowedTCPPorts = [ 2022 ];
 
-  # Enable mosh
   programs.mosh.enable = true;
 
-  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
-  users.users.root.shell = "/run/current-system/sw/bin/bash";
+  users.defaultUserShell = pkgs.zsh;
+  users.users.root.shell = pkgs.bash;
 }

@@ -8,7 +8,7 @@
     meta.name = "infra";
     # Make flake available in modules
     specialArgs = { inherit self; };
-    directory = self;
+    inherit self;
     inventory.services = {
       zerotier.claninfra = {
         roles.controller.machines = [ "web01" ];
