@@ -241,6 +241,14 @@ $ nix run clan-infra#terraform
 
 ## Storinator01
 
+- Instance type:
+  [Storinator Q30](https://www.45drives.com/products/storinator-q30-configurations.php)
+- CPU: Intel Xeon Silver 4216 (16C/32T)
+- RAM: 128 GB DDR5 ECC
+- Storage:
+  - OS: 2 x 500GB SATA SSD
+  - Data: 18 HDDs in zraid2 + 1 Spare == 200TB
+
 ### Deploy new configuration
 
 Add this to your local ssh config:
