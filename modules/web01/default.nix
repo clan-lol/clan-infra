@@ -7,7 +7,6 @@
     ./goaccess.nix
     ./harmonia.nix
     ./homepage.nix
-    ./postfix.nix
     ./matrix-synapse.nix
     ./remote-builder.nix
     ../dev.nix
