@@ -74,6 +74,7 @@ in
   sops.secrets."vars/gitea-mail/gitea-password".owner =
     lib.mkForce config.systemd.services.gitea.serviceConfig.User;
 
+  services.nginx.clientMaxBodySize = "100M";
   services.nginx.virtualHosts."git.clan.lol" = publog {
     forceSSL = true;
     enableACME = true;
