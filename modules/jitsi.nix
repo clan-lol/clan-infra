@@ -27,6 +27,8 @@
         { urls = "turn:turn.matrix.org:3478?transport=tcp"; }
       ];
       breakoutRooms.hideAddRoomButton = false;
+      breakoutRooms.hideAutoAssignButton = false;
+      breakoutRooms.hideJoinRoomButton = false;
     };
     interfaceConfig = {
       SHOW_JITSI_WATERMARK = false;
