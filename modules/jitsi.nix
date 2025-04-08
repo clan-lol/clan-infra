@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   self,
@@ -91,7 +92,9 @@
         config.clan.core.vars.generators."jitsi-presence".files."envfile".path
       ];
       DynamicUser = true;
-      ExecStart = "${self.inputs.jitsi-matrix-presence.packages.x86_64-linux.default}/bin/jitsi-presence";
+      ExecStart =
+        lib.getExe
+          self.inputs.jitsi-matrix-presence.packages.${pkgs.hostPlatform.system}.default;
       Restart = "on-failure";
       RestartSec = "5s";
     };
