@@ -9,6 +9,9 @@
     # Make flake available in modules
     specialArgs = { inherit self; };
     inherit self;
+    inventory.machineClass = {
+      build02 = "darwin";
+    };
     inventory.services = {
       zerotier.claninfra = {
         roles.controller.machines = [ "web01" ];

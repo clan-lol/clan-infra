@@ -26,13 +26,12 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/pull/3115/head.tar.gz";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.nix-darwin.follows = "nix-darwin";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    # Use Nix 2.26 inside buildbot-worker
     buildbot-nix.url = "github:nix-community/buildbot-nix";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
