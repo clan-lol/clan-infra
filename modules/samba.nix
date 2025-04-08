@@ -15,6 +15,7 @@ let
       "janik"
       "arjen"
       "w"
+      "b4l-service"
     ];
     GLOM.users = [ "berwn" ];
   };
@@ -80,6 +81,9 @@ in
       janik.isNormalUser = true;
       janik.extraGroups = [ "samba" ];
       berwn.extraGroups = [ "samba" ];
+
+      b4l-service.isNormalUser = true;
+      b4l-service.extraGroups = [ "samba" ];
     }
     // lib.mapAttrs (share: opts: {
       isSystemUser = true;
