@@ -1,5 +1,5 @@
 {
-  python3,
+  buildPythonApplication,
   setuptools,
   matrix-nio,
   aiofiles,
@@ -24,7 +24,7 @@ let
 
   testDependencies = pythonDependencies ++ runtimeDependencies ++ [ ];
 in
-python3.pkgs.buildPythonApplication {
+buildPythonApplication {
   name = "matrix-bot";
   src = ./.;
   format = "pyproject";
