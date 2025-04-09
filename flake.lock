@@ -30,16 +30,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1744130318,
-        "narHash": "sha256-dzXurqJXzsHdoRt/Bxh2o7ucu1WZmo4ZJKbM8YWsa6c=",
+        "lastModified": 1744202774,
+        "narHash": "sha256-51lqiz0UR6ZWqHDdbT74RNyFinRF1WsR5qjvV5uy8T4=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "8a59d60be99fb037b53b379a1c46883fe09f5912",
+        "rev": "7b9470b52144566fe1a2c7372fae245628d1fbb6",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "worker-count",
         "repo": "buildbot-nix",
         "type": "github"
       }
