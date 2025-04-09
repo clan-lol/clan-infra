@@ -6,8 +6,7 @@
 }:
 {
   imports = [
-    self.darwinModules.deploy
-    self.inputs.srvos.darwinModules.mixins-nix-experimental
+    self.darwinModules.build02
   ];
 
   # Set Git commit hash for darwin-version.
