@@ -1,4 +1,9 @@
-{ config, self, ... }:
+{
+  config,
+  self,
+  lib,
+  ...
+}:
 {
   services.tailscale.enable = true;
 
@@ -6,7 +11,7 @@
 
   nix.buildMachines = [
     {
-      hostName = "clan-mac-mini.tailfc885e.ts.net";
+      hostName = "build02";
       sshUser = "buildbot";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
@@ -37,4 +42,9 @@
   nix.settings.trusted-public-keys = [
     self.nixosConfigurations.build01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
   ];
+
+  # Use `vars` once it has nix-darwin support
+  programs.ssh.knownHosts.build02.publicKey =
+    assert !lib.hasAttrByPath [ "clan" "core" "vars" ] self.darwinConfigurations.build02.config;
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHLndcrM45W12GD8w9O/0DKzTYyGWUSr6O+77nla5bj";
 }
