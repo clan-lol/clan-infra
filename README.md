@@ -130,16 +130,6 @@ $ nix run clan-infra#terraform
 
 ### Deploy new configuration
 
-Add this to your ssh config:
-
-```nix
-programs.ssh.extraConfig = ''
-  Host build02
-    ProxyJump tunnel@clan.lol
-    Hostname 100.98.54.8
-'';
-```
-
 ```
 $ clan machines update build01
 ```
@@ -190,6 +180,16 @@ sudo tailscale up
    `System Settings > General > Sharing > Remote Login`
 
 ### Deploy new configuration
+
+To access this machine, you'll need to add this to your SSH config:
+
+```nix
+programs.ssh.extraConfig = ''
+  Host build02
+    ProxyJump tunnel@clan.lol
+    Hostname 100.98.54.8
+'';
+```
 
 Due to quirks in nix-darwin, deployment must be done from `admin` and not any
 other users. The easiest way to do this is by running the `deploy-build02`
@@ -251,7 +251,7 @@ $ nix run clan-infra#terraform
 
 ### Deploy new configuration
 
-Add this to your local ssh config:
+To access this machine, you'll need to add this to your SSH config:
 
 ```nix
 programs.ssh.extraConfig = ''
