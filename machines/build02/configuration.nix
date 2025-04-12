@@ -73,8 +73,7 @@
     "root"
   ];
 
-  system.build.targetUser = "admin";
-  system.build.targetHost = "build02";
+  clan.core.networking.targetHost = "root@build02";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

@@ -73,11 +73,7 @@
   };
 
   flake.darwinModules = {
-    deploy = ./darwin/deploy.nix;
-
     build02.imports = [
-      self.darwinModules.deploy
-
       inputs.srvos.darwinModules.server
       inputs.srvos.darwinModules.mixins-nix-experimental
     ];
