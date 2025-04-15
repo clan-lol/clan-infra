@@ -24,6 +24,8 @@ in
   services.borgbackup.jobs.${config.networking.hostName} = {
     exclude = [
       "*.pyc"
+      "/var/lib/buildbot-worker/"
+      "/var/lib/private/gitea-runner/"
       "/home/*/.direnv"
       "/home/*/.cache"
       "/home/*/.cargo"
