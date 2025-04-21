@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, config, ... }:
 {
   imports = [ self.inputs.clan-core.clanModules.matrix-synapse ];
   clan.matrix-synapse.server_tld = "clan.lol";
@@ -31,4 +31,17 @@
       };
     };
   };
+  services.nginx.virtualHosts.${config.clan.matrix-synapse.app_domain}.extraConfig =
+    let
+      timeout = "10m";
+    in
+    ''
+      keepalive_timeout ${timeout};
+      send_timeout ${timeout};
+      client_body_timeout ${timeout};
+      client_header_timeout ${timeout};
+      proxy_connect_timeout ${timeout};
+      proxy_read_timeout ${timeout};
+      proxy_send_timeout ${timeout};
+    '';
 }
