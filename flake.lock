@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744963141,
-        "narHash": "sha256-OVdHdvP+5bXSmSYeuYmoVgZOD9miU6vM/5ia4c36bxs=",
+        "lastModified": 1745241922,
+        "narHash": "sha256-EH510IN0P1EbZFb4lglgMhJLVDMiUy5+qo7UAvOd/9w=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "df395905be3183741bb0d207a958ce454ba5057f",
+        "rev": "32e47f17d250b3e4f90f734cb6b6a07acb24b79f",
         "type": "github"
       },
       "original": {
@@ -198,11 +198,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742014779,
-        "narHash": "sha256-I6fG1zrfdLFcp/imGZElig0BJO3YU0QEXLgvwWoOpJ8=",
+        "lastModified": 1744693102,
+        "narHash": "sha256-1Z4WPGVky4w3lrhrgs89OKsLzPdtkbi1bPLNFWsoLfY=",
         "owner": "hercules-ci",
         "repo": "hercules-ci-effects",
-        "rev": "524637ef84c177661690b924bf64a1ce18072a2c",
+        "rev": "5b6cec51c9ec095a0d3fd4c8eeb53eb5c59ae33e",
         "type": "github"
       },
       "original": {
