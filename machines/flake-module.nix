@@ -48,18 +48,10 @@
     {
       inputs',
       config,
-      system,
-      lib,
       pkgs,
       ...
     }:
     {
-      packages = lib.mapAttrs' (
-        name: configuration:
-        lib.nameValuePair "deploy-${name}"
-          self.clanInternals.machines.${system}.${name}.config.system.build.deploy
-      ) self.darwinConfigurations;
-
       terranix =
         let
           package = pkgs.opentofu.withPlugins (p: [

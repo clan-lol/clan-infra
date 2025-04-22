@@ -1,7 +1,6 @@
 {
   config,
   self,
-  lib,
   ...
 }:
 {
@@ -43,8 +42,6 @@
     self.nixosConfigurations.build01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
   ];
 
-  # Use `vars` once it has nix-darwin support
   programs.ssh.knownHosts.build02.publicKey =
-    assert !lib.hasAttrByPath [ "clan" "core" "vars" ] self.darwinConfigurations.build02.config;
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHLndcrM45W12GD8w9O/0DKzTYyGWUSr6O+77nla5bj";
+    self.darwinConfigurations.build02.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
 }

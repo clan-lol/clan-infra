@@ -73,10 +73,10 @@
   };
 
   flake.darwinModules = {
-    deploy = ./darwin/deploy.nix;
+    sshd = ./darwin/sshd.nix;
 
     build02.imports = [
-      self.darwinModules.deploy
+      self.darwinModules.sshd
 
       inputs.srvos.darwinModules.server
       inputs.srvos.darwinModules.mixins-nix-experimental
