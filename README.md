@@ -130,6 +130,16 @@ $ nix run clan-infra#terraform
 
 ### Deploy new configuration
 
+To access this machine, you'll need to add this to your SSH config:
+
+```nix
+programs.ssh.extraConfig = ''
+  Host build01
+    ProxyJump tunnel@clan.lol
+    Hostname fda9:b487:2919:3547:3699:9336:90ec:cb59
+'';
+```
+
 ```
 $ clan machines update build01
 ```
