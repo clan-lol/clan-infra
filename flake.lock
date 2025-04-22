@@ -64,10 +64,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1745333933,
-        "narHash": "sha256-vuNG5HWHmjujwcSUN1zSaLOTT+nx5gbuUL2WMXtzc2A=",
+        "lastModified": 1745336445,
+        "narHash": "sha256-e+GBYJYd5rxcBhyomJormCyhGqF4Wiq1nQLcme4GRnE=",
         "ref": "main",
-        "rev": "74e64d413f042829637368dc712342e469e9ac5e",
+        "rev": "b5cc25023721851063ea879825f22eff0a200e8b",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
@@ -314,10 +314,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1744536153,
-        "narHash": "sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg/N38=",
+        "lastModified": 1744868846,
+        "narHash": "sha256-5RJTdUHDmj12Qsv7XOhuospjAjATNiTMElplWnJE9Hs=",
         "ref": "nixpkgs-unstable",
-        "rev": "18dd725c29603f582cf1900e0d25f9f1063dbf11",
+        "rev": "ebe4301cbd8f81c4f8d3244b3632338bbeb6d49c",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
