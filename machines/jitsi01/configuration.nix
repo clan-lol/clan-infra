@@ -1,5 +1,4 @@
 {
-  options,
   self,
   lib,
   pkgs,
@@ -18,17 +17,7 @@
 
   clan.core.sops.defaultGroups = [ "admins" ];
 
-  # Once `networking.fqdn` is no longer readonly, we can just set `networking.fqdn` directly
-  programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames =
-    assert options.networking.fqdn.readOnly;
-    [
-      "jitsi.clan.lol"
-    ];
-
-  # Once `networking.fqdn` is no longer readonly, this will be inherited from `networking.fqdn`
-  clan.core.networking.targetHost =
-    assert options.networking.fqdn.readOnly;
-    "root@jitsi.clan.lol";
+  networking.fqdn = "jitsi.clan.lol";
 
   environment.systemPackages = [
     pkgs.python3 # for sshuttle tunneling
