@@ -40,9 +40,11 @@
     }:
     {
       patches = patches ++ [
+        # https://github.com/renovatebot/renovate/pull/33991
+        # https://github.com/SuperSandro2000/renovate/pull/4
         (pkgs.fetchpatch {
-          url = "https://github.com/renovatebot/renovate/pull/33991.diff";
-          hash = "sha256-6ME048IiptweOkJhnK9QvQqfJ6QaXWX23SlY5TAmsFE=";
+          url = "https://github.com/renovatebot/renovate/compare/535874ba60521538cc5e7d7891e2cd6c850a8882...2562d3d04ca14ad7530465a97ef920f4e91a82b9.patch";
+          hash = "sha256-h2n0UJKsNM5q4BKAXptCUEJdu5wMkYtVpB1ePAVswr0=";
         })
       ];
     }
