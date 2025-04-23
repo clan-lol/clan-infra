@@ -40,11 +40,12 @@
     }:
     {
       patches = patches ++ [
-        # https://github.com/renovatebot/renovate/pull/33991
-        # https://github.com/SuperSandro2000/renovate/pull/4
+        # Using https://github.com/Mic92/dotfiles/blob/52cea06ecfdcc4d2294c826340122a9ca4ac167d/machines/eve/modules/renovate/default.nix#L65-L66
+        # as the latest version of https://github.com/renovatebot/renovate/pull/33991 is broken
+        # see: https://github.com/renovatebot/renovate/pull/33991#issuecomment-2798990410
         (pkgs.fetchpatch {
-          url = "https://github.com/renovatebot/renovate/compare/535874ba60521538cc5e7d7891e2cd6c850a8882...2562d3d04ca14ad7530465a97ef920f4e91a82b9.patch";
-          hash = "sha256-h2n0UJKsNM5q4BKAXptCUEJdu5wMkYtVpB1ePAVswr0=";
+          url = "https://github.com/renovatebot/renovate/compare/99bd69cd3d2938d9e9f52ec9e924dc4e57d886ad...91535da48df9afbda587bf1c079cb543d929bd49.patch";
+          hash = "sha256-aggafF9YN2HexfMH6Ir8kRJHYxy4vW5Ji0FL2/WzqHM=";
         })
       ];
     }
