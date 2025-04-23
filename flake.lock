@@ -218,11 +218,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1737894973,
-        "narHash": "sha256-a9uJXhH9oFfZOlm3opTxCcZbV3RzaAtYbODMl4aXiDg=",
+        "lastModified": 1745430429,
+        "narHash": "sha256-XT9yrLAgCEV9HYr22+eWFkAkRLdjPxPt9yfPXS//1mM=",
         "owner": "pinpox",
         "repo": "jitsi-matrix-presence",
-        "rev": "046069e9d3ab35716f0938d7d9dda62062dc498b",
+        "rev": "38385dfc608cf7e5d633b46523761d0b97bae1bd",
         "type": "github"
       },
       "original": {
