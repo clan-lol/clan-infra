@@ -25,6 +25,7 @@
     pkgs.tmux
     pkgs.direnv
     pkgs.jujutsu
+    pkgs.ranger
 
     # for flokli
     pkgs.kitty.terminfo
