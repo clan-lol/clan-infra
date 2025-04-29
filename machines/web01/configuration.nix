@@ -9,4 +9,6 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   networking.fqdn = "clan.lol";
+
+  boot.tmp.useTmpfs = true;
 }
