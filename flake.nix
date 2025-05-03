@@ -24,6 +24,15 @@
       inputs.flake-compat.follows = "flake-compat";
     };
 
+    # To test the cgroup fix: https://github.com/Mic92/nix-1/commit/fa1f677653c5d1ae910b5908ea1efb0ff909e9c9
+    nix.url = "git+https://github.com/Mic92/nix-1?shallow=1";
+    nix.inputs.nixpkgs.follows = "nixpkgs";
+    nix.inputs.flake-parts.follows = "";
+    nix.inputs.flake-compat.follows = "";
+    nix.inputs.nixpkgs-regression.follows = "";
+    nix.inputs.git-hooks-nix.follows = "";
+    nix.inputs.nixpkgs-23-11.follows = "";
+
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -14,6 +14,7 @@
       ./emergency-access.nix
       ./admins.nix
       ./signing.nix
+      ./nix-daemon.nix
     ];
 
     hetzner-ax162r.imports = [
