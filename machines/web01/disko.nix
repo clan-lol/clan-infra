@@ -1,3 +1,6 @@
+# TODO: !!!!!!!!!
+# PLEASE ADD SOME SWAP TO THE NEXT SERVER!
+
 { config, pkgs, ... }:
 let
   mirrorBoot = idx: {
