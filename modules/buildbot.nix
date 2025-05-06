@@ -53,7 +53,7 @@
   services.buildbot-nix.worker = {
     enable = true;
     workerPasswordFile = config.sops.secrets.buildbot-worker-password-file.path;
-    workers = 24;
+    workers = 48;
   };
 
   sops.secrets.buildbot-oauth-secret-file = { };
