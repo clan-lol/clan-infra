@@ -9,4 +9,7 @@
   clan.core.sops.defaultGroups = [ "admins" ];
 
   networking.fqdn = "clan.lol";
+
+  nix.settings.max-jobs = 48;
+  nix.settings.cores = 32;
 }
