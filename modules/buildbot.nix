@@ -40,7 +40,7 @@
 
     jobReportLimit = 0;
     # optional nix-eval-jobs settings
-    evalWorkerCount = 50; # limit number of concurrent evaluations
+    evalWorkerCount = 20; # limit number of concurrent evaluations
     evalMaxMemorySize = 4096; # limit memory usage per evaluation
   };
 
