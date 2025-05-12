@@ -42,6 +42,10 @@
         config.certificate.searchDomains = [ "clan.lol" ];
       };
     };
+
+    secrets.age.plugins = [
+      "age-plugin-1p"
+    ];
   };
 
   perSystem =
