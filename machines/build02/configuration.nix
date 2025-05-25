@@ -24,12 +24,6 @@
     # for sh or bash so `ssh root@clan-mac-mini nix-daemon --version`
     # will fail with `command not found`
     shell = "/bin/zsh";
-    # Necessary for remote deployment as `admin` is not a trusted user
-    # so copying untrusted inputs will fail
-    openssh.authorizedKeys.keys = [
-      # Enzime
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE"
-    ];
   };
 
   users.users.luishebendanz = {
@@ -41,14 +35,7 @@
     uid = 502;
     home = "/Users/admin";
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      # Enzime
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE"
-
-      # Mic92
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKbBp2dH2X3dcU1zh+xW3ZsdYROKpJd3n13ssOP092qE"
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCsjXKHCkpQT4LhWIdT0vDM/E/3tw/4KHTQcdJhyqPSH0FnwC8mfP2N9oHYFa2isw538kArd5ZMo5DD1ujL5dLk="
-    ];
+    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
   users.users.buildbot = {

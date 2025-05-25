@@ -81,6 +81,8 @@
 
       inputs.srvos.darwinModules.server
       inputs.srvos.darwinModules.mixins-nix-experimental
+
+      ./admins.nix
     ];
   };
 
