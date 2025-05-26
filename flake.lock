@@ -416,6 +416,26 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "renovate": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748177460,
+        "narHash": "sha256-Kkq14axuopFlGG7nR9FpAqenJcE6SL0j/2eVnBKRY/E=",
+        "owner": "Mic92",
+        "repo": "renovate",
+        "rev": "76a8a4579bcd3978d6a58d16564a73c6d8c9627d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "renovate",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "buildbot-nix": "buildbot-nix",
@@ -429,6 +449,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
+        "renovate": "renovate",
         "srvos": "srvos",
         "terranix": "terranix",
         "treefmt-nix": "treefmt-nix"
