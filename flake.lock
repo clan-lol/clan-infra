@@ -401,10 +401,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1747467164,
-        "narHash": "sha256-JBXbjJ0t6T6BbVc9iPVquQI9XSXCGQJD8c8SgnUquus=",
+        "lastModified": 1748186667,
+        "narHash": "sha256-UQubDNIQ/Z42R8tPCIpY+BOhlxO8t8ZojwC9o2FW3c8=",
         "ref": "nixpkgs-unstable",
-        "rev": "3fcbdcfc707e0aa42c541b7743e05820472bdaec",
+        "rev": "bdac72d387dca7f836f6ef1fe547755fb0e9df61",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -414,6 +414,26 @@
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
+      }
+    },
+    "renovate": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748177460,
+        "narHash": "sha256-Kkq14axuopFlGG7nR9FpAqenJcE6SL0j/2eVnBKRY/E=",
+        "owner": "Mic92",
+        "repo": "renovate",
+        "rev": "76a8a4579bcd3978d6a58d16564a73c6d8c9627d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "renovate",
+        "type": "github"
       }
     },
     "root": {
@@ -429,6 +449,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
+        "renovate": "renovate",
         "srvos": "srvos",
         "terranix": "terranix",
         "treefmt-nix": "treefmt-nix"

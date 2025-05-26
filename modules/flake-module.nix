@@ -17,6 +17,11 @@
       ./nix-daemon.nix
     ];
 
+    renovate.imports = [
+      inputs.renovate.nixosModules.default
+      ./renovate.nix
+    ];
+
     hetzner-ax162r.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./initrd-networking.nix
@@ -57,15 +62,18 @@
     ];
 
     web01.imports = [
-      self.nixosModules.server
-      self.nixosModules.buildbot
       inputs.srvos.nixosModules.mixins-nginx
       inputs.srvos.nixosModules.mixins-nix-experimental
+
+      inputs.nixos-mailserver.nixosModules.mailserver
+
+      self.nixosModules.server
+      self.nixosModules.buildbot
+      self.nixosModules.renovate
+
       ./matrix-bot.nix
       ./web01
-      inputs.nixos-mailserver.nixosModules.mailserver
       ./mailserver.nix
-      ./renovate.nix
     ];
 
     storinator.imports = [
