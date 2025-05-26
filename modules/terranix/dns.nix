@@ -1,3 +1,4 @@
+{ self }:
 { config, ... }:
 let
   base_ipv4 = "23.88.17.207";
@@ -14,14 +15,16 @@ in
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "storinator01.vpn";
       type = "AAAA";
-      value = "fda9:b487:2919:3547:3699:9393:7f57:6e6b";
+      value =
+        self.nixosConfigurations.storinator01.config.clan.core.vars.generators.zerotier.files.zerotier-ip.value;
     };
 
     build01 = {
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "build01.vpn";
       type = "AAAA";
-      value = "fda9:b487:2919:3547:3699:9336:90ec:cb59";
+      value =
+        self.nixosConfigurations.build01.config.clan.core.vars.generators.zerotier.files.zerotier-ip.value;
     };
 
     build02 = {
