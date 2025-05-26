@@ -243,7 +243,8 @@ $ clan secrets groups add-user admins <user>
 
 ## Update DNS
 
-Currently DNS can't be updated separately to `jitsi01`
+Currently DNS can't be updated separately to the machines, so you'll need to
+deploy the entire Terraform configuration:
 
 ```
 $ nix run clan-infra#terraform
