@@ -72,6 +72,8 @@
           "aarch64-linux"
           "aarch64-darwin"
         ];
+        # Hacky way to detect we're in a REPL
+        debug = builtins ? currentSystem;
         imports = [
           inputs.clan-core.flakeModules.default
           inputs.treefmt-nix.flakeModule

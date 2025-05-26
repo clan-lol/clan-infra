@@ -133,11 +133,13 @@ $ nix run clan-infra#terraform
 To access this machine, you'll need to add this to your SSH config:
 
 ```nix
-programs.ssh.extraConfig = ''
-  Host build01
-    ProxyJump tunnel@clan.lol
-    Hostname fda9:b487:2919:3547:3699:9336:90ec:cb59
-'';
+{
+  programs.ssh.extraConfig = ''
+    Host build01
+      ProxyJump tunnel@clan.lol
+      Hostname build01.vpn.clan.lol
+  '';
+}
 ```
 
 ```
@@ -194,11 +196,13 @@ sudo tailscale up
 To access this machine, you'll need to add this to your SSH config:
 
 ```nix
-programs.ssh.extraConfig = ''
-  Host build02
-    ProxyJump tunnel@clan.lol
-    Hostname 100.98.54.8
-'';
+{
+  programs.ssh.extraConfig = ''
+    Host build02
+      ProxyJump tunnel@clan.lol
+      Hostname build02.vpn.clan.lol
+  '';
+}
 ```
 
 Due to quirks in nix-darwin, deployment must be done from `admin` and not any
@@ -250,7 +254,7 @@ deploy the entire Terraform configuration:
 $ nix run clan-infra#terraform
 ```
 
-## Storinator01
+## storinator01
 
 - Instance type:
   [Storinator Q30](https://www.45drives.com/products/storinator-q30-configurations.php)
@@ -265,11 +269,13 @@ $ nix run clan-infra#terraform
 To access this machine, you'll need to add this to your SSH config:
 
 ```nix
-programs.ssh.extraConfig = ''
-  Host storinator01
-    ProxyJump tunnel@clan.lol
-    Hostname fda9:b487:2919:3547:3699:9393:7f57:6e6b
-'';
+{
+  programs.ssh.extraConfig = ''
+    Host storinator01
+      ProxyJump tunnel@clan.lol
+      Hostname storinator01.vpn.clan.lol
+  '';
+}
 ```
 
 ```

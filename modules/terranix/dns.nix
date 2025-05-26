@@ -13,14 +13,21 @@ in
     storinator01 = {
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "storinator01.vpn";
-      type = "A";
+      type = "AAAA";
+      value = "fda9:b487:2919:3547:3699:9393:7f57:6e6b";
+    };
+
+    build01 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "build01.vpn";
+      type = "AAAA";
       value = "fda9:b487:2919:3547:3699:9336:90ec:cb59";
     };
 
     build02 = {
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "build02.vpn";
-      type = "AAAA";
+      type = "A";
       value = "100.98.54.8";
     };
 
