@@ -13,8 +13,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Use root based activation
-    nix-darwin.url = "github:nix-darwin/nix-darwin/pull/1341/merge";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver = {
