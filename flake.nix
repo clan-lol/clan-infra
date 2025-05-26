@@ -46,16 +46,11 @@
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    # OpenTofu support
-    # https://github.com/pedorich-n/terranix/pull/1
-    # https://github.com/terranix/terranix/pull/115
-    # https://github.com/terranix/terranix/pull/116
-    terranix.url = "github:Enzime/terranix/terranix-plus";
-    terranix.inputs.bats-assert.follows = "";
-    terranix.inputs.bats-support.follows = "";
+    # Fix `devShells` failing to build on latest HEAD
+    # https://github.com/terranix/terranix/pull/125
+    terranix.url = "github:terranix/terranix/pull/125/merge";
     terranix.inputs.flake-parts.follows = "flake-parts";
     terranix.inputs.nixpkgs.follows = "nixpkgs";
-    terranix.inputs.terranix-examples.follows = "";
 
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
@@ -77,6 +72,8 @@
           "aarch64-linux"
           "aarch64-darwin"
         ];
+        # Hacky way to detect we're in a REPL
+        debug = builtins ? currentSystem;
         imports = [
           inputs.clan-core.flakeModules.default
           inputs.treefmt-nix.flakeModule

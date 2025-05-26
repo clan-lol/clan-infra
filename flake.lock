@@ -542,28 +542,25 @@
     },
     "terranix": {
       "inputs": {
-        "bats-assert": [],
-        "bats-support": [],
         "flake-parts": [
           "flake-parts"
         ],
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_3",
-        "terranix-examples": []
+        "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1737337241,
-        "narHash": "sha256-gBtoYWlV79ocXsXFZIH9I+J0rmBtCz8NPwynG9LbHkc=",
-        "owner": "Enzime",
+        "lastModified": 1748240861,
+        "narHash": "sha256-5KcYbYCTQ3VE9q/7z97cqkJMZo76w4h/H2bpQI0PgjY=",
+        "owner": "terranix",
         "repo": "terranix",
-        "rev": "df8728ace8ce6692a33fc87439b915260f857dee",
+        "rev": "3df442a5717530510a52abf48249e4fd70b59b79",
         "type": "github"
       },
       "original": {
-        "owner": "Enzime",
-        "ref": "terranix-plus",
+        "owner": "terranix",
+        "ref": "pull/125/merge",
         "repo": "terranix",
         "type": "github"
       }

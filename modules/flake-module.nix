@@ -1,4 +1,9 @@
-{ self, inputs, ... }:
+{
+  flake-parts-lib,
+  self,
+  inputs,
+  ...
+}:
 {
   flake.nixosModules = {
     server.imports = [
@@ -95,6 +100,6 @@
   };
 
   flake.modules.terranix.base = ./terranix/base.nix;
-  flake.modules.terranix.dns = ./terranix/dns.nix;
+  flake.modules.terranix.dns = flake-parts-lib.importApply ./terranix/dns.nix { inherit self; };
   flake.modules.terranix.vultr = ./terranix/vultr.nix;
 }
