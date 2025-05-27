@@ -13,7 +13,6 @@
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
-  environment.etc."nix-darwin".source = "${config.users.users.admin.home}/.config/nix-darwin";
   nix.settings.sandbox = true;
 
   services.openssh.enable = true;

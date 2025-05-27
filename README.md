@@ -169,16 +169,16 @@ You can leave both `Anyone may request permission to control screen` and
 `VNC viewers may control screen with password` disabled as macOS will allow you
 to control the screen by connecting with your macOS username and password.
 
-3. Clone this repo
+3. Clone this repo into a temporary directory
 
 ```
-nix run nixpkgs#git -- clone https://git.clan.lol/clan/clan-infra.git ~/.config/nix-darwin
+nix run nixpkgs#git -- clone https://git.clan.lol/clan/clan-infra.git temp-bootstrap
 ```
 
-4. Install nix-darwin
+4. Install nix-darwin from the temporary directory
 
 ```
-nix run nix-darwin -- switch --flake ~/.config/nix-darwin
+nix run nix-darwin -- switch --flake ./temp-bootsrap
 ```
 
 5. Log in to Tailscale
@@ -190,6 +190,12 @@ sudo tailscale up
 6. Enable `Allow full disk access for remote users` and
    `Allow access for all users` in
    `System Settings > General > Sharing > Remote Login`
+
+7. Delete the temporary directory
+
+```
+rm -rf ./temp-bootstrap
+```
 
 ### Deploy new configuration
 
@@ -205,18 +211,8 @@ To access this machine, you'll need to add this to your SSH config:
 }
 ```
 
-Due to quirks in nix-darwin, deployment must be done from `admin` and not any
-other users. The easiest way to do this is by running the `deploy-build02`
-package which will deploy the specified flake:
-
 ```
-$ nix run clan-infra#deploy-build02
-```
-
-The deployment script also supports overriding inputs:
-
-```
-nix run clan-infra#deploy-build02 -- --override-input nixpkgs ~/nixpkgs
+$ clan machines update build02
 ```
 
 ## Adding new users
