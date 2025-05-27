@@ -1,4 +1,5 @@
 {
+  _class,
   self,
   pkgs,
   lib,
@@ -6,7 +7,18 @@
 }:
 {
   imports = [
-    self.inputs.nix-index-database.nixosModules.nix-index
+    self.inputs.nix-index-database."${_class}Modules".nix-index
+
+    (lib.optionalAttrs (_class == "nixos") {
+      programs.nix-ld.enable = lib.mkDefault true; # for my sanity
+
+      # 2022 = eternal-terminal
+      networking.firewall.allowedTCPPorts = [ 2022 ];
+
+      programs.mosh.enable = true;
+
+      users.defaultUserShell = pkgs.zsh;
+    })
   ];
 
   environment.systemPackages = [
@@ -27,41 +39,37 @@
     pkgs.jujutsu
     pkgs.ranger
 
-    # for flokli
     pkgs.kitty.terminfo
-    pkgs.ghostty.terminfo
+    (if _class == "darwin" then pkgs.ghostty-bin.terminfo else pkgs.ghostty.terminfo)
   ];
-
-  programs.nix-ld.enable = lib.mkDefault true; # for my sanity
 
   programs.nix-index-database.comma.enable = true;
 
   programs.direnv.enable = true;
 
-  programs.zsh = {
-    enable = true;
-    ohMyZsh.enable = true;
-    ohMyZsh.theme = "robbyrussell";
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-    loginShellInit = ''
-      # if the user do not have a zshrc yet, create it
-      if [[ ! -f ~/.zshrc ]]; then
-        touch ~/.zshrc
-      fi
+  programs.zsh =
+    {
+      enable = true;
+      loginShellInit = ''
+        # if the user do not have a zshrc yet, create it
+        if [[ ! -f ~/.zshrc ]]; then
+          touch ~/.zshrc
+        fi
 
-      if [[ -n "''${commands[fzf-share]}" ]]; then
-        FZF_CTRL_R_OPTS=--reverse
-        source "$(fzf-share)/key-bindings.zsh"
-      fi
-    '';
-  };
+        if [[ -n "''${commands[fzf-share]}" ]]; then
+          FZF_CTRL_R_OPTS=--reverse
+          source "$(fzf-share)/key-bindings.zsh"
+        fi
+      '';
+    }
+    // (lib.optionalAttrs (_class == "nixos") {
+      ohMyZsh.enable = true;
+      ohMyZsh.theme = "robbyrussell";
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+    });
 
   services.eternal-terminal.enable = true;
-  networking.firewall.allowedTCPPorts = [ 2022 ];
 
-  programs.mosh.enable = true;
-
-  users.defaultUserShell = pkgs.zsh;
   users.users.root.shell = pkgs.bash;
 }

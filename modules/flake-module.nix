@@ -18,6 +18,7 @@
 
       ./emergency-access.nix
       ./admins.nix
+      ./dev.nix
       ./signing.nix
       ./nix-daemon.nix
     ];
@@ -52,18 +53,15 @@
       self.nixosModules.server
       inputs.srvos.nixosModules.mixins-nix-experimental
       ./builder.nix
-      ./dev.nix
     ];
 
     demo01.imports = [
       self.nixosModules.server
-      ./dev.nix
     ];
 
     jitsi01.imports = [
       self.nixosModules.server
       ./jitsi.nix
-      ./dev.nix
     ];
 
     web01.imports = [
@@ -89,13 +87,19 @@
   flake.darwinModules = {
     sshd = ./darwin/sshd.nix;
 
+    server.imports = [
+      inputs.srvos.darwinModules.server
+
+      ./admins.nix
+      ./dev.nix
+    ];
+
     build02.imports = [
       self.darwinModules.sshd
+      self.darwinModules.server
 
       inputs.srvos.darwinModules.server
       inputs.srvos.darwinModules.mixins-nix-experimental
-
-      ./admins.nix
     ];
   };
 

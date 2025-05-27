@@ -2,6 +2,7 @@
   config,
   self,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -23,7 +24,7 @@
     # Necessary because nix-darwin doesn't correctly set the PATH
     # for sh or bash so `ssh root@clan-mac-mini nix-daemon --version`
     # will fail with `command not found`
-    shell = "/bin/zsh";
+    shell = lib.mkForce pkgs.zsh;
   };
 
   users.users.luishebendanz = {
