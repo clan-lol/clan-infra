@@ -93,6 +93,7 @@
               ./build01/terraform-configuration.nix
               ./demo01/terraform-configuration.nix
               ./jitsi01/terraform-configuration.nix
+              ./web02/terraform-configuration.nix
             ];
             terraformWrapper.package = package;
             terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];

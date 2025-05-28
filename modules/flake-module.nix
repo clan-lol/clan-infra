@@ -80,6 +80,10 @@
       ./mailserver.nix
     ];
 
+    web02.imports = [
+      self.nixosModules.server
+    ];
+
     storinator.imports = [
       self.nixosModules.server
     ];
