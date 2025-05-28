@@ -1,4 +1,5 @@
 {
+  moduleWithSystem,
   flake-parts-lib,
   self,
   inputs,
@@ -104,6 +105,10 @@
   };
 
   flake.modules.terranix.base = ./terranix/base.nix;
+  # use `moduleWithSystem` to give us access to `perSystem`'s `config`
+  flake.modules.terranix.with-dns = moduleWithSystem (
+    { config }: flake-parts-lib.importApply ./terranix/with-dns.nix { config' = config; }
+  );
   flake.modules.terranix.dns = flake-parts-lib.importApply ./terranix/dns.nix { inherit self; };
   flake.modules.terranix.vultr = ./terranix/vultr.nix;
 }

@@ -1,7 +1,5 @@
 {
-  config',
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -22,18 +20,6 @@
       (config.resource.vultr_ssh_key.enzime "id")
     ];
     backups = "disabled";
-  };
-
-  module.dns = {
-    source = toString (
-      pkgs.linkFarm "dns-module" [
-        {
-          name = "config.tf.json";
-          path = config'.terranix.terranixConfigurations.dns.result.terraformConfiguration;
-        }
-      ]
-    );
-    passphrase = lib.tf.ref "var.passphrase";
   };
 
   resource.hetznerdns_record.jitsi_a = {
