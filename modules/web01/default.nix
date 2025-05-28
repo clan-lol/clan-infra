@@ -9,7 +9,6 @@
     ./homepage.nix
     ./matrix-synapse.nix
     ./remote-builder.nix
-    ../dev.nix
     ./jumphost.nix
     ./hypervisor.nix
     self.inputs.clan-core.clanModules.zt-tcp-relay
