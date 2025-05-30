@@ -44,6 +44,8 @@
               p.local
             ]
           ))
+
+          pkgs.kanidm_1_6
         ];
       };
     };
