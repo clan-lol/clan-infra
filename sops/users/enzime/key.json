@@ -1,5 +1,13 @@
 [
   {
+    "publickey": "age1se1qt69yl3735wgyqxa8z2n2rna9vf7nvyqhnht4pgf8g393qcepj6a78h6vhs",
+    "type": "age"
+  },
+  {
+    "publickey": "age1tkm5q3s4fy2tx6a0km2fuccq9l6uvrnukjpk8h3c55fu2ljyaa4s7xdq9l",
+    "type": "age"
+  },
+  {
     "publickey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE",
     "type": "age"
   }

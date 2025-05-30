@@ -129,6 +129,7 @@
                     "jitsi01"
                     "storinator01"
                     "web01"
+                    "web02"
                   ];
                   aarch64-linux = [
                     "build01"

@@ -45,6 +45,7 @@
 
     secrets.age.plugins = [
       "age-plugin-1p"
+      "age-plugin-se"
     ];
   };
 
@@ -88,14 +89,13 @@
             workdir = "terraform";
             modules = [
               self.modules.terranix.base
+              self.modules.terranix.with-dns
               self.modules.terranix.vultr
               ./build01/terraform-configuration.nix
               ./demo01/terraform-configuration.nix
               ./jitsi01/terraform-configuration.nix
+              ./web02/terraform-configuration.nix
             ];
-            extraArgs = {
-              config' = config;
-            };
             terraformWrapper.package = package;
             terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
             terraformWrapper.prefixText = ''

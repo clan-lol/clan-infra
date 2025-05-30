@@ -10,6 +10,11 @@ in
     ttl = 3600;
   };
 
+  resource.hetznerdns_zone.thecomputer_co = {
+    name = "thecomputer.co";
+    ttl = 3600;
+  };
+
   resource.hetznerdns_record = {
     storinator01 = {
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
@@ -102,5 +107,9 @@ in
 
   output.clan_lol_zone_id = {
     value = config.resource.hetznerdns_zone.clan_lol "id";
+  };
+
+  output.thecomputer_co_zone_id = {
+    value = config.resource.hetznerdns_zone.thecomputer_co "id";
   };
 }
