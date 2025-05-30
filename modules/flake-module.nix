@@ -81,7 +81,11 @@
     ];
 
     web02.imports = [
+      inputs.srvos.nixosModules.mixins-nginx
+
       self.nixosModules.server
+
+      ./web02/outline.nix
     ];
 
     storinator.imports = [
