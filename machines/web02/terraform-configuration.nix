@@ -36,6 +36,13 @@
     value = config.resource.vultr_instance.web02 "v6_main_ip";
   };
 
+  resource.hetznerdns_record.thecomputer_co_outline_a = {
+    zone_id = lib.tf.ref "module.dns.thecomputer_co_zone_id";
+    name = "outline";
+    type = "A";
+    value = config.resource.vultr_instance.web02 "main_ip";
+  };
+
   resource.null_resource.install-web02 = {
     triggers = {
       instance_id = config.resource.vultr_instance.web02 "id";
