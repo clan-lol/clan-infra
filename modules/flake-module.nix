@@ -85,6 +85,7 @@
 
       self.nixosModules.server
 
+      ./web02/kanidm.nix
       ./web02/outline.nix
     ];
 
