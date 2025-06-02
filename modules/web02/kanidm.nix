@@ -35,6 +35,7 @@ in
       enable = true;
       adminPasswordFile = config.clan.core.vars.generators.kanidm.files.admin-password.path;
       idmAdminPasswordFile = config.clan.core.vars.generators.kanidm.files.idm-admin-password.path;
+      # Don't declare any users here as that may cause existing users to get wiped
     };
   };
 

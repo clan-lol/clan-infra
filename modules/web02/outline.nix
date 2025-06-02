@@ -25,6 +25,9 @@ in
     prompts.oidc-secret.persist = true;
   };
 
+  # This group is a Kanidm builtin, but we need to specify it as
+  # the NixOS module won't let us create a scope map referencing
+  # it without declaring it first.
   services.kanidm.provision.groups.idm_all_persons = { };
 
   services.kanidm.provision.systems.oauth2.${clientId} = {

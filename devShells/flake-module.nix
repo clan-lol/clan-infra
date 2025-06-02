@@ -47,6 +47,7 @@
 
           pkgs.kanidm_1_6
         ];
+        env.KANIDM_URL = "https://idm.thecomputer.co";
       };
     };
 }
