@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   terraform.required_providers.local.source = "hashicorp/local";
@@ -12,9 +12,15 @@
     enable_ipv6 = true;
     ssh_key_ids = [
       (config.resource.vultr_ssh_key.terraform "id")
-      (config.resource.vultr_ssh_key.enzime "id")
     ];
     backups = "disabled";
+  };
+
+  resource.hetznerdns_record.demo_a = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "demo";
+    type = "A";
+    value = config.resource.vultr_instance.demo01 "main_ip";
   };
 
   resource.null_resource.install-demo01 = {
