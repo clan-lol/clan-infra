@@ -12,4 +12,7 @@
 
   nix.settings.max-jobs = 48;
   nix.settings.cores = 32;
+
+  # Check https://nixos-mailserver.readthedocs.io/en/latest/migrations.html before bumping
+  mailserver.stateVersion = 2;
 }
