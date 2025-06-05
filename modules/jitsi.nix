@@ -81,7 +81,7 @@
 
     wantedBy = [ "multi-user.target" ];
     environment = {
-      JITSI_ROOMS = "space,space2,standup,clan.lol,nixos";
+      JITSI_ROOMS = "space,space2,standup,clan.lol,nixos,pub";
       JITSI_SERVER = "https://jitsi.clan.lol";
       ROOM_ID = "!36gU7xj73xzjlVoD:thalheim.io";
       HOMESERVER_URL = "https://matrix.org";
