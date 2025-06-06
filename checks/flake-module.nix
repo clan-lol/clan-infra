@@ -1,5 +1,7 @@
 { self, ... }:
 {
+  imports = [ ./secrets.nix ];
+
   perSystem =
     {
       system,
