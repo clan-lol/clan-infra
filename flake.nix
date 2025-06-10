@@ -46,9 +46,7 @@
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    # Fix `devShells` failing to build on latest HEAD
-    # https://github.com/terranix/terranix/pull/125
-    terranix.url = "github:terranix/terranix/pull/125/merge";
+    terranix.url = "github:terranix/terranix";
     terranix.inputs.flake-parts.follows = "flake-parts";
     terranix.inputs.nixpkgs.follows = "nixpkgs";
 
