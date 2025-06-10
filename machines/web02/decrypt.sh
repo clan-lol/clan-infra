@@ -1,10 +1,6 @@
-#!/usr/bin/env nix
-#! nix shell --inputs-from ../.. nixpkgs#bash nixpkgs#coreutils nixpkgs#sops nixpkgs#openssh clan-core --command bash
-# shellcheck shell=bash
-
+#!/usr/bin/env bash
 # shellcheck disable=SC1008,SC1128
-
-set -euox pipefail
+set -euxo pipefail
 
 HOST="thecomputer.co"
 
