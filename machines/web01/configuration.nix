@@ -15,4 +15,8 @@
 
   # Check https://nixos-mailserver.readthedocs.io/en/latest/migrations.html before bumping
   mailserver.stateVersion = 2;
+
+  # zram for extra memory
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 100;
 }
