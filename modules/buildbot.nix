@@ -41,7 +41,7 @@
     jobReportLimit = 0;
     # optional nix-eval-jobs settings
     evalWorkerCount = 20; # limit number of concurrent evaluations
-    evalMaxMemorySize = 4096; # limit memory usage per evaluation
+    evalMaxMemorySize = 2096; # limit memory usage per evaluation
   };
 
   # Optional: Enable acme/TLS in nginx (recommended)
@@ -53,7 +53,7 @@
   services.buildbot-nix.worker = {
     enable = true;
     workerPasswordFile = config.sops.secrets.buildbot-worker-password-file.path;
-    workers = 48;
+    workers = 96;
   };
 
   sops.secrets.buildbot-oauth-secret-file = { };
