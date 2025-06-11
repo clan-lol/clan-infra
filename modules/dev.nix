@@ -38,8 +38,6 @@
     pkgs.direnv
     pkgs.jujutsu
     pkgs.ranger
-
-    pkgs.kitty.terminfo
     (if _class == "darwin" then pkgs.ghostty-bin.terminfo else pkgs.ghostty.terminfo)
   ];
 
@@ -72,4 +70,6 @@
   services.eternal-terminal.enable = true;
 
   users.users.root.shell = pkgs.bash;
+
+  environment.enableAllTerminfo = true;
 }
