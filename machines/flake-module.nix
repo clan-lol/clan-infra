@@ -10,6 +10,16 @@
     specialArgs = { inherit self; };
     inherit self;
     inventory.machines.build02.machineClass = "darwin";
+    inventory.instances = {
+      emergency-access = {
+        module = {
+          name = "emergency-access";
+          input = "clan-core";
+        };
+
+        roles.default.tags."all" = { };
+      };
+    };
     inventory.services = {
       zerotier.claninfra = {
         roles.controller.machines = [ "web01" ];
