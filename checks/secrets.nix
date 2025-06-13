@@ -4,6 +4,7 @@
     { inputs', pkgs, ... }:
     {
       checks = {
+        # TODO: use `clan secrets key check` instead
         secrets =
           pkgs.runCommandNoCC "check-secrets"
             {
@@ -17,7 +18,7 @@
               ${inputs'.clan-core.legacyPackages.setupNixInNix}
               mkdir -p self
               cp -r --no-target-directory ${self} self
-              clan secrets key update --flake self
+              CLAN_LOAD_AGE_PLUGINS=false clan secrets key update --flake self
               touch $out
             '';
       };
