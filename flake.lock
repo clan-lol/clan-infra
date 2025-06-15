@@ -381,11 +381,11 @@
         "nixpkgs-25_05": []
       },
       "locked": {
-        "lastModified": 1749941549,
-        "narHash": "sha256-tcJ+lEblc+3v8Jie/6f4o56S8P9m+UnV9mmt44rLGhE=",
+        "lastModified": 1749955524,
+        "narHash": "sha256-YppJBWiOIFRDJDDL6GwhnptOprkqjFkmOO808qStaZc=",
         "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "5f592b59607975e0f25f7f72ee1763f24224dd5e",
+        "rev": "b555b3e8dc727c46b86ae679f2ceb128e3e63092",
         "type": "gitlab"
       },
       "original": {
