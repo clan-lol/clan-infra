@@ -176,6 +176,11 @@ in
             mountpoint = "/mnt/hdd";
             mountOptions = [ "nofail" ];
           };
+          "ollama" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/private/ollama";
+            mountOptions = [ "nofail" ];
+          };
         };
       };
     };

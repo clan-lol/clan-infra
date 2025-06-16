@@ -6,6 +6,7 @@
     ./users.nix
     ./incus.nix
     ../../modules/samba.nix
+    ../../modules/ollama.nix
   ];
 
   systemd.services."serial-getty@ttyS0".enable = true;
