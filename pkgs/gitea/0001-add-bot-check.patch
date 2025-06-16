@@ -22,13 +22,13 @@ index 007e790b8..a8f3ba7dc 100644
  	ctx.Data["PageIsSignUp"] = true
  
 +	if !strings.Contains(strings.ToLower(form.Notabot), "clan") {
-+		ctx.Error(http.StatusForbidden)
++		ctx.HTTPError(http.StatusForbidden)
 +		return
 +	}
 +
  	// Permission denied if DisableRegistration or AllowOnlyExternalRegistration options are true
  	if setting.Service.DisableRegistration || setting.Service.AllowOnlyExternalRegistration {
- 		ctx.Error(http.StatusForbidden)
+ 		ctx.HTTPError(http.StatusForbidden)
 diff --git a/services/forms/user_form.go b/services/forms/user_form.go
 index cbab27423..4d0f221f4 100644
 --- a/services/forms/user_form.go
