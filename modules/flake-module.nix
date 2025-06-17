@@ -7,21 +7,29 @@
 }:
 {
   flake.nixosModules = {
-    server.imports = [
-      inputs.srvos.nixosModules.server
-      inputs.srvos.nixosModules.mixins-telegraf
+    server = {
+      imports = [
+        inputs.srvos.nixosModules.server
+        inputs.srvos.nixosModules.mixins-telegraf
 
-      inputs.clan-core.clanModules.root-password
-      inputs.clan-core.clanModules.state-version
+        inputs.clan-core.clanModules.root-password
+        inputs.clan-core.clanModules.state-version
 
-      # FIXME: switch to VPN later
-      { networking.firewall.allowedTCPPorts = [ 9273 ]; }
+        ./admins.nix
+        ./dev.nix
+        ./signing.nix
+        ./nix-daemon.nix
+      ];
+    };
 
-      ./admins.nix
-      ./dev.nix
-      ./signing.nix
-      ./nix-daemon.nix
-    ];
+    # FIXME: switch to VPN later
+    networking.firewall.allowedTCPPorts = [ 9273 ];
+
+    # server
+    boot.kernel.sysctl = {
+      "fs.inotify.max_user_instances" = 524288;
+      "fs.inotify.max_user_watches" = 524288;
+    };
 
     renovate.imports = [
       inputs.renovate.nixosModules.default
