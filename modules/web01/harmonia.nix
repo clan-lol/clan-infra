@@ -28,6 +28,11 @@
   services.nginx.virtualHosts."cache-low-prio.clan.lol" = {
     forceSSL = true;
     enableACME = true;
+    locations."= /nix-cache-info".alias = pkgs.writeText "cache-info" ''
+      StoreDir: /nix/store
+      WantMassQuery: 1
+      Priority: 42
+    '';
     locations."/".extraConfig = ''
       proxy_pass http://127.0.0.1:5000;
       proxy_set_header Host $host;
@@ -39,12 +44,6 @@
 
       zstd on;
       zstd_types application/x-nix-archive;
-
-      alias ${pkgs.writeText "cache-info" ''
-        StoreDir: /nix/store
-        WantMassQuery: 1
-        Priority: 42
-      ''};
     '';
   };
 }
