@@ -20,15 +20,14 @@
         ./signing.nix
         ./nix-daemon.nix
       ];
-    };
+      # FIXME: switch to VPN later
+      networking.firewall.allowedTCPPorts = [ 9273 ];
 
-    # FIXME: switch to VPN later
-    networking.firewall.allowedTCPPorts = [ 9273 ];
-
-    # server
-    boot.kernel.sysctl = {
-      "fs.inotify.max_user_instances" = 524288;
-      "fs.inotify.max_user_watches" = 524288;
+      # server
+      boot.kernel.sysctl = {
+        "fs.inotify.max_user_instances" = 524288;
+        "fs.inotify.max_user_watches" = 524288;
+      };
     };
 
     renovate.imports = [
