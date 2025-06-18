@@ -137,7 +137,7 @@
           uid = uid 8;
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDXQJb6ZOU2OxSYOXZRKMNo66rbytOvm2Xi7uFzK8x3y" # builder key
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYKiMQTkDFdiZJIKQhyqLms4rcUfDw8FCY/vju38lfd" # builder key
           ];
           gitea.username = "Enzime";
         } // grantSudoAccess;
