@@ -21,7 +21,9 @@
 
     admins =
       lib.mapAttrsToList (_: user: user.gitea.username) (
-        lib.filterAttrs (_: user: user.isNormalUser) config.users.users
+        lib.filterAttrs (
+          _: user: user.isNormalUser && builtins.elem "wheel" user.extraGroups
+        ) config.users.users
       )
       ++ [
         "brianmcgee"
