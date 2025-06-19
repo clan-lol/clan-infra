@@ -11,10 +11,10 @@
   nix.buildMachines = [
     {
       hostName = "build02";
-      sshUser = "buildbot";
+      sshUser = "builder";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
-      systems = [ "aarch64-darwin" ];
+      system = "aarch64-darwin";
       maxJobs = 10;
       supportedFeatures = [
         "big-parallel"
@@ -26,7 +26,7 @@
       sshUser = "builder";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
-      systems = [ "aarch64-linux" ];
+      system = "aarch64-linux";
       maxJobs = 80;
       supportedFeatures = [
         "big-parallel"

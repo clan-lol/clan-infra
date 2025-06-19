@@ -1,5 +1,6 @@
 {
   _class,
+  self,
   config,
   lib,
   pkgs,
@@ -40,9 +41,9 @@
                 '';
               };
 
-              config = {
-                createHome = lib.mkIf args.config.isNormalUser true;
-                home = lib.mkIf args.config.isNormalUser "/Users/${name}";
+              config = lib.mkIf args.config.isNormalUser {
+                createHome = lib.mkDefault true;
+                home = lib.mkDefault "/Users/${name}";
               };
             };
 
@@ -69,6 +70,21 @@
         uid = offset: config.users.startingUid + offset;
       in
       {
+        # If you want to do remote builds, use this account as it has no sudo and is not trusted
+        # you will need to use `ssh-ng://` to be able to build trustless input-addressed derivations
+        builder = {
+          isNormalUser = true;
+          home = "/var/lib/builder";
+          shell = pkgs.zsh;
+          uid = uid 50;
+          openssh.authorizedKeys.keys =
+            (builtins.attrValues {
+              web01 =
+                self.nixosConfigurations.web01.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+              enzime = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYKiMQTkDFdiZJIKQhyqLms4rcUfDw8FCY/vju38lfd";
+            })
+            ++ config.users.users.root.openssh.authorizedKeys.keys;
+        } // (if _class == "darwin" then { } else { group = "builder"; });
         mic92 = {
           isNormalUser = true;
           shell = pkgs.zsh;
@@ -137,7 +153,6 @@
           uid = uid 8;
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKZfejb9htpSB5K9p0RuEowErkba2BMKaze93ZVkQIE"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYKiMQTkDFdiZJIKQhyqLms4rcUfDw8FCY/vju38lfd" # builder key
           ];
           gitea.username = "Enzime";
         } // grantSudoAccess;
@@ -175,5 +190,11 @@
     security.sudo = lib.optionalAttrs (_class == "nixos") {
       wheelNeedsPassword = false;
     };
+
+    users.groups.builder = { };
+
+    nix.settings.trusted-public-keys = [
+      self.nixosConfigurations.web01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
+    ];
   };
 }
