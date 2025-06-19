@@ -45,7 +45,6 @@
 
   users.knownUsers = [
     "admin"
-    "buildbot"
     "luishebendanz"
     "root"
   ];
