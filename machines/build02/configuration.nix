@@ -39,24 +39,12 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
-  users.users.buildbot = {
-    uid = 503;
-    home = "/var/lib/buildbot";
-    createHome = true;
-    shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      self.nixosConfigurations.web01.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value
-    ];
-  };
-
   nix.settings.trusted-users = [
-    "buildbot"
     "root"
   ];
 
   users.knownUsers = [
     "admin"
-    "buildbot"
     "luishebendanz"
     "root"
   ];
