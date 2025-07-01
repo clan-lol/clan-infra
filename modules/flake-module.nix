@@ -35,7 +35,7 @@
       ./renovate.nix
     ];
 
-    hetzner-ax162r.imports = [
+    hetzner-amd.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./initrd-networking.nix
     ];
@@ -83,6 +83,12 @@
       ./matrix-bot.nix
       ./web01
       ./mailserver.nix
+    ];
+
+    build-x86-01.imports = [
+      inputs.srvos.nixosModules.mixins-nix-experimental
+      self.nixosModules.hetzner-amd
+      self.nixosModules.server
     ];
 
     web02.imports = [
