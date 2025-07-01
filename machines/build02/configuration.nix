@@ -51,6 +51,8 @@
 
   clan.core.networking.targetHost = "root@build02";
 
+  clan.core.sops.defaultGroups = [ "admins" ];
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 6;
