@@ -107,6 +107,7 @@
 
       ./admins.nix
       ./dev.nix
+      ./signing.nix
     ];
 
     build02.imports = [
