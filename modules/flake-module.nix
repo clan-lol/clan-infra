@@ -85,12 +85,6 @@
       ./mailserver.nix
     ];
 
-    build-x86-01.imports = [
-      inputs.srvos.nixosModules.mixins-nix-experimental
-      self.nixosModules.hetzner-amd
-      self.nixosModules.server
-    ];
-
     web02.imports = [
       inputs.srvos.nixosModules.mixins-nginx
 

@@ -1,7 +1,9 @@
 { self, ... }:
 {
   imports = [
-    self.nixosModules.build-x86-01
+    self.inputs.srvos.nixosModules.mixins-nix-experimental
+    self.nixosModules.hetzner-amd
+    self.nixosModules.server
     ./disko.nix
   ];
   disabledModules = [
@@ -16,7 +18,7 @@
 
   programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames = [ "144.76.97.38" ];
 
-  clan.core.networking.targetHost = "root@build-x86-01";
+  clan.core.networking.targetHost = "root@144.76.97.38";
 
   nixpkgs.hostPlatform = "x86_64-linux";
 }
