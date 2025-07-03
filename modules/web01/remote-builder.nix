@@ -10,6 +10,21 @@
 
   nix.buildMachines = [
     {
+      hostName = "build-x86-01";
+      sshUser = "builder";
+      protocol = "ssh-ng";
+      sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
+      system = "x86_64-linux";
+      maxJobs = 32;
+      supportedFeatures = [
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+        "uid-range"
+        "recursive-nix"
+      ];
+    }
+    {
       hostName = "build02";
       sshUser = "builder";
       protocol = "ssh-ng";
