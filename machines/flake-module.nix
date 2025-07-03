@@ -19,6 +19,14 @@
 
         roles.default.tags."all" = { };
       };
+      importer.module.name = "importer";
+      importer.module.input = "clan-core";
+      importer.roles.default = {
+        tags.all = { };
+        extraModules = [
+          (inputs.clan-core + "/clanModules/static-hosts/default.nix")
+        ];
+      };
     };
     inventory.services = {
       zerotier.claninfra = {
