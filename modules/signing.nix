@@ -10,8 +10,10 @@ in
       config.nix.package
     ];
     script = ''
-      nix key generate-secret --key-name ${config.networking.hostName}-1 > $out/key
-      nix key convert-secret-to-public < $out/key > $out/key.pub
+      nix --extra-experimental-features "nix-command flakes" \
+        key generate-secret --key-name ${config.networking.hostName}-1 > $out/key
+      nix --extra-experimental-features "nix-command flakes" \
+        key convert-secret-to-public < $out/key > $out/key.pub
     '';
   };
 

@@ -35,7 +35,7 @@
       ./renovate.nix
     ];
 
-    hetzner-ax162r.imports = [
+    hetzner-amd.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./initrd-networking.nix
     ];
