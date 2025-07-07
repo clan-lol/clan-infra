@@ -13,6 +13,10 @@
         vi = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAmgyEGuY/r7SDlJgrzYmQqpcWS5W+fCzRi3OS59ne4W openpgp:0xFF687387"
         ];
+        kurogeek = [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9vyls+5iD4OxxbG+nzZ/e+AEc1nZPBkPQz7Sfl3xoFmBUm8av288Lf3QtjeKr9ItqHOfAuEO6ZBIePDzdQpHoRA29iQw3+RGqv82N3nEagnb+R71Daj+6G4VGKg8wwMd5csDAv+htBxxSfULnuJ+o7j9VxVgwl8J5hQ4uKK1BeXDopM4bCxTNhkIAAuwHfjcFs5J0jdgKwmZwukXc53EhYj2/eMhARy5LwJhNOy9Rq+1hVLO0KnT4imY8I4FIT441b88Ae3Etn1w/zL3BASvTBzXR/FYgbBXpbm91dtpW7p+fRw7hZFAuAl172qgLMEY4Q+nF428NURlHYARLXlp1OdLuXgnJhKspgVc9k2h42j8Vc5+nHdZMCdyEhUgTNpTE+lNspM6F0b/Ee15oMk782UAAZH7hU8Abm0Z3MKz04HMZ5/8oq2RbkgObExcoB7Z9gEr+BVDiSqU9PLd+iLJeTjJiTcnRWkUNkHTU9ZkqUgxkE5q0SJsTFe9c3OXESoE= panupong
+"
+        ];
       };
     };
   };
