@@ -5,6 +5,100 @@ This repository contains nixos modules and terraform code that powers
 [Hetzner](https://www.hetzner.com/). The demo server and Jitsi server are hosted
 on [Vultr](https://www.vultr.com/).
 
+## Adding a New Admin User
+
+To add a new admin user, follow these steps:
+
+1. **User generates an age key:**
+
+The new user runs:
+
+```
+$ clan secrets key generate
+```
+
+This creates an age key pair, which is used for secret management.
+
+2. **User provides credentials to an existing admin:**
+
+The user shares **both** of the following with a current admin:
+
+- Their **SSH public key**
+- Their **age public key** (found in `~/.config/sops/age/keys.txt` or
+  `~/Library/Application Support/sops/age/keys.txt` on macOS)
+
+3. **Admin adds the user:**
+
+The admin runs:
+
+```
+$ clan secrets users add <username> <age-key>
+$ clan secrets groups add-user admins <username>
+```
+
+Replace `<username>` and `<age-key>` with the actual values.
+
+4. **Admin updates configuration:**
+
+Add the new user to the [`modules/admins.nix`](modules/admins.nix) file.
+
+The new admin user will now have access according to the configuration.
+
+## Joining the clan-infra Zerotier Network
+
+To connect your device to the clan-infra Zerotier network:
+
+1. **Get the Zerotier network ID:**
+
+On any existing machine (e.g., `web01`), run:
+
+```bash
+clan vars list web01
+```
+
+Look for the line:
+
+```
+zerotier/zerotier-network-id: a9b4872919354736
+```
+
+2. **Configure your device to join the network:**
+
+Add the following to your NixOS configuration:
+
+```nix
+services.zerotierone.joinNetworks = [
+  "a9b4872919354736" # clan-infra network
+];
+```
+
+3. **Find your device's Zerotier ID:**
+
+After starting Zerotier, run:
+
+```bash
+sudo zerotier-cli info
+```
+
+The output will look like:
+
+```
+200 info <myid> 1.14.2 ONLINE
+```
+
+Note your `<myid>`.
+
+4. **Authorize your device on the network:**
+
+SSH into `web01` (or another admin machine) and run:
+
+```bash
+sudo zerotier-members allow <myid>
+```
+
+Once authorized, your device will be connected to the clan-infra Zerotier
+network.
+
 ## web01
 
 - Instance type: [ax162-r](https://www.hetzner.com/dedicated-rootserver/ax162-r)
@@ -245,7 +339,7 @@ To access this machine, you'll need to add this to your SSH config:
 {
   programs.ssh.extraConfig = ''
     Host build02
-      ProxyJump tunnel@clan.lol
+      ProxyJump <clanuser>@clan.lol
       Hostname build02.vpn.clan.lol
   '';
 }
@@ -308,7 +402,7 @@ To access this machine, you'll need to add this to your SSH config:
 {
   programs.ssh.extraConfig = ''
     Host storinator01
-      ProxyJump tunnel@clan.lol
+      ProxyJump <clan-user>@clan.lol
       Hostname storinator01.vpn.clan.lol
   '';
 }
