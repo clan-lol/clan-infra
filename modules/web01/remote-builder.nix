@@ -10,7 +10,7 @@
 
   nix.buildMachines = [
     {
-      hostName = "build-x86-01";
+      hostName = "144.76.97.38";
       sshUser = "builder";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;

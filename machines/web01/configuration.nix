@@ -14,7 +14,7 @@
   nix.settings.cores = 32;
 
   # Check https://nixos-mailserver.readthedocs.io/en/latest/migrations.html before bumping
-  mailserver.stateVersion = 2;
+  mailserver.stateVersion = 3;
 
   # zram for extra memory
   zramSwap.enable = true;
