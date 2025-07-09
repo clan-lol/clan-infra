@@ -280,6 +280,27 @@ To access this machine, you'll need to add this to your SSH config:
 $ clan machines update build01
 ```
 
+## build-x86-01
+
+- Instance type: Hetzner dedicated server (AMD)
+- Platform: x86_64-linux
+- Max parallel jobs: 32
+- Features: big-parallel, kvm, nixos-test, uid-range, recursive-nix
+
+### Initial setup
+
+To install the system, you can run the following command:
+
+```
+$ clan machines install build-x86-01 --update-hardware-config nixos-facter --no-reboot
+```
+
+### Deploy new configuration
+
+```
+$ clan machines update build-x86-01
+```
+
 ## build02
 
 - Instance type:
