@@ -24,6 +24,7 @@
         packages = [
           pkgs.bash
           pkgs.sops
+          pkgs.age-plugin-se
 
           pkgs.nixVersions.latest
 
