@@ -10,7 +10,7 @@
 
   networking.fqdn = "clan.lol";
 
-  nix.settings.max-jobs = 0;
+  nix.settings.max-jobs = 10;
   nix.settings.cores = 32;
 
   # Check https://nixos-mailserver.readthedocs.io/en/latest/migrations.html before bumping
