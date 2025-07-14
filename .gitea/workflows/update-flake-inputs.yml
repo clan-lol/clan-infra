@@ -20,3 +20,5 @@ jobs:
         uses: Mic92/update-flake-inputs-gitea@main
         with:
           gitea-token: ${{ secrets.CI_BOT_TOKEN }}
+        env:
+          NIX_CONFIG: "access-tokens = github.com=${{ secrets.CI_BOT_GITHUB_TOKEN }}"
