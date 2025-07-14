@@ -19,4 +19,4 @@ jobs:
       - name: Update flake inputs
         uses: Mic92/update-flake-inputs-gitea@main
         with:
-          gitea-token: ${{ secrets.GITEA_TOKEN }}
+          gitea-token: ${{ secrets.CI_BOT_TOKEN }}
