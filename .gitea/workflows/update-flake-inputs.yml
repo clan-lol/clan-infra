@@ -18,5 +18,5 @@ jobs:
           git config --global user.name "clan-bot"
       - name: Update flake inputs
         uses: Mic92/update-flake-inputs-gitea@main
-        env:
-          GITEA_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+        with:
+          gitea-token: ${{ secrets.GITEA_TOKEN }}
