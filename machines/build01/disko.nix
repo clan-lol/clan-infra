@@ -79,7 +79,6 @@ in
         type = "zpool";
         rootFsOptions = {
           compression = "lz4";
-          "com.sun:auto-snapshot" = "true";
         };
         datasets = {
           "root" = {
