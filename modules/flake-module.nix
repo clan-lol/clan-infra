@@ -33,11 +33,6 @@
       nix.gc.dates = [ "weekly" ];
     };
 
-    renovate.imports = [
-      inputs.renovate.nixosModules.default
-      ./renovate.nix
-    ];
-
     hetzner-amd.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ./initrd-networking.nix
@@ -81,7 +76,6 @@
 
       self.nixosModules.server
       self.nixosModules.buildbot
-      self.nixosModules.renovate
 
       ./matrix-bot.nix
       ./web01
