@@ -135,7 +135,7 @@
           shell = pkgs.zsh;
           uid = uid 5;
           openssh.authorizedKeys.keys = [
-            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDO3VnW1X/Sn9m8uQ65xpNod/Weynvjc/u3dnHsfRVWnZHWb0MicXO/XJiEX9e3JijMR/tR6d55hiV9D5ZtpeZln7lY7ashsvse45cq0Y1nnUx8ikm3fRwMKHcN9Xb6KZJRUcSjHyBNOKClnHk9VVzd9aRABcTObyz30rNfhPWElAY2Cvui/FTMnstLMvy+jGOzHAb1q3zEhFUqd32qiUvAoK80zHDrMUio1sbR664xzoneiiuLRCREWSSAEC50QIm6CEVWXKxf/tE0iIVUrCa41T4leR0ECdngAzwwgJ9t5XWm8T0QVdFOHoch5+EcA5c2gpggi9mdKqFtlab6+333l+dHXX94olzkxWd39GEMaNr02p/QXPXImaC3GRcKYoQhVQx5HkFncnlTYnrtmPT+L57Dqq+wbhixSJci+QWADOLgk1+Upe5yp89wWX3dSPQZpBBQRQoGUyFBaU8L2bMrz72Cb2dF2CI377Ls6A1EYBcc96dNKPZlkDpuFt96nOs="
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLuev3+8kF+pd1YnCRR7Kw9i9DswOMvGhvdQq6dEIJF"
           ];
           gitea.username = "hsjobeki";
         } // grantSudoAccess;
