@@ -21,3 +21,4 @@ jobs:
         with:
           gitea-token: ${{ secrets.CI_BOT_TOKEN }}
           github-token: ${{ secrets.CI_BOT_GITHUB_TOKEN }}
+          auto-merge: true
