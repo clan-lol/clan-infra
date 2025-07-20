@@ -2,6 +2,7 @@
 let
   user = "u443083";
   host = "${user}.your-storagebox.de";
+  port = 23;
 
   # Run this from the hetzner network
   # ssh-keyscan -p 23 <host>
@@ -86,13 +87,13 @@ in
   ];
 
   programs.ssh.knownHosts = {
-    storagebox-ed25519.hostNames = [ "[${host}]:23" ];
+    storagebox-ed25519.hostNames = [ "[${host}]:${toString port}" ];
     storagebox-ed25519.publicKey = storagebox-ed25519-knowHost;
 
-    storagebox-ecdsa.hostNames = [ "[${host}]:23" ];
+    storagebox-ecdsa.hostNames = [ "[${host}]:${toString port}" ];
     storagebox-ecdsa.publicKey = storagebox-ecdsa-knowHost;
 
-    storagebox-rsa.hostNames = [ "[${host}]:23" ];
+    storagebox-rsa.hostNames = [ "[${host}]:${toString port}" ];
     storagebox-rsa.publicKey = storagebox-rsa-knowHost;
   };
 }
