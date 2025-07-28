@@ -184,14 +184,6 @@
           ];
           gitea.username = "kurogeek";
         } // grantSudoAccess;
-        daniel = {
-          isNormalUser = true;
-          shell = "/run/current-system/sw/bin/bash";
-          uid = uid 13;
-          openssh.authorizedKeys.keys = [
-            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDiAbxcyiQzOiASAVP1WusoImiknbNeJYI6oW1mqXoU8NbxcV1qenLa/IrjO27ebNrxQUt9JDliW4xuFjyxM7kJNv94zGgb/es1wEMlR4PS6Pgd1ZIL4BNpjIwpZF2q/nQ+IUZgUnav546M6y6pQW9YB+GpecXiBn/Vqx4YM4eBN7102wRS3TH1bQVhug1NCsp6xPyJ6edvTO7iqxRR63AAO7FIj5phPeHhFb4ZYhAz6mYpUGEfE41J7UPVy/zq4UzqMYj8yRcyhUEe5/3d27LtALQ43p8oWPIG6isJhYXSiXwBkEpMI5+dfFKfWo7S/2Z41jdEtoBhGOqvI4sbzlvI0Zhr4BI/XbBP+5D0zS2j0iE3y9WiBJDMZ1I1h/DmvH4pbaPd+79N6hWgiGOs1PmhsaTxK6lGI7ro4n5Z85Caj6h6UP+qWsGO2HromkAFtlexgJw49qk2QjID8IXLTU7Um+5fpbLi8xF5j0+EtzC+v5898ixIMZS/qjjr9yZP0Z4ZKfCM4mrQLrqmkHis8GQ0lRzcKqpZNeAAIPvEvDCO+uk21MV/+XvJaticG2FZjaKk0UphlZXkUnQVF28nICdxJPStG+w5Qo09rB3q2GQtBPpd5QdzWU8l/WYfh9p497vxOsVfBS4eTd8KQXQS1+QWpIEi4zEGpjAH0HEeL83lrQ== skunklab@MACBOOK-PRO.local"
-          ];
-        };
 
         root.openssh.authorizedKeys.keys = builtins.concatMap (user: user.openssh.authorizedKeys.keys) (
           builtins.attrValues (
