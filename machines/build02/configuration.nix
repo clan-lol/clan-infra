@@ -41,13 +41,11 @@
 
   nix.settings.trusted-users = [
     "root"
-    "daniel"
   ];
 
   users.knownUsers = [
     "admin"
     "luishebendanz"
-    "daniel"
     "root"
   ];
 
