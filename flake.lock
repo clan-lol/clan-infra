@@ -499,11 +499,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1755807081,
-        "narHash": "sha256-HwnBgNYGBDIZRiGqkFT8o5zg8TskLmee2kb26KrfB1I=",
+        "lastModified": 1755942832,
+        "narHash": "sha256-odAkOwfQPClNpEVdHAz0wEZ8WdFKoGau2HcnMRsNpyE=",
         "owner": "terranix",
         "repo": "terranix",
-        "rev": "d7b9b84cb40d3bc4e21cd15b3465e3f3a51e9fa2",
+        "rev": "d1d1f186c9de5c58475e11bab219bc0467fb0b4d",
         "type": "github"
       },
       "original": {
