@@ -12,14 +12,13 @@
         inputs.srvos.nixosModules.server
         inputs.srvos.nixosModules.mixins-telegraf
 
-        inputs.clan-core.clanModules.root-password
-        inputs.clan-core.clanModules.state-version
-
         ./admins.nix
         ./dev.nix
         ./signing.nix
         ./nix-daemon.nix
       ];
+      clan.core.settings.state-version.enable = true;
+
       # FIXME: switch to VPN later
       networking.firewall.allowedTCPPorts = [ 9273 ];
 
