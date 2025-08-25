@@ -27,37 +27,54 @@
           (inputs.clan-core + "/clanModules/static-hosts/default.nix")
         ];
       };
-    };
-    inventory.services = {
-      zerotier.claninfra = {
-        roles.controller.machines = [ "web01" ];
-        roles.controller.extraModules = [
-          "modules/zerotier.nix"
-        ];
-        roles.moon.machines = [
-          "jitsi01"
-          "web01"
-        ];
-        machines.jitsi01.config = {
+      users-root = {
+        module = {
+          name = "users";
+          input = "clan-core";
+        };
+        roles.default.tags."all" = { };
+        roles.default.settings = {
+          user = "root";
+          prompt = false;
+          groups = [ ];
+        };
+      };
+      zerotier-claninfra = {
+        module = {
+          name = "zerotier";
+          input = "clan-core";
+        };
+        roles.controller.machines.web01 = { };
+        roles.controller.extraModules = [ ../modules/zerotier.nix ];
+        roles.moon.machines.jitsi01.settings = {
           # jitsi.clan.lol
-          moon.stableEndpoints = [
+          stableEndpoints = [
             "207.148.120.82"
             "2401:c080:1400:5439:5400:5ff:fe43:3de5"
           ];
         };
-        machines.web01.config = {
+        roles.moon.machines.web01.settings = {
           # clan.lol
-          moon.stableEndpoints = [
+          stableEndpoints = [
             "23.88.17.207"
             "2a01:4f8:2220:1565::1"
           ];
         };
-        roles.peer.tags = [ "all" ];
+        roles.peer.tags.all = { };
       };
-      sshd.clan = {
-        roles.server.tags = [ "all" ];
-        roles.client.tags = [ "all" ];
-        config.certificate.searchDomains = [ "clan.lol" ];
+      sshd-clan = {
+        module = {
+          name = "sshd";
+          input = "clan-core";
+        };
+        roles.server.tags.all = { };
+        roles.server.machines.web01.settings = {
+          hostKeys.rsa.enable = true;
+        };
+        roles.client.tags.all = { };
+        roles.client.settings = {
+          certificate.searchDomains = [ "clan.lol" ];
+        };
       };
     };
 
