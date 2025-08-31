@@ -74,7 +74,7 @@
         # you will need to use `ssh-ng://` to be able to build trustless input-addressed derivations
         builder = {
           isNormalUser = true;
-          home = "/var/lib/builder";
+          home = if _class == "darwin" then "/private/var/lib/builder" else "/var/lib/builder";
           shell = pkgs.zsh;
           uid = uid 50;
           openssh.authorizedKeys.keys =
@@ -202,6 +202,14 @@
     };
 
     users.groups.builder = { };
+
+    # On Darwin, ensure builder user can SSH into the system
+    system.activationScripts = lib.optionalAttrs (_class == "darwin") {
+      postActivation.text = ''
+        echo "Ensuring builder user is in SSH access group..."
+        /usr/sbin/dseditgroup -o edit -a builder -t user com.apple.access_ssh 2>/dev/null || true
+      '';
+    };
 
     nix.settings.trusted-public-keys = [
       self.nixosConfigurations.web01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
