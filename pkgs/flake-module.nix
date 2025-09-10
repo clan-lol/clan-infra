@@ -1,6 +1,5 @@
 {
   imports = [
-    ./matrix-bot/flake-module.nix
   ];
   perSystem =
     { pkgs, config, ... }:
