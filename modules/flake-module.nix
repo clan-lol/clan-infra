@@ -76,7 +76,6 @@
       self.nixosModules.server
       self.nixosModules.buildbot
 
-      ./matrix-bot.nix
       ./web01
       ./mailserver.nix
     ];
