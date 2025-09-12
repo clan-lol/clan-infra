@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  clan.nginx.acme.email = "admins@clan.lol";
-
   # www user to push website artifacts via ssh
   users.users.www = {
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [

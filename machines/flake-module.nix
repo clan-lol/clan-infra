@@ -68,6 +68,18 @@
           certificate.searchDomains = [ "clan.lol" ];
         };
       };
+      matrix-synapse = {
+        module = {
+          name = "matrix-synapse";
+          input = "clan-core";
+        };
+        roles.default.machines.web01 = { };
+        roles.default.settings = {
+          app_domain = "matrix.clan.lol";
+          server_tld = "clan.lol";
+          acmeEmail = "admins@clan.lol";
+        };
+      };
     };
 
     secrets.age.plugins = [
