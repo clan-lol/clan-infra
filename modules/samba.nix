@@ -25,70 +25,68 @@ in
     enable = true;
     package = pkgs.samba;
     openFirewall = true;
-    settings =
-      {
-        global = {
-          security = "user";
-          workgroup = "WORKGROUP";
-          "server string" = "Storiantor01";
-          interfaces = "eth* en*";
-          "max log size" = "50";
-          "dns proxy" = false;
-          "syslog only" = true;
-        };
-      }
-      // lib.mapAttrs (share: opts: {
-        path = "/mnt/hdd/samba/${share}";
-        comment = share;
-        "force user" = share;
-        "force group" = share;
-        public = "yes";
-        "guest ok" = "no";
-        #"only guest" = "yes";
-        "create mask" = "0640";
-        "directory mask" = "0750";
-        writable = "yes";
-        browseable = "yes";
-        printable = "no";
-        # TODO
-        "valid users" = toString opts.users;
-      }) sharedFolders
-      // lib.mapAttrs (user: opts: {
-        comment = user;
-        path = "/mnt/hdd/samba/${user}";
-        "force user" = user;
-        "force group" = "users";
-        public = "yes";
-        "guest ok" = "no";
-        #"only guest" = "yes";
-        "create mask" = "0640";
-        "directory mask" = "0750";
-        writable = "yes";
-        browseable = "yes";
-        printable = "no";
-        "valid users" = user;
-
-      }) sambaUser;
-  };
-
-  users.users =
-    {
-      # B4L
-      backup.isNormalUser = true;
-      backup.extraGroups = [ "samba" ];
-      arjen.isNormalUser = true;
-      arjen.extraGroups = [ "samba" ];
-      janik.isNormalUser = true;
-      janik.extraGroups = [ "samba" ];
-      berwn.extraGroups = [ "samba" ];
-
-      b4l-service.isNormalUser = true;
-      b4l-service.extraGroups = [ "samba" ];
+    settings = {
+      global = {
+        security = "user";
+        workgroup = "WORKGROUP";
+        "server string" = "Storiantor01";
+        interfaces = "eth* en*";
+        "max log size" = "50";
+        "dns proxy" = false;
+        "syslog only" = true;
+      };
     }
     // lib.mapAttrs (share: opts: {
-      isSystemUser = true;
-      group = share;
-    }) sharedFolders;
+      path = "/mnt/hdd/samba/${share}";
+      comment = share;
+      "force user" = share;
+      "force group" = share;
+      public = "yes";
+      "guest ok" = "no";
+      #"only guest" = "yes";
+      "create mask" = "0640";
+      "directory mask" = "0750";
+      writable = "yes";
+      browseable = "yes";
+      printable = "no";
+      # TODO
+      "valid users" = toString opts.users;
+    }) sharedFolders
+    // lib.mapAttrs (user: opts: {
+      comment = user;
+      path = "/mnt/hdd/samba/${user}";
+      "force user" = user;
+      "force group" = "users";
+      public = "yes";
+      "guest ok" = "no";
+      #"only guest" = "yes";
+      "create mask" = "0640";
+      "directory mask" = "0750";
+      writable = "yes";
+      browseable = "yes";
+      printable = "no";
+      "valid users" = user;
+
+    }) sambaUser;
+  };
+
+  users.users = {
+    # B4L
+    backup.isNormalUser = true;
+    backup.extraGroups = [ "samba" ];
+    arjen.isNormalUser = true;
+    arjen.extraGroups = [ "samba" ];
+    janik.isNormalUser = true;
+    janik.extraGroups = [ "samba" ];
+    berwn.extraGroups = [ "samba" ];
+
+    b4l-service.isNormalUser = true;
+    b4l-service.extraGroups = [ "samba" ];
+  }
+  // lib.mapAttrs (share: opts: {
+    isSystemUser = true;
+    group = share;
+  }) sharedFolders;
 
   users.groups = lib.mapAttrs (share: opts: { }) sharedFolders;
 

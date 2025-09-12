@@ -45,27 +45,26 @@
 
   programs.direnv.enable = true;
 
-  programs.zsh =
-    {
-      enable = true;
-      loginShellInit = ''
-        # if the user do not have a zshrc yet, create it
-        if [[ ! -f ~/.zshrc ]]; then
-          touch ~/.zshrc
-        fi
+  programs.zsh = {
+    enable = true;
+    loginShellInit = ''
+      # if the user do not have a zshrc yet, create it
+      if [[ ! -f ~/.zshrc ]]; then
+        touch ~/.zshrc
+      fi
 
-        if [[ -n "''${commands[fzf-share]}" ]]; then
-          FZF_CTRL_R_OPTS=--reverse
-          source "$(fzf-share)/key-bindings.zsh"
-        fi
-      '';
-    }
-    // (lib.optionalAttrs (_class == "nixos") {
-      ohMyZsh.enable = true;
-      ohMyZsh.theme = "robbyrussell";
-      autosuggestions.enable = true;
-      syntaxHighlighting.enable = true;
-    });
+      if [[ -n "''${commands[fzf-share]}" ]]; then
+        FZF_CTRL_R_OPTS=--reverse
+        source "$(fzf-share)/key-bindings.zsh"
+      fi
+    '';
+  }
+  // (lib.optionalAttrs (_class == "nixos") {
+    ohMyZsh.enable = true;
+    ohMyZsh.theme = "robbyrussell";
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+  });
 
   services.eternal-terminal.enable = true;
 

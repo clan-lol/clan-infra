@@ -11,11 +11,9 @@ let
   publog =
     vhost:
     lib.attrsets.unionOfDisjoint vhost {
-      extraConfig =
-        (vhost.extraConfig or "")
-        + ''
-          access_log /var/log/nginx/public.log vcombined;
-        '';
+      extraConfig = (vhost.extraConfig or "") + ''
+        access_log /var/log/nginx/public.log vcombined;
+      '';
     };
 in
 {
