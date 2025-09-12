@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   clan.nginx.acme.email = "admins@clan.lol";
@@ -10,7 +10,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGmAw62wkSAvzAKwZn3xFvCj+jUkOgp2arABA6PEbc8 clan-www2" # key for git.clan.lol/clan/data-mesher gitea-ci
     ];
     isSystemUser = true;
-    shell = "/run/current-system/sw/bin/bash";
+    shell = pkgs.bash;
     group = "www";
   };
   users.groups.www = { };
