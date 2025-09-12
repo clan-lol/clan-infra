@@ -26,9 +26,6 @@
         { urls = "turn:turn.matrix.org:3478?transport=udp"; }
         { urls = "turn:turn.matrix.org:3478?transport=tcp"; }
       ];
-      breakoutRooms.hideAddRoomButton = false;
-      breakoutRooms.hideAutoAssignButton = false;
-      breakoutRooms.hideJoinRoomButton = false;
     };
     interfaceConfig = {
       SHOW_JITSI_WATERMARK = false;
@@ -44,30 +41,6 @@
     443
   ];
 
-  services.prosody.extraPluginPaths =
-    let
-      prosody-contrib-plugins = pkgs.fetchFromGitHub {
-        owner = "jitsi-contrib";
-        repo = "prosody-plugins";
-        rev = "v20230929";
-        sha256 = "sha256-1Lmj+ZWqZRRvHVgNDXXEqH2DwhE7TwP0gktjihJCg1g=";
-      };
-    in
-    [ "${prosody-contrib-plugins}/event_sync" ];
-
-  services.prosody.extraModules = [
-    "admin_shell"
-    "event_sync"
-  ];
-
-  services.prosody.extraConfig = ''
-    Component "event_sync.pinpox" "event_sync_component"
-      muc_component = "conference.jitsi.clan.lol"
-      breakout_component = "breakout.jitsi.clan.lol"
-
-      api_prefix = "http://127.0.0.1:8228"
-  '';
-
   clan.core.vars.generators."jitsi-presence" = {
     files.envfile = { };
     runtimeInputs = [ pkgs.coreutils ];
@@ -78,7 +51,6 @@
   };
 
   systemd.services.jitsi-matrix-presence-clan-lol = {
-
     wantedBy = [ "multi-user.target" ];
     environment = {
       JITSI_ROOMS = "space,space2,standup,clan.lol,nixos,pub";

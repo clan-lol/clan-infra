@@ -24,7 +24,8 @@ in
   nix.settings.trusted-public-keys = [
     # trust our own key, this is useful if we reinstall the machine and someone sends us back our own package
     config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
-  ] ++ flake.nixConfig.extra-trusted-public-keys;
+  ]
+  ++ flake.nixConfig.extra-trusted-public-keys;
 
   nix.settings.substituters = flake.nixConfig.extra-substituters;
 }
