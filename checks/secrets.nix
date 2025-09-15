@@ -19,7 +19,7 @@
               ${inputs'.clan-core.legacyPackages.setupNixInNix}
               mkdir -p self
               cp -r --no-target-directory ${self} self
-              CLAN_LOAD_AGE_PLUGINS=false clan secrets key update --flake self
+              CLAN_LOAD_AGE_PLUGINS=false clan secrets key update --flake ./self
               touch $out
             '';
       };

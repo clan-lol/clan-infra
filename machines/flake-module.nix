@@ -19,14 +19,6 @@
 
         roles.default.tags."all" = { };
       };
-      importer.module.name = "importer";
-      importer.module.input = "clan-core";
-      importer.roles.default = {
-        tags.all = { };
-        extraModules = [
-          (inputs.clan-core + "/clanModules/static-hosts/default.nix")
-        ];
-      };
       users-root = {
         module = {
           name = "users";
@@ -74,6 +66,18 @@
         roles.client.tags.all = { };
         roles.client.settings = {
           certificate.searchDomains = [ "clan.lol" ];
+        };
+      };
+      matrix-synapse = {
+        module = {
+          name = "matrix-synapse";
+          input = "clan-core";
+        };
+        roles.default.machines.web01 = { };
+        roles.default.settings = {
+          app_domain = "matrix.clan.lol";
+          server_tld = "clan.lol";
+          acmeEmail = "admins@clan.lol";
         };
       };
     };
