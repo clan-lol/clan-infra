@@ -1,6 +1,7 @@
 {
   config,
   self,
+  lib,
   ...
 }:
 {
@@ -40,7 +41,10 @@
       ];
     }
     {
-      hostName = "fda9:b487:2919:3547:3699:9336:90ec:cb59";
+      # Once we are using Nix >= 2.31.2, we can remove the brackets again
+      hostName =
+        assert lib.versionAtLeast config.nix.package.version "2.31.1";
+        "[fda9:b487:2919:3547:3699:9336:90ec:cb59]";
       sshUser = "builder";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
