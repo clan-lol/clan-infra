@@ -78,6 +78,16 @@
           app_domain = "matrix.clan.lol";
           server_tld = "clan.lol";
           acmeEmail = "admins@clan.lol";
+
+          users = {
+            admin = {
+              admin = true;
+            };
+            monitoring = { };
+            clan-bot = { };
+            w = { };
+            toastal = { };
+          };
         };
       };
     };
