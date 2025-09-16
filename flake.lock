@@ -30,16 +30,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1758036668,
-        "narHash": "sha256-zqKYqUcgeRWiLPVVK9kSpvK9NmJN251PFVFY8l0JC6w=",
+        "lastModified": 1758124995,
+        "narHash": "sha256-oTSNzPL7dyrc2uoztZuttZpi0KHE294J/Ky1CpSFY5I=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "1a210ea4c099cf24a1a499eef953ca1b0904677e",
+        "rev": "1d9956f4fa844cac49d399c035dddb3c2829e13a",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "refactoring",
         "repo": "buildbot-nix",
         "type": "github"
       }
