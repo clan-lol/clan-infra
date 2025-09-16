@@ -41,7 +41,7 @@
     terranix.inputs.flake-parts.follows = "flake-parts";
     terranix.inputs.nixpkgs.follows = "nixpkgs";
 
-    jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence/pull/1/merge";
+    jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-index-database.url = "github:nix-community/nix-index-database";
