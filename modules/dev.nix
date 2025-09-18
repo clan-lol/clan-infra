@@ -38,8 +38,21 @@
     pkgs.direnv
     pkgs.jujutsu
     pkgs.ranger
-    (if _class == "darwin" then pkgs.ghostty-bin.terminfo else pkgs.ghostty.terminfo)
-  ];
+
+    (pkgs.runCommand "ghostty-terminfo"
+      {
+        nativeBuildInputs = [ pkgs.pkgsBuildBuild._7zz ];
+      }
+      ''
+        7zz -snld x ${pkgs.ghostty-bin.src}
+        mkdir -p $out/share/terminfo
+        cp -r Ghostty.app/Contents/Resources/terminfo $out/share/terminfo
+      ''
+    )
+    pkgs.pkgsBuildBuild.kitty.terminfo
+    pkgs.pkgsBuildBuild.wezterm.terminfo
+  ]
+  ++ lib.optional (_class == "nixos") pkgs.foot.terminfo;
 
   programs.nix-index-database.comma.enable = true;
 
@@ -69,6 +82,4 @@
   services.eternal-terminal.enable = true;
 
   users.users.root.shell = pkgs.bash;
-
-  environment.enableAllTerminfo = true;
 }
