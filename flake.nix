@@ -72,48 +72,43 @@
           ./modules/flake-module.nix
           ./pkgs/flake-module.nix
         ];
-        perSystem = (
-          {
-            ...
-          }:
-          {
-            treefmt = {
-              projectRootFile = ".git/config";
-              programs.terraform.enable = true;
-              programs.shellcheck.enable = true;
+        perSystem = _: {
+          treefmt = {
+            projectRootFile = ".git/config";
+            programs.terraform.enable = true;
+            programs.shellcheck.enable = true;
 
-              programs.deno.enable = true;
+            programs.deno.enable = true;
 
-              programs.ruff.check = true;
-              programs.ruff.format = true;
-              programs.yamlfmt.enable = true;
+            programs.ruff.check = true;
+            programs.ruff.format = true;
+            programs.yamlfmt.enable = true;
 
-              settings.global.excludes = [
-                # generated files
-                "sops/*"
-                "terraform.tfstate"
-                "*.tfvars.sops.json"
-                "*nixos-vars.json"
-                "secrets.yaml"
-                "facter.json"
-                "secrets.auto.tfvars.sops.json"
-              ];
+            settings.global.excludes = [
+              # generated files
+              "sops/*"
+              "terraform.tfstate"
+              "*.tfvars.sops.json"
+              "*nixos-vars.json"
+              "secrets.yaml"
+              "facter.json"
+              "secrets.auto.tfvars.sops.json"
+            ];
 
-              programs.nixfmt.enable = true;
-              settings.formatter.nixfmt.excludes = [
-                # generated files
-                "node-env.nix"
-                "node-packages.nix"
-                "composition.nix"
-              ];
+            programs.nixfmt.enable = true;
+            settings.formatter.nixfmt.excludes = [
+              # generated files
+              "node-env.nix"
+              "node-packages.nix"
+              "composition.nix"
+            ];
 
-              programs.deadnix.enable = true;
-              programs.deadnix.no-lambda-arg = true;
+            programs.deadnix.enable = true;
+            programs.deadnix.no-lambda-arg = true;
 
-              programs.statix.enable = true;
-            };
-          }
-        );
+            programs.statix.enable = true;
+          };
+        };
       }
     );
 }

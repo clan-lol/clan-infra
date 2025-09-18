@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   # Increase rate limits for Matrix bots
   services.matrix-synapse.settings = {
     max_upload_size = "150M";
