@@ -40,7 +40,7 @@
       topic = "buildbot-clan";
     };
 
-    jobReportLimit = 0;
+    failedBuildReportLimit = 0;
     # optional nix-eval-jobs settings
     evalWorkerCount = 20; # limit number of concurrent evaluations
     evalMaxMemorySize = 2096; # limit memory usage per evaluation
