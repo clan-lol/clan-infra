@@ -109,6 +109,8 @@
 
               programs.deadnix.enable = true;
               programs.deadnix.no-lambda-arg = true;
+
+              programs.statix.enable = true;
             };
           }
         );
