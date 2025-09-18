@@ -355,16 +355,16 @@
         "nixpkgs-25_05": []
       },
       "locked": {
-        "lastModified": 1758014337,
-        "narHash": "sha256-pWuyZIhu0B0mauTY+6RMxjMoTzFW9Kjwk+zjFtLoM9A=",
-        "owner": "Mic92",
+        "lastModified": 1758014596,
+        "narHash": "sha256-4m/qaksmdskILp2fqKtpQrHSp2sbSdf3XnjXFlKwR38=",
+        "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "45a958c0d79bf15628876264a0077577bfd700ee",
+        "rev": "8747f4c7c797252d482cb587afdaf95581e320c4",
         "type": "gitlab"
       },
       "original": {
-        "owner": "Mic92",
-        "ref": "mr-436",
+        "owner": "simple-nixos-mailserver",
+        "ref": "merge-requests/445/merge",
         "repo": "nixos-mailserver",
         "type": "gitlab"
       }

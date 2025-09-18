@@ -17,8 +17,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver = {
-      # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/merge_requests/436
-      url = "gitlab:Mic92/nixos-mailserver/mr-436";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/merge-requests/445/merge";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-25_05.follows = "";
       inputs.flake-compat.follows = "flake-compat";
