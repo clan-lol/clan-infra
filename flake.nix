@@ -93,18 +93,21 @@
             "secrets.auto.tfvars.sops.json"
           ];
 
+          programs.deadnix.enable = true;
+          programs.deadnix.priority = 1;
+          programs.deadnix.no-lambda-arg = true;
+
+          programs.statix.enable = true;
+          programs.statix.priority = 2;
+
           programs.nixfmt.enable = true;
-          settings.formatter.nixfmt.excludes = [
+          programs.nixfmt.priority = 3;
+          programs.nixfmt.excludes = [
             # generated files
             "node-env.nix"
             "node-packages.nix"
             "composition.nix"
           ];
-
-          programs.deadnix.enable = true;
-          programs.deadnix.no-lambda-arg = true;
-
-          programs.statix.enable = true;
         };
       };
     };
