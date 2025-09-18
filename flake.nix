@@ -50,69 +50,62 @@
 
   outputs =
     inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      { self, ... }:
-      {
-        systems = [
-          "x86_64-linux"
-          "aarch64-linux"
-          "aarch64-darwin"
-        ];
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
 
-        # Hacky way to detect we're in a REPL
-        debug = builtins ? currentSystem;
+      # Hacky way to detect we're in a REPL
+      debug = builtins ? currentSystem;
 
-        imports = [
-          inputs.clan-core.flakeModules.default
-          inputs.treefmt-nix.flakeModule
+      imports = [
+        inputs.clan-core.flakeModules.default
+        inputs.treefmt-nix.flakeModule
 
-          ./checks/flake-module.nix
-          ./devShells/flake-module.nix
-          ./machines/flake-module.nix
-          ./modules/flake-module.nix
-          ./pkgs/flake-module.nix
-        ];
-        perSystem = (
-          {
-            lib,
-            self',
-            pkgs,
-            system,
-            ...
-          }:
-          {
-            treefmt = {
-              projectRootFile = ".git/config";
-              programs.terraform.enable = true;
-              programs.shellcheck.enable = true;
+        ./checks/flake-module.nix
+        ./devShells/flake-module.nix
+        ./machines/flake-module.nix
+        ./modules/flake-module.nix
+        ./pkgs/flake-module.nix
+      ];
+      perSystem = {
+        treefmt = {
+          projectRootFile = ".git/config";
+          programs.terraform.enable = true;
+          programs.shellcheck.enable = true;
 
-              programs.deno.enable = true;
+          programs.deno.enable = true;
 
-              programs.ruff.check = true;
-              programs.ruff.format = true;
-              programs.yamlfmt.enable = true;
+          programs.ruff.check = true;
+          programs.ruff.format = true;
+          programs.yamlfmt.enable = true;
 
-              settings.global.excludes = [
-                # generated files
-                "sops/*"
-                "terraform.tfstate"
-                "*.tfvars.sops.json"
-                "*nixos-vars.json"
-                "secrets.yaml"
-                "facter.json"
-                "secrets.auto.tfvars.sops.json"
-              ];
+          settings.global.excludes = [
+            # generated files
+            "sops/*"
+            "terraform.tfstate"
+            "*.tfvars.sops.json"
+            "*nixos-vars.json"
+            "secrets.yaml"
+            "facter.json"
+            "secrets.auto.tfvars.sops.json"
+          ];
 
-              programs.nixfmt.enable = true;
-              settings.formatter.nixfmt.excludes = [
-                # generated files
-                "node-env.nix"
-                "node-packages.nix"
-                "composition.nix"
-              ];
-            };
-          }
-        );
-      }
-    );
+          programs.nixfmt.enable = true;
+          settings.formatter.nixfmt.excludes = [
+            # generated files
+            "node-env.nix"
+            "node-packages.nix"
+            "composition.nix"
+          ];
+
+          programs.deadnix.enable = true;
+          programs.deadnix.no-lambda-arg = true;
+
+          programs.statix.enable = true;
+        };
+      };
+    };
 }

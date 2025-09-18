@@ -1,4 +1,3 @@
-{ ... }:
 {
   # Increase rate limits for Matrix bots
   services.matrix-synapse.settings = {

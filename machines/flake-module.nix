@@ -101,7 +101,6 @@
   perSystem =
     {
       inputs',
-      config,
       pkgs,
       ...
     }:

@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   imports = [
     ./borgbackup.nix

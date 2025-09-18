@@ -20,16 +20,20 @@ in
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "storinator01.vpn";
       type = "AAAA";
-      value =
-        self.nixosConfigurations.storinator01.config.clan.core.vars.generators.zerotier.files.zerotier-ip.value;
+      inherit
+        (self.nixosConfigurations.storinator01.config.clan.core.vars.generators.zerotier.files.zerotier-ip)
+        value
+        ;
     };
 
     build01 = {
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "build01.vpn";
       type = "AAAA";
-      value =
-        self.nixosConfigurations.build01.config.clan.core.vars.generators.zerotier.files.zerotier-ip.value;
+      inherit
+        (self.nixosConfigurations.build01.config.clan.core.vars.generators.zerotier.files.zerotier-ip)
+        value
+        ;
     };
 
     build02 = {

@@ -21,7 +21,7 @@ in
   clan.core.vars.generators.outline = {
     files.oidc-secret = {
       owner = config.services.outline.user;
-      group = config.services.outline.group;
+      inherit (config.services.outline) group;
     };
     prompts.oidc-secret.persist = true;
   };
