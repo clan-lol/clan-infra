@@ -110,6 +110,9 @@
                 "node-packages.nix"
                 "composition.nix"
               ];
+
+              programs.deadnix.enable = true;
+              programs.deadnix.no-lambda-arg = true;
             };
           }
         );
