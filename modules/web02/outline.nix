@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -58,6 +59,8 @@ in
     publicUrl = "https://${domain}";
     storage.storageType = "local";
   };
+
+  services.postgresql.package = pkgs.postgresql_16;
 
   services.nginx.virtualHosts."outline.${config.networking.fqdn}" = {
     forceSSL = true;
