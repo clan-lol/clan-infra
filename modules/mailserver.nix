@@ -33,6 +33,23 @@ in
       "joerg"
     ];
 
+    services.automx2.enable = true;
+    services.automx2.domain = "clan.lol";
+    services.automx2.settings = {
+      provider = "Clan.lol";
+      domains = [ "clan.lol" ];
+      servers = [
+        {
+          type = "imap";
+          name = "mail.clan.lol";
+        }
+        {
+          type = "smtp";
+          name = "mail.clan.lol";
+        }
+      ];
+    };
+
     mailserver = {
       enable = true;
       fqdn = "mail.clan.lol";
