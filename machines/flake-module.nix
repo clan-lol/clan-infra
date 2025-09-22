@@ -149,16 +149,16 @@
             terraformWrapper.prefixText = ''
               TF_VAR_passphrase=$(clan secrets get tf-passphrase)
               export TF_VAR_passphrase
-              TF_ENCRYPTION=$(cat <<EOF
+              TF_ENCRYPTION=$(cat <<'EOF'
               key_provider "pbkdf2" "state_encryption_password" {
-                passphrase = "$TF_VAR_passphrase"
+                passphrase = var.passphrase
               }
               method "aes_gcm" "encryption_method" {
-                keys = "\''${key_provider.pbkdf2.state_encryption_password}"
+                keys = key_provider.pbkdf2.state_encryption_password
               }
               state {
                 enforced = true
-                method = "\''${method.aes_gcm.encryption_method}"
+                method = method.aes_gcm.encryption_method
               }
               EOF
               )
