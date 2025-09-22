@@ -107,6 +107,42 @@ in
       type = "TXT";
       value = "\"v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerc.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100\"";
     };
+
+    # RFC 6186 service records for mail services
+    imap = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "_imap._tcp";
+      type = "SRV";
+      value = "10 20 143 mail.clan.lol.";
+    };
+
+    imaps = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "_imaps._tcp";
+      type = "SRV";
+      value = "0 1 993 mail.clan.lol.";
+    };
+
+    pop3 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "_pop3._tcp";
+      type = "SRV";
+      value = "0 1 110 mail.clan.lol.";
+    };
+
+    smtp = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "_smtp._tcp";
+      type = "SRV";
+      value = "0 1 25 mail.clan.lol.";
+    };
+
+    submission = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "_submission._tcp";
+      type = "SRV";
+      value = "10 20 587 mail.clan.lol.";
+    };
   };
 
   output.clan_lol_zone_id = {
