@@ -12,8 +12,8 @@ let
         mkpasswd
       ];
       script = ''
-        xkcdpass -n 4 -d - > $secrets/${service}-password
-        cat $secrets/${service}-password | mkpasswd -s -m bcrypt > $secrets/${service}-password-hash
+        xkcdpass -n 4 -d - > $out/${service}-password
+        cat $out/${service}-password | mkpasswd -s -m bcrypt > $out/${service}-password-hash
       '';
     };
 in
@@ -27,9 +27,13 @@ in
     fqdn = "mail.clan.lol";
     domains = [ "clan.lol" ];
     enablePop3 = true;
+    enableImap = true;
+
     certificateScheme = "acme-nginx";
     # kresd sucks unfortunally (fails when one NS server is not working, instead of trying other ones)
     localDnsResolver = false;
+
+    fullTextSearch.enable = true;
 
     loginAccounts."golem@clan.lol".hashedPasswordFile =
       config.clan.core.vars.generators.golem-mail.files.golem-password-hash.path;
@@ -37,8 +41,17 @@ in
     loginAccounts."w@clan.lol".hashedPasswordFile =
       config.clan.core.vars.generators.w-mail.files.w-password-hash.path;
 
+    loginAccounts."chris@clan.lol".hashedPasswordFile =
+      config.clan.core.vars.generators.chris-mail.files.chris-password-hash.path;
+
     loginAccounts."gitea@clan.lol".hashedPasswordFile =
       config.clan.core.vars.generators.gitea-mail.files.gitea-password-hash.path;
+
+    loginAccounts."kiran@clan.lol".hashedPasswordFile =
+      config.clan.core.vars.generators.kiran-mail.files.kiran-password-hash.path;
+
+    loginAccounts."timo@clan.lol".hashedPasswordFile =
+      config.clan.core.vars.generators.timo-mail.files.timo-password-hash.path;
   };
 
   services.unbound = {
@@ -59,4 +72,8 @@ in
   clan.core.vars.generators.golem-mail = mailPassword { service = "golem"; };
   clan.core.vars.generators.w-mail = mailPassword { service = "w"; };
   clan.core.vars.generators.gitea-mail = mailPassword { service = "gitea"; };
+
+  clan.core.vars.generators.chris-mail = mailPassword { service = "chris"; };
+  clan.core.vars.generators.kiran-mail = mailPassword { service = "kiran"; };
+  clan.core.vars.generators.timo-mail = mailPassword { service = "timo"; };
 }
