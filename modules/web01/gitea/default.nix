@@ -40,6 +40,7 @@ in
 
     settings.mailer = {
       ENABLED = true;
+      PROTOCOL = "smtp+starttls";
       FROM = "gitea@clan.lol";
       USER = "gitea@clan.lol";
       SMTP_ADDR = "mail.clan.lol";
