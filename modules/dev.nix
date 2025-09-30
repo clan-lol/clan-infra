@@ -39,16 +39,7 @@
     pkgs.jujutsu
     pkgs.ranger
 
-    (pkgs.runCommand "ghostty-terminfo"
-      {
-        nativeBuildInputs = [ pkgs.pkgsBuildBuild._7zz ];
-      }
-      ''
-        7zz -snld x ${pkgs.ghostty-bin.src}
-        mkdir -p $out/share/terminfo
-        cp -r Ghostty.app/Contents/Resources/terminfo $out/share/terminfo
-      ''
-    )
+    (if _class == "darwin" then pkgs.ghostty-bin.terminfo else pkgs.ghostty.terminfo)
   ];
 
   programs.nix-index-database.comma.enable = true;
