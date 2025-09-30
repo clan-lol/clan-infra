@@ -49,10 +49,7 @@
         cp -r Ghostty.app/Contents/Resources/terminfo $out/share/terminfo
       ''
     )
-    pkgs.pkgsBuildBuild.kitty.terminfo
-    pkgs.pkgsBuildBuild.wezterm.terminfo
-  ]
-  ++ lib.optional (_class == "nixos") pkgs.foot.terminfo;
+  ];
 
   programs.nix-index-database.comma.enable = true;
 
