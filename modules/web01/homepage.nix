@@ -136,6 +136,7 @@
       # Cache static files for 1 week
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=604800, immutable";
+        add_header Access-Control-Allow-Origin "https://clan.lol" always;
       '';
     };
 
