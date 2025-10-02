@@ -14,7 +14,10 @@
   users.groups.www = { };
 
   # ensure /var/www can be accessed by nginx and www user
-  systemd.tmpfiles.rules = [ "d /var/www 0755 www nginx" ];
+  systemd.tmpfiles.rules = [
+    "d /var/www 0755 www nginx"
+    "d /var/www/static.clan.lol 0755 www nginx"
+  ];
 
   services.nginx = {
 
@@ -118,6 +121,22 @@
       forceSSL = true;
       enableACME = true;
       globalRedirect = "clan.lol";
+    };
+
+    virtualHosts."static.clan.lol" = {
+      forceSSL = true;
+      enableACME = true;
+      root = "/var/www/static.clan.lol";
+      extraConfig = ''
+        charset utf-8;
+        source_charset utf-8;
+        autoindex off;
+      '';
+
+      # Cache static files for 1 week
+      locations."/".extraConfig = ''
+        add_header Cache-Control "public, max-age=604800, immutable";
+      '';
     };
   };
 }
