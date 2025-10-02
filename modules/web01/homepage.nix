@@ -138,5 +138,11 @@
         add_header Cache-Control "public, max-age=604800, immutable";
       '';
     };
+
+    virtualHosts."blog.clan.lol" = {
+      forceSSL = true;
+      enableACME = true;
+      globalRedirect = "clan.lol/blog";
+    };
   };
 }
