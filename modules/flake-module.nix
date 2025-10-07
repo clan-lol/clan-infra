@@ -64,6 +64,7 @@
     jitsi01.imports = [
       self.nixosModules.server
       ./jitsi.nix
+      ./lasuite-meet.nix
     ];
 
     web01.imports = [
