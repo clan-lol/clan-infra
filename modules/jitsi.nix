@@ -55,7 +55,7 @@
     environment = {
       JITSI_ROOMS = "space,space2,standup,clan.lol,nixos,pub";
       JITSI_SERVER = "https://jitsi.clan.lol";
-      ROOM_ID = "!36gU7xj73xzjlVoD:thalheim.io";
+      ROOM_ID = "!_gftm3igPaZl3_fLP63UPbyN8zazJnumz2LmoIo0PBU";
       HOMESERVER_URL = "https://matrix.org";
       USER_ID = "@alertus-maximus:matrix.org";
       LISTEN_ADDRESS = "127.0.0.1:8228";
