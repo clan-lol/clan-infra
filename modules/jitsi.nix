@@ -41,6 +41,33 @@
     443
   ];
 
+  services.prosody.extraPluginPaths =
+    let
+      prosody-contrib-plugins = pkgs.fetchFromGitHub {
+        owner = "jitsi-contrib";
+        repo = "prosody-plugins";
+        rev = "v20250923";
+        sha256 = "sha256-sq33ATYkZWF+ASR4IZbTGrkGWwRT+xpPMuARLSdxoMU=";
+      };
+    in
+    [ "${prosody-contrib-plugins}/event_sync" ];
+
+  services.prosody.extraModules = [
+    "admin_shell"
+  ];
+
+  # The first argument needs to be a valid domain name (no underscores) and a subdomain
+  # of a virtual host configured in prosody (`services.prosody.virtualHosts`).
+  # The second argument is the name of the module which should be found in the top level
+  # of a plugin directory.
+  services.prosody.extraConfig = ''
+    Component "event-sync.jitsi.clan.lol" "event_sync_component"
+      muc_component = "conference.jitsi.clan.lol"
+      breakout_component = "breakout.jitsi.clan.lol"
+
+      api_prefix = "http://127.0.0.1:8228"
+  '';
+
   clan.core.vars.generators."jitsi-presence" = {
     files.envfile = { };
     runtimeInputs = [ pkgs.coreutils ];
