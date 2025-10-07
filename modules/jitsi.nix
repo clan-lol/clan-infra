@@ -52,10 +52,6 @@
     in
     [ "${prosody-contrib-plugins}/event_sync" ];
 
-  services.prosody.extraModules = [
-    "admin_shell"
-  ];
-
   # The first argument needs to be a valid domain name (no underscores) and a subdomain
   # of a virtual host configured in prosody (`services.prosody.virtualHosts`).
   # The second argument is the name of the module which should be found in the top level
