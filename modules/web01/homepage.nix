@@ -102,6 +102,7 @@
       # Make sure to expire the cache after 12 hour
       locations."/".extraConfig = ''
         add_header Cache-Control "public, max-age=43200";
+        try_files $uri $uri.html $uri/ $uri/index.html =404;
       '';
       locations."/blog/2024/03/19/introducing-clan-full-stack-computing-redefined/".return =
         "307 https://clan.lol/blog/introduction-clan/";
