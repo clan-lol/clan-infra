@@ -40,6 +40,8 @@
       topic = "buildbot-clan";
     };
 
+    branches.stableBranches.matchGlob = "clan-*.*";
+
     # optional nix-eval-jobs settings
     evalWorkerCount = 20; # limit number of concurrent evaluations
     evalMaxMemorySize = 2096; # limit memory usage per evaluation
