@@ -32,7 +32,7 @@
     clan-core.inputs.nix-darwin.follows = "nix-darwin";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    buildbot-nix.url = "github:nix-community/buildbot-nix";
+    buildbot-nix.url = "github:nix-community/buildbot-nix/niks3";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
@@ -46,6 +46,11 @@
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    niks3.url = "github:Mic92/niks3/add-client";
+    niks3.inputs.nixpkgs.follows = "nixpkgs";
+    niks3.inputs.treefmt-nix.follows = "treefmt-nix";
+    niks3.inputs.flake-parts.follows = "flake-parts";
   };
 
   outputs =

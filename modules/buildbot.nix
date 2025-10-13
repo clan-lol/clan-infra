@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  self,
+  ...
+}:
 {
   services.buildbot-nix.master = {
     enable = true;
@@ -57,6 +62,13 @@
     enable = true;
     workerPasswordFile = config.sops.secrets.buildbot-worker-password-file.path;
     workers = 96;
+  };
+
+  services.buildbot-nix.master.niks3 = {
+    enable = true;
+    serverUrl = "https://niks3.clan.lol";
+    authTokenFile = config.clan.core.vars.generators.niks3-api-token.files."token".path;
+    package = self.inputs.niks3.packages.${config.nixpkgs.hostPlatform.system}.niks3;
   };
 
   sops.secrets.buildbot-oauth-secret-file = { };

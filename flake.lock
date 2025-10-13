@@ -30,15 +30,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1760038591,
-        "narHash": "sha256-n5EUuD0t2CUqBTCiwIuoUaXcf7Qmy3m0s6PRf1RFi/A=",
+        "lastModified": 1760375771,
+        "narHash": "sha256-EMsYXjLee/KaddHV0ZM3Ir5/IhFHEuZzjfAr2cHUFz4=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "fd3cc9d98846603e711dcea483e7f79a1591f9a2",
+        "rev": "4a16a562a914a30bcff05572264c00d9cf817852",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "niks3",
         "repo": "buildbot-nix",
         "type": "github"
       }
@@ -274,6 +275,34 @@
         "type": "github"
       }
     },
+    "niks3": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "process-compose": "process-compose",
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1760377738,
+        "narHash": "sha256-tjVIxKvFmCnmPLJFVpuYOHAIwOA2pF3Ws9M8W/tEdZs=",
+        "owner": "Mic92",
+        "repo": "niks3",
+        "rev": "d6ee25dbbdca6baef1cd55593e32849aaa5d8a1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "ref": "add-client",
+        "repo": "niks3",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -386,6 +415,21 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "process-compose": {
+      "locked": {
+        "lastModified": 1758658658,
+        "narHash": "sha256-y5GSCqlGe/uZzlocCPZcjc7Gj+mTq7m0P6xPGx88+No=",
+        "owner": "Platonic-Systems",
+        "repo": "process-compose-flake",
+        "rev": "e968a94633788f5d9595d727f41c2baf0714be7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Platonic-Systems",
+        "repo": "process-compose-flake",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "buildbot-nix": "buildbot-nix",
@@ -394,6 +438,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
+        "niks3": "niks3",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixos-mailserver": "nixos-mailserver",
