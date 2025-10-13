@@ -10,6 +10,7 @@
     ./remote-builder.nix
     ./jumphost.nix
     ./hypervisor.nix
+    ./niks3.nix
   ];
 
   nix.settings.extra-substituters = [ "https://hetzner-cache.numtide.com" ];

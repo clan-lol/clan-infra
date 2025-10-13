@@ -72,6 +72,7 @@
       inputs.srvos.nixosModules.mixins-nix-experimental
 
       inputs.nixos-mailserver.nixosModules.mailserver
+      inputs.niks3.nixosModules.niks3
 
       self.nixosModules.server
       self.nixosModules.buildbot
