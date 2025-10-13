@@ -143,6 +143,22 @@ in
       type = "SRV";
       value = "10 20 587 mail.clan.lol.";
     };
+
+    # Fastly CDN for cache2.clan.lol
+    cache2 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "cache2";
+      type = "CNAME";
+      value = "x.sni.global.fastly.net.";
+    };
+
+    # Fastly ACME challenge for cache2.clan.lol
+    cache2_acme_challenge = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "_acme-challenge.cache2";
+      type = "CNAME";
+      value = "90idichjxpxvxf1cod.fastly-validations.com.";
+    };
   };
 
   output.clan_lol_zone_id = {
