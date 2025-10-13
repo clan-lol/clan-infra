@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  user = "u443083";
+  user = "u499466";
   host = "${user}.your-storagebox.de";
   port = 23;
 
