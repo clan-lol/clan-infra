@@ -60,13 +60,14 @@
           input = "clan-core";
         };
         roles.server.tags.all = { };
+        roles.server.settings = {
+          certificate.searchDomains = [ "clan.lol" ];
+        };
         roles.server.machines.web01.settings = {
           hostKeys.rsa.enable = true;
         };
         roles.client.tags.all = { };
-        roles.client.settings = {
-          certificate.searchDomains = [ "clan.lol" ];
-        };
+        # searchDomains automatically inherited from all servers in the instance
       };
       matrix-synapse = {
         module = {
