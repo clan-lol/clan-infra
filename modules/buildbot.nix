@@ -52,7 +52,6 @@
     evalMaxMemorySize = 2096; # limit memory usage per evaluation
   };
 
-  # Optional: Enable acme/TLS in nginx (recommended)
   services.nginx.virtualHosts.${config.services.buildbot-nix.master.domain} = {
     forceSSL = true;
     enableACME = true;
