@@ -26,7 +26,7 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=fix-sshd-searchdomains-graceful-degrade&shallow=1";
     clan-core.inputs.flake-parts.follows = "flake-parts";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.nix-darwin.follows = "nix-darwin";
@@ -47,7 +47,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    niks3.url = "github:Mic92/niks3/add-client";
+    niks3.url = "github:Mic92/niks3";
     niks3.inputs.nixpkgs.follows = "nixpkgs";
     niks3.inputs.treefmt-nix.follows = "treefmt-nix";
     niks3.inputs.flake-parts.follows = "flake-parts";
