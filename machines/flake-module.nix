@@ -109,12 +109,12 @@
       terranix =
         let
           package = pkgs.opentofu.withPlugins (p: [
-            p.external
-            p.local
-            p.hetznerdns
-            p.null
-            p.tls
-            p.vultr
+            p.hashicorp_external
+            p.hashicorp_local
+            p.timohirt_hetznerdns
+            p.hashicorp_null
+            p.hashicorp_tls
+            p.vultr_vultr
           ]);
         in
         {
