@@ -35,20 +35,32 @@ in
   };
   services.nextcloud.appstoreEnable = false;
 
-  # We don't need a client secret because we use PKCE
-  # however the `user_oidc:provider` command expects us
-  # to always pass a client secret.
   systemd.services.nextcloud-setup.script = lib.mkAfter ''
+    # As the `user_oidc:provider` doesn't support updating the values after creation
+    # we want to delete the provider first
     ${lib.getExe config.services.nextcloud.occ} user_oidc:provider:delete Gitea --force
-    ${lib.getExe config.services.nextcloud.occ} user_oidc:provider Gitea \
-      --scope="openid email profile groups" \
-      --clientid=${lib.escapeShellArg config.clan.core.vars.generators.nextcloud-oidc.files.client-id.value} \
-      --clientsecret="" \
-      --discoveryuri="https://git.clan.lol/.well-known/openid-configuration" \
-      --group-provisioning=1 \
-      --group-whitelist-regex='/^clan:(owners|nextcloud)$/' \
-      --group-restrict-login-to-whitelist=1 \
+
+    providerFlags=(
+      --scope="openid email profile groups"
+      --clientid=${lib.escapeShellArg config.clan.core.vars.generators.nextcloud-oidc.files.client-id.value}
+      # We don't need a client secret because we use PKCE however the `user_oidc:provider` command
+      # expects us to always pass a client secret.
+      --clientsecret=""
+      --discoveryuri="https://git.clan.lol/.well-known/openid-configuration"
+      --unique-uid=0
+      --mapping-uid=preferred_username
+      --group-provisioning=1
+      --group-whitelist-regex='/^clan:(owners|nextcloud)$/'
+      --group-restrict-login-to-whitelist=1
+      --mapping-groups=groups
       --no-interaction
+    )
+
+    ${lib.getExe config.services.nextcloud.occ} user_oidc:provider Gitea "''${providerFlags[@]}"
+
+    # Force all users to log in through Gitea, to log in as the admin account you can go to:
+    # https://nextcloud.clan.lol/login?direct=1&user=admin
+    ${lib.getExe config.services.nextcloud.occ} config:app:set --value=0 user_oidc allow_multiple_user_backends
   '';
   services.nextcloud.settings.user_oidc.use_pkce = true;
 
