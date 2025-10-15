@@ -23,6 +23,10 @@ in
   services.nextcloud.hostName = hostname;
   services.nextcloud.https = true;
   services.nextcloud.database.createLocally = true;
+  services.nextcloud.extraApps = {
+    inherit (config.services.nextcloud.package.packages.apps) calendar user_oidc;
+  };
+  services.nextcloud.appstoreEnable = false;
 
   services.nextcloud.config = {
     dbtype = "pgsql";
