@@ -116,6 +116,10 @@
             p.tls
             p.vultr
           ]);
+          cachePackage = pkgs.opentofu.withPlugins (p: [
+            p.hashicorp_external
+            p.fastly_fastly
+          ]);
         in
         {
           # `nix run .#dns` will fail
@@ -146,6 +150,36 @@
               ./web02/terraform-configuration.nix
             ];
             terraformWrapper.package = package;
+            terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
+            terraformWrapper.prefixText = ''
+              TF_VAR_passphrase=$(clan secrets get tf-passphrase)
+              export TF_VAR_passphrase
+              TF_ENCRYPTION=$(cat <<'EOF'
+              key_provider "pbkdf2" "state_encryption_password" {
+                passphrase = var.passphrase
+              }
+              method "aes_gcm" "encryption_method" {
+                keys = key_provider.pbkdf2.state_encryption_password
+              }
+              state {
+                enforced = true
+                method = method.aes_gcm.encryption_method
+              }
+              EOF
+              )
+
+              # shellcheck disable=SC2090
+              export TF_ENCRYPTION
+            '';
+          };
+
+          # Separate Fastly cache configuration
+          terranixConfigurations.cache = {
+            workdir = "terraform-cache";
+            modules = [
+              self.modules.terranix.cache
+            ];
+            terraformWrapper.package = cachePackage;
             terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
             terraformWrapper.prefixText = ''
               TF_VAR_passphrase=$(clan secrets get tf-passphrase)
