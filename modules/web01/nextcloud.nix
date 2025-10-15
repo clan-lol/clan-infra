@@ -22,9 +22,10 @@ in
   services.nextcloud.package = pkgs.nextcloud32;
   services.nextcloud.hostName = hostname;
   services.nextcloud.https = true;
+  services.nextcloud.database.createLocally = true;
 
   services.nextcloud.config = {
-    dbtype = "sqlite";
+    dbtype = "pgsql";
     adminuser = "admin";
     adminpassFile = config.clan.core.vars.generators.nextcloud.files.admin-password.path;
   };
