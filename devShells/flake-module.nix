@@ -6,19 +6,6 @@
       pkgs,
       ...
     }:
-    let
-      convert2Tofu =
-        provider:
-        provider.override (prev: {
-          homepage =
-            builtins.replaceStrings
-              [ "registry.terraform.io/providers" ]
-              [
-                "registry.opentofu.org"
-              ]
-              prev.homepage;
-        });
-    in
     {
       devShells.default = pkgs.mkShellNoCC {
         packages = [
@@ -34,17 +21,6 @@
 
           # treefmt with config defined in ./flake.nix
           config.treefmt.build.wrapper
-
-          (pkgs.opentofu.withPlugins (
-            p:
-            builtins.map convert2Tofu [
-              p.hetznerdns
-              p.hcloud
-              p.null
-              p.external
-              p.local
-            ]
-          ))
 
           pkgs.kanidm_1_7
         ];
