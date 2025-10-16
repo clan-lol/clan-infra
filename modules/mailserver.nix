@@ -24,6 +24,7 @@ in
       kiran = {
         redirect = "kiran.lenk99@googlemail.com";
       };
+      nextcloud = { };
       timo = { };
       joerg = {
         redirect = "joerg.clan@thalheim.io";
