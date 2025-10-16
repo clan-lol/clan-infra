@@ -10,12 +10,16 @@ in
 {
   clan.core.vars.generators.nextcloud = {
     files.admin-password = { };
+    files.secret-file = { };
+    dependencies = [ "nextcloud-mail" ];
     runtimeInputs = [
       pkgs.coreutils
       pkgs.xkcdpass
+      pkgs.jq
     ];
     script = ''
       xkcdpass --numwords 4 --random-delimiters --valid-delimiters='1234567890!@#$%^&*()-_+=,.<>/?' --case random | tr -d "\n" > $out/admin-password
+      jq -n --rawfile pass "$in/nextcloud-mail/nextcloud-password" '{mail_smtppassword: $pass | rtrimstr("\n")}' > $out/secret-file
     '';
   };
 
@@ -31,7 +35,12 @@ in
   services.nextcloud.https = true;
   services.nextcloud.database.createLocally = true;
   services.nextcloud.extraApps = {
-    inherit (config.services.nextcloud.package.packages.apps) calendar user_oidc;
+    inherit (config.services.nextcloud.package.packages.apps)
+      calendar
+      contacts
+      mail
+      user_oidc
+      ;
   };
   services.nextcloud.appstoreEnable = false;
 
@@ -63,6 +72,18 @@ in
     ${lib.getExe config.services.nextcloud.occ} config:app:set --value=0 user_oidc allow_multiple_user_backends
   '';
   services.nextcloud.settings.user_oidc.use_pkce = true;
+
+  services.nextcloud.settings = {
+    mail_smtpmode = "smtp";
+    mail_smtphost = "mail.clan.lol";
+    mail_smtpport = 587;
+    mail_smtpauth = true;
+    mail_smtpname = "nextcloud@clan.lol";
+    mail_domain = "clan.lol";
+    mail_from_address = "nextcloud";
+  };
+
+  services.nextcloud.secretFile = config.clan.core.vars.generators.nextcloud.files.secret-file.path;
 
   services.nextcloud.config = {
     dbtype = "pgsql";
