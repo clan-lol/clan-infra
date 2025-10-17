@@ -38,6 +38,20 @@ in
       value = base_ipv6;
     };
 
+    nextcloud_a = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "nextcloud";
+      type = "A";
+      value = base_ipv4;
+    };
+
+    nextcloud_aaaa = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "nextcloud";
+      type = "AAAA";
+      value = base_ipv6;
+    };
+
     # for sending emails
     spf = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
