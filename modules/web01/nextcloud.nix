@@ -33,6 +33,8 @@ in
   services.nextcloud.package = pkgs.nextcloud32;
   services.nextcloud.hostName = hostname;
   services.nextcloud.https = true;
+  # Fixes Circles incorrectly using localhost and teams being super buggy
+  services.nextcloud.settings."overwrite.cli.url" = "https://${hostname}";
   services.nextcloud.database.createLocally = true;
   services.nextcloud.extraApps = {
     inherit (config.services.nextcloud.package.packages.apps)
