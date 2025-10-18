@@ -64,7 +64,7 @@ in
         --unique-uid=0
         --mapping-uid=preferred_username
         --group-provisioning=1
-        --group-whitelist-regex='/^clan:(owners|nextcloud)$/'
+        --group-whitelist-regex='/^clan:(owners|core|nextcloud)$/'
         --group-restrict-login-to-whitelist=1
         --mapping-groups=groups
         --no-interaction
