@@ -76,6 +76,9 @@ in
       # https://nextcloud.clan.lol/login?direct=1&user=admin
       ${occ} config:app:set --value=0 user_oidc allow_multiple_user_backends
 
+      ${occ} config:app:set --value="no" dav generateBirthdayCalendar
+      ${occ} config:app:set --value=false dav enableDefaultContact
+
       ${occ} app:disable photos
     '';
   services.nextcloud.settings.user_oidc.use_pkce = true;
