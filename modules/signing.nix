@@ -1,6 +1,28 @@
-{ config, self, ... }:
+{
+  config,
+  self,
+  lib,
+  ...
+}:
 let
   flake = import "${self}/flake.nix";
+
+  # Read all public signing keys from the vars directory
+  varsDir = "${self}/vars/per-machine";
+
+  # Get all machine names from the vars directory
+  machines = lib.attrNames (builtins.readDir varsDir);
+
+  # Read public keys from all machines that have nix-signing-key
+  allMachineSigningKeys = lib.flatten (
+    map (
+      machine:
+      let
+        keyPath = "${varsDir}/${machine}/nix-signing-key/key.pub/value";
+      in
+      lib.optional (builtins.pathExists keyPath) (lib.fileContents keyPath)
+    ) machines
+  );
 in
 {
   clan.core.vars.generators.nix-signing-key = {
@@ -21,11 +43,9 @@ in
     config.clan.core.vars.generators.nix-signing-key.files."key".path
   ];
 
-  nix.settings.trusted-public-keys = [
-    # trust our own key, this is useful if we reinstall the machine and someone sends us back our own package
-    config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
-  ]
-  ++ flake.nixConfig.extra-trusted-public-keys;
+  # Trust all signing keys from all machines in the repository
+  nix.settings.trusted-public-keys =
+    allMachineSigningKeys ++ flake.nixConfig.extra-trusted-public-keys;
 
   nix.settings.substituters = flake.nixConfig.extra-substituters;
 }

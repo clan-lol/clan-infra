@@ -60,10 +60,6 @@
     }
   ];
 
-  nix.settings.trusted-public-keys = [
-    self.nixosConfigurations.build01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
-  ];
-
   programs.ssh.knownHosts."build02.vpn.clan.lol".publicKey =
     self.darwinConfigurations.build02.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
 }
