@@ -140,5 +140,21 @@ in
       type = "CNAME";
       value = "90idichjxpxvxf1cod.fastly-validations.com.";
     };
+
+    # Fastly CDN for cache.clan.lol
+    cache = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "cache";
+      type = "CNAME";
+      value = "x.sni.global.fastly.net.";
+    };
+
+    # Fastly ACME challenge for cache.clan.lol
+    cache_acme_challenge = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "_acme-challenge.cache";
+      type = "CNAME";
+      value = "61s5zcfes5290tjs5r.fastly-validations.com.";
+    };
   };
 }

@@ -203,6 +203,36 @@
               export TF_ENCRYPTION
             '';
           };
+
+          # Separate Fastly cache configuration for cache.clan.lol
+          terranixConfigurations.cache-new = {
+            workdir = "terraform-cache-new";
+            modules = [
+              self.modules.terranix.cache-new
+            ];
+            terraformWrapper.package = cachePackage;
+            terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
+            terraformWrapper.prefixText = ''
+              TF_VAR_passphrase=$(clan secrets get tf-passphrase)
+              export TF_VAR_passphrase
+              TF_ENCRYPTION=$(cat <<'EOF'
+              key_provider "pbkdf2" "state_encryption_password" {
+                passphrase = var.passphrase
+              }
+              method "aes_gcm" "encryption_method" {
+                keys = key_provider.pbkdf2.state_encryption_password
+              }
+              state {
+                enforced = true
+                method = method.aes_gcm.encryption_method
+              }
+              EOF
+              )
+
+              # shellcheck disable=SC2090
+              export TF_ENCRYPTION
+            '';
+          };
         };
     };
 }
