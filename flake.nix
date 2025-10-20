@@ -1,7 +1,10 @@
 {
   nixConfig = {
     extra-substituters = [ "https://cache2.clan.lol" ];
-    extra-trusted-public-keys = [ "niks3.clan.lol-1:R1VTRLhKHvKKrx/X36wAMuay2bdagsGylwfF7wPs6ns=" ];
+    extra-trusted-public-keys = [
+      "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28="
+      "niks3.clan.lol-1:R1VTRLhKHvKKrx/X36wAMuay2bdagsGylwfF7wPs6ns="
+    ];
   };
 
   inputs = {
