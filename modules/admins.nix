@@ -223,9 +223,5 @@
         /usr/sbin/dseditgroup -o edit -a builder -t user com.apple.access_ssh 2>/dev/null || true
       '';
     };
-
-    nix.settings.trusted-public-keys = [
-      self.nixosConfigurations.web01.config.clan.core.vars.generators.nix-signing-key.files."key.pub".value
-    ];
   };
 }
