@@ -77,8 +77,16 @@ in
       }
     ];
 
-    # Condition for 404 errors
+    # Conditions
     condition = [
+      # Match root path for landing page redirect
+      {
+        name = "match-root";
+        priority = 10;
+        statement = ''req.url ~ "^/$"'';
+        type = "REQUEST";
+      }
+      # 404 errors
       {
         name = "is-404";
         priority = 0;
@@ -101,6 +109,17 @@ in
 
     # Headers
     header = [
+      # Rewrite root path to index.html (landing page)
+      {
+        action = "set";
+        destination = "url";
+        ignore_if_set = false;
+        name = "Landing page";
+        priority = 10;
+        request_condition = "match-root";
+        source = ''"/index.html"'';
+        type = "request";
+      }
       # Clean headers for better caching (based on actual Ceph/Hetzner S3 headers)
       {
         destination = "http.x-amz-request-id";

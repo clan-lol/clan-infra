@@ -1,10 +1,7 @@
 {
   nixConfig = {
-    extra-substituters = [ "https://cache2.clan.lol" ];
-    extra-trusted-public-keys = [
-      "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28="
-      "niks3.clan.lol-1:R1VTRLhKHvKKrx/X36wAMuay2bdagsGylwfF7wPs6ns="
-    ];
+    extra-substituters = [ "https://cache.clan.lol" ];
+    extra-trusted-public-keys = [ "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28=" ];
   };
 
   inputs = {
@@ -50,7 +47,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    niks3.url = "github:Mic92/niks3";
+    niks3.url = "github:Mic92/niks3/tests";
     niks3.inputs.nixpkgs.follows = "nixpkgs";
     niks3.inputs.treefmt-nix.follows = "treefmt-nix";
     niks3.inputs.flake-parts.follows = "flake-parts";

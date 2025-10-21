@@ -5,6 +5,8 @@
     enable = true;
     httpAddr = "127.0.0.1:5752";
 
+    cacheUrl = "https://cache.clan.lol";
+
     # Hetzner Object Storage configuration
     s3 = {
       endpoint = "nbg1.your-objectstorage.com";
