@@ -7,7 +7,7 @@
 
 let
   # Cache domain
-  cache_domain = "cache2.clan.lol";
+  cache_domain = "cache.clan.lol";
 
   # S3 bucket details
   s3_bucket = "clan-cache";
@@ -39,26 +39,14 @@ in
 
   provider.fastly.api_key = config.data.external.fastly-api-key "result.secret";
 
-  # Import existing resources
-  import = [
-    {
-      to = "fastly_service_vcl.cache";
-      id = "R3YzKvkDNI44XEyD4pEjzB";
-    }
-    {
-      to = "fastly_tls_subscription.cache";
-      id = "eAp2J9BpksyLgiLAUVOrAQ";
-    }
-  ];
-
-  # Fastly service for cache2.clan.lol
-  resource.fastly_service_vcl.cache = {
+  # Fastly service for cache.clan.lol
+  resource.fastly_service_vcl.cache_new = {
     name = cache_domain;
     default_ttl = 86400; # 24 hours
 
     # NOTE: Domain must be added manually via Fastly dashboard
     # The terraform provider's domain API is deprecated (returns 400)
-    # cache2.clan.lol should already be configured at: https://manage.fastly.com/configure/services/R3YzKvkDNI44XEyD4pEjzB/domains
+    # Add cache.clan.lol at: https://manage.fastly.com/configure/services/l864Jj5vHcp8xzy9fONPwq/domains
 
     # S3 backend
     backend = [
@@ -188,17 +176,26 @@ in
   };
 
   # TLS certificate
-  resource.fastly_tls_subscription.cache = {
+  resource.fastly_tls_subscription.cache_new = {
     domains = [ cache_domain ];
     certificate_authority = "certainly";
   };
 
   # Outputs
-  output.cache_domain = {
+  output.cache_new_domain = {
     value = cache_domain;
   };
 
-  output.service_id = {
-    value = "\${fastly_service_vcl.cache.id}";
+  output.cache_new_service_id = {
+    value = "\${fastly_service_vcl.cache_new.id}";
+  };
+
+  output.cache_new_tls_subscription_id = {
+    value = "\${fastly_tls_subscription.cache_new.id}";
+  };
+
+  output.cache_new_managed_dns_challenges = {
+    value = "\${fastly_tls_subscription.cache_new.managed_dns_challenges}";
+    description = "ACME challenge records for cache.clan.lol - add these to DNS";
   };
 }

@@ -3,7 +3,6 @@
     ./borgbackup.nix
     ./gitea
     ./goaccess.nix
-    ./harmonia.nix
     ./homepage.nix
     ./hypervisor.nix
     ./jumphost.nix

@@ -123,4 +123,5 @@
   flake.modules.terranix.dns = flake-parts-lib.importApply ./terranix/dns.nix { inherit self; };
   flake.modules.terranix.vultr = ./terranix/vultr.nix;
   flake.modules.terranix.cache = ./terranix/cache.nix;
+  flake.modules.terranix.cache-new = ./terranix/cache-new.nix;
 }
