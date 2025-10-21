@@ -65,10 +65,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1760443318,
-        "narHash": "sha256-OnR4dQT/msakC7qVFthhGM7DwpbY47RvOGO6URvBSPw=",
+        "lastModified": 1761052672,
+        "narHash": "sha256-cpBnA9KXGeaTPkhvf/RNC9lYMc1ye8u9jjq4mrX9v0c=",
         "ref": "fix-sshd-searchdomains-graceful-degrade",
-        "rev": "4600b961156a0505ae7535d6ded251c2e8679753",
+        "rev": "ea5007ae40d3a61eb84c086a3bebd93fa403a88f",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
@@ -96,11 +96,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759140052,
-        "narHash": "sha256-CpGdQRvgmBhEAlXNyrSfrDWcKoYYSGd+5Lw7mvlbt/A=",
-        "rev": "8332273e734aa906e7a1b2fda80e631f2dc9d4c9",
+        "lastModified": 1760612273,
+        "narHash": "sha256-pP/bSqUHubxAOTI7IHD5ZBQ2Qm11Nb4pXXTPv334UEM=",
+        "rev": "0099739c78be750b215cbdefafc9ba1533609393",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/data-mesher/archive/8332273e734aa906e7a1b2fda80e631f2dc9d4c9.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/data-mesher/archive/0099739c78be750b215cbdefafc9ba1533609393.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -115,11 +115,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758287904,
-        "narHash": "sha256-IGmaEf3Do8o5Cwp1kXBN1wQmZwQN3NLfq5t4nHtVtcU=",
+        "lastModified": 1760701190,
+        "narHash": "sha256-y7UhnWlER8r776JsySqsbTUh2Txf7K30smfHlqdaIQw=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "67ff9807dd148e704baadbd4fd783b54282ca627",
+        "rev": "3a9450b26e69dcb6f8de6e2b07b3fc1c288d85f5",
         "type": "github"
       },
       "original": {
@@ -455,11 +455,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760393368,
-        "narHash": "sha256-8mN3kqyqa2PKY0wwZ2UmMEYMcxvNTwLaOrrDsw6Qi4E=",
+        "lastModified": 1760845571,
+        "narHash": "sha256-PwGzU3EOU65Ef1VvuNnVLie+l+P0g/fzf/PGUG82KbM=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "ab8d56e85b8be14cff9d93735951e30c3e86a437",
+        "rev": "9c9a9798be331ed3f4b2902933d7677d0659ee61",
         "type": "github"
       },
       "original": {
