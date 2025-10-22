@@ -6,6 +6,8 @@
 
   clan = {
     meta.name = "infra";
+    meta.tld = "clan";
+
     # Make flake available in modules
     specialArgs = { inherit self; };
     inherit self;
