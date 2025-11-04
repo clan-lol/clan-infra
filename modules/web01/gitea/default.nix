@@ -32,7 +32,7 @@ in
       port = 5432;
     };
     lfs.enable = true;
-    package = self.packages.${pkgs.hostPlatform.system}.gitea;
+    package = self.packages.${pkgs.stdenv.hostPlatform.system}.gitea;
 
     settings.actions.ENABLED = true;
 

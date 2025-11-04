@@ -7,7 +7,7 @@
         # TODO: use `clan secrets key check` instead
         # TODO: add `clan vars check`
         secrets =
-          pkgs.runCommandNoCC "check-secrets"
+          pkgs.runCommand "check-secrets"
             {
               nativeBuildInputs = [
                 inputs'.clan-core.packages.default
