@@ -91,7 +91,7 @@
       DynamicUser = true;
       ExecStart =
         lib.getExe
-          self.inputs.jitsi-matrix-presence.packages.${pkgs.hostPlatform.system}.default;
+          self.inputs.jitsi-matrix-presence.packages.${pkgs.stdenv.hostPlatform.system}.default;
       Restart = "on-failure";
       RestartSec = "5s";
     };

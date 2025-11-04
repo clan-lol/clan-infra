@@ -109,7 +109,9 @@ lib.mkMerge [
           };
           script = ''
             set -euo pipefail
-            token=$(${lib.getExe self.packages.${pkgs.hostPlatform.system}.gitea} actions generate-runner-token)
+            token=$(${
+              lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.gitea
+            } actions generate-runner-token)
             echo "TOKEN=$token" > /var/lib/gitea-registration/${name}
           '';
           unitConfig.ConditionPathExists = [ "!/var/lib/gitea-registration/${name}" ];
