@@ -543,11 +543,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1762161791,
-        "narHash": "sha256-J1L1yP29NVBJO04LA/JGM6kwhnjeNhEsX0tLFnuN3FI=",
+        "lastModified": 1762472226,
+        "narHash": "sha256-iVS4sxVgGn+T74rGJjEJbzx+kjsuaP3wdQVXBNJ79A0=",
         "owner": "terranix",
         "repo": "terranix",
-        "rev": "a79a47b4617dfb92184e2e5b8f5aa6fc06c659c8",
+        "rev": "3b5947a48da5694094b301a3b1ef7b22ec8b19fc",
         "type": "github"
       },
       "original": {
