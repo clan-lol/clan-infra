@@ -90,6 +90,7 @@
             clan-bot = { };
             w = { };
             toastal = { };
+            calendar = { };
           };
         };
       };
