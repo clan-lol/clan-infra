@@ -142,6 +142,7 @@
           uid = uid 5;
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLuev3+8kF+pd1YnCRR7Kw9i9DswOMvGhvdQq6dEIJF"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsxOAekV0JLi6OJ1cjx6CJQ/Ysk19QD+zY6k1qVn9+v"
           ];
           gitea.username = "hsjobeki";
         }
