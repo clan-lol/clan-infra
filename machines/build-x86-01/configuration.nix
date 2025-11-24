@@ -1,7 +1,6 @@
 { self, ... }:
 {
   imports = [
-    self.inputs.srvos.nixosModules.mixins-nix-experimental
     self.nixosModules.hetzner-amd
     self.nixosModules.server
     ./disko.nix

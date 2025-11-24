@@ -11,9 +11,11 @@
       imports = [
         inputs.srvos.nixosModules.server
         inputs.srvos.nixosModules.mixins-telegraf
+        inputs.srvos.nixosModules.mixins-nix-experimental
 
         ./admins.nix
         ./dev.nix
+        ./nix-daemon.nix
         ./signing.nix
       ];
       clan.core.settings.state-version.enable = true;
@@ -54,7 +56,6 @@
 
     build01.imports = [
       self.nixosModules.server
-      inputs.srvos.nixosModules.mixins-nix-experimental
     ];
 
     demo01.imports = [
@@ -69,7 +70,6 @@
 
     web01.imports = [
       inputs.srvos.nixosModules.mixins-nginx
-      inputs.srvos.nixosModules.mixins-nix-experimental
 
       inputs.nixos-mailserver.nixosModules.mailserver
       inputs.niks3.nixosModules.niks3
@@ -100,18 +100,17 @@
 
     server.imports = [
       inputs.srvos.darwinModules.server
+      inputs.srvos.darwinModules.mixins-nix-experimental
 
       ./admins.nix
       ./dev.nix
+      ./nix-daemon.nix
       ./signing.nix
     ];
 
     build02.imports = [
       self.darwinModules.sshd
       self.darwinModules.server
-
-      inputs.srvos.darwinModules.server
-      inputs.srvos.darwinModules.mixins-nix-experimental
     ];
   };
 
