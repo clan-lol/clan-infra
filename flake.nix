@@ -19,6 +19,14 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-1.url = "git+https://github.com/Mic92/nix-1?shallow=1";
+    nix-1.inputs.nixpkgs.follows = "nixpkgs";
+    nix-1.inputs.flake-parts.follows = "";
+    nix-1.inputs.flake-compat.follows = "";
+    nix-1.inputs.nixpkgs-regression.follows = "";
+    nix-1.inputs.git-hooks-nix.follows = "";
+    nix-1.inputs.nixpkgs-23-11.follows = "";
+
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/merge-requests/445/merge";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,7 +58,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    niks3.url = "github:Mic92/niks3";
+    niks3.url = "github:Mic92/niks3/tests";
     niks3.inputs.nixpkgs.follows = "nixpkgs";
     niks3.inputs.treefmt-nix.follows = "treefmt-nix";
     niks3.inputs.flake-parts.follows = "flake-parts";
