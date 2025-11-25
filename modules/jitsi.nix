@@ -35,7 +35,19 @@
     };
   };
 
-  services.jitsi-videobridge.openFirewall = true;
+  services.jitsi-videobridge = {
+    openFirewall = true;
+    config = {
+      videobridge = {
+        cc = {
+          # Disable trusted bandwidth estimation to prevent video from being
+          # turned off during screen sharing
+          trust-bwe = false;
+        };
+      };
+    };
+  };
+
   networking.firewall.allowedTCPPorts = [
     80
     443
