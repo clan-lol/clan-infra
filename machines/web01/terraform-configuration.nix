@@ -38,6 +38,20 @@ in
       value = base_ipv6;
     };
 
+    pass_a = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "pass";
+      type = "A";
+      value = base_ipv4;
+    };
+
+    pass_aaaa = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "pass";
+      type = "AAAA";
+      value = base_ipv6;
+    };
+
     nextcloud_a = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "nextcloud";

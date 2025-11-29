@@ -79,6 +79,7 @@
 
       ./web01
       ./mailserver.nix
+      ./vaultwarden.nix
     ];
 
     web02.imports = [

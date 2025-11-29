@@ -19,4 +19,14 @@
   # zram for extra memory
   zramSwap.enable = true;
   zramSwap.memoryPercent = 100;
+
+  clan.vaultwarden = {
+    domain = "pass.clan.lol";
+    smtp = {
+      host = "mail.clan.lol";
+      from = "pass@clan.lol";
+      username = "pass@clan.lol";
+    };
+  };
+
 }

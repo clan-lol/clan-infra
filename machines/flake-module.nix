@@ -54,7 +54,7 @@
             "2a01:4f8:2220:1565::1"
           ];
         };
-        roles.peer.tags.all = { };
+        roles.peer.tags.nixos = { };
       };
       sshd-clan = {
         module = {
