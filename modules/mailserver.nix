@@ -21,6 +21,7 @@ in
       w = { };
       chris = { };
       gitea = { };
+      pass = { };
       kiran = {
         redirect = "kiran.lenk99@googlemail.com";
       };
