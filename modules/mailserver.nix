@@ -30,6 +30,7 @@ in
       joerg = {
         redirect = "joerg.clan@thalheim.io";
       };
+      infra = { };
     };
 
     services.automx2.enable = true;
