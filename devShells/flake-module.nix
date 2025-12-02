@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   perSystem =
     {
@@ -21,7 +22,7 @@
           # treefmt with config defined in ./flake.nix
           config.treefmt.build.wrapper
 
-          pkgs.kanidm_1_7
+          self.nixosConfigurations.web02.config.services.kanidm.package
         ];
         env.KANIDM_URL = "https://idm.thecomputer.co";
       };
