@@ -98,7 +98,6 @@
 
     secrets.age.plugins = [
       "age-plugin-1p"
-      "age-plugin-se"
       "age-plugin-yubikey"
     ];
   };
