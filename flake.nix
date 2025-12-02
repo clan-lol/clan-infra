@@ -28,10 +28,10 @@
     nix-1.inputs.nixpkgs-23-11.follows = "";
 
     nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/merge-requests/445/merge";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-25_05.follows = "";
       inputs.flake-compat.follows = "flake-compat";
+      inputs.git-hooks.follows = "";
     };
 
     srvos.url = "github:nix-community/srvos";
