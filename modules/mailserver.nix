@@ -56,6 +56,9 @@ in
       domains = [ "clan.lol" ];
       enablePop3 = true;
       enableImap = true;
+      # Re-enable STARTTLS on port 587 (disabled by default in 25.11 per RFC 8314 3.3)
+      # Needed until all clients migrate to SMTPS on port 465
+      enableSubmission = true;
 
       certificateScheme = "acme-nginx";
       # kresd sucks unfortunally (fails when one NS server is not working, instead of trying other ones)

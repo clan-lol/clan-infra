@@ -40,11 +40,11 @@ in
 
     settings.mailer = {
       ENABLED = true;
-      PROTOCOL = "smtps";
+      PROTOCOL = "smtp+starttls";
       FROM = "gitea@clan.lol";
       USER = "gitea@clan.lol";
       SMTP_ADDR = "mail.clan.lol";
-      SMTP_PORT = "465";
+      SMTP_PORT = "587";
     };
 
     settings.log.LEVEL = "Error";

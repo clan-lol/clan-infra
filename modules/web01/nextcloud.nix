@@ -86,8 +86,7 @@ in
   services.nextcloud.settings = {
     mail_smtpmode = "smtp";
     mail_smtphost = "mail.clan.lol";
-    mail_smtpport = 465;
-    mail_smtpsecure = "ssl";
+    mail_smtpport = 587;
     mail_smtpauth = true;
     mail_smtpname = "nextcloud@clan.lol";
     mail_domain = "clan.lol";

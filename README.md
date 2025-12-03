@@ -243,8 +243,8 @@ To destroy just the server without taking down the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.demo01"
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- destroy -target "vultr_instance.demo01"
 ```
 
 ## build01
@@ -259,7 +259,7 @@ $ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.demo
 To install the system, you can run the following command:
 
 ```
-$ nix run clan-infra#terraform
+$ nix run .#terraform
 ```
 
 ### Deploy new configuration
@@ -402,7 +402,7 @@ Currently DNS can't be updated separately to the machines, so you'll need to
 deploy the entire Terraform configuration:
 
 ```
-$ nix run clan-infra#terraform
+$ nix run .#terraform
 ```
 
 ## storinator01
