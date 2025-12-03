@@ -15,14 +15,15 @@
       build02.machineClass = "darwin";
       # Deploy targets
       web01.deploy.targetHost = "root@clan.lol";
+      web02.deploy.targetHost = "thecomputer.co";
       build01.deploy.targetHost = "root@build01.clan.lol";
       build-x86-01.deploy.targetHost = "root@build-x86-01.clan.lol";
 
-      # tailscale
-      build02.deploy.targetHost = "root@build02";
+      # tailscale (via jump host)
+      build02.deploy.targetHost = "root@build02.vpn.clan.lol?ProxyJump=root@clan.lol";
 
-      # zerotier
-      storinator01.deploy.targetHost = "root@storinator01.vpn.clan.lol";
+      # zerotier (via jump host)
+      storinator01.deploy.targetHost = "root@storinator01.vpn.clan.lol?ProxyJump=root@clan.lol";
       storinator01.deploy.buildHost = "root@clan.lol";
     };
     inventory.instances = {
