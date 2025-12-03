@@ -160,13 +160,6 @@ in
       value = "0 1 110 mail.clan.lol.";
     };
 
-    smtp = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
-      name = "_smtp._tcp";
-      type = "SRV";
-      value = "0 1 25 mail.clan.lol.";
-    };
-
     # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     submission = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
