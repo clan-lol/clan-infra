@@ -107,6 +107,24 @@
           };
         };
       };
+      wireguard-infra = {
+        module = {
+          name = "wireguard";
+          input = "clan-core";
+        };
+        roles.controller.machines = {
+          web01.settings.endpoint = "clan.lol";
+          build01.settings.endpoint = "build01.clan.lol";
+          build-x86-01.settings.endpoint = "build-x86-01.clan.lol";
+          jitsi01.settings.endpoint = "jitsi.clan.lol";
+          demo01.settings.endpoint = "demo.clan.lol";
+          web02.settings.endpoint = "thecomputer.co";
+        };
+        roles.peer.machines = {
+          storinator01.settings.controller = "web01";
+          build02.settings.controller = "web01";
+        };
+      };
     };
 
     secrets.age.plugins = [
