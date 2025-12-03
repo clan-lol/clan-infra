@@ -17,6 +17,4 @@
   networking.firewall.trustedInterfaces = [ "ztqcw3e3rp" ];
 
   programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames = [ "157.90.137.201" ];
-
-  clan.core.networking.targetHost = "root@build01";
 }

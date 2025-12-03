@@ -17,7 +17,5 @@
 
   programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames = [ "144.76.97.38" ];
 
-  clan.core.networking.targetHost = "root@144.76.97.38";
-
   nixpkgs.hostPlatform = "x86_64-linux";
 }
