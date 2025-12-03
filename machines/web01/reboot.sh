@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -ux
 
 HOST="clan.lol"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -8,4 +9,4 @@ while ping -W 1 -c 1 "$HOST"; do
   sleep 1
 done
 
-"$SCRIPT_DIR/decrypt.sh"
+exec "$SCRIPT_DIR/decrypt.sh"
