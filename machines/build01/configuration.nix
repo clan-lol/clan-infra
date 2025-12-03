@@ -11,8 +11,6 @@
 
   clan.core.sops.defaultGroups = [ "admins" ];
 
-  services.openssh.openFirewall = false;
-
   # connections over ZeroTier can access all ports
   networking.firewall.trustedInterfaces = [ "ztqcw3e3rp" ];
 
