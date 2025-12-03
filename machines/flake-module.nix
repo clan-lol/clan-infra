@@ -15,9 +15,12 @@
       build02.machineClass = "darwin";
       # Deploy targets
       web01.deploy.targetHost = "root@clan.lol";
-      build01.deploy.targetHost = "root@build01";
+      build01.deploy.targetHost = "root@build01.clan.lol";
+      build-x86-01.deploy.targetHost = "root@build-x86-01.clan.lol";
+
+      # tailscale
       build02.deploy.targetHost = "root@build02";
-      build-x86-01.deploy.targetHost = "root@144.76.97.38";
+      # zerotier
       storinator01.deploy.targetHost = "root@storinator01";
     };
     inventory.instances = {
