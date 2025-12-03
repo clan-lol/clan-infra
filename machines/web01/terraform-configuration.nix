@@ -52,6 +52,27 @@ in
       value = base_ipv6;
     };
 
+    mail_a = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "mail";
+      type = "A";
+      value = base_ipv4;
+    };
+
+    mail_aaaa = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "mail";
+      type = "AAAA";
+      value = base_ipv6;
+    };
+
+    mx = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "@";
+      type = "MX";
+      value = "10 mail.clan.lol.";
+    };
+
     pass_a = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "pass";
