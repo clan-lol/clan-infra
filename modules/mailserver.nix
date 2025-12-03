@@ -54,6 +54,9 @@ in
       enable = true;
       fqdn = "mail.clan.lol";
       domains = [ "clan.lol" ];
+      enablePop3Ssl = true;
+
+      # Disable these once there are no more clients using them as they're insecure
       enablePop3 = true;
       enableImap = true;
       # Re-enable STARTTLS on port 587 (disabled by default in 25.11 per RFC 8314 3.3)
