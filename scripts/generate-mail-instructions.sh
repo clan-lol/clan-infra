@@ -42,7 +42,7 @@ Incoming Mail (POP3):
 
 Outgoing Mail (SMTP):
   Server:   mail.clan.lol
-  Port:     465 (SSL/TLS) or 587 (STARTTLS)
+  Port:     465 (SSL/TLS)
   Username: ${EMAIL}
   Authentication: Required
 
