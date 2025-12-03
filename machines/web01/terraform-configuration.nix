@@ -167,11 +167,20 @@ in
       value = "0 1 25 mail.clan.lol.";
     };
 
+    # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     submission = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "_submission._tcp";
       type = "SRV";
-      value = "10 20 587 mail.clan.lol.";
+      value = "0 0 0 .";
+    };
+
+    # Advertise SMTPS
+    submissions = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "_submissions._tcp";
+      type = "SRV";
+      value = "0 1 465 mail.clan.lol.";
     };
 
     # Fastly CDN for cache2.clan.lol
