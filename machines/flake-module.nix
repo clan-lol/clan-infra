@@ -12,19 +12,18 @@
     specialArgs = { inherit self; };
     inherit self;
     inventory.machines = {
-      build02.machineClass = "darwin";
-      # Deploy targets
-      web01.deploy.targetHost = "root@clan.lol";
-      web02.deploy.targetHost = "thecomputer.co";
+      web01.deploy.targetHost = "root@web01.clan.lol";
+      web02.deploy.targetHost = "root@web02.clan.lol";
+      jitsi01.deploy.targetHost = "root@jitsi01.clan.lol";
       build01.deploy.targetHost = "root@build01.clan.lol";
       build-x86-01.deploy.targetHost = "root@build-x86-01.clan.lol";
 
-      # tailscale (via jump host)
-      build02.deploy.targetHost = "root@build02.vpn.clan.lol?ProxyJump=root@clan.lol";
+      # no public IP, via jump host
+      build02.machineClass = "darwin";
+      build02.deploy.targetHost = "root@build02.wireguard-infra?ProxyJump=root@web01.clan.lol";
 
-      # zerotier (via jump host)
-      storinator01.deploy.targetHost = "root@storinator01.vpn.clan.lol?ProxyJump=root@clan.lol";
-      storinator01.deploy.buildHost = "root@clan.lol";
+      storinator01.deploy.targetHost = "root@storinator01.wireguard-infra?ProxyJump=root@web01.clan.lol";
+      storinator01.deploy.buildHost = "root@web01.clan.lol";
     };
     inventory.instances = {
       emergency-access = {
@@ -77,7 +76,10 @@
         };
         roles.server.tags.all = { };
         roles.server.settings = {
-          certificate.searchDomains = [ "clan.lol" ];
+          certificate.searchDomains = [
+            "clan.lol"
+            "wireguard-infra"
+          ];
         };
         roles.server.machines.web01.settings = {
           hostKeys.rsa.enable = true;

@@ -36,6 +36,20 @@
     value = config.resource.vultr_instance.web02 "v6_main_ip";
   };
 
+  resource.hetznerdns_record.web02_a = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "web02";
+    type = "A";
+    value = config.resource.vultr_instance.web02 "main_ip";
+  };
+
+  resource.hetznerdns_record.web02_aaaa = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "web02";
+    type = "AAAA";
+    value = config.resource.vultr_instance.web02 "v6_main_ip";
+  };
+
   resource.hetznerdns_record.thecomputer_co_outline_a = {
     zone_id = lib.tf.ref "module.dns.thecomputer_co_zone_id";
     name = "outline";

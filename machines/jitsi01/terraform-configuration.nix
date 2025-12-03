@@ -36,6 +36,20 @@
     value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
   };
 
+  resource.hetznerdns_record.jitsi01_a = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "jitsi01";
+    type = "A";
+    value = config.resource.vultr_instance.jitsi01 "main_ip";
+  };
+
+  resource.hetznerdns_record.jitsi01_aaaa = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "jitsi01";
+    type = "AAAA";
+    value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
+  };
+
   resource.hetznerdns_record.meet_a = {
     zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
     name = "meet";

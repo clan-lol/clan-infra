@@ -23,6 +23,20 @@
     value = config.resource.vultr_instance.demo01 "main_ip";
   };
 
+  resource.hetznerdns_record.demo01_a = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "demo01";
+    type = "A";
+    value = config.resource.vultr_instance.demo01 "main_ip";
+  };
+
+  resource.hetznerdns_record.demo01_aaaa = {
+    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+    name = "demo01";
+    type = "AAAA";
+    value = config.resource.vultr_instance.demo01 "v6_main_ip";
+  };
+
   resource.null_resource.install-demo01 = {
     triggers = {
       instance_id = config.resource.vultr_instance.demo01 "id";
