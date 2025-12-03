@@ -32,6 +32,34 @@
         ;
     };
 
+    build01-v4 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "build01";
+      type = "A";
+      value = "157.90.137.201";
+    };
+
+    build01-v6 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "build01";
+      type = "AAAA";
+      value = "2a01:4f8:2220:140f::1";
+    };
+
+    build-x86-01-v4 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "build-x86-01";
+      type = "A";
+      value = "144.76.97.38";
+    };
+
+    build-x86-01-v6 = {
+      zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+      name = "build-x86-01";
+      type = "AAAA";
+      value = "2a01:4f8:192:3223::2";
+    };
+
     build02 = {
       zone_id = config.resource.hetznerdns_zone.clan_lol "id";
       name = "build02.vpn";

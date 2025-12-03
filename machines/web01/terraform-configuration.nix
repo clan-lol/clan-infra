@@ -38,6 +38,20 @@ in
       value = base_ipv6;
     };
 
+    web01_a = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "web01";
+      type = "A";
+      value = base_ipv4;
+    };
+
+    web01_aaaa = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "web01";
+      type = "AAAA";
+      value = base_ipv6;
+    };
+
     pass_a = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "pass";
