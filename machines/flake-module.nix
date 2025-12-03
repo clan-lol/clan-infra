@@ -20,8 +20,10 @@
 
       # tailscale
       build02.deploy.targetHost = "root@build02";
+
       # zerotier
-      storinator01.deploy.targetHost = "root@storinator01";
+      storinator01.deploy.targetHost = "root@storinator01.vpn.clan.lol";
+      storinator01.deploy.buildHost = "root@clan.lol";
     };
     inventory.instances = {
       emergency-access = {
