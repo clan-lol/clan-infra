@@ -132,11 +132,11 @@ in
       value = "0 1 25 mail.clan.lol.";
     };
 
-    submissions = {
+    submission = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
-      name = "_submissions._tcp";
+      name = "_submission._tcp";
       type = "SRV";
-      value = "0 1 465 mail.clan.lol.";
+      value = "10 20 587 mail.clan.lol.";
     };
 
     # Fastly CDN for cache2.clan.lol
