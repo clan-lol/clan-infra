@@ -32,12 +32,12 @@ SERVER SETTINGS:
 ----------------
 Incoming Mail (IMAP):
   Server:   mail.clan.lol
-  Port:     993 (SSL/TLS) or 143 (STARTTLS)
+  Port:     993 (SSL/TLS)
   Username: ${EMAIL}
 
 Incoming Mail (POP3):
   Server:   mail.clan.lol
-  Port:     110 (STARTTLS)
+  Port:     995 (SSL/TLS)
   Username: ${EMAIL}
 
 Outgoing Mail (SMTP):
@@ -57,5 +57,6 @@ SECURITY NOTES:
 ---------------
 - Your password is randomly generated for security
 - Please store it in a password manager
-- All connections use encryption (SSL/TLS)
+- All connections use implicit TLS (SSL/TLS from connection start)
+- Modern email clients automatically configure these ports
 EOF
