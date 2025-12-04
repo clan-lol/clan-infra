@@ -139,11 +139,12 @@ in
     };
 
     # RFC 6186 service records for mail services
+    # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     imap = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "_imap._tcp";
       type = "SRV";
-      value = "10 20 143 mail.clan.lol.";
+      value = "0 0 0 .";
     };
 
     imaps = {
@@ -153,25 +154,35 @@ in
       value = "0 1 993 mail.clan.lol.";
     };
 
+    # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     pop3 = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "_pop3._tcp";
       type = "SRV";
-      value = "0 1 110 mail.clan.lol.";
+      value = "0 0 0 .";
     };
 
-    smtp = {
+    pop3s = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
-      name = "_smtp._tcp";
+      name = "_pop3s._tcp";
       type = "SRV";
-      value = "0 1 25 mail.clan.lol.";
+      value = "0 1 995 mail.clan.lol.";
     };
 
+    # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     submission = {
       zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
       name = "_submission._tcp";
       type = "SRV";
-      value = "10 20 587 mail.clan.lol.";
+      value = "0 0 0 .";
+    };
+
+    # Advertise SMTPS
+    submissions = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "_submissions._tcp";
+      type = "SRV";
+      value = "0 1 465 mail.clan.lol.";
     };
 
     # Fastly CDN for cache2.clan.lol
