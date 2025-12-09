@@ -62,6 +62,9 @@
     niks3.inputs.nixpkgs.follows = "nixpkgs";
     niks3.inputs.treefmt-nix.follows = "treefmt-nix";
     niks3.inputs.flake-parts.follows = "flake-parts";
+
+    nixpkgs-terraform-providers-bin.url = "github:nix-community/nixpkgs-terraform-providers-bin";
+    nixpkgs-terraform-providers-bin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
