@@ -15,15 +15,11 @@ let
   s3_endpoint = "${s3_region}.your-objectstorage.com";
 in
 {
-  # Variable for state encryption
   variable.passphrase = { };
 
-  # Terraform providers
-  terraform.required_providers.fastly = {
-    source = "fastly/fastly";
-  };
+  terraform.required_providers.fastly.source = "fastly/fastly";
+  terraform.required_providers.b2.source = "Backblaze/b2";
 
-  # Fastly API key from secrets
   data.external.fastly-api-key = {
     program = [
       (lib.getExe (
@@ -39,17 +35,49 @@ in
 
   provider.fastly.api_key = config.data.external.fastly-api-key "result.secret";
 
-  # Import existing resources
-  import = [
-    {
-      to = "fastly_service_vcl.cache";
-      id = "R3YzKvkDNI44XEyD4pEjzB";
-    }
-    {
-      to = "fastly_tls_subscription.cache";
-      id = "eAp2J9BpksyLgiLAUVOrAQ";
-    }
-  ];
+  data.external.b2-key-id = {
+    program = [
+      (lib.getExe (
+        pkgs.writeShellApplication {
+          name = "get-clan-secret";
+          text = ''
+            jq -n --arg secret "$(clan secrets get b2-key-id)" '{"secret":$secret}'
+          '';
+        }
+      ))
+    ];
+  };
+
+  data.external.b2-application-key = {
+    program = [
+      (lib.getExe (
+        pkgs.writeShellApplication {
+          name = "get-clan-secret";
+          text = ''
+            jq -n --arg secret "$(clan secrets get b2-application-key)" '{"secret":$secret}'
+          '';
+        }
+      ))
+    ];
+  };
+
+  provider.b2.application_key_id = config.data.external.b2-key-id "result.secret";
+  provider.b2.application_key = config.data.external.b2-application-key "result.secret";
+
+  resource.b2_bucket.cache = {
+    bucket_name = "clan-cache";
+    bucket_type = "allPrivate";
+  };
+
+  resource.b2_application_key.niks3 = {
+    key_name = "niks3";
+    # default list when manually creating application key through Backblaze web interface
+    capabilities = [
+      "listBuckets"
+      "shareFiles"
+    ];
+    bucket_ids = [ (config.resource.b2_bucket.cache "id") ];
+  };
 
   # Fastly service for cache2.clan.lol
   resource.fastly_service_vcl.cache = {

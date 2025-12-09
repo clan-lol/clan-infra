@@ -156,6 +156,7 @@
           cachePackage = pkgs.opentofu.withPlugins (p: [
             p.hashicorp_external
             p.fastly_fastly
+            inputs'.nixpkgs-terraform-providers-bin.legacyPackages.providers.Backblaze.b2
           ]);
         in
         {

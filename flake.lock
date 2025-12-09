@@ -389,6 +389,26 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "nixpkgs-terraform-providers-bin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765242168,
+        "narHash": "sha256-btjIVPRh7s81bfpOctjx3VKzi5Ovf7BBsOn8DjBRnDM=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-terraform-providers-bin",
+        "rev": "0c7f76a31e9da579333e52ce94529083a3716a40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs-terraform-providers-bin",
+        "type": "github"
+      }
+    },
     "process-compose": {
       "locked": {
         "lastModified": 1764915241,
@@ -418,6 +438,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-terraform-providers-bin": "nixpkgs-terraform-providers-bin",
         "srvos": "srvos",
         "terranix": "terranix",
         "treefmt-nix": "treefmt-nix"
