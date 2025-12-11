@@ -1,15 +1,14 @@
 { config, pkgs, ... }:
 {
-
   services.niks3 = {
     enable = true;
     httpAddr = "127.0.0.1:5752";
 
     cacheUrl = "https://cache.clan.lol";
 
-    # Hetzner Object Storage configuration
+    # Backblaze B2 configuration (S3-compatible)
     s3 = {
-      endpoint = "nbg1.your-objectstorage.com";
+      endpoint = "s3.eu-central-003.backblazeb2.com";
       bucket = "clan-cache";
       useSSL = true;
       accessKeyFile = config.clan.core.vars.generators.niks3-s3.files."access-key".path;
@@ -27,29 +26,26 @@
     nginx.domain = "niks3.clan.lol";
   };
 
-  # Clan vars generators for niks3 secrets
+  # Clan vars for niks3 S3 credentials (populated by terraform via cache-new)
   clan.core.vars.generators.niks3-s3 = {
     files."access-key" = {
-      owner = config.services.niks3.user;
+      owner = "niks3";
+      deploy = config.services.niks3.enable;
     };
     files."secret-key" = {
-      owner = config.services.niks3.user;
+      owner = "niks3";
+      deploy = config.services.niks3.enable;
     };
-    prompts.access-key.type = "line";
-    prompts.access-key.persist = true;
-    prompts.access-key.description = "S3 Access Key for niks3";
-    prompts.secret-key.type = "hidden";
-    prompts.secret-key.persist = true;
-    prompts.secret-key.description = "S3 Secret Key for niks3";
     script = ''
-      cat "$prompts"/access-key > $out/access-key
-      cat "$prompts"/secret-key > $out/secret-key
+      echo "niks3-s3 credentials are populated by terraform (cache-new), not generated" >&2
+      exit 1
     '';
   };
 
   clan.core.vars.generators.niks3-api-token = {
     files."token" = {
-      owner = config.services.niks3.user;
+      owner = "niks3";
+      deploy = config.services.niks3.enable;
     };
     runtimeInputs = [ pkgs.openssl ];
     script = ''
@@ -60,7 +56,8 @@
 
   clan.core.vars.generators.niks3-signing-key = {
     files."key" = {
-      owner = config.services.niks3.user;
+      owner = "niks3";
+      deploy = config.services.niks3.enable;
     };
     files."key.pub".secret = false;
     runtimeInputs = [ pkgs.nix ];
