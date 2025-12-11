@@ -9,10 +9,10 @@ let
   # Cache domain
   cache_domain = "cache2.clan.lol";
 
-  # S3 bucket details
+  # Backblaze B2 bucket details (S3-compatible)
   s3_bucket = "clan-cache";
-  s3_region = "nbg1";
-  s3_endpoint = "${s3_region}.your-objectstorage.com";
+  s3_region = "eu-central-003";
+  s3_endpoint = "s3.${s3_region}.backblazeb2.com";
 in
 {
   variable.passphrase = { };
@@ -79,6 +79,13 @@ in
     bucket_ids = [ (config.resource.b2_bucket.cache "id") ];
   };
 
+  # Application key for Fastly to read from B2 (S3-compatible)
+  resource.b2_application_key.fastly = {
+    key_name = "fastly";
+    capabilities = [ "readFiles" ];
+    bucket_ids = [ (config.resource.b2_bucket.cache "id") ];
+  };
+
   # Fastly service for cache2.clan.lol
   resource.fastly_service_vcl.cache = {
     name = cache_domain;
@@ -102,7 +109,7 @@ in
         name = "s3-backend";
         override_host = "${s3_bucket}.${s3_endpoint}";
         port = 443;
-        shield = "frankfurt-de"; # Frankfurt shield (closest to NBG)
+        shield = "frankfurt-de"; # Frankfurt shield (closest to B2 eu-central-003)
         ssl_cert_hostname = "${s3_bucket}.${s3_endpoint}";
         ssl_check_cert = true;
         use_ssl = true;
@@ -137,18 +144,12 @@ in
 
     # Headers
     header = [
-      # Clean headers for better caching (based on actual Ceph/Hetzner S3 headers)
+      # Clean headers for better caching
       {
         destination = "http.x-amz-request-id";
         type = "cache";
         action = "delete";
         name = "remove x-amz-request-id";
-      }
-      {
-        destination = "http.x-rgw-object-type";
-        type = "cache";
-        action = "delete";
-        name = "remove x-rgw-object-type";
       }
       # Enable Streaming Miss
       {
@@ -209,6 +210,22 @@ in
         name = "vcl_recv - Enable segmented caching for NAR files";
         priority = 60;
         type = "recv";
+      }
+      # Authenticate S3 requests to B2 using AWS Signature V4
+      {
+        name = "vcl_miss - Authenticate S3 requests";
+        priority = 100;
+        type = "miss";
+        content =
+          builtins.replaceStrings
+            [ "\${backend_domain}" "\${s3_region}" "\${access_key}" "\${secret_key}" ]
+            [
+              "${s3_bucket}.${s3_endpoint}"
+              s3_region
+              (config.resource.b2_application_key.fastly "application_key_id")
+              (config.resource.b2_application_key.fastly "application_key")
+            ]
+            (builtins.readFile ./cache/s3-authn.vcl);
       }
       # Set long cache time for nix-cache-info with extended grace period
       # This ensures the cache remains available even during backend issues
