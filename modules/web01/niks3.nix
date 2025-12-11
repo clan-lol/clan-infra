@@ -21,21 +21,10 @@
 
     # Use niks3-specific signing key
     signKeyFiles = [ config.clan.core.vars.generators.niks3-signing-key.files."key".path ];
-  };
 
-  # NGINX reverse proxy configuration for niks3.clan.lol
-  services.nginx.virtualHosts."niks3.clan.lol" = {
-    forceSSL = true;
-    enableACME = true;
-    locations."/".extraConfig = ''
-      proxy_pass http://127.0.0.1:5752;
-      proxy_set_header Host $host;
-      proxy_redirect http:// https://;
-      proxy_http_version 1.1;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection $connection_upgrade;
-    '';
+    # Use the built-in nginx option
+    nginx.enable = true;
+    nginx.domain = "niks3.clan.lol";
   };
 
   # Clan vars generators for niks3 secrets
