@@ -69,16 +69,6 @@ in
     bucket_type = "allPrivate";
   };
 
-  resource.b2_application_key.niks3 = {
-    key_name = "niks3";
-    # default list when manually creating application key through Backblaze web interface
-    capabilities = [
-      "listBuckets"
-      "shareFiles"
-    ];
-    bucket_ids = [ (config.resource.b2_bucket.cache "id") ];
-  };
-
   # Application key for Fastly to read from B2 (S3-compatible)
   resource.b2_application_key.fastly = {
     key_name = "fastly";
@@ -104,7 +94,6 @@ in
         connect_timeout = 5000;
         error_threshold = 0;
         first_byte_timeout = 15000;
-        healthcheck = "s3-health";
         max_conn = 200;
         name = "s3-backend";
         override_host = "${s3_bucket}.${s3_endpoint}";
@@ -117,23 +106,6 @@ in
       }
     ];
 
-    # Health check to detect slow S3 responses
-    # If S3 can't respond to nix-cache-info within 3s, mark as unhealthy
-    healthcheck = [
-      {
-        name = "s3-health";
-        host = "${s3_bucket}.${s3_endpoint}";
-        path = "/nix-cache-info";
-        check_interval = 5000; # Check every 5 seconds
-        timeout = 3000; # 3 second timeout
-        threshold = 2; # 2 successful checks to mark healthy
-        window = 3; # Out of last 3 checks
-        initial = 2; # Start as healthy
-        method = "GET";
-        expected_response = 200;
-      }
-    ];
-
     # Force HTTPS
     request_setting = [
       {
@@ -142,8 +114,30 @@ in
       }
     ];
 
+    # Conditions
+    condition = [
+      # Match root path for landing page redirect
+      {
+        name = "match-root";
+        priority = 10;
+        statement = ''req.url ~ "^/$"'';
+        type = "REQUEST";
+      }
+    ];
+
     # Headers
     header = [
+      # Rewrite root path to index.html (landing page)
+      {
+        action = "set";
+        destination = "url";
+        ignore_if_set = false;
+        name = "Landing page";
+        priority = 10;
+        request_condition = "match-root";
+        source = ''"/index.html"'';
+        type = "request";
+      }
       # Clean headers for better caching
       {
         destination = "http.x-amz-request-id";
@@ -185,19 +179,6 @@ in
         content = "set req.url = querystring.remove(req.url);";
         name = "vcl_recv - Remove query strings";
         priority = 50;
-        type = "recv";
-      }
-      # If S3 backend is unhealthy (slow), immediately return 404
-      # This prevents clients from waiting for timeouts when S3 is slow
-      # Exception: nix-cache-info uses stale content via grace period
-      {
-        content = ''
-          if (!req.backend.healthy && req.url.path !~ "^/nix-cache-info") {
-            error 404 "Backend unhealthy";
-          }
-        '';
-        name = "vcl_recv - Return 404 if backend unhealthy";
-        priority = 55;
         type = "recv";
       }
       # Enable segmented caching for large NAR files (>2GB support)
