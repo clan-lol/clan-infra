@@ -270,6 +270,18 @@ in
         priority = 100;
         type = "fetch";
       }
+      # Add Content-Encoding header for zstd-compressed files
+      # B2 doesn't set this header, so Fastly needs to add it
+      {
+        name = "vcl_fetch - Add Content-Encoding for zstd files";
+        content = ''
+          if (req.url.path ~ "\.(narinfo|ls)$" || req.url.path ~ "\.nar\.zst$" || req.url.path ~ "^/realisations/" || req.url.path ~ "^/log/") {
+            set beresp.http.Content-Encoding = "zstd";
+          }
+        '';
+        priority = 105;
+        type = "fetch";
+      }
     ];
   };
 
