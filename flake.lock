@@ -65,10 +65,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1765615664,
-        "narHash": "sha256-DuGhcIDQmCvFivSfKTd0BNia8NoJu626kCGcsgqy2C4=",
+        "lastModified": 1765637436,
+        "narHash": "sha256-IdPlgTRSxCCa+EFk46rq+b8INq2BI45xwo8XZ+zi6oE=",
         "ref": "main",
-        "rev": "d2be5c4b03ab86abd5c50d2a3f9a4350f2299d69",
+        "rev": "5d19f9bb2db09af8ca4572bcf72035befd9e2ae6",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
