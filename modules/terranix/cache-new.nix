@@ -270,12 +270,13 @@ in
         priority = 100;
         type = "fetch";
       }
-      # Add Content-Encoding header for zstd-compressed files
-      # B2 doesn't set this header, so Fastly needs to add it
+      # Add Content-Encoding header for zstd-compressed metadata files
+      # Exclude .nar.zst files as Nix handles their decompression itself
+      # Only set for successful responses (not 404s)
       {
-        name = "vcl_fetch - Add Content-Encoding for zstd files";
+        name = "vcl_fetch - Add Content-Encoding for zstd metadata";
         content = ''
-          if (req.url.path ~ "\.(narinfo|ls)$" || req.url.path ~ "\.nar\.zst$" || req.url.path ~ "^/realisations/" || req.url.path ~ "^/log/") {
+          if (beresp.status == 200 && (req.url.path ~ "\.(narinfo|ls)$" || req.url.path ~ "^/realisations/" || req.url.path ~ "^/log/")) {
             set beresp.http.Content-Encoding = "zstd";
           }
         '';
