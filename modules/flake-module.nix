@@ -66,7 +66,6 @@
       self.nixosModules.server
       ./jitsi.nix
       ./lasuite-meet.nix
-      ./mumble.nix
     ];
 
     web01.imports = [
