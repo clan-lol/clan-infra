@@ -34,7 +34,9 @@
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "demo01";
     type = "AAAA";
-    records = [ { value = config.resource.vultr_instance.demo01 "v6_main_ip"; } ];
+    records = [
+      { value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.demo01 "v6_main_ip"}/128", 0)''; }
+    ];
   };
 
   resource.null_resource.install-demo01 = {

@@ -32,7 +32,11 @@
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi";
     type = "AAAA";
-    records = [ { value = config.resource.vultr_instance.jitsi01 "v6_main_ip"; } ];
+    records = [
+      {
+        value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.jitsi01 "v6_main_ip"}/128", 0)'';
+      }
+    ];
   };
 
   resource.hcloud_zone_rrset.jitsi01_a = {
@@ -46,7 +50,11 @@
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi01";
     type = "AAAA";
-    records = [ { value = config.resource.vultr_instance.jitsi01 "v6_main_ip"; } ];
+    records = [
+      {
+        value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.jitsi01 "v6_main_ip"}/128", 0)'';
+      }
+    ];
   };
 
   resource.hcloud_zone_rrset.meet_a = {
@@ -60,7 +68,11 @@
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "meet";
     type = "AAAA";
-    records = [ { value = config.resource.vultr_instance.jitsi01 "v6_main_ip"; } ];
+    records = [
+      {
+        value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.jitsi01 "v6_main_ip"}/128", 0)'';
+      }
+    ];
   };
 
   resource.null_resource.install-jitsi01 = {

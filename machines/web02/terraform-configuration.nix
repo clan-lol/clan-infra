@@ -32,7 +32,9 @@
     zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
     name = "@";
     type = "AAAA";
-    records = [ { value = config.resource.vultr_instance.web02 "v6_main_ip"; } ];
+    records = [
+      { value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.web02 "v6_main_ip"}/128", 0)''; }
+    ];
   };
 
   resource.hcloud_zone_rrset.web02_a = {
@@ -46,7 +48,9 @@
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "web02";
     type = "AAAA";
-    records = [ { value = config.resource.vultr_instance.web02 "v6_main_ip"; } ];
+    records = [
+      { value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.web02 "v6_main_ip"}/128", 0)''; }
+    ];
   };
 
   resource.hcloud_zone_rrset.thecomputer_co_outline_a = {
