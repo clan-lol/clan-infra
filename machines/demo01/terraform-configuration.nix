@@ -16,25 +16,25 @@
     backups = "disabled";
   };
 
-  resource.hetznerdns_record.demo_a = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.demo_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "demo";
     type = "A";
-    value = config.resource.vultr_instance.demo01 "main_ip";
+    records = [ { value = config.resource.vultr_instance.demo01 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.demo01_a = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.demo01_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "demo01";
     type = "A";
-    value = config.resource.vultr_instance.demo01 "main_ip";
+    records = [ { value = config.resource.vultr_instance.demo01 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.demo01_aaaa = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.demo01_aaaa = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "demo01";
     type = "AAAA";
-    value = config.resource.vultr_instance.demo01 "v6_main_ip";
+    records = [ { value = config.resource.vultr_instance.demo01 "v6_main_ip"; } ];
   };
 
   resource.null_resource.install-demo01 = {

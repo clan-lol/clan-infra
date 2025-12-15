@@ -6,7 +6,6 @@
 
 {
   terraform.required_providers.local.source = "hashicorp/local";
-  terraform.required_providers.hetznerdns.source = "timohirt/hetznerdns";
 
   resource.vultr_instance.web02 = {
     label = "web02";
@@ -22,46 +21,46 @@
     backups = "disabled";
   };
 
-  resource.hetznerdns_record.thecomputer_co_root_a = {
-    zone_id = lib.tf.ref "module.dns.thecomputer_co_zone_id";
+  resource.hcloud_zone_rrset.thecomputer_co_root_a = {
+    zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
     name = "@";
     type = "A";
-    value = config.resource.vultr_instance.web02 "main_ip";
+    records = [ { value = config.resource.vultr_instance.web02 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.thecomputer_co_root_aaaa = {
-    zone_id = lib.tf.ref "module.dns.thecomputer_co_zone_id";
+  resource.hcloud_zone_rrset.thecomputer_co_root_aaaa = {
+    zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
     name = "@";
     type = "AAAA";
-    value = config.resource.vultr_instance.web02 "v6_main_ip";
+    records = [ { value = config.resource.vultr_instance.web02 "v6_main_ip"; } ];
   };
 
-  resource.hetznerdns_record.web02_a = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.web02_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "web02";
     type = "A";
-    value = config.resource.vultr_instance.web02 "main_ip";
+    records = [ { value = config.resource.vultr_instance.web02 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.web02_aaaa = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.web02_aaaa = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "web02";
     type = "AAAA";
-    value = config.resource.vultr_instance.web02 "v6_main_ip";
+    records = [ { value = config.resource.vultr_instance.web02 "v6_main_ip"; } ];
   };
 
-  resource.hetznerdns_record.thecomputer_co_outline_a = {
-    zone_id = lib.tf.ref "module.dns.thecomputer_co_zone_id";
+  resource.hcloud_zone_rrset.thecomputer_co_outline_a = {
+    zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
     name = "outline";
     type = "A";
-    value = config.resource.vultr_instance.web02 "main_ip";
+    records = [ { value = config.resource.vultr_instance.web02 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.thecomputer_co_idm_a = {
-    zone_id = lib.tf.ref "module.dns.thecomputer_co_zone_id";
+  resource.hcloud_zone_rrset.thecomputer_co_idm_a = {
+    zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
     name = "idm";
     type = "A";
-    value = config.resource.vultr_instance.web02 "main_ip";
+    records = [ { value = config.resource.vultr_instance.web02 "main_ip"; } ];
   };
 
   resource.null_resource.install-web02 = {

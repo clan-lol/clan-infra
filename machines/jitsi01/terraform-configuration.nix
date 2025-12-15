@@ -6,7 +6,6 @@
 
 {
   terraform.required_providers.local.source = "hashicorp/local";
-  terraform.required_providers.hetznerdns.source = "timohirt/hetznerdns";
 
   resource.vultr_instance.jitsi01 = {
     label = "jitsi01";
@@ -22,46 +21,46 @@
     backups = "disabled";
   };
 
-  resource.hetznerdns_record.jitsi_a = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.jitsi_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi";
     type = "A";
-    value = config.resource.vultr_instance.jitsi01 "main_ip";
+    records = [ { value = config.resource.vultr_instance.jitsi01 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.jitsi_aaaa = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.jitsi_aaaa = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi";
     type = "AAAA";
-    value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
+    records = [ { value = config.resource.vultr_instance.jitsi01 "v6_main_ip"; } ];
   };
 
-  resource.hetznerdns_record.jitsi01_a = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.jitsi01_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi01";
     type = "A";
-    value = config.resource.vultr_instance.jitsi01 "main_ip";
+    records = [ { value = config.resource.vultr_instance.jitsi01 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.jitsi01_aaaa = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.jitsi01_aaaa = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi01";
     type = "AAAA";
-    value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
+    records = [ { value = config.resource.vultr_instance.jitsi01 "v6_main_ip"; } ];
   };
 
-  resource.hetznerdns_record.meet_a = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.meet_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "meet";
     type = "A";
-    value = config.resource.vultr_instance.jitsi01 "main_ip";
+    records = [ { value = config.resource.vultr_instance.jitsi01 "main_ip"; } ];
   };
 
-  resource.hetznerdns_record.meet_aaaa = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.meet_aaaa = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "meet";
     type = "AAAA";
-    value = config.resource.vultr_instance.jitsi01 "v6_main_ip";
+    records = [ { value = config.resource.vultr_instance.jitsi01 "v6_main_ip"; } ];
   };
 
   resource.null_resource.install-jitsi01 = {

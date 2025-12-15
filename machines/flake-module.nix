@@ -148,9 +148,9 @@
           package = pkgs.opentofu.withPlugins (p: [
             p.hashicorp_external
             p.hashicorp_local
-            p.timohirt_hetznerdns
             p.hashicorp_null
             p.hashicorp_tls
+            p.hetznercloud_hcloud
             p.vultr_vultr
           ]);
           cachePackage = pkgs.opentofu.withPlugins (p: [

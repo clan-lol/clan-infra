@@ -2,13 +2,17 @@
 { lib, ... }:
 
 {
-  resource.storinator01_vpn_aaaa = {
-    zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+  resource.hcloud_zone_rrset.storinator01_vpn_aaaa = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "storinator01.vpn";
     type = "AAAA";
-    inherit
-      (self.nixosConfigurations.storinator01.config.clan.core.vars.generators.zerotier.files.zerotier-ip)
-      value
-      ;
+    records = [
+      {
+        inherit
+          (self.nixosConfigurations.storinator01.config.clan.core.vars.generators.zerotier.files.zerotier-ip)
+          value
+          ;
+      }
+    ];
   };
 }

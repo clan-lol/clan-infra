@@ -1,9 +1,9 @@
-{ config, ... }:
+{ lib, ... }:
 {
-  resource.hetznerdns_record.build02_vpn_a = {
-    zone_id = config.resource.hetznerdns_zone.clan_lol "id";
+  resource.hcloud_zone_rrset.build02_vpn_a = {
+    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "build02.vpn";
     type = "A";
-    value = "100.98.54.8";
+    records = [ { value = "100.98.54.8"; } ];
   };
 }

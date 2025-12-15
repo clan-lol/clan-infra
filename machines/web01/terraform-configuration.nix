@@ -7,214 +7,224 @@ let
   base_ipv6 = "2a01:4f8:2220:1565::1";
 in
 {
-  terraform.required_providers.hetznerdns.source = "timohirt/hetznerdns";
-
-  resource.hetznerdns_record = {
+  resource.hcloud_zone_rrset = {
     root_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "@";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     root_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "@";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     wildcard_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "*";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     wildcard_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "*";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     web01_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "web01";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     web01_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "web01";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     mail_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "mail";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     mail_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "mail";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     mx = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "@";
       type = "MX";
-      value = "10 mail.clan.lol.";
+      records = [ { value = "10 mail.clan.lol."; } ];
     };
 
     pass_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "pass";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     pass_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "pass";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     nextcloud_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "nextcloud";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     nextcloud_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "nextcloud";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     # for sending emails
     spf = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "@";
       type = "TXT";
-      value = ''"v=spf1 ip4:${base_ipv4} ip6:${base_ipv6} ~all"'';
+      records = [
+        {
+          value = lib.tf.ref ''provider::hcloud::txt_record("v=spf1 ip4:${base_ipv4} ip6:${base_ipv6} ~all")'';
+        }
+      ];
     };
 
     dkim = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "mail._domainkey";
       type = "TXT";
       # taken from `systemctl status opendkim`
-      value = ''"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCdw2gyAg5TW2/OO2u8sbzlI6vfLkPycr4ufpfFQVvpd31hb6ctvpWXlzVHUDi9KyaWRydB7cAmYvPuZ7KFi1XPzQ213vy0S0AEbnXOJsTyT5FR8cmiuHPhiWGSMrSlB/l78kG6xK6A1x2lWCm2r7z/dzkLyCgAqI79YaUTcYO0eQIDAQAB"'';
+      records = [
+        {
+          value = lib.tf.ref ''provider::hcloud::txt_record("v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCdw2gyAg5TW2/OO2u8sbzlI6vfLkPycr4ufpfFQVvpd31hb6ctvpWXlzVHUDi9KyaWRydB7cAmYvPuZ7KFi1XPzQ213vy0S0AEbnXOJsTyT5FR8cmiuHPhiWGSMrSlB/l78kG6xK6A1x2lWCm2r7z/dzkLyCgAqI79YaUTcYO0eQIDAQAB")'';
+        }
+      ];
     };
 
     adsp = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_adsp._hostnamekey";
       type = "TXT";
-      value = ''"dkim=all;"'';
+      records = [ { value = lib.tf.ref ''provider::hcloud::txt_record("dkim=all;")''; } ];
     };
 
     matrix = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_matrix._tcp";
       type = "SRV";
-      value = "0 5 443 matrix";
+      records = [ { value = "0 5 443 matrix.clan.lol."; } ];
     };
 
     dmarc = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_dmarc";
       type = "TXT";
-      value = ''"v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerg.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100"'';
+      records = [
+        {
+          value = lib.tf.ref ''provider::hcloud::txt_record("v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:joerg.dmarc@thalheim.io; ruf=mailto:joerg.dmarc@thalheim.io; pct=100")'';
+        }
+      ];
     };
 
     # RFC 6186 service records for mail services
     # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     imap = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_imap._tcp";
       type = "SRV";
-      value = "0 0 0 .";
+      records = [ { value = "0 0 0 ."; } ];
     };
 
     imaps = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_imaps._tcp";
       type = "SRV";
-      value = "0 1 993 mail.clan.lol.";
+      records = [ { value = "0 1 993 mail.clan.lol."; } ];
     };
 
     # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     pop3 = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_pop3._tcp";
       type = "SRV";
-      value = "0 0 0 .";
+      records = [ { value = "0 0 0 ."; } ];
     };
 
     pop3s = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_pop3s._tcp";
       type = "SRV";
-      value = "0 1 995 mail.clan.lol.";
+      records = [ { value = "0 1 995 mail.clan.lol."; } ];
     };
 
     # Don't advertise Opportunistic TLS (STARTTLS) as it is insecure
     submission = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_submission._tcp";
       type = "SRV";
-      value = "0 0 0 .";
+      records = [ { value = "0 0 0 ."; } ];
     };
 
     # Advertise SMTPS
     submissions = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_submissions._tcp";
       type = "SRV";
-      value = "0 1 465 mail.clan.lol.";
+      records = [ { value = "0 1 465 mail.clan.lol."; } ];
     };
 
     # Fastly CDN for cache2.clan.lol
     cache2 = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "cache2";
       type = "CNAME";
-      value = "x.sni.global.fastly.net.";
+      records = [ { value = "x.sni.global.fastly.net."; } ];
     };
 
     # Fastly ACME challenge for cache2.clan.lol
     cache2_acme_challenge = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_acme-challenge.cache2";
       type = "CNAME";
-      value = "90idichjxpxvxf1cod.fastly-validations.com.";
+      records = [ { value = "90idichjxpxvxf1cod.fastly-validations.com."; } ];
     };
 
     # Fastly CDN for cache.clan.lol
     cache = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "cache";
       type = "CNAME";
-      value = "x.sni.global.fastly.net.";
+      records = [ { value = "x.sni.global.fastly.net."; } ];
     };
 
     # Fastly ACME challenge for cache.clan.lol
     cache_acme_challenge = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "_acme-challenge.cache";
       type = "CNAME";
-      value = "61s5zcfes5290tjs5r.fastly-validations.com.";
+      records = [ { value = "61s5zcfes5290tjs5r.fastly-validations.com."; } ];
     };
   };
 }

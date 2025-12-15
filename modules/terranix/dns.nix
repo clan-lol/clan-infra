@@ -1,20 +1,20 @@
 { config, ... }:
 {
-  resource.hetznerdns_zone.clan_lol = {
+  resource.hcloud_zone.clan_lol = {
     name = "clan.lol";
-    ttl = 3600;
+    mode = "primary";
   };
 
-  resource.hetznerdns_zone.thecomputer_co = {
+  resource.hcloud_zone.thecomputer_co = {
     name = "thecomputer.co";
-    ttl = 3600;
+    mode = "primary";
   };
 
-  output.clan_lol_zone_id = {
-    value = config.resource.hetznerdns_zone.clan_lol "id";
+  output.clan_lol_zone_name = {
+    value = config.resource.hcloud_zone.clan_lol "name";
   };
 
-  output.thecomputer_co_zone_id = {
-    value = config.resource.hetznerdns_zone.thecomputer_co "id";
+  output.thecomputer_co_zone_name = {
+    value = config.resource.hcloud_zone.thecomputer_co "name";
   };
 }
