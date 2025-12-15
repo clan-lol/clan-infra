@@ -7,6 +7,33 @@
 {
   terraform.required_providers.local.source = "hashicorp/local";
 
+  import = [
+    {
+      to = "hcloud_zone_rrset.thecomputer_co_root_a";
+      id = "thecomputer.co/@/A";
+    }
+    {
+      to = "hcloud_zone_rrset.thecomputer_co_root_aaaa";
+      id = "thecomputer.co/@/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.web02_a";
+      id = "clan.lol/web02/A";
+    }
+    {
+      to = "hcloud_zone_rrset.web02_aaaa";
+      id = "clan.lol/web02/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.thecomputer_co_outline_a";
+      id = "thecomputer.co/outline/A";
+    }
+    {
+      to = "hcloud_zone_rrset.thecomputer_co_idm_a";
+      id = "thecomputer.co/idm/A";
+    }
+  ];
+
   resource.vultr_instance.web02 = {
     label = "web02";
     region = "sgp";

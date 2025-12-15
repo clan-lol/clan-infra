@@ -7,6 +7,121 @@ let
   base_ipv6 = "2a01:4f8:2220:1565::1";
 in
 {
+  import = [
+    {
+      to = "hcloud_zone_rrset.root_a";
+      id = "clan.lol/@/A";
+    }
+    {
+      to = "hcloud_zone_rrset.root_aaaa";
+      id = "clan.lol/@/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.wildcard_a";
+      id = "clan.lol/*/A";
+    }
+    {
+      to = "hcloud_zone_rrset.wildcard_aaaa";
+      id = "clan.lol/*/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.web01_a";
+      id = "clan.lol/web01/A";
+    }
+    {
+      to = "hcloud_zone_rrset.web01_aaaa";
+      id = "clan.lol/web01/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.mail_a";
+      id = "clan.lol/mail/A";
+    }
+    {
+      to = "hcloud_zone_rrset.mail_aaaa";
+      id = "clan.lol/mail/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.mx";
+      id = "clan.lol/@/MX";
+    }
+    {
+      to = "hcloud_zone_rrset.pass_a";
+      id = "clan.lol/pass/A";
+    }
+    {
+      to = "hcloud_zone_rrset.pass_aaaa";
+      id = "clan.lol/pass/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.nextcloud_a";
+      id = "clan.lol/nextcloud/A";
+    }
+    {
+      to = "hcloud_zone_rrset.nextcloud_aaaa";
+      id = "clan.lol/nextcloud/AAAA";
+    }
+    {
+      to = "hcloud_zone_rrset.spf";
+      id = "clan.lol/@/TXT";
+    }
+    {
+      to = "hcloud_zone_rrset.dkim";
+      id = "clan.lol/mail._domainkey/TXT";
+    }
+    {
+      to = "hcloud_zone_rrset.adsp";
+      id = "clan.lol/_adsp._hostnamekey/TXT";
+    }
+    {
+      to = "hcloud_zone_rrset.matrix";
+      id = "clan.lol/_matrix._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.dmarc";
+      id = "clan.lol/_dmarc/TXT";
+    }
+    {
+      to = "hcloud_zone_rrset.imap";
+      id = "clan.lol/_imap._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.imaps";
+      id = "clan.lol/_imaps._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.pop3";
+      id = "clan.lol/_pop3._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.pop3s";
+      id = "clan.lol/_pop3s._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.submission";
+      id = "clan.lol/_submission._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.submissions";
+      id = "clan.lol/_submissions._tcp/SRV";
+    }
+    {
+      to = "hcloud_zone_rrset.cache2";
+      id = "clan.lol/cache2/CNAME";
+    }
+    {
+      to = "hcloud_zone_rrset.cache2_acme_challenge";
+      id = "clan.lol/_acme-challenge.cache2/CNAME";
+    }
+    {
+      to = "hcloud_zone_rrset.cache";
+      id = "clan.lol/cache/CNAME";
+    }
+    {
+      to = "hcloud_zone_rrset.cache_acme_challenge";
+      id = "clan.lol/_acme-challenge.cache/CNAME";
+    }
+  ];
+
   resource.hcloud_zone_rrset = {
     root_a = {
       zone = lib.tf.ref "module.dns.clan_lol_zone_name";

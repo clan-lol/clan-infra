@@ -4,6 +4,12 @@
 {
   terraform.required_providers.local.source = "hashicorp/local";
 
+  import = [
+    { to = "hcloud_zone_rrset.build01_a"; id = "clan.lol/build01/A"; }
+    { to = "hcloud_zone_rrset.build01_aaaa"; id = "clan.lol/build01/AAAA"; }
+    { to = "hcloud_zone_rrset.build01_vpn_aaaa"; id = "clan.lol/build01.vpn/AAAA"; }
+  ];
+
   resource.hcloud_zone_rrset.build01_a = {
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "build01";
