@@ -1,3 +1,0 @@
-# shellcheck shell=bash
-# https://console.hetzner.cloud/projects/2447141/security/tokens
-export HCLOUD_TOKEN="<your-hetzner-token>"
