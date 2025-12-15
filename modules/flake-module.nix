@@ -120,8 +120,25 @@
   flake.modules.terranix.with-dns = moduleWithSystem (
     { config }: flake-parts-lib.importApply ./terranix/with-dns.nix { config' = config; }
   );
-  flake.modules.terranix.dns = flake-parts-lib.importApply ./terranix/dns.nix { inherit self; };
+  flake.modules.terranix.dns = ./terranix/dns.nix;
   flake.modules.terranix.vultr = ./terranix/vultr.nix;
   flake.modules.terranix.cache = ./terranix/cache.nix;
   flake.modules.terranix.cache-new = ./terranix/cache-new.nix;
+
+  flake.modules.terranix.build01 =
+    flake-parts-lib.importApply ../machines/build01/terraform-configuration.nix
+      {
+        inherit self;
+      };
+  flake.modules.terranix.build02 = ../machines/build02/terraform-configuration.nix;
+  flake.modules.terranix.build-x86-01 = ../machines/build-x86-01/terraform-configuration.nix;
+  flake.modules.terranix.demo01 = ../machines/demo01/terraform-configuration.nix;
+  flake.modules.terranix.jitsi01 = ../machines/jitsi01/terraform-configuration.nix;
+  flake.modules.terranix.storinator01 =
+    flake-parts-lib.importApply ../machines/storinator01/terraform-configuration.nix
+      {
+        inherit self;
+      };
+  flake.modules.terranix.web01 = ../machines/web01/terraform-configuration.nix;
+  flake.modules.terranix.web02 = ../machines/web02/terraform-configuration.nix;
 }

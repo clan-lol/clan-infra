@@ -148,9 +148,9 @@
           package = pkgs.opentofu.withPlugins (p: [
             p.hashicorp_external
             p.hashicorp_local
-            p.timohirt_hetznerdns
             p.hashicorp_null
             p.hashicorp_tls
+            p.hetznercloud_hcloud
             p.vultr_vultr
           ]);
           cachePackage = pkgs.opentofu.withPlugins (p: [
@@ -182,11 +182,13 @@
               self.modules.terranix.base
               self.modules.terranix.with-dns
               self.modules.terranix.vultr
-              ./build01/terraform-configuration.nix
-              ./demo01/terraform-configuration.nix
-              ./jitsi01/terraform-configuration.nix
-              ./web01/terraform-configuration.nix
-              ./web02/terraform-configuration.nix
+              self.modules.terranix.build01
+              self.modules.terranix.build-x86-01
+              self.modules.terranix.demo01
+              self.modules.terranix.jitsi01
+              self.modules.terranix.storinator01
+              self.modules.terranix.web01
+              self.modules.terranix.web02
             ];
             terraformWrapper.package = package;
             terraformWrapper.extraRuntimeInputs = [ inputs'.clan-core.packages.default ];
