@@ -3,21 +3,6 @@
 {
   terraform.required_providers.local.source = "hashicorp/local";
 
-  import = [
-    {
-      to = "hcloud_zone_rrset.demo_a";
-      id = "clan.lol/demo/A";
-    }
-    {
-      to = "hcloud_zone_rrset.demo01_a";
-      id = "clan.lol/demo01/A";
-    }
-    {
-      to = "hcloud_zone_rrset.demo01_aaaa";
-      id = "clan.lol/demo01/AAAA";
-    }
-  ];
-
   resource.vultr_instance.demo01 = {
     label = "demo01";
     region = "sgp";

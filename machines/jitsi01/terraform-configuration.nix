@@ -7,33 +7,6 @@
 {
   terraform.required_providers.local.source = "hashicorp/local";
 
-  import = [
-    {
-      to = "hcloud_zone_rrset.jitsi_a";
-      id = "clan.lol/jitsi/A";
-    }
-    {
-      to = "hcloud_zone_rrset.jitsi_aaaa";
-      id = "clan.lol/jitsi/AAAA";
-    }
-    {
-      to = "hcloud_zone_rrset.jitsi01_a";
-      id = "clan.lol/jitsi01/A";
-    }
-    {
-      to = "hcloud_zone_rrset.jitsi01_aaaa";
-      id = "clan.lol/jitsi01/AAAA";
-    }
-    {
-      to = "hcloud_zone_rrset.meet_a";
-      id = "clan.lol/meet/A";
-    }
-    {
-      to = "hcloud_zone_rrset.meet_aaaa";
-      id = "clan.lol/meet/AAAA";
-    }
-  ];
-
   resource.vultr_instance.jitsi01 = {
     label = "jitsi01";
     region = "sgp";

@@ -5,11 +5,6 @@
   ...
 }:
 {
-  import = [
-    { to = "module.dns.hcloud_zone.clan_lol"; id = "clan.lol"; }
-    { to = "module.dns.hcloud_zone.thecomputer_co"; id = "thecomputer.co"; }
-  ];
-
   module.dns = {
     source = toString (
       pkgs.linkFarm "dns-module" [
