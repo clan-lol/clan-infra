@@ -18,6 +18,7 @@
         let
           machinesPerSystem = {
             x86_64-linux = [
+              "build-x86-01"
               "jitsi01"
               "storinator01"
               "web01"
