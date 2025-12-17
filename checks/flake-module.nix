@@ -15,7 +15,6 @@
         let
           machinesPerSystem = {
             x86_64-linux = [
-              "demo01"
               "jitsi01"
               "storinator01"
               "web01"
