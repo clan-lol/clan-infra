@@ -2,8 +2,8 @@
 
 This repository contains nixos modules and terraform code that powers
 [clan.lol](https://clan.lol/). The website and git are currently hosted on
-[Hetzner](https://www.hetzner.com/). The demo server and Jitsi server are hosted
-on [Vultr](https://www.vultr.com/).
+[Hetzner](https://www.hetzner.com/). The Jitsi server is hosted on
+[Vultr](https://www.vultr.com/).
 
 ## Adding a New Admin User
 
@@ -205,46 +205,6 @@ To destroy just the server without taking down the `clan.lol` DNS:
 # Run `apply` script first to ensure `terraform init` gets run
 $ nix run clan-infra#terraform
 $ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.jitsi01"
-```
-
-## demo01
-
-- Instance type: [vc2-2c-4gb](https://www.vultr.com/pricing/#cloud-compute)
-- CPU: 2 Intel vCPU cores
-- RAM: 4 GB
-- Storage: 80 GB SSD
-
-### Initial setup
-
-```
-$ nix run clan-infra#terraform
-```
-
-### Deploy new configuration
-
-```
-$ clan machines update demo01
-```
-
-### Redeploy server
-
-To redeploy the server without running `terraform destroy` which will take down
-the `clan.lol` DNS:
-
-```
-# Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- apply -replace "vultr_instance.demo01"
-```
-
-### Destroy server
-
-To destroy just the server without taking down the `clan.lol` DNS:
-
-```
-# Run `apply` script first to ensure `terraform init` gets run
-$ nix run .#terraform
-$ nix run .#terraform.terraform -- destroy -target "vultr_instance.demo01"
 ```
 
 ## build01

@@ -120,7 +120,6 @@
           build01.settings.endpoint = "build01.clan.lol";
           build-x86-01.settings.endpoint = "build-x86-01.clan.lol";
           jitsi01.settings.endpoint = "jitsi.clan.lol";
-          demo01.settings.endpoint = "demo.clan.lol";
           web02.settings.endpoint = "thecomputer.co";
         };
         roles.peer.machines = {
@@ -184,7 +183,6 @@
               self.modules.terranix.vultr
               self.modules.terranix.build01
               self.modules.terranix.build-x86-01
-              self.modules.terranix.demo01
               self.modules.terranix.jitsi01
               self.modules.terranix.storinator01
               self.modules.terranix.web01

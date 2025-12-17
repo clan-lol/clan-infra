@@ -58,10 +58,6 @@
       self.nixosModules.server
     ];
 
-    demo01.imports = [
-      self.nixosModules.server
-    ];
-
     jitsi01.imports = [
       self.nixosModules.server
       ./jitsi.nix
@@ -132,7 +128,6 @@
       };
   flake.modules.terranix.build02 = ../machines/build02/terraform-configuration.nix;
   flake.modules.terranix.build-x86-01 = ../machines/build-x86-01/terraform-configuration.nix;
-  flake.modules.terranix.demo01 = ../machines/demo01/terraform-configuration.nix;
   flake.modules.terranix.jitsi01 = ../machines/jitsi01/terraform-configuration.nix;
   flake.modules.terranix.storinator01 =
     flake-parts-lib.importApply ../machines/storinator01/terraform-configuration.nix
