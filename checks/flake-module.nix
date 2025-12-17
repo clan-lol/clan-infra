@@ -1,6 +1,9 @@
 { self, ... }:
 {
-  imports = [ ./secrets.nix ];
+  imports = [
+    ./secrets.nix
+    ./vars.nix
+  ];
 
   perSystem =
     {
