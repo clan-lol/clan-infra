@@ -1,4 +1,9 @@
-{ self, inputs, ... }:
+{
+  config,
+  self,
+  inputs,
+  ...
+}:
 {
   perSystem =
     {
@@ -11,8 +16,6 @@
       checks = lib.optionalAttrs (!pkgs.stdenv.hostPlatform.isDarwin) {
         vars =
           let
-            allMachines =
-              lib.attrNames (self.nixosConfigurations or { }) ++ lib.attrNames (self.darwinConfigurations or { });
             # Recursively collect all flake inputs including transitive ones
             allInputPaths = map (x: x.key) (
               lib.genericClosure {
@@ -45,7 +48,7 @@
               ${lib.concatMapStringsSep "\n" (machine: ''
                 clan vars check ${machine} --flake ./self --debug
                 clan vars fix ${machine} --flake ./self --debug
-              '') allMachines}
+              '') (lib.attrNames config.clan.inventory.machines)}
               touch $out
             '';
       };

@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, config, ... }:
 {
   imports = [
     ./secrets.nix
@@ -31,29 +31,13 @@
               "build02"
             ];
           };
-          listedNixosMachines = lib.sort lib.lessThan (
-            lib.concatLists (
-              lib.attrValues (lib.filterAttrs (s: _: lib.hasSuffix "-linux" s) machinesPerSystem)
-            )
-          );
-          listedDarwinMachines = lib.sort lib.lessThan (
-            lib.concatLists (
-              lib.attrValues (lib.filterAttrs (s: _: lib.hasSuffix "-darwin" s) machinesPerSystem)
-            )
-          );
-          actualNixosMachines = lib.sort lib.lessThan (lib.attrNames (self.nixosConfigurations or { }));
-          actualDarwinMachines = lib.sort lib.lessThan (lib.attrNames (self.darwinConfigurations or { }));
+          listedMachines = lib.sort lib.lessThan (lib.concatLists (lib.attrValues machinesPerSystem));
+          actualMachines = lib.sort lib.lessThan (lib.attrNames config.clan.inventory.machines);
           machinesPerSystemCheck = pkgs.runCommand "machines-per-system-check" { } ''
-            ${lib.optionalString (listedNixosMachines != actualNixosMachines) ''
-              echo "machinesPerSystem out of sync with nixosConfigurations:"
-              echo "  listed: ${lib.concatStringsSep " " listedNixosMachines}"
-              echo "  actual: ${lib.concatStringsSep " " actualNixosMachines}"
-              exit 1
-            ''}
-            ${lib.optionalString (listedDarwinMachines != actualDarwinMachines) ''
-              echo "machinesPerSystem out of sync with darwinConfigurations:"
-              echo "  listed: ${lib.concatStringsSep " " listedDarwinMachines}"
-              echo "  actual: ${lib.concatStringsSep " " actualDarwinMachines}"
+            ${lib.optionalString (listedMachines != actualMachines) ''
+              echo "machinesPerSystem out of sync with clan.inventory.machines:"
+              echo "  listed: ${lib.concatStringsSep " " listedMachines}"
+              echo "  actual: ${lib.concatStringsSep " " actualMachines}"
               exit 1
             ''}
             touch $out
