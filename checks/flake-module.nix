@@ -56,13 +56,6 @@
               )
             )
           );
-          homeConfigurations =
-            lib.mapAttrs' (name: config: lib.nameValuePair "home-manager-${name}" config.activationPackage)
-              (
-                lib.filterAttrs (_: config: config.pkgs.stdenv.hostPlatform.system == system) (
-                  self.homeConfigurations or { }
-                )
-              );
           packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
           devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
         in
@@ -71,7 +64,6 @@
         }
         // nixosMachines
         // darwinMachines
-        // homeConfigurations
         // packages
         // devShells;
     };
