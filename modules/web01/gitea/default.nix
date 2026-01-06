@@ -49,6 +49,10 @@ in
 
     settings.log.LEVEL = "Error";
 
+    settings.ui = {
+      ONLY_SHOW_RELEVANT_REPOS = true;
+    };
+
     settings.service = {
       DISABLE_REGISTRATION = false;
       ENABLE_NOTIFY_MAIL = true;
