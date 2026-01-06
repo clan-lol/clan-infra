@@ -45,7 +45,8 @@
       topic = "buildbot-clan";
     };
 
-    branches.stableBranches.matchGlob = "clan-*.*";
+    # match releases, e.g. 25.11
+    branches.stableBranches.matchGlob = "^\d\d\.\d\d$";
 
     # optional nix-eval-jobs settings
     evalWorkerCount = 20; # limit number of concurrent evaluations
