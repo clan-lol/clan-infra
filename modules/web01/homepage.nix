@@ -4,6 +4,7 @@
   # www user to push website artifacts via ssh
   users.users.www = {
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICezYVapRivfpiaxOFG09uty365vyGDqXSGfFKvB54yG" # hgl
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyHjnmRUbCw8EP350+4K0KOHPiTzTpTBrOQUzNINOrx gitea-ci"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGmAw62wkSAvzAKwZn3xFvCj+jUkOgp2arABA6PEbc8 clan-www2" # key for git.clan.lol/clan/data-mesher gitea-ci
     ];
