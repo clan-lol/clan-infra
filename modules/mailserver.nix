@@ -50,6 +50,21 @@ in
       ];
     };
 
+    # Setup ACME certificate for mail.clan.lol via nginx
+    services.nginx.virtualHosts."mail.clan.lol" = {
+      enableACME = true;
+      forceSSL = true;
+      # Allow ACME http-01 challenge
+      locations."/".return = "404";
+    };
+
+    # Allow mail services to read the ACME certificates
+    users.groups.acme.members = [
+      "nginx"
+      "postfix"
+      "dovecot2"
+    ];
+
     mailserver = {
       enable = true;
       fqdn = "mail.clan.lol";
@@ -63,7 +78,7 @@ in
       # Needed until all clients migrate to SMTPS on port 465
       enableSubmission = true;
 
-      certificateScheme = "acme-nginx";
+      x509.useACMEHost = "mail.clan.lol";
       # kresd sucks unfortunally (fails when one NS server is not working, instead of trying other ones)
       localDnsResolver = false;
 
