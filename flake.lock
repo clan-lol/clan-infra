@@ -30,15 +30,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1768103297,
-        "narHash": "sha256-++pDhuTROULQKjOYWt8cLhjkgnQdQl7J4Wlt0mRloYk=",
+        "lastModified": 1768236248,
+        "narHash": "sha256-kqGEJzkU9RYN3EATnH0uKnEGo16UDhVlOqhJY1w5QU0=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "1042175c71c470d31bc5eaaaa6d55ae28eae459e",
+        "rev": "8ce39839d7e0ef76b8bac2b4abf1662d8d9c0a3b",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "fix-twisted-epoll-enoent",
         "repo": "buildbot-nix",
         "type": "github"
       }

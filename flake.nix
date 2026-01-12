@@ -43,7 +43,7 @@
     clan-core.inputs.nix-darwin.follows = "nix-darwin";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    buildbot-nix.url = "github:nix-community/buildbot-nix";
+    buildbot-nix.url = "github:nix-community/buildbot-nix/fix-twisted-epoll-enoent";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
