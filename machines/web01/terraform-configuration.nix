@@ -99,6 +99,20 @@ in
       records = [ { value = base_ipv6; } ];
     };
 
+    vpnbench_a = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "vpnbench";
+      type = "A";
+      value = base_ipv4;
+    };
+
+    vpnbench_aaaa = {
+      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      name = "vpnbench";
+      type = "AAAA";
+      value = base_ipv6;
+    };
+
     # for sending emails
     spf = {
       zone = lib.tf.ref "module.dns.clan_lol_zone_name";
