@@ -18,6 +18,7 @@
   systemd.tmpfiles.rules = [
     "d /var/www 0755 www nginx"
     "d /var/www/static.clan.lol 0755 www nginx"
+    "d /var/www/vpnbench 0755 www nginx"
   ];
 
   services.nginx = {
@@ -146,6 +147,20 @@
       forceSSL = true;
       enableACME = true;
       globalRedirect = "clan.lol/blog";
+    };
+
+    virtualHosts."vpnbench.clan.lol" = {
+      forceSSL = true;
+      enableACME = true;
+      root = "/var/www/vpnbench";
+      extraConfig = ''
+        charset utf-8;
+        source_charset utf-8;
+      '';
+
+      locations."/".extraConfig = ''
+        try_files $uri $uri.html $uri/ $uri/index.html =404;
+      '';
     };
   };
 }
