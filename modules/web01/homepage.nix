@@ -158,7 +158,7 @@
       '';
 
       locations."/".extraConfig = ''
-        try_files $uri $uri.html $uri/ $uri/index.html =404;
+        try_files $uri $uri/ /index.html;
       '';
     };
   };
