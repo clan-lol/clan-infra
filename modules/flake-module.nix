@@ -16,6 +16,7 @@
         ./admins.nix
         ./dev.nix
         ./nix-daemon.nix
+        ./shared.nix
         ./signing.nix
       ];
       clan.core.settings.state-version.enable = true;
@@ -102,6 +103,7 @@
       ./admins.nix
       ./dev.nix
       ./nix-daemon.nix
+      ./shared.nix
       ./signing.nix
     ];
 
