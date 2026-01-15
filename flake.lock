@@ -30,16 +30,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1768236248,
-        "narHash": "sha256-kqGEJzkU9RYN3EATnH0uKnEGo16UDhVlOqhJY1w5QU0=",
-        "owner": "nix-community",
+        "lastModified": 1768496536,
+        "narHash": "sha256-XfbypoApPoQ5JCsDf2zLUXJFP/4b5+AHszH++t9K/V8=",
+        "owner": "Enzime",
         "repo": "buildbot-nix",
-        "rev": "8ce39839d7e0ef76b8bac2b4abf1662d8d9c0a3b",
+        "rev": "3a56757f359e8a278f17de23e190e596973c087c",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "fix-twisted-epoll-enoent",
+        "owner": "Enzime",
+        "ref": "push-ottkyuyywqzt",
         "repo": "buildbot-nix",
         "type": "github"
       }

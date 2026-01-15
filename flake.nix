@@ -43,7 +43,9 @@
     clan-core.inputs.nix-darwin.follows = "nix-darwin";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    buildbot-nix.url = "github:nix-community/buildbot-nix/fix-twisted-epoll-enoent";
+    # Test https://github.com/nix-community/buildbot-nix/pull/548
+    # and https://github.com/Enzime/buildbot-nix/tree/claude/fix-gitea-build-status-5GQ0K
+    buildbot-nix.url = "github:Enzime/buildbot-nix/push-ottkyuyywqzt";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
