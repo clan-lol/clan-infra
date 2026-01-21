@@ -65,10 +65,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1768931441,
-        "narHash": "sha256-XWuk6/XDNqPUAKiIKlLaWLMX0xyw11D5UL4+KoLiVXA=",
+        "lastModified": 1768953968,
+        "narHash": "sha256-eQz58/K898VH/ANbCmIt3ghtaUXhfGKfLYi2nZSmN2s=",
         "ref": "main",
-        "rev": "c1550aa8b4cb53abbf9ebe1849708aa0dae0ad70",
+        "rev": "1fad702bb84ce9da04c155ad40234df529845d46",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
@@ -115,11 +115,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768920986,
-        "narHash": "sha256-CNzzBsRhq7gg4BMBuTDObiWDH/rFYHEuDRVOwCcwXw4=",
+        "lastModified": 1768923567,
+        "narHash": "sha256-GVJ0jKsyXLuBzRMXCDY6D5J8wVdwP1DuQmmvYL/Vw/Q=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "de5708739256238fb912c62f03988815db89ec9a",
+        "rev": "00395d188e3594a1507f214a2f15d4ce5c07cb28",
         "type": "github"
       },
       "original": {
