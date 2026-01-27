@@ -1,10 +1,30 @@
-{ self, ... }:
+{
+  self,
+  inputs,
+  ...
+}:
 {
   perSystem =
-    { inputs', pkgs, ... }:
     {
-      checks = {
-        # TODO: use `clan secrets key check` instead
+      inputs',
+      pkgs,
+      lib,
+      ...
+    }:
+    let
+      # Closure of all flake inputs needed for evaluation
+      flakeInputsClosure = pkgs.closureInfo {
+        rootPaths = builtins.attrValues (
+          removeAttrs inputs [
+            "self"
+          ]
+        );
+      };
+    in
+    {
+      # TODO: use `clan secrets key check` instead
+      # Skip on Darwin: diverted stores are not supported on macOS
+      checks = lib.optionalAttrs (!pkgs.stdenv.hostPlatform.isDarwin) {
         secrets =
           pkgs.runCommand "check-secrets"
             {
@@ -13,6 +33,7 @@
                 pkgs.nixVersions.latest
                 pkgs.sops
               ];
+              closureInfo = flakeInputsClosure;
             }
             ''
               ${inputs'.clan-core.legacyPackages.setupNixInNix}
