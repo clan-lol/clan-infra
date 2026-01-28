@@ -13,6 +13,17 @@ in
   imports = [
     ./acme.nix
     ./mailserver-users.nix
+    {
+      clan.core.vars.generators.postsrsd = {
+        files.secret = { };
+        runtimeInputs = with pkgs; [
+          coreutils
+        ];
+        script = ''
+          dd if=/dev/random bs=18 count=1 status=none | base64 > $out/secret
+        '';
+      };
+    }
   ];
 
   config = {
@@ -80,6 +91,9 @@ in
       # kresd sucks unfortunally (fails when one NS server is not working, instead of trying other ones)
       localDnsResolver = false;
 
+      # Necessary for forwarding emails
+      srs.enable = true;
+
       fullTextSearch.enable = true;
 
       loginAccounts = lib.mapAttrs' (
@@ -98,6 +112,8 @@ in
         )
       ) cfg.users;
     };
+
+    services.postsrsd.secretsFile = config.clan.core.vars.generators.postsrsd.files.secret.path;
 
     services.unbound = {
       enable = true;
