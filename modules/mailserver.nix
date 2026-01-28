@@ -13,6 +13,17 @@ in
   imports = [
     ./acme.nix
     ./mailserver-users.nix
+    {
+      clan.core.vars.generators.postsrsd = {
+        files.secret = { };
+        runtimeInputs = with pkgs; [
+          coreutils
+        ];
+        script = ''
+          dd if=/dev/random bs=18 count=1 status=none | base64 > $out/secret
+        '';
+      };
+    }
   ];
 
   config = {
@@ -31,6 +42,9 @@ in
         redirect = "joerg.clan@thalheim.io";
       };
       infra = { };
+      enzime = {
+        redirect = "fine.wolf8996@fastmail.com";
+      };
     };
 
     services.automx2.enable = true;
@@ -54,8 +68,6 @@ in
     services.nginx.virtualHosts."mail.clan.lol" = {
       enableACME = true;
       forceSSL = true;
-      # Allow ACME http-01 challenge
-      locations."/".return = "404";
     };
 
     # Allow mail services to read the ACME certificates
@@ -82,6 +94,9 @@ in
       # kresd sucks unfortunally (fails when one NS server is not working, instead of trying other ones)
       localDnsResolver = false;
 
+      # Necessary for forwarding emails
+      srs.enable = true;
+
       fullTextSearch.enable = true;
 
       loginAccounts = lib.mapAttrs' (
@@ -101,6 +116,8 @@ in
       ) cfg.users;
     };
 
+    services.postsrsd.secretsFile = config.clan.core.vars.generators.postsrsd.files.secret.path;
+
     services.unbound = {
       enable = true;
       settings.server = {
@@ -115,6 +132,17 @@ in
 
     # use local unbound as dns resolver
     networking.nameservers = [ "127.0.0.1" ];
+
+    services.roundcube = {
+      enable = true;
+      hostName = config.mailserver.fqdn;
+      extraConfig = ''
+        $config['imap_host'] = "ssl://${config.mailserver.fqdn}";
+        $config['smtp_host'] = "ssl://${config.mailserver.fqdn}";
+        $config['smtp_user'] = "%u";
+        $config['smtp_pass'] = "%p";
+      '';
+    };
 
     clan.core.vars.generators = lib.mapAttrs' (
       username: userCfg:
