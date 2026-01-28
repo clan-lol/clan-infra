@@ -42,6 +42,9 @@ in
         redirect = "joerg.clan@thalheim.io";
       };
       infra = { };
+      enzime = {
+        redirect = "fine.wolf8996@fastmail.com";
+      };
     };
 
     services.automx2.enable = true;
