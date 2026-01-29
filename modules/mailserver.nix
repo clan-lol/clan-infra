@@ -68,6 +68,8 @@ in
     services.nginx.virtualHosts."mail.clan.lol" = {
       enableACME = true;
       forceSSL = true;
+      # Only allow using this subdomain for ACME http-01 challenge
+      locations."/".return = "404";
     };
 
     # Allow mail services to read the ACME certificates
@@ -132,17 +134,6 @@ in
 
     # use local unbound as dns resolver
     networking.nameservers = [ "127.0.0.1" ];
-
-    services.roundcube = {
-      enable = true;
-      hostName = config.mailserver.fqdn;
-      extraConfig = ''
-        $config['imap_host'] = "ssl://${config.mailserver.fqdn}";
-        $config['smtp_host'] = "ssl://${config.mailserver.fqdn}";
-        $config['smtp_user'] = "%u";
-        $config['smtp_pass'] = "%p";
-      '';
-    };
 
     clan.core.vars.generators = lib.mapAttrs' (
       username: userCfg:
