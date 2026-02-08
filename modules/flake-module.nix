@@ -29,9 +29,6 @@
         "fs.inotify.max_user_instances" = 524288;
         "fs.inotify.max_user_watches" = 524288;
       };
-
-      nix.gc.automatic = true;
-      nix.gc.dates = [ "weekly" ];
     };
 
     hetzner-amd.imports = [
