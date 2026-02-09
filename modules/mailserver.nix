@@ -45,6 +45,7 @@ in
       enzime = {
         redirect = "fine.wolf8996@fastmail.com";
       };
+      hgl = { };
     };
 
     services.automx2.enable = true;
