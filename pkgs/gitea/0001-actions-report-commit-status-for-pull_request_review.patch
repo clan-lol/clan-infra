@@ -1,0 +1,53 @@
+From 1a633a6feccbb60b7de4d387b8c60296fc1ef15e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B6rg=20Thalheim?= <joerg@thalheim.io>
+Date: Wed, 11 Feb 2026 14:58:43 +0100
+Subject: [PATCH] actions: report commit status for pull_request_review events
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Review events (approved, rejected, comment) use PullRequestPayload
+just like other pull_request events but were missing from the commit
+status handler's switch statement. They fell through to the default
+case which returned nil, silently skipping status creation.
+
+This caused workflows triggered by pull_request_review to complete
+successfully but never update the commit status on the PR, making
+them invisible in the merge checks UI.
+
+Add the three review event types to the existing pull_request case
+so they share the same 'pull_request' context name and extract the
+SHA from the pull request head, matching the behavior of other PR
+events.
+
+Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
+---
+ services/actions/commit_status.go | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/services/actions/commit_status.go b/services/actions/commit_status.go
+index ef241e5..da2e3e2 100644
+--- a/services/actions/commit_status.go
++++ b/services/actions/commit_status.go
+@@ -55,13 +55,16 @@ func createCommitStatus(ctx context.Context, job *actions_model.ActionRunJob) er
+ 			return errors.New("head commit is missing in event payload")
+ 		}
+ 		sha = payload.HeadCommit.ID
+-	case // pull_request
++	case // pull_request and pull_request_review
+ 		webhook_module.HookEventPullRequest,
+ 		webhook_module.HookEventPullRequestSync,
+ 		webhook_module.HookEventPullRequestAssign,
+ 		webhook_module.HookEventPullRequestLabel,
+ 		webhook_module.HookEventPullRequestReviewRequest,
+-		webhook_module.HookEventPullRequestMilestone:
++		webhook_module.HookEventPullRequestMilestone,
++		webhook_module.HookEventPullRequestReviewApproved,
++		webhook_module.HookEventPullRequestReviewRejected,
++		webhook_module.HookEventPullRequestReviewComment:
+ 		if run.TriggerEvent == actions_module.GithubEventPullRequestTarget {
+ 			event = "pull_request_target"
+ 		} else {
+-- 
+2.52.0
+
