@@ -3,6 +3,7 @@
 gitea.overrideAttrs (old: {
   patches = old.patches ++ [
     ./0001-add-bot-check.patch
+    ./0001-actions-report-commit-status-for-pull_request_review.patch
 
     (fetchpatch {
       name = "show-when-only-optional-checks-failed.patch";
