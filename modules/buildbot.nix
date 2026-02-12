@@ -47,6 +47,7 @@
 
     # match releases, e.g. 25.11
     branches.stableBranches.matchGlob = "^\d\d\.\d\d$";
+    branches.mergeQueue.matchGlob = "gitea-mq/*";
 
     # optional nix-eval-jobs settings
     evalWorkerCount = 20; # limit number of concurrent evaluations
