@@ -2,6 +2,7 @@
   imports = [
     ./borgbackup.nix
     ./gitea
+    ./gitea-mq.nix
     ./goaccess.nix
     ./homepage.nix
     ./hypervisor.nix

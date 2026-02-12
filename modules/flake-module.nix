@@ -67,6 +67,7 @@
 
       inputs.nixos-mailserver.nixosModules.mailserver
       inputs.niks3.nixosModules.niks3
+      inputs.gitea-mq.nixosModules.default
 
       self.nixosModules.server
       self.nixosModules.buildbot

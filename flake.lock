@@ -181,6 +181,32 @@
         "type": "github"
       }
     },
+    "gitea-mq": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770893328,
+        "narHash": "sha256-EIt7I0cfG7NUBI+FrB2/bcKVG3jP83YodVpIWWOPRqg=",
+        "owner": "Mic92",
+        "repo": "gitea-mq",
+        "rev": "95faa804b510c17e8f6e9feee6b9b7cec590801d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "gitea-mq",
+        "type": "github"
+      }
+    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": [
@@ -417,6 +443,7 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "gitea-mq": "gitea-mq",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
         "niks3": "niks3",
         "nix-1": "nix-1",
