@@ -83,7 +83,10 @@ in
     mailserver = {
       enable = true;
       fqdn = "mail.clan.lol";
-      domains = [ "clan.lol" ];
+      domains = [
+        "clan.lol"
+        "noreply.git.clan.lol"
+      ];
       enablePop3Ssl = true;
 
       # Disable these once there are no more clients using them as they're insecure
@@ -114,6 +117,9 @@ in
               require ["copy"];
               redirect :copy "${userCfg.redirect}";
             '';
+          }
+          // lib.optionalAttrs (username == "gitea") {
+            catchAll = [ "noreply.git.clan.lol" ];
           }
         )
       ) cfg.users;
