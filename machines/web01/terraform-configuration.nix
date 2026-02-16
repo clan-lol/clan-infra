@@ -71,6 +71,13 @@ in
       records = [ { value = "10 mail.clan.lol."; } ];
     };
 
+    noreply_git_mx = {
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
+      name = "noreply.git";
+      type = "MX";
+      records = [ { value = "10 mail.clan.lol."; } ];
+    };
+
     pass_a = {
       zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "pass";
@@ -100,17 +107,17 @@ in
     };
 
     vpnbench_a = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "vpnbench";
       type = "A";
-      value = base_ipv4;
+      records = [ { value = base_ipv4; } ];
     };
 
     vpnbench_aaaa = {
-      zone_id = lib.tf.ref "module.dns.clan_lol_zone_id";
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "vpnbench";
       type = "AAAA";
-      value = base_ipv6;
+      records = [ { value = base_ipv6; } ];
     };
 
     # for sending emails
