@@ -6,26 +6,17 @@
 }:
 {
   imports = [
-    self.darwinModules.build02
+    self.darwinModules.build04
   ];
 
-  services.tailscale.enable = true;
-
-  users.users.luishebendanz = {
+  users.users.customer = {
     uid = 501;
-    shell = pkgs.zsh;
-  };
-
-  users.users.admin = {
-    uid = 502;
-    home = "/Users/admin";
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
   users.knownUsers = [
-    "admin"
-    "luishebendanz"
+    "customer"
   ];
 
   # Used for backwards compatibility, please read the changelog before changing.

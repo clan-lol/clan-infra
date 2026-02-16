@@ -29,6 +29,7 @@
             ];
             aarch64-darwin = [
               "build02"
+              "build04"
             ];
           };
           listedMachines = lib.sort lib.lessThan (lib.concatLists (lib.attrValues machinesPerSystem));
