@@ -182,6 +182,7 @@
               self.modules.terranix.with-dns
               self.modules.terranix.vultr
               self.modules.terranix.build01
+              self.modules.terranix.build02
               self.modules.terranix.build-x86-01
               self.modules.terranix.jitsi01
               self.modules.terranix.storinator01
