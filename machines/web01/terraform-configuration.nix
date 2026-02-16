@@ -71,6 +71,20 @@ in
       records = [ { value = "10 mail.clan.lol."; } ];
     };
 
+    git_a = {
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
+      name = "git";
+      type = "A";
+      records = [ { value = base_ipv4; } ];
+    };
+
+    git_aaaa = {
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
+      name = "git";
+      type = "AAAA";
+      records = [ { value = base_ipv6; } ];
+    };
+
     noreply_git_mx = {
       zone = lib.tf.ref "module.dns.clan_lol_zone_name";
       name = "noreply.git";
