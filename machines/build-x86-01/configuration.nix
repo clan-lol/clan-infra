@@ -10,8 +10,6 @@
   ];
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f8:192:3223::2";
 
-  clan.core.sops.defaultGroups = [ "admins" ];
-
   # connections over ZeroTier can access all ports
   networking.firewall.trustedInterfaces = [ "ztqcw3e3rp" ];
 
