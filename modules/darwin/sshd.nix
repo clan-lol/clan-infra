@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   clan.core.vars.generators.openssh = {
     files."ssh.id_ed25519" = { };
@@ -12,4 +12,11 @@
       ssh-keygen -t ed25519 -N "" -f "$out"/ssh.id_ed25519
     '';
   };
+
+  services.openssh.hostKeys = [
+    {
+      type = "ed25519";
+      inherit (config.clan.core.vars.generators.openssh.files."ssh.id_ed25519") path;
+    }
+  ];
 }
