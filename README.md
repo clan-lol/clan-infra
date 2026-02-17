@@ -342,38 +342,16 @@ ssh customer@build04.clan.lol passwd
 ssh customer@build04.clan.lol security set-keychain-password
 ```
 
-1. Install Nix using the experimental Nix installer
+2. Install Nix using the experimental Nix installer
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
 ```
 
-3. Clone this repo into a temporary directory
+3. Deploy initial nix-darwin configuration
 
 ```
-nix run nixpkgs#git -- clone https://git.clan.lol/clan/clan-infra.git temp-bootstrap
-```
-
-4. Install nix-darwin from the temporary directory
-
-```
-nix shell nix-darwin -c sudo darwin-rebuild switch --flake ./temp-bootsrap#build04
-```
-
-5. Log in to Tailscale
-
-```
-sudo tailscale up
-```
-
-6. Enable `Allow full disk access for remote users` and
-   `Allow access for all users` in
-   `System Settings > General > Sharing > Remote Login`
-
-7. Delete the temporary directory
-
-```
-rm -rf ./temp-bootstrap
+clan machines update build04
 ```
 
 ### Deploy new configuration

@@ -16,7 +16,9 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/pull/1701/merge";
+    # Test https://github.com/nix-darwin/nix-darwin/pull/1701
+    # and https://github.com/nix-darwin/nix-darwin/pull/1702
+    nix-darwin.url = "github:Enzime/nix-darwin/1701+1702";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-1.url = "git+https://github.com/Mic92/nix-1?shallow=1";
