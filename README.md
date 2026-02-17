@@ -11,38 +11,38 @@ To add a new admin user, follow these steps:
 
 1. **User generates an age key:**
 
-The new user runs:
+   The new user runs:
 
-```
-$ clan secrets key generate
-```
+   ```
+   $ clan secrets key generate
+   ```
 
-This creates an age key pair, which is used for secret management.
+   This creates an age key pair, which is used for secret management.
 
 2. **User provides credentials to an existing admin:**
 
-The user shares **both** of the following with a current admin:
+   The user shares **both** of the following with a current admin:
 
-- Their **SSH public key**
-- Their **age public key** (found in `~/.config/sops/age/keys.txt` or
-  `~/Library/Application Support/sops/age/keys.txt` on macOS)
+   - Their **SSH public key**
+   - Their **age public key** (found in `~/.config/sops/age/keys.txt` or
+     `~/Library/Application Support/sops/age/keys.txt` on macOS)
 
 3. **Admin adds the user:**
 
-The admin runs:
+   The admin runs:
 
-```
-$ clan secrets users add <username> <age-key>
-$ clan secrets groups add-user admins <username>
-```
+   ```
+   $ clan secrets users add <username> <age-key>
+   $ clan secrets groups add-user admins <username>
+   ```
 
-Replace `<username>` and `<age-key>` with the actual values.
+   Replace `<username>` and `<age-key>` with the actual values.
 
 4. **Admin updates configuration:**
 
-Add the new user to the [`modules/admins.nix`](modules/admins.nix) file.
+   Add the new user to the [`modules/admins.nix`](modules/admins.nix) file.
 
-The new admin user will now have access according to the configuration.
+   The new admin user will now have access according to the configuration.
 
 ## Joining the clan-infra Zerotier Network
 
@@ -50,54 +50,54 @@ To connect your device to the clan-infra Zerotier network:
 
 1. **Get the Zerotier network ID:**
 
-On any existing machine (e.g., `web01`), run:
+   On any existing machine (e.g., `web01`), run:
 
-```bash
-clan vars list web01
-```
+   ```bash
+   clan vars list web01
+   ```
 
-Look for the line:
+   Look for the line:
 
-```
-zerotier/zerotier-network-id: a9b4872919354736
-```
+   ```
+   zerotier/zerotier-network-id: a9b4872919354736
+   ```
 
 2. **Configure your device to join the network:**
 
-Add the following to your NixOS configuration:
+   Add the following to your NixOS configuration:
 
-```nix
-services.zerotierone.joinNetworks = [
-  "a9b4872919354736" # clan-infra network
-];
-```
+   ```nix
+   services.zerotierone.joinNetworks = [
+     "a9b4872919354736" # clan-infra network
+   ];
+   ```
 
 3. **Find your device's Zerotier ID:**
 
-After starting Zerotier, run:
+   After starting Zerotier, run:
 
-```bash
-sudo zerotier-cli info
-```
+   ```bash
+   sudo zerotier-cli info
+   ```
 
-The output will look like:
+   The output will look like:
 
-```
-200 info <myid> 1.14.2 ONLINE
-```
+   ```
+   200 info <myid> 1.14.2 ONLINE
+   ```
 
-Note your `<myid>`.
+   Note your `<myid>`.
 
 4. **Authorize your device on the network:**
 
-SSH into `web01` (or another admin machine) and run:
+   SSH into `web01` (or another admin machine) and run:
 
-```bash
-sudo zerotier-members allow <myid>
-```
+   ```bash
+   sudo zerotier-members allow <myid>
+   ```
 
-Once authorized, your device will be connected to the clan-infra Zerotier
-network.
+   Once authorized, your device will be connected to the clan-infra Zerotier
+   network.
 
 ## web01
 
@@ -273,33 +273,34 @@ $ clan machines update build-x86-01
 
 1. Install Nix using the experimental Nix installer
 
-```
-curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
-```
+   ```
+   curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
+   ```
 
 2. Enable `Screen Sharing` in `System Settings > General > Sharing`
 
-You can leave both `Anyone may request permission to control screen` and
-`VNC viewers may control screen with password` disabled as macOS will allow you
-to control the screen by connecting with your macOS username and password.
+   You can leave both `Anyone may request permission to control screen` and
+   `VNC viewers may control screen with password` disabled as macOS will allow
+   you to control the screen by connecting with your macOS username and
+   password.
 
 3. Clone this repo into a temporary directory
 
-```
-nix run nixpkgs#git -- clone https://git.clan.lol/clan/clan-infra.git temp-bootstrap
-```
+   ```
+   nix run nixpkgs#git -- clone https://git.clan.lol/clan/clan-infra.git temp-bootstrap
+   ```
 
 4. Install nix-darwin from the temporary directory
 
-```
-nix run nix-darwin -- switch --flake ./temp-bootsrap
-```
+   ```
+   nix run nix-darwin -- switch --flake ./temp-bootsrap
+   ```
 
 5. Log in to Tailscale
 
-```
-sudo tailscale up
-```
+   ```
+   sudo tailscale up
+   ```
 
 6. Enable `Allow full disk access for remote users` and
    `Allow access for all users` in
@@ -307,9 +308,9 @@ sudo tailscale up
 
 7. Delete the temporary directory
 
-```
-rm -rf ./temp-bootstrap
-```
+   ```
+   rm -rf ./temp-bootstrap
+   ```
 
 ### Deploy new configuration
 
@@ -337,22 +338,22 @@ To access this machine, you'll need to add this to your SSH config:
 
 1. Change initial password
 
-```
-ssh customer@build04.clan.lol passwd
-ssh customer@build04.clan.lol security set-keychain-password
-```
+   ```
+   ssh customer@build04.clan.lol passwd
+   ssh customer@build04.clan.lol security set-keychain-password
+   ```
 
 2. Install Nix using the experimental Nix installer
 
-```
-curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
-```
+   ```
+   curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
+   ```
 
 3. Deploy initial nix-darwin configuration
 
-```
-clan machines update build04
-```
+   ```
+   clan machines update build04
+   ```
 
 ### Deploy new configuration
 
@@ -430,10 +431,10 @@ $ clan machines update storinator01
 3. If you aren't using Terraform to provision the server, make sure to add the
    Terraform deployment SSH key to your server which you can find by running:
 
-```
-$ nix run clan-infra#terraform.terraform -- init
-$ nix run clan-infra#terraform.terraform -- state show tls_private_key.ssh_deploy_key
-```
+   ```
+   $ nix run clan-infra#terraform.terraform -- init
+   $ nix run clan-infra#terraform.terraform -- state show tls_private_key.ssh_deploy_key
+   ```
 
 4. `nix run clan-infra#terraform` to run the initial deploy
 
