@@ -92,11 +92,14 @@
   };
 
   flake.darwinModules = {
+    base = ./darwin/base.nix;
     sshd = ./darwin/sshd.nix;
 
     server.imports = [
       inputs.srvos.darwinModules.server
       inputs.srvos.darwinModules.mixins-nix-experimental
+
+      self.darwinModules.base
 
       ./admins.nix
       ./dev.nix
@@ -106,6 +109,11 @@
     ];
 
     build02.imports = [
+      self.darwinModules.sshd
+      self.darwinModules.server
+    ];
+
+    build04.imports = [
       self.darwinModules.sshd
       self.darwinModules.server
     ];
@@ -127,6 +135,7 @@
         inherit self;
       };
   flake.modules.terranix.build02 = ../machines/build02/terraform-configuration.nix;
+  flake.modules.terranix.build04 = ../machines/build04/terraform-configuration.nix;
   flake.modules.terranix.build-x86-01 = ../machines/build-x86-01/terraform-configuration.nix;
   flake.modules.terranix.jitsi01 = ../machines/jitsi01/terraform-configuration.nix;
   flake.modules.terranix.storinator01 =

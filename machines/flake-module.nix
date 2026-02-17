@@ -22,6 +22,9 @@
       build02.machineClass = "darwin";
       build02.deploy.targetHost = "root@build02.wireguard-infra?ProxyJump=root@web01.clan.lol";
 
+      build04.machineClass = "darwin";
+      build04.deploy.targetHost = "root@build04.clan.lol";
+
       storinator01.deploy.targetHost = "root@storinator01.wireguard-infra?ProxyJump=root@web01.clan.lol";
       storinator01.deploy.buildHost = "root@web01.clan.lol";
     };
@@ -125,6 +128,7 @@
         roles.peer.machines = {
           storinator01.settings.controller = "web01";
           build02.settings.controller = "web01";
+          build04.settings.controller = "web01";
         };
       };
     };
@@ -182,6 +186,8 @@
               self.modules.terranix.with-dns
               self.modules.terranix.vultr
               self.modules.terranix.build01
+              self.modules.terranix.build02
+              self.modules.terranix.build04
               self.modules.terranix.build-x86-01
               self.modules.terranix.jitsi01
               self.modules.terranix.storinator01

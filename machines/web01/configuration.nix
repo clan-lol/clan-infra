@@ -6,8 +6,6 @@
   ];
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f8:2220:1565::1/64";
 
-  clan.core.sops.defaultGroups = [ "admins" ];
-
   networking.fqdn = "clan.lol";
 
   nix.settings.max-jobs = 10;

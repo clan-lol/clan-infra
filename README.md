@@ -271,11 +271,10 @@ $ clan machines update build-x86-01
 
 ### Initial setup
 
-1. Install Nix using the Nix installer from Determinate Systems
+1. Install Nix using the experimental Nix installer
 
 ```
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
-  sh -s -- install --diagnostic-endpoint=""
+curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
 ```
 
 2. Enable `Screen Sharing` in `System Settings > General > Sharing`
@@ -326,8 +325,39 @@ To access this machine, you'll need to add this to your SSH config:
 }
 ```
 
+## build04
+
+- Instance type:
+  [Apple Mac mini (2024) (Mac16,10)](https://www.oakhost.net/product/mac-mini-hosting-m4-32gb)
+- CPU: Apple M4 chip with 10-core CPU, 10-core GPU, 16-core Neural Engine
+- RAM: 32 GB unified memory
+- Storage: 1 TB SSD
+
+### Initial setup
+
+1. Change initial password
+
 ```
-$ clan machines update build02
+ssh customer@build04.clan.lol passwd
+ssh customer@build04.clan.lol security set-keychain-password
+```
+
+2. Install Nix using the experimental Nix installer
+
+```
+curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/nix-installer | sh -s -- install
+```
+
+3. Deploy initial nix-darwin configuration
+
+```
+clan machines update build04
+```
+
+### Deploy new configuration
+
+```
+$ clan machines update build04
 ```
 
 ## Adding new users

@@ -313,15 +313,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1770922915,
-        "narHash": "sha256-6J/JoK9iL7sHvKJcGW2KId2agaKv1OGypsa7kN+ZBD4=",
-        "owner": "nix-darwin",
+        "lastModified": 1771368812,
+        "narHash": "sha256-EIbB00bOfNzU0ijM1rQ/1jxoM+0/pvHTXm6WCEbC+mg=",
+        "owner": "Enzime",
         "repo": "nix-darwin",
-        "rev": "6c5a56295d2a24e43bcd8af838def1b9a95746b2",
+        "rev": "3430c55fab88236a1e6bbda0aabb11cb4f0e9585",
         "type": "github"
       },
       "original": {
-        "owner": "nix-darwin",
+        "owner": "Enzime",
+        "ref": "1701+1702",
         "repo": "nix-darwin",
         "type": "github"
       }

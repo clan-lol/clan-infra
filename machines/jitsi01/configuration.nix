@@ -15,8 +15,6 @@
 
   boot.loader.grub.enable = lib.mkForce false;
 
-  clan.core.sops.defaultGroups = [ "admins" ];
-
   networking.fqdn = "jitsi.clan.lol";
 
   environment.systemPackages = [
