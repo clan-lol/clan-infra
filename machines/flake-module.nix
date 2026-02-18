@@ -20,12 +20,12 @@
 
       # no public IP, via jump host
       build02.machineClass = "darwin";
-      build02.deploy.targetHost = "root@build02.wireguard-infra?ProxyJump=root@web01.clan.lol";
+      build02.deploy.targetHost = "root@build02?ProxyJump=tunnel@web01.clan.lol";
 
       build04.machineClass = "darwin";
       build04.deploy.targetHost = "root@build04.clan.lol";
 
-      storinator01.deploy.targetHost = "root@storinator01.wireguard-infra?ProxyJump=root@web01.clan.lol";
+      storinator01.deploy.targetHost = "root@storinator01.wireguard-infra?ProxyJump=tunnel@web01.clan.lol";
       storinator01.deploy.buildHost = "root@web01.clan.lol";
     };
     inventory.instances = {
@@ -122,13 +122,13 @@
           web01.settings.endpoint = "clan.lol";
           build01.settings.endpoint = "build01.clan.lol";
           build-x86-01.settings.endpoint = "build-x86-01.clan.lol";
+          build04.settings.endpoint = "build04.clan.lol";
           jitsi01.settings.endpoint = "jitsi.clan.lol";
           web02.settings.endpoint = "thecomputer.co";
         };
         roles.peer.machines = {
           storinator01.settings.controller = "web01";
           build02.settings.controller = "web01";
-          build04.settings.controller = "web01";
         };
       };
     };
