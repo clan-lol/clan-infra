@@ -6,7 +6,7 @@
 }:
 let
   domain = "outline.${config.networking.fqdn}";
-  idmDomain = config.services.kanidm.serverSettings.origin;
+  idmDomain = config.services.kanidm.server.settings.origin;
   clientId = "outline";
 in
 {
@@ -51,7 +51,7 @@ in
         "profile"
       ];
       clientSecretFile = config.clan.core.vars.generators.outline.files.oidc-secret.path;
-      displayName = config.services.kanidm.serverSettings.domain;
+      displayName = config.services.kanidm.server.settings.domain;
       tokenUrl = "${idmDomain}/oauth2/token";
       userinfoUrl = "${idmDomain}/oauth2/openid/outline/userinfo";
     };
