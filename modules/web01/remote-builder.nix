@@ -10,12 +10,12 @@
 
   nix.buildMachines = [
     {
-      hostName = "build-x86-01.clan.lol";
+      hostName = "build01.clan.lol";
       sshUser = "builder";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
-      system = "x86_64-linux";
-      maxJobs = 32;
+      system = "aarch64-linux";
+      maxJobs = 80;
       supportedFeatures = [
         "big-parallel"
         "kvm"
@@ -40,12 +40,12 @@
       ];
     }
     {
-      hostName = "build01.clan.lol";
+      hostName = "build-x86-01.clan.lol";
       sshUser = "builder";
       protocol = "ssh-ng";
       sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
-      system = "aarch64-linux";
-      maxJobs = 80;
+      system = "x86_64-linux";
+      maxJobs = 32;
       supportedFeatures = [
         "big-parallel"
         "kvm"
@@ -54,8 +54,26 @@
         "recursive-nix"
       ];
     }
+    {
+      hostName = "build04.clan.lol";
+      sshUser = "builder";
+      protocol = "ssh-ng";
+      sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
+      systems = [
+        "aarch64-darwin"
+      ];
+      maxJobs = 10;
+      supportedFeatures = [
+        "big-parallel"
+        "recursive-nix"
+      ];
+    }
   ];
 
-  programs.ssh.knownHosts."build02.vpn.clan.lol".publicKey =
-    self.darwinConfigurations.build02.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+  programs.ssh.knownHosts = {
+    "build02.vpn.clan.lol".publicKey =
+      self.darwinConfigurations.build02.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+    "build04.clan.lol".publicKey =
+      self.darwinConfigurations.build04.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+  };
 }
