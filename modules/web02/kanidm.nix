@@ -24,8 +24,8 @@ in
 
   services.kanidm = {
     package = pkgs.kanidmWithSecretProvisioning_1_8;
-    enableServer = true;
-    serverSettings = {
+    server.enable = true;
+    server.settings = {
       inherit domain;
       origin = "https://${domain}";
       tls_chain = "${certs.directory}/fullchain.pem";
@@ -49,7 +49,7 @@ in
   services.nginx.virtualHosts.${domain} = {
     forceSSL = true;
     enableACME = true;
-    locations."/".proxyPass = "https://${config.services.kanidm.serverSettings.bindaddress}";
+    locations."/".proxyPass = "https://${config.services.kanidm.server.settings.bindaddress}";
   };
 
   networking.firewall.allowedTCPPorts = [
