@@ -23,7 +23,7 @@ in
   };
 
   services.kanidm = {
-    package = pkgs.kanidmWithSecretProvisioning_1_8;
+    package = pkgs.kanidmWithSecretProvisioning_1_9;
     server.enable = true;
     server.settings = {
       inherit domain;

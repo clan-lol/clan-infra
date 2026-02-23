@@ -98,45 +98,56 @@
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
-      perSystem = {
-        treefmt = {
-          projectRootFile = ".git/config";
-          programs.terraform.enable = true;
-          programs.shellcheck.enable = true;
+      perSystem =
+        { pkgs, ... }:
+        {
+          treefmt = {
+            projectRootFile = ".git/config";
+            programs.terraform.enable = true;
+            programs.shellcheck.enable = true;
 
-          programs.deno.enable = true;
+            programs.deno.enable = true;
+            # REMOVEME when https://github.com/NixOS/nixpkgs/pull/491807 is available on channels
+            programs.deno.package = pkgs.deno.overrideAttrs (old: {
+              cargoTestFlags =
+                assert builtins.elem "--test=integration_tests" old.cargoTestFlags;
+                [
+                  "--lib"
+                  "--test=integration_test"
+                ];
+            });
 
-          programs.ruff.check = true;
-          programs.ruff.format = true;
-          programs.yamlfmt.enable = true;
+            programs.ruff.check = true;
+            programs.ruff.format = true;
+            programs.yamlfmt.enable = true;
 
-          settings.global.excludes = [
-            # generated files
-            "sops/*"
-            "terraform.tfstate"
-            "*.tfvars.sops.json"
-            "*nixos-vars.json"
-            "secrets.yaml"
-            "facter.json"
-            "secrets.auto.tfvars.sops.json"
-          ];
+            settings.global.excludes = [
+              # generated files
+              "sops/*"
+              "terraform.tfstate"
+              "*.tfvars.sops.json"
+              "*nixos-vars.json"
+              "secrets.yaml"
+              "facter.json"
+              "secrets.auto.tfvars.sops.json"
+            ];
 
-          programs.deadnix.enable = true;
-          programs.deadnix.priority = 1;
-          programs.deadnix.no-lambda-arg = true;
+            programs.deadnix.enable = true;
+            programs.deadnix.priority = 1;
+            programs.deadnix.no-lambda-arg = true;
 
-          programs.statix.enable = true;
-          programs.statix.priority = 2;
+            programs.statix.enable = true;
+            programs.statix.priority = 2;
 
-          programs.nixfmt.enable = true;
-          programs.nixfmt.priority = 3;
-          programs.nixfmt.excludes = [
-            # generated files
-            "node-env.nix"
-            "node-packages.nix"
-            "composition.nix"
-          ];
+            programs.nixfmt.enable = true;
+            programs.nixfmt.priority = 3;
+            programs.nixfmt.excludes = [
+              # generated files
+              "node-env.nix"
+              "node-packages.nix"
+              "composition.nix"
+            ];
+          };
         };
-      };
     };
 }
