@@ -17,7 +17,7 @@ jobs:
           git config --global user.email "clan-bot@clan.lol"
           git config --global user.name "clan-bot"
       - name: Update flake inputs
-        uses: Mic92/update-flake-inputs-gitea@pull/86/merge
+        uses: Enzime/update-flake-inputs-gitea@push-yykqmollrkrx
         with:
           gitea-token: ${{ secrets.CI_BOT_TOKEN }}
           github-token: ${{ secrets.CI_BOT_GITHUB_TOKEN }}
