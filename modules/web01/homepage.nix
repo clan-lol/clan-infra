@@ -71,17 +71,25 @@
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
       locations."= /docs".return = "301 /docs/unstable";
       locations."= /docs/".return = "301 /docs/unstable";
-      locations."~ ^/docs/([^/]+)(.*)$".extraConfig = ''
-        root /var/www/versioned-docs;
-        rewrite ^/docs/([^/]+)(.*)$ /$1/docs/$1$2 break;
-        index index.html;
-        try_files $uri $uri.html $uri/ $uri/index.html =404;
-      '';
-      # Serve versioned doc assets: /_assets/<VERSION>/... from /var/www/versioned-docs/<VERSION>/_assets/<VERSION>/...
-      locations."~ ^/_assets/([^/]+)(.*)$".extraConfig = ''
-        root /var/www/versioned-docs;
-        rewrite ^/_assets/([^/]+)(.*)$ /$1/_assets/$1$2 break;
-        add_header Cache-Control "public, max-age=604800, immutable";
+      # Serve versioned docs from /var/www/versioned-docs/<VERSION>/
+      # URL: /docs/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/docs/<VERSION>/path
+      # URL: /_assets/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/_assets/<VERSION>/path
+      #
+      # The entire versioned site tree lives under /var/www/versioned-docs/<VERSION>/
+      # so we set root to that and rewrite to the internal path.
+      # We use an internal named location for .html fallback.
+      locations."~ ^/(docs|_assets)/(?<version>[^/]+)(?<vpath>/.*)?$".extraConfig = ''
+        root /var/www/versioned-docs/$version;
+        set $section $1;
+
+        # Redirect trailing slash to non-trailing slash for clean URLs
+        # (except for bare /docs/<version>/ which is fine)
+        rewrite ^(.+)/$ $1 permanent;
+
+        # try_files paths are relative to root
+        # e.g. for /docs/unstable/getting-started with root=/var/www/versioned-docs/unstable
+        # tries: /docs/unstable/getting-started, /docs/unstable/getting-started.html, /docs/unstable/getting-started/index.html
+        try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html =404;
       '';
 
       locations."/wclan".return = "307 https://clan.lol/";
