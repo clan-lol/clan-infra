@@ -18,6 +18,7 @@
     "d /var/www 0755 www nginx"
     "d /var/www/static.clan.lol 0755 www nginx"
     "d /var/www/vpnbench 0755 www nginx"
+    "d /var/www/versioned-docs 0755 www nginx"
   ];
 
   services.nginx = {
@@ -65,9 +66,24 @@
             add_header 'Access-Control-Allow-Headers' 'Origin, X-Requested-With, Content-Type, Accept, Authorization' always;
         }
       '';
-      locations."^~ /docs".extraConfig = ''
-        rewrite ^/docs(.*)$ https://docs.clan.lol permanent;
+      # Versioned docs: /docs/<VERSION>/* serves from /var/www/versioned-docs/<VERSION>/docs/<VERSION>/*
+      # Each release branch deploys via rsync into /var/www/versioned-docs/<VERSION>/
+      # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
+      locations."= /docs".return = "301 /docs/unstable";
+      locations."= /docs/".return = "301 /docs/unstable";
+      locations."~ ^/docs/([^/]+)(.*)$".extraConfig = ''
+        root /var/www/versioned-docs;
+        rewrite ^/docs/([^/]+)(.*)$ /$1/docs/$1$2 break;
+        index index.html;
+        try_files $uri $uri.html $uri/ $uri/index.html =404;
       '';
+      # Serve versioned doc assets: /_assets/<VERSION>/... from /var/www/versioned-docs/<VERSION>/_assets/<VERSION>/...
+      locations."~ ^/_assets/([^/]+)(.*)$".extraConfig = ''
+        root /var/www/versioned-docs;
+        rewrite ^/_assets/([^/]+)(.*)$ /$1/_assets/$1$2 break;
+        add_header Cache-Control "public, max-age=604800, immutable";
+      '';
+
       locations."/wclan".return = "307 https://clan.lol/";
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
@@ -90,6 +106,7 @@
       '';
     };
 
+    # TODO: Once clan.lol/docs is verified working, redirect docs.clan.lol to clan.lol/docs
     virtualHosts."docs.clan.lol" = {
       forceSSL = true;
       enableACME = true;
