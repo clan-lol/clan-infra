@@ -18,6 +18,7 @@
     "d /var/www 0755 www nginx"
     "d /var/www/static.clan.lol 0755 www nginx"
     "d /var/www/vpnbench 0755 www nginx"
+    "d /var/www/versioned-docs 0755 www nginx"
   ];
 
   services.nginx = {
@@ -65,9 +66,32 @@
             add_header 'Access-Control-Allow-Headers' 'Origin, X-Requested-With, Content-Type, Accept, Authorization' always;
         }
       '';
-      locations."^~ /docs".extraConfig = ''
-        rewrite ^/docs(.*)$ https://docs.clan.lol permanent;
+      # Versioned docs: /docs/<VERSION>/* serves from /var/www/versioned-docs/<VERSION>/docs/<VERSION>/*
+      # Each release branch deploys via rsync into /var/www/versioned-docs/<VERSION>/
+      # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
+      locations."= /docs".return = "301 /docs/unstable";
+      locations."= /docs/".return = "301 /docs/unstable";
+      # Serve versioned docs from /var/www/versioned-docs/<VERSION>/
+      # URL: /docs/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/docs/<VERSION>/path
+      # URL: /_assets/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/_assets/<VERSION>/path
+      #
+      # The entire versioned site tree lives under /var/www/versioned-docs/<VERSION>/
+      # so we set root to that and rewrite to the internal path.
+      # We use an internal named location for .html fallback.
+      locations."~ ^/(docs|_assets)/(?<version>[^/]+)(?<vpath>/.*)?$".extraConfig = ''
+        root /var/www/versioned-docs/$version;
+        set $section $1;
+
+        # Redirect trailing slash to non-trailing slash for clean URLs
+        # (except for bare /docs/<version>/ which is fine)
+        rewrite ^(.+)/$ $1 permanent;
+
+        # try_files paths are relative to root
+        # e.g. for /docs/unstable/getting-started with root=/var/www/versioned-docs/unstable
+        # tries: /docs/unstable/getting-started, /docs/unstable/getting-started.html, /docs/unstable/getting-started/index.html
+        try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html =404;
       '';
+
       locations."/wclan".return = "307 https://clan.lol/";
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
@@ -90,6 +114,7 @@
       '';
     };
 
+    # TODO: Once clan.lol/docs is verified working, redirect docs.clan.lol to clan.lol/docs
     virtualHosts."docs.clan.lol" = {
       forceSSL = true;
       enableACME = true;
