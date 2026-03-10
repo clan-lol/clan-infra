@@ -65,10 +65,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1773071831,
-        "narHash": "sha256-LtxAHE/9RnfRWL3p7xFvL5KPNf4Ed0DMdsZzzNsp4GQ=",
+        "lastModified": 1773087041,
+        "narHash": "sha256-ykqiCekSRqWVXGAgJMIwpDauPAFF3o7jCDXSi0cABB8=",
         "ref": "main",
-        "rev": "1a526cf010ad6e98b99a941ad45f647b19caa8b2",
+        "rev": "d19c84142fb9f8af0ad847c61b8912919f3b3ae8",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
@@ -96,11 +96,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773050915,
-        "narHash": "sha256-MEavsX73nkcwSTz6WplNEqRiMD5RMBrtGz+di1Y7dRM=",
-        "rev": "451cb8ff5f568a08e896418ec1517c83e305cd54",
+        "lastModified": 1773068786,
+        "narHash": "sha256-fNdn9Bc5Sgfk0V7VYvwvk6Ah6ohl+5ch6glrsB115NY=",
+        "rev": "6265600b5a330985b901eab8eec3f17467ca8a02",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/data-mesher/archive/451cb8ff5f568a08e896418ec1517c83e305cd54.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/data-mesher/archive/6265600b5a330985b901eab8eec3f17467ca8a02.tar.gz"
       },
       "original": {
         "type": "tarball",
