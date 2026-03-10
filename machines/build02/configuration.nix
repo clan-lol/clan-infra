@@ -2,6 +2,7 @@
   config,
   self,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -10,6 +11,19 @@
   ];
 
   services.tailscale.enable = true;
+
+  nix.settings.experimental-features = lib.mkForce [
+    "nix-command"
+    "flakes"
+    "fetch-closure"
+    "recursive-nix"
+    "configurable-impure-env"
+    # "ca-derivations" # breaks devshells
+    "impure-derivations"
+    "blake3-hashes"
+    "nix-command"
+    "flakes"
+  ];
 
   users.users.luishebendanz = {
     uid = 501;
