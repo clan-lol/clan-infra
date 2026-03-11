@@ -1,4 +1,4 @@
-{ self, ... }:
+{ lib, self, ... }:
 {
   imports = [
     self.nixosModules.build01
@@ -11,6 +11,21 @@
 
   # connections over ZeroTier can access all ports
   networking.firewall.trustedInterfaces = [ "ztqcw3e3rp" ];
+
+  nix.settings.experimental-features = lib.mkForce [
+    "nix-command"
+    "flakes"
+    "auto-allocate-uids"
+    "cgroups"
+    "fetch-closure"
+    "recursive-nix"
+    "configurable-impure-env"
+    # "ca-derivations" # breaks devshells
+    "impure-derivations"
+    "blake3-hashes"
+    "nix-command"
+    "flakes"
+  ];
 
   programs.ssh.knownHosts.clan-sshd-self-ed25519.hostNames = [
     "157.90.137.201"
