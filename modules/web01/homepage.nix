@@ -36,11 +36,6 @@
       locations."/".extraConfig = ''
         set $cors "false";
 
-        # Allow cross-origin requests from docs.clan.lol
-        if ($http_origin = "https://docs.clan.lol") {
-            set $cors "true";
-        }
-
         # Allow cross-origin requests from localhost IPs with port 8000
         if ($http_origin = "http://localhost:8000") {
             set $cors "true";
@@ -71,6 +66,9 @@
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
       locations."= /docs".return = "301 /docs/25.11";
       locations."= /docs/".return = "301 /docs/25.11";
+      locations."^~ /docs/main".extraConfig = ''
+        rewrite ^/docs/main(.*)$ /docs/unstable$1 permanent;
+      '';
       locations."= /docs/versions".extraConfig = ''
         proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/static/docs/versions;
         proxy_set_header Host git.clan.lol;
@@ -96,11 +94,19 @@
         # try_files paths are relative to root
         # e.g. for /docs/unstable/getting-started with root=/var/www/versioned-docs/unstable
         # tries: /docs/unstable/getting-started, /docs/unstable/getting-started.html, /docs/unstable/getting-started/index.html
-        try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html =404;
+        try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html @fallback;
 
         add_header Cache-Control "no-cache, no-store, must-revalidate" always;
       '';
 
+      locations."@fallback".extraConfig = ''
+        # If we had a subpath (e.g. /docs/unstable/nonexistent), redirect to version root
+        # If already at version root (e.g. /docs/99.99), redirect to /docs
+        if ($vpath = "") {
+          return 302 /docs;
+        }
+        return 302 /docs/$version;
+      '';
       locations."/wclan".return = "307 https://clan.lol/";
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
@@ -123,33 +129,27 @@
       '';
     };
 
-    # TODO: Once clan.lol/docs is verified working, redirect docs.clan.lol to clan.lol/docs
     virtualHosts."docs.clan.lol" = {
       forceSSL = true;
       enableACME = true;
-      # to be deployed via rsync
-      root = "/var/www/docs.clan.lol";
-      extraConfig = ''
-        charset utf-8;
-        source_charset utf-8;
-      '';
-
-      # Make sure to expire the cache after 12 hour
-      locations."/".extraConfig = ''
-        add_header Cache-Control "public, max-age=43200";
-        try_files $uri $uri.html $uri/ $uri/index.html =404;
-      '';
       locations."/blog/2024/03/19/introducing-clan-full-stack-computing-redefined/".return =
-        "307 https://clan.lol/blog/introduction-clan/";
+        "301 https://clan.lol/blog/introduction-clan/";
       locations."/blog/2024/05/25/jsonschema-converter/".return =
-        "307 https://clan.lol/blog/json-schema-converter/";
+        "301 https://clan.lol/blog/json-schema-converter/";
       locations."/blog/2024/06/24/backups/".return =
-        "307 https://clan.lol/blog/declarative-backups-and-restore/";
-      locations."/blog/2024/07/19/nixos-facter/".return = "307 https://clan.lol/blog/nixos-facter/";
-      locations."/blog/2024/09/11/interfaces/".return = "307 https://clan.lol/blog/interfaces/";
-
-      locations."^~ /blog".extraConfig = ''
-        rewrite ^/wclan(.*)$ https://clan.lol/blog permanent;
+        "301 https://clan.lol/blog/declarative-backups-and-restore/";
+      locations."/blog/2024/07/19/nixos-facter/".return = "301 https://clan.lol/blog/nixos-facter/";
+      locations."/blog/2024/09/11/interfaces/".return = "301 https://clan.lol/blog/interfaces/";
+      locations."^~ /blog".return = "301 https://clan.lol/blog";
+      # Old docs.clan.lol used /<version>/... paths (no /docs/ prefix)
+      locations."^~ /main/".extraConfig = ''
+        rewrite ^/main/(.*)$ https://clan.lol/docs/unstable/$1 permanent;
+      '';
+      locations."= /main".return = "301 https://clan.lol/docs/unstable";
+      locations."/".extraConfig = ''
+        rewrite ^/([0-9]+\.[0-9]+)/(.*)$ https://clan.lol/docs/$1/$2 permanent;
+        rewrite ^/([0-9]+\.[0-9]+)/?$ https://clan.lol/docs/$1 permanent;
+        return 301 https://clan.lol/docs;
       '';
     };
 
