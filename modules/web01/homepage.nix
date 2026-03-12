@@ -76,6 +76,7 @@
         proxy_set_header Host git.clan.lol;
         proxy_ssl_server_name on;
         proxy_ssl_name git.clan.lol;
+        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
       '';
       # Serve versioned docs from /var/www/versioned-docs/<VERSION>/
       # URL: /docs/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/docs/<VERSION>/path
@@ -96,6 +97,8 @@
         # e.g. for /docs/unstable/getting-started with root=/var/www/versioned-docs/unstable
         # tries: /docs/unstable/getting-started, /docs/unstable/getting-started.html, /docs/unstable/getting-started/index.html
         try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html =404;
+
+        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
       '';
 
       locations."/wclan".return = "307 https://clan.lol/";
