@@ -71,10 +71,12 @@
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
       locations."= /docs".return = "301 /docs/unstable";
       locations."= /docs/".return = "301 /docs/unstable";
-      locations."= /docs/versions" = {
-        proxyPass = "https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/static/docs/versions";
-        recommendedProxySettings = true;
-      };
+      locations."= /docs/versions".extraConfig = ''
+        proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/static/docs/versions;
+        proxy_set_header Host git.clan.lol;
+        proxy_ssl_server_name on;
+        proxy_ssl_name git.clan.lol;
+      '';
       # Serve versioned docs from /var/www/versioned-docs/<VERSION>/
       # URL: /docs/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/docs/<VERSION>/path
       # URL: /_assets/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/_assets/<VERSION>/path
