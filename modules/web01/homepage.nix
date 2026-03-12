@@ -66,6 +66,9 @@
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
       locations."= /docs".return = "301 /docs/25.11";
       locations."= /docs/".return = "301 /docs/25.11";
+      locations."^~ /docs/main".extraConfig = ''
+        rewrite ^/docs/main(.*)$ /docs/unstable$1 permanent;
+      '';
       locations."= /docs/versions".extraConfig = ''
         proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/static/docs/versions;
         proxy_set_header Host git.clan.lol;
@@ -91,11 +94,19 @@
         # try_files paths are relative to root
         # e.g. for /docs/unstable/getting-started with root=/var/www/versioned-docs/unstable
         # tries: /docs/unstable/getting-started, /docs/unstable/getting-started.html, /docs/unstable/getting-started/index.html
-        try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html =404;
+        try_files /$section/$version$vpath /$section/$version''${vpath}.html /$section/$version$vpath/index.html @fallback;
 
         add_header Cache-Control "no-cache, no-store, must-revalidate" always;
       '';
 
+      locations."@fallback".extraConfig = ''
+        # If we had a subpath (e.g. /docs/unstable/nonexistent), redirect to version root
+        # If already at version root (e.g. /docs/99.99), redirect to /docs
+        if ($vpath = "") {
+          return 302 /docs;
+        }
+        return 302 /docs/$version;
+      '';
       locations."/wclan".return = "307 https://clan.lol/";
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
@@ -130,8 +141,16 @@
       locations."/blog/2024/07/19/nixos-facter/".return = "301 https://clan.lol/blog/nixos-facter/";
       locations."/blog/2024/09/11/interfaces/".return = "301 https://clan.lol/blog/interfaces/";
       locations."^~ /blog".return = "301 https://clan.lol/blog";
-      # Redirect docs.clan.lol -> clan.lol/docs
-      locations."/".return = "301 https://clan.lol/docs$request_uri";
+      # Old docs.clan.lol used /<version>/... paths (no /docs/ prefix)
+      locations."^~ /main/".extraConfig = ''
+        rewrite ^/main/(.*)$ https://clan.lol/docs/unstable/$1 permanent;
+      '';
+      locations."= /main".return = "301 https://clan.lol/docs/unstable";
+      locations."/".extraConfig = ''
+        rewrite ^/([0-9]+\.[0-9]+)/(.*)$ https://clan.lol/docs/$1/$2 permanent;
+        rewrite ^/([0-9]+\.[0-9]+)/?$ https://clan.lol/docs/$1 permanent;
+        return 301 https://clan.lol/docs;
+      '';
     };
 
     virtualHosts."www.clan.lol" = {
