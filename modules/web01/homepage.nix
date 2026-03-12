@@ -69,8 +69,8 @@
       # Versioned docs: /docs/<VERSION>/* serves from /var/www/versioned-docs/<VERSION>/docs/<VERSION>/*
       # Each release branch deploys via rsync into /var/www/versioned-docs/<VERSION>/
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
-      locations."= /docs".return = "301 /docs/unstable";
-      locations."= /docs/".return = "301 /docs/unstable";
+      locations."= /docs".return = "301 /docs/25.11";
+      locations."= /docs/".return = "301 /docs/25.11";
       locations."= /docs/versions".extraConfig = ''
         proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/static/docs/versions;
         proxy_set_header Host git.clan.lol;
