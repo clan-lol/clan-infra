@@ -22,6 +22,7 @@
     webhookSecretFile = config.clan.core.vars.generators.gitea-mq.files."webhook-secret".path;
     listenAddr = "127.0.0.1:8092";
     externalUrl = "https://mq.clan.lol";
+    logLevel = "debug";
   };
 
   # Clan vars: prompt for the Gitea API token, generate the webhook secret
