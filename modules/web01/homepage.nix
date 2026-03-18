@@ -6,6 +6,7 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys ++ [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyHjnmRUbCw8EP350+4K0KOHPiTzTpTBrOQUzNINOrx gitea-ci"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGmAw62wkSAvzAKwZn3xFvCj+jUkOgp2arABA6PEbc8 clan-www2" # key for git.clan.lol/clan/data-mesher gitea-ci
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKHHl5kgMDNQA/zqK+AzT4SO09rfAp+y/EeUC+Ow5XqyNid5lm6sgLGM+AqZDx0jOrMKWhd5lhzGDdtsSf0Y8g4= brian@saturn"
     ];
     isSystemUser = true;
     shell = pkgs.bash;
