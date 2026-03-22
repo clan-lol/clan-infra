@@ -409,11 +409,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774055702,
-        "narHash": "sha256-/y9ba7Jw2P98naHvaIseSFd9fAb8C3RSdnFM15CKXdM=",
+        "lastModified": 1774142532,
+        "narHash": "sha256-vd6CUUD/NAej5oYZJem1EH5XDlSHPXBmwduqnlNXsD8=",
         "owner": "nix-community",
         "repo": "nixpkgs-terraform-providers-bin",
-        "rev": "b97af13909c58d75771172ab38f6d483da33be9d",
+        "rev": "32f2ae9d951ac7eda2a9ead8e6eeba4c355adf04",
         "type": "github"
       },
       "original": {
