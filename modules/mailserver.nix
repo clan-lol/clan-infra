@@ -105,7 +105,7 @@ in
 
       fullTextSearch.enable = true;
 
-      loginAccounts = lib.mapAttrs' (
+      accounts = lib.mapAttrs' (
         username: userCfg:
         lib.nameValuePair "${username}@clan.lol" (
           {
