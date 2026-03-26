@@ -35,7 +35,6 @@
     pkgs.ripgrep
     pkgs.tig
     pkgs.tmux
-    pkgs.direnv
     pkgs.jujutsu
     pkgs.ranger
 
@@ -45,6 +44,14 @@
   programs.nix-index-database.comma.enable = true;
 
   programs.direnv.enable = true;
+  # REMOVEME when we don't need to backport this fix from upstream
+  programs.direnv.package = pkgs.direnv.overrideAttrs (old: {
+    postPatch =
+      assert !old ? postPatch;
+      ''
+        substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""
+      '';
+  });
 
   programs.zsh = {
     enable = true;
