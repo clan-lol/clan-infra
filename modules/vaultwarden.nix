@@ -1,4 +1,5 @@
 {
+  self,
   config,
   pkgs,
   lib,
@@ -9,7 +10,10 @@ let
 in
 
 {
-  imports = [ ./nginx.nix ];
+  imports = [
+    self.inputs.srvos.nixosModules.mixins-nginx
+    ./acme.nix
+  ];
 
   options.clan.vaultwarden = {
     domain = lib.mkOption {
