@@ -1,13 +1,9 @@
 {
   _class,
   lib,
-  pkgs,
-  self,
   ...
 }:
 {
-  nix.package = self.inputs.nix-1.packages.${pkgs.stdenv.hostPlatform.system}.nix;
-
   nix.gc = {
     automatic = true;
     options = "--delete-older-than 30d";

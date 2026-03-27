@@ -280,32 +280,6 @@
         "type": "github"
       }
     },
-    "nix-1": {
-      "inputs": {
-        "flake-compat": [],
-        "flake-parts": [],
-        "git-hooks-nix": [],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-23-11": [],
-        "nixpkgs-regression": []
-      },
-      "locked": {
-        "lastModified": 1774360187,
-        "narHash": "sha256-/+79ch8LZU+7P7AXftsnUuPKfTjn6xoNTLtomFN9oWg=",
-        "ref": "refs/heads/main",
-        "rev": "98814351b916327ede6090880cce26ee79770009",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/Mic92/nix-1"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/Mic92/nix-1"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -447,7 +421,6 @@
         "gitea-mq": "gitea-mq",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
         "niks3": "niks3",
-        "nix-1": "nix-1",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixos-mailserver": "nixos-mailserver",
