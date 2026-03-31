@@ -84,6 +84,7 @@
 
       ./web02/kanidm.nix
       ./web02/outline.nix
+      ./web02/personal-computing.nix
     ];
 
     storinator.imports = [

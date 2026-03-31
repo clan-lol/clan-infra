@@ -60,6 +60,13 @@
     records = [ { value = config.resource.vultr_instance.web02 "main_ip"; } ];
   };
 
+  resource.hcloud_zone_rrset.thecomputer_co_temp_a = {
+    zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
+    name = "temp";
+    type = "A";
+    records = [ { value = config.resource.vultr_instance.web02 "main_ip"; } ];
+  };
+
   resource.hcloud_zone_rrset.thecomputer_co_idm_a = {
     zone = lib.tf.ref "module.dns.thecomputer_co_zone_name";
     name = "idm";
