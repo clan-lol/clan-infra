@@ -396,6 +396,28 @@
         "type": "github"
       }
     },
+    "personal-computing": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774961592,
+        "narHash": "sha256-X8gnSI007b4zFkQlG1bez4vtbjAJG9WikktetJxNaYU=",
+        "ref": "main",
+        "rev": "63628afb52b5a315792162bcbba00ee26b09845f",
+        "shallow": true,
+        "type": "git",
+        "url": "https://git.clan.lol/clan/personal-computing"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "https://git.clan.lol/clan/personal-computing"
+      }
+    },
     "process-compose": {
       "locked": {
         "lastModified": 1767863885,
@@ -426,6 +448,7 @@
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
         "nixpkgs-terraform-providers-bin": "nixpkgs-terraform-providers-bin",
+        "personal-computing": "personal-computing",
         "srvos": "srvos",
         "terranix": "terranix",
         "treefmt-nix": "treefmt-nix"

@@ -62,6 +62,9 @@
 
     nixpkgs-terraform-providers-bin.url = "github:nix-community/nixpkgs-terraform-providers-bin";
     nixpkgs-terraform-providers-bin.inputs.nixpkgs.follows = "nixpkgs";
+
+    personal-computing.url = "git+https://git.clan.lol/clan/personal-computing?ref=main&shallow=1";
+    personal-computing.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
