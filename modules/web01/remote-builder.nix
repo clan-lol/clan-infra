@@ -25,21 +25,6 @@
       ];
     }
     {
-      hostName = "build02.vpn.clan.lol";
-      sshUser = "builder";
-      protocol = "ssh-ng";
-      sshKey = config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path;
-      systems = [
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-      maxJobs = 10;
-      supportedFeatures = [
-        "big-parallel"
-        "recursive-nix"
-      ];
-    }
-    {
       hostName = "build-x86-01.clan.lol";
       sshUser = "builder";
       protocol = "ssh-ng";
