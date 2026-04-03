@@ -403,10 +403,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1774961592,
-        "narHash": "sha256-X8gnSI007b4zFkQlG1bez4vtbjAJG9WikktetJxNaYU=",
+        "lastModified": 1775036523,
+        "narHash": "sha256-fw18j3ENirI0/BJWiIdeRHNRBA+hQiLqXtY7nn7WPCA=",
         "ref": "main",
-        "rev": "63628afb52b5a315792162bcbba00ee26b09845f",
+        "rev": "0649aff4fea7a87815fb82430751a373d4fb6908",
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/personal-computing"
