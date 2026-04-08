@@ -71,7 +71,7 @@
         rewrite ^/docs/main(.*)$ /docs/unstable$1 permanent;
       '';
       locations."= /docs/versions".extraConfig = ''
-        proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/static/docs/versions;
+        proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/versions;
         proxy_set_header Host git.clan.lol;
         proxy_ssl_server_name on;
         proxy_ssl_name git.clan.lol;
