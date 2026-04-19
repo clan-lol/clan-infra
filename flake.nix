@@ -41,7 +41,7 @@
     clan-core.inputs.systems.follows = "systems";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    buildbot-nix.url = "github:nix-community/buildbot-nix";
+    buildbot-nix.url = "github:nix-community/buildbot-nix/pull/619/merge";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
     buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
