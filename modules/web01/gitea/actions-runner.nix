@@ -231,6 +231,8 @@ lib.mkMerge [
           };
         });
 
+    services.gitea-actions-runner.package =
+      self.packages.${pkgs.stdenv.hostPlatform.system}.gitea-actions-runner;
     services.gitea-actions-runner.instances =
       lib.genAttrs (builtins.genList (n: "nix${builtins.toString n}") numInstances)
         (name: {
