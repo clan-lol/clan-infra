@@ -21,7 +21,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/pull/1701/merge";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver = {
@@ -62,7 +62,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    niks3.url = "github:Mic92/niks3/rate-limit";
+    niks3.url = "github:Mic92/niks3";
     niks3.inputs.nixpkgs.follows = "nixpkgs";
     niks3.inputs.treefmt-nix.follows = "treefmt-nix";
     niks3.inputs.flake-parts.follows = "flake-parts";
