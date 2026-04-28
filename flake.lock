@@ -360,13 +360,12 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1777270315,
-        "narHash": "sha256-yKB4G6cKsQsWN7M6rZGk6gkJPDNPIzT05y4qzRyCDlI=",
-        "ref": "nixpkgs-unstable",
-        "rev": "6368eda62c9775c38ef7f714b2555a741c20c72d",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
+        "lastModified": 1777406241,
+        "narHash": "sha256-ybPSeNsyyE7GF1szb4E/KDAwLDQV8YAcO2tMhyaGzvg=",
+        "owner": "Enzime",
+        "repo": "nixpkgs",
+        "rev": "f78e59a9f402c7de740f419452ed7e97737c8970",
+        "type": "github"
       },
       "original": {
         "ref": "nixpkgs-unstable",
