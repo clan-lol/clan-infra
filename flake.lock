@@ -345,11 +345,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775959179,
-        "narHash": "sha256-FEwm2CI5r9E/r5EV8cSfV6rer3F3ZpMKSv7Zpap2Z/I=",
+        "lastModified": 1777240132,
+        "narHash": "sha256-QoarbYyC2KqFjZvFj/WgHzjlrWvon1sO4HxzAVi6uQM=",
         "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "d98a6302f1c56e16d660e68f2aa41382f7ed766b",
+        "rev": "583a362c5bdeb74bdf7861165a3c7a9168da4e65",
         "type": "gitlab"
       },
       "original": {
@@ -360,13 +360,12 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1775888245,
-        "narHash": "sha256-nwASzrRDD1JBEu/o8ekKYEXm/oJW6EMCzCRdrwcLe90=",
-        "ref": "nixpkgs-unstable",
-        "rev": "13043924aaa7375ce482ebe2494338e058282925",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
+        "lastModified": 1777406241,
+        "narHash": "sha256-ybPSeNsyyE7GF1szb4E/KDAwLDQV8YAcO2tMhyaGzvg=",
+        "owner": "Enzime",
+        "repo": "nixpkgs",
+        "rev": "f78e59a9f402c7de740f419452ed7e97737c8970",
+        "type": "github"
       },
       "original": {
         "ref": "nixpkgs-unstable",
