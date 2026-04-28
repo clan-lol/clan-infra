@@ -56,7 +56,6 @@
 
     gitea-mq.url = "github:Mic92/gitea-mq";
     gitea-mq.inputs.nixpkgs.follows = "nixpkgs";
-    gitea-mq.inputs.flake-parts.follows = "flake-parts";
     gitea-mq.inputs.treefmt-nix.follows = "treefmt-nix";
 
     nix-index-database.url = "github:nix-community/nix-index-database";
