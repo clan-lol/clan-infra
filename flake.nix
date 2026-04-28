@@ -102,8 +102,6 @@
           programs.terraform.enable = true;
           programs.shellcheck.enable = true;
 
-          programs.deno.enable = true;
-
           programs.ruff.check = true;
           programs.ruff.format = true;
           programs.yamlfmt.enable = true;
