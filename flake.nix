@@ -31,7 +31,7 @@
       inputs.git-hooks.follows = "";
     };
 
-    srvos.url = "github:nix-community/srvos";
+    srvos.url = "github:nix-community/srvos/pull/809/merge";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=main&shallow=1";
