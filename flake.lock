@@ -18,7 +18,6 @@
     },
     "buildbot-nix": {
       "inputs": {
-        "hercules-ci-effects": "hercules-ci-effects",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -27,16 +26,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1777972447,
-        "narHash": "sha256-HrnvfnLbm+DHxx68UA8ewz9L/8rf8vo9oSD39YAFVr0=",
-        "owner": "nix-community",
+        "lastModified": 1778005233,
+        "narHash": "sha256-VT+oNatOvoPL1hM/WGHJ4NyfxtLnebfE77gd+OEqEP8=",
+        "owner": "Enzime",
         "repo": "buildbot-nix",
-        "rev": "03df42097a05aead3862718711d37d65623eae27",
+        "rev": "758b05728fe997dbc2c42b1e3ade11e33688b8dc",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "pull/619/merge",
+        "owner": "Enzime",
+        "ref": "619+629",
         "repo": "buildbot-nix",
         "type": "github"
       }
@@ -145,27 +144,6 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "buildbot-nix",
-          "hercules-ci-effects",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775087534,
-        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
-        "type": "github"
-      },
-      "original": {
-        "id": "flake-parts",
-        "type": "indirect"
-      }
-    },
-    "flake-parts_2": {
-      "inputs": {
-        "nixpkgs-lib": [
           "nixpkgs"
         ]
       },
@@ -223,28 +201,6 @@
       "original": {
         "owner": "Mic92",
         "repo": "gitea-mq",
-        "type": "github"
-      }
-    },
-    "hercules-ci-effects": {
-      "inputs": {
-        "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "buildbot-nix",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1776603440,
-        "narHash": "sha256-wA+ONiwbvQIy7ERJx/ruhV7y5xku6XKstXCII5bIbdI=",
-        "owner": "hercules-ci",
-        "repo": "hercules-ci-effects",
-        "rev": "e2456ee419f9d75f8382e3d6c5af4690b316a5a8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "hercules-ci-effects",
         "type": "github"
       }
     },
@@ -451,7 +407,7 @@
         "buildbot-nix": "buildbot-nix",
         "clan-core": "clan-core",
         "flake-compat": "flake-compat",
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "gitea-mq": "gitea-mq",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
