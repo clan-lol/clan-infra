@@ -18,7 +18,7 @@
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.url = "github:numtide/treefmt-nix/pull/502/merge";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-darwin.url = "github:nix-darwin/nix-darwin";
@@ -131,6 +131,7 @@
             "composition.nix"
           ];
 
+          programs.actionlint.enable = true;
           programs.flake-edit.enable = true;
         };
       };
