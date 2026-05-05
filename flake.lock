@@ -18,9 +18,6 @@
     },
     "buildbot-nix": {
       "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
         "hercules-ci-effects": "hercules-ci-effects",
         "nixpkgs": [
           "nixpkgs"
@@ -30,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777374263,
-        "narHash": "sha256-ItTuFmW0NfOC1KakWo8O3KQhWH7ZQHvS72+RT/t9K6M=",
+        "lastModified": 1777972447,
+        "narHash": "sha256-HrnvfnLbm+DHxx68UA8ewz9L/8rf8vo9oSD39YAFVr0=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "063da57a78d676ae85d71781766a67cc86849745",
+        "rev": "03df42097a05aead3862718711d37d65623eae27",
         "type": "github"
       },
       "original": {
@@ -148,6 +145,27 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
+          "buildbot-nix",
+          "hercules-ci-effects",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775087534,
+        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
+        "type": "github"
+      },
+      "original": {
+        "id": "flake-parts",
+        "type": "indirect"
+      }
+    },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": [
           "nixpkgs"
         ]
       },
@@ -210,10 +228,7 @@
     },
     "hercules-ci-effects": {
       "inputs": {
-        "flake-parts": [
-          "buildbot-nix",
-          "flake-parts"
-        ],
+        "flake-parts": "flake-parts",
         "nixpkgs": [
           "buildbot-nix",
           "nixpkgs"
@@ -436,7 +451,7 @@
         "buildbot-nix": "buildbot-nix",
         "clan-core": "clan-core",
         "flake-compat": "flake-compat",
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_2",
         "flake-utils": "flake-utils",
         "gitea-mq": "gitea-mq",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
