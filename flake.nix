@@ -43,7 +43,6 @@
 
     buildbot-nix.url = "github:nix-community/buildbot-nix/pull/619/merge";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
-    buildbot-nix.inputs.flake-parts.follows = "flake-parts";
     buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
 
     terranix.url = "github:terranix/terranix";
@@ -131,6 +130,8 @@
             "node-packages.nix"
             "composition.nix"
           ];
+
+          programs.flake-edit.enable = true;
         };
       };
     };
