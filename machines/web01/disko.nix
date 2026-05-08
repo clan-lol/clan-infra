@@ -57,6 +57,8 @@ in
     '';
   };
 
+  boot.zfs.forceImportRoot = false;
+
   boot.initrd.systemd.services.zfs-import-zroot = {
     preStart = ''
       while [ ! -f ${config.clan.core.vars.generators.zfs.files.key.path} ]; do
