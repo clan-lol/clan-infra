@@ -112,6 +112,10 @@
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
       locations."/blog/hello-world/".return = "307 https://clan.lol/blog/introduction-clan/";
+      locations."= /install/unstable".return =
+        "301 https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+      locations."= /install/25.11".return =
+        "301 https://git.clan.lol/clan/clan-core/archive/25.11.tar.gz";
     };
 
     virtualHosts."data-mesher.docs.clan.lol" = {
