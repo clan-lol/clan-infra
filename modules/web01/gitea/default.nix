@@ -56,6 +56,15 @@ in
     settings.service = {
       DISABLE_REGISTRATION = false;
       ENABLE_NOTIFY_MAIL = true;
+      # Require login on expensive pages to deter scrapers
+      REQUIRE_SIGNIN_VIEW = "expensive";
+    };
+
+    # Prioritize authenticated users to reduce disruption from scrapers
+    settings.qos = {
+      ENABLED = true;
+      # Default is 4 * CPU cores but that's too high
+      MAX_INFLIGHT = 32;
     };
 
     settings.metrics.ENABLED = true;
