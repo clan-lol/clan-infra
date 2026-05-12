@@ -46,8 +46,6 @@
     settings.service = {
       DISABLE_REGISTRATION = false;
       ENABLE_NOTIFY_MAIL = true;
-      # Require login on expensive pages to deter scrapers
-      REQUIRE_SIGNIN_VIEW = "expensive";
     };
 
     # Prioritize authenticated users to reduce disruption from scrapers
