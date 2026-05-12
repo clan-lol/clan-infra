@@ -113,6 +113,25 @@
           };
         };
       };
+      matrix-synapse-personal-computer = {
+        module = {
+          name = "matrix-synapse";
+          input = "clan-core";
+        };
+        roles.default.machines.web02 = { };
+        roles.default.settings = {
+          app_domain = "matrix.personal.computer";
+          server_tld = "personal.computer";
+          acmeEmail = "admins@clan.lol";
+
+          users = {
+            admin = {
+              admin = true;
+            };
+            w = { };
+          };
+        };
+      };
       wireguard-infra = {
         module = {
           name = "wireguard";
