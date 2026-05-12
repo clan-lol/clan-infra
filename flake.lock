@@ -226,23 +226,19 @@
     },
     "niks3": {
       "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ],
-        "process-compose": "process-compose",
         "treefmt-nix": [
           "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1778424272,
-        "narHash": "sha256-p6YjBvCp9RTTPC/091ITnzMsmL7XPXYZmdDvW8ezm1o=",
+        "lastModified": 1778431771,
+        "narHash": "sha256-5cOjpGIdh1D3vsoOA8r21ACJBMulhg240MRaBNTbPLI=",
         "owner": "Mic92",
         "repo": "niks3",
-        "rev": "c75da269108bc508fbbc8078cef21cd0498d4900",
+        "rev": "2fd07c218b5575e30b7e62da56e6ddd6899f59db",
         "type": "github"
       },
       "original": {
@@ -386,21 +382,6 @@
         "shallow": true,
         "type": "git",
         "url": "https://git.clan.lol/clan/personal-computing"
-      }
-    },
-    "process-compose": {
-      "locked": {
-        "lastModified": 1767863885,
-        "narHash": "sha256-XXekPAxzbv1DmHFo3Elmj/vDnvWc1V0jdDUvM0/Wf7k=",
-        "owner": "Platonic-Systems",
-        "repo": "process-compose-flake",
-        "rev": "99bea96cf269cfd235833ebdf645b567069fd398",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Platonic-Systems",
-        "repo": "process-compose-flake",
-        "type": "github"
       }
     },
     "root": {
