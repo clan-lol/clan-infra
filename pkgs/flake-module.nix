@@ -10,7 +10,6 @@
         in
         {
           gitea = pkgs.callPackage ./gitea { };
-          gitea-actions-runner = pkgs.callPackage ./gitea-actions-runner { };
 
           action-create-pr = pkgs.callPackage ./action-create-pr {
             inherit (writers) writePureShellScriptBin;
