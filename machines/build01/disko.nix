@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   mirrorBoot = idx: {
     type = "disk";
@@ -13,13 +18,27 @@ let
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot${idx}";
+            mountOptions = [
+              "umask=0077"
+              "nofail"
+            ];
           };
         };
-        zfs = {
+        swap = {
+          size = "16G";
+          content = {
+            type = "swap";
+            discardPolicy = "both";
+            randomEncryption = true;
+            # equal priority on both disks ⇒ kernel stripes writes across them
+            priority = 100;
+          };
+        };
+        mdraid = {
           size = "100%";
           content = {
-            type = "zfs";
-            pool = "zroot";
+            type = "mdraid";
+            name = "stripe";
           };
         };
       };
@@ -27,6 +46,12 @@ let
   };
 in
 {
+  services.fstrim.enable = true;
+
+  # Disable monitoring on this server as it's just a build server
+  boot.swraid.mdadmConf = "MAILADDR root";
+  systemd.services.mdmonitor.enable = false;
+
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
@@ -43,32 +68,15 @@ in
     ];
   };
 
-  clan.core.vars.generators.zfs = {
-    files.key.neededFor = "partitioning";
+  clan.core.vars.generators.luks = {
+    files.password.neededFor = "partitioning";
     runtimeInputs = [
       pkgs.coreutils
-      pkgs.xxd
+      pkgs.xkcdpass
     ];
     script = ''
-      dd if=/dev/urandom bs=32 count=1 | xxd -c32 -p > $out/key
+      xkcdpass --numwords 6 --random-delimiters --valid-delimiters='1234567890!@#$%^&*()-_+=,.<>/?' --case random | tr -d "\n" > $out/password
     '';
-  };
-
-  boot.zfs.forceImportRoot = false;
-
-  boot.initrd.systemd.services.zfs-import-zroot = {
-    preStart = ''
-      while [ ! -f ${config.clan.core.vars.generators.zfs.files.key.path} ]; do
-        sleep 1
-      done
-    '';
-    unitConfig = {
-      StartLimitIntervalSec = 0;
-    };
-    serviceConfig = {
-      RestartSec = "1s";
-      Restart = "on-failure";
-    };
   };
 
   disko.devices = {
@@ -76,38 +84,42 @@ in
       x = mirrorBoot "0";
       y = mirrorBoot "1";
     };
-    zpool = {
-      zroot = {
-        type = "zpool";
-        rootFsOptions = {
-          compression = "lz4";
+    mdadm.stripe = {
+      type = "mdadm";
+      level = 0;
+      content = {
+        type = "luks";
+        name = "cryptroot";
+        passwordFile = config.clan.core.vars.generators.luks.files.password.path;
+        settings = {
+          allowDiscards = true;
+          bypassWorkqueues = true;
         };
-        datasets = {
-          "root" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              encryption = "aes-256-gcm";
-              keyformat = "hex";
-              keylocation = "file://${config.clan.core.vars.generators.zfs.files.key.path}";
-            };
-          };
-          "root/nixos" = {
-            type = "zfs_fs";
-            options.mountpoint = "/";
-            mountpoint = "/";
-          };
-          "root/home" = {
-            type = "zfs_fs";
-            options.mountpoint = "/home";
-            mountpoint = "/home";
-          };
-          "root/podman" = {
-            type = "zfs_fs";
-            options.mountpoint = "none";
-          };
+        content = {
+          type = "filesystem";
+          format = "ext4";
+          mountpoint = "/";
+          mountOptions = [ "noatime" ];
+          extraArgs = [
+            # Increases maximum number of files per directory
+            "-O"
+            "large_dir"
+            # more efficient lookups in large directories
+            "-O"
+            "dir_index"
+            # shrink root-reserved blocks from the 5% default
+            "-m"
+            "1"
+          ];
         };
       };
     };
+  };
+
+  virtualisation.vmVariantWithDisko = {
+    boot.loader.grub.devices = lib.mkForce [ ];
+    disko.devices.mdadm.stripe.content.passwordFile = lib.mkForce (
+      toString (pkgs.writeText "password" "apple")
+    );
   };
 }

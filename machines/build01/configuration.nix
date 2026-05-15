@@ -9,6 +9,12 @@
   ];
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f8:2220:140f::1";
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 25;
+  };
+
   # connections over ZeroTier can access all ports
   networking.firewall.trustedInterfaces = [ "ztqcw3e3rp" ];
 

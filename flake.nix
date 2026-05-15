@@ -74,11 +74,7 @@
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
+      systems = import inputs.systems;
 
       # Hacky way to detect we're in a REPL
       debug = builtins ? currentSystem;

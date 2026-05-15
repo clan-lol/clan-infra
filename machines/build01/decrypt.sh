@@ -11,5 +11,4 @@ while ! timeout --foreground 10 ssh -p 2222 "root@$HOST" true; do
   sleep 1
 done
 
-# Ensure that /run/partitioning-secrets/zfs/key only ever exists with the full key
-clan vars get build01 zfs/key | ssh -p 2222 "root@${HOST}" "mkdir -p /run/partitioning-secrets/zfs && cat > /run/partitioning-secrets/zfs/key.tmp && mv /run/partitioning-secrets/zfs/key.tmp /run/partitioning-secrets/zfs/key"
+clan vars get build01 luks/password | awk '1; END{print ""}' | ssh -p 2222 -tt "root@${HOST}" systemctl default
