@@ -7,7 +7,6 @@
 }:
 
 {
-
   imports = [
     ./postgresql.nix
     ./actions-runner.nix
@@ -60,6 +59,8 @@
       APP_DATA_PATH = "/var/lib/gitea/data";
       DISABLE_ROUTER_LOG = true;
       ROOT_URL = "https://git.clan.lol";
+      # Only listen on localhost
+      HTTP_ADDR = "127.0.0.1";
       HTTP_PORT = 3002;
       DOMAIN = "git.clan.lol";
       LANDING_PAGE = "explore";
@@ -74,12 +75,54 @@
   sops.secrets."vars/gitea-mail/gitea-password".owner =
     lib.mkForce config.systemd.services.gitea.serviceConfig.User;
 
+  services.anubis.instances.gitea = {
+    settings = {
+      # https://anubis.techaro.lol/docs/admin/configuration/subrequest-auth
+      TARGET = " ";
+      BIND = "127.0.0.1:3001";
+      BIND_NETWORK = "tcp";
+      OG_PASSTHROUGH = true;
+      # Just in case we ever stop using subrequest auth
+      # https://anubis.techaro.lol/docs/admin/configuration/redirect-domains
+      REDIRECT_DOMAINS = config.services.gitea.settings.server.DOMAIN;
+    };
+
+    policy = {
+      # https://anubis.techaro.lol/docs/admin/configuration/subrequest-auth
+      settings.status_codes = {
+        CHALLENGE = 200;
+        DENY = 403;
+      };
+
+      # https://github.com/TecharoHQ/anubis/blob/main/data/apps/gitea-rss-feeds.yaml
+      extraBots = [
+        { import = "(data)/apps/gitea-rss-feeds.yaml"; }
+      ];
+    };
+  };
+
   services.nginx.clientMaxBodySize = "100M";
   services.nginx.virtualHosts."git.clan.lol" = {
     forceSSL = true;
     enableACME = true;
-    locations."/".extraConfig = ''
-      proxy_pass http://localhost:3002;
+
+    # https://anubis.techaro.lol/docs/admin/configuration/subrequest-auth
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:3002";
+      extraConfig = ''
+        auth_request /.within.website/x/cmd/anubis/api/check;
+        error_page 401 = @redirectToAnubis;
+      '';
+    };
+
+    locations."/.within.website/" = {
+      proxyPass = "http://127.0.0.1:3001";
+      extraConfig = "auth_request off;";
+    };
+
+    locations."@redirectToAnubis".extraConfig = ''
+      return 307 /.within.website/?redir=$scheme://$host$request_uri;
+      auth_request off;
     '';
 
     locations."= /robots.txt".alias = ./robots.txt;
