@@ -6,16 +6,6 @@
   ...
 }:
 
-let
-  # make the logs for this host "public" so that they show up in e.g. metrics
-  publog =
-    vhost:
-    lib.attrsets.unionOfDisjoint vhost {
-      extraConfig = (vhost.extraConfig or "") + ''
-        access_log /var/log/nginx/public.log vcombined;
-      '';
-    };
-in
 {
 
   imports = [
@@ -87,7 +77,7 @@ in
     lib.mkForce config.systemd.services.gitea.serviceConfig.User;
 
   services.nginx.clientMaxBodySize = "100M";
-  services.nginx.virtualHosts."git.clan.lol" = publog {
+  services.nginx.virtualHosts."git.clan.lol" = {
     forceSSL = true;
     enableACME = true;
     locations."/".extraConfig = ''
