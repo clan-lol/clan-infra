@@ -117,7 +117,11 @@
 
     locations."/.within.website/" = {
       proxyPass = "http://127.0.0.1:3001";
-      extraConfig = "auth_request off;";
+      extraConfig = ''
+        auth_request off;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+      '';
     };
 
     locations."@redirectToAnubis".extraConfig = ''
