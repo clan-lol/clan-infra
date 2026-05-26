@@ -4,7 +4,6 @@
     ./gitea
     ./gitea-mq.nix
     ./homepage.nix
-    ./hypervisor.nix
     ./jumphost.nix
     ./matrix-synapse.nix
     ./nextcloud.nix
