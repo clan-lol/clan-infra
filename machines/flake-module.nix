@@ -79,6 +79,9 @@
         };
         roles.server.tags.all = { };
         roles.server.settings = {
+          # disable ssh certificates as enabling SSH CA by default will lock out all GPG users as GPG does not handle this at all
+          # @magic_rb complained about this
+          certificate.enable = false;
           certificate.searchDomains = [
             "clan.lol"
             "wireguard-infra"
