@@ -56,6 +56,10 @@
   ];
 
   programs.ssh.knownHosts = {
+    "build01.clan.lol".publicKey =
+      self.nixosConfigurations.build01.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+    "build-x86-01.clan.lol".publicKey =
+      self.nixosConfigurations.build-x86-01.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
     "build02.vpn.clan.lol".publicKey =
       self.darwinConfigurations.build02.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
     "build04.clan.lol".publicKey =
