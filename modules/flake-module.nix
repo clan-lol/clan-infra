@@ -18,6 +18,7 @@
         ./nix-daemon.nix
         ./shared.nix
         ./signing.nix
+        ./variants.nix
       ];
       clan.core.settings.state-version.enable = true;
 
