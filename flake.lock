@@ -477,11 +477,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779960003,
-        "narHash": "sha256-DN2rfofPBoGi0qge+l+q42o9rMFWq0S8rMHfdiUVJnw=",
+        "lastModified": 1779965098,
+        "narHash": "sha256-Jh0Zk+g0pEbNopADEtqvrnhrl83rlNFHpn3Zhz4s+VM=",
         "owner": "terranix",
         "repo": "terranix",
-        "rev": "fed28150d3ec9b9d7b8ba1bf6883875057770028",
+        "rev": "36ed5bdee452978d0e9c4450de872483ab541006",
         "type": "github"
       },
       "original": {
