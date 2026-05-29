@@ -70,13 +70,15 @@
       locations."^~ /docs/main".extraConfig = ''
         rewrite ^/docs/main(.*)$ /docs/unstable$1 permanent;
       '';
-      locations."= /docs/versions".extraConfig = ''
-        proxy_pass https://git.clan.lol/clan/clan-core/raw/branch/main/pkgs/clan-site/versions;
-        proxy_set_header Host git.clan.lol;
-        proxy_ssl_server_name on;
-        proxy_ssl_name git.clan.lol;
-        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
-      '';
+      # Served same-origin from a file the docs deploy writes, so the version
+      # switcher has no cross-service dependency on git.clan.lol / Anubis.
+      locations."= /docs/versions" = {
+        alias = "/var/www/versioned-docs/versions";
+        extraConfig = ''
+          default_type text/plain;
+          add_header Cache-Control "no-cache, no-store, must-revalidate" always;
+        '';
+      };
       # Serve versioned docs from /var/www/versioned-docs/<VERSION>/
       # URL: /docs/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/docs/<VERSION>/path
       # URL: /_assets/<VERSION>/path  →  /var/www/versioned-docs/<VERSION>/_assets/<VERSION>/path
