@@ -40,6 +40,7 @@ in
     inherit (config.services.nextcloud.package.packages.apps)
       calendar
       contacts
+      tasks
       user_oidc
       ;
   };
