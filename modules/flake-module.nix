@@ -7,30 +7,39 @@
 }:
 {
   flake.nixosModules = {
-    server = {
-      imports = [
-        inputs.srvos.nixosModules.server
-        inputs.srvos.nixosModules.mixins-telegraf
-        inputs.srvos.nixosModules.mixins-nix-experimental
+    server =
+      { lib, ... }:
+      {
+        imports = [
+          inputs.srvos.nixosModules.server
+          inputs.srvos.nixosModules.mixins-telegraf
+          inputs.srvos.nixosModules.mixins-nix-experimental
 
-        ./admins.nix
-        ./dev.nix
-        ./nix-daemon.nix
-        ./shared.nix
-        ./signing.nix
-        ./variants.nix
-      ];
-      clan.core.settings.state-version.enable = true;
+          ./admins.nix
+          ./dev.nix
+          ./nix-daemon.nix
+          ./shared.nix
+          ./signing.nix
+          ./variants.nix
+        ];
 
-      # FIXME: switch to VPN later
-      networking.firewall.allowedTCPPorts = [ 9273 ];
+        clan.core.settings.state-version.enable = true;
 
-      # server
-      boot.kernel.sysctl = {
-        "fs.inotify.max_user_instances" = 524288;
-        "fs.inotify.max_user_watches" = 524288;
+        # FIXME: switch to VPN later
+        networking.firewall.allowedTCPPorts = [ 9273 ];
+
+        # server
+        boot.kernel.sysctl = {
+          "fs.inotify.max_user_instances" = 524288;
+          "fs.inotify.max_user_watches" = 524288;
+        };
+
+        # Override the mkForce inside SrvOS as it breaks ssh-copy-id and nixos-anywhere
+        services.openssh.authorizedKeysFiles = lib.mkOverride 49 [
+          "%h/.ssh/authorized_keys"
+          "/etc/ssh/authorized_keys.d/%u"
+        ];
       };
-    };
 
     hetzner-amd.imports = [
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
