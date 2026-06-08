@@ -18,6 +18,9 @@
   zramSwap.enable = true;
   zramSwap.memoryPercent = 100;
 
+  # increase swappiness because we have zram swap
+  boot.kernel.sysctl."vm.swappiness" = 100;
+
   clan.vaultwarden = {
     domain = "pass.clan.lol";
     smtp = {

@@ -30,8 +30,8 @@ let
             type = "swap";
             discardPolicy = "both";
             randomEncryption = true;
-            # equal priority on both disks ⇒ kernel stripes writes across them
-            priority = 100;
+            # equal priority on both disks ⇒ kernel stripes writes across them after filling zram
+            priority = config.zramSwap.priority - 1;
           };
         };
         mdraid = {
