@@ -1,5 +1,4 @@
 {
-  config,
   self,
   inputs,
   ...
@@ -45,10 +44,8 @@
               ${inputs'.clan-core.legacyPackages.setupNixInNix}
               mkdir -p self
               cp -r --no-target-directory ${self} self
-              ${lib.concatMapStringsSep "\n" (machine: ''
-                clan vars check ${machine} --flake ./self --debug
-                clan vars fix ${machine} --flake ./self --debug
-              '') (lib.attrNames config.clan.inventory.machines)}
+              clan vars check --flake ./self --debug
+              clan vars fix --flake ./self --debug
               touch $out
             '';
       };
