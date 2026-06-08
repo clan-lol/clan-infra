@@ -15,6 +15,9 @@
     memoryPercent = 25;
   };
 
+  # increase swappiness because we have zram swap
+  boot.kernel.sysctl."vm.swappiness" = 100;
+
   # connections over ZeroTier can access all ports
   networking.firewall.trustedInterfaces = [ "ztqcw3e3rp" ];
 
