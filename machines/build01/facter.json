@@ -68,8 +68,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E111sv00000000sd00000000bc06sc04i00"
       },
@@ -137,8 +141,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E103sv00000000sd00000000bc06sc04i00"
       },
@@ -334,8 +342,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E117sv00000000sd00000000bc06sc04i00"
       },
@@ -403,8 +415,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E115sv00000000sd00000000bc06sc04i00"
       },
@@ -472,8 +488,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E103sv00000000sd00000000bc06sc04i00"
       },
@@ -596,8 +616,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E101sv00000000sd00000000bc06sc04i00"
       },
@@ -665,8 +689,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E101sv00000000sd00000000bc06sc04i00"
       },
@@ -734,8 +762,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E115sv00000000sd00000000bc06sc04i00"
       },
@@ -803,8 +835,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E113sv00000000sd00000000bc06sc04i00"
       },
@@ -872,8 +908,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E104sv00000000sd00000000bc06sc04i00"
       },
@@ -996,8 +1036,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E111sv00000000sd00000000bc06sc04i00"
       },
@@ -1065,8 +1109,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E102sv00000000sd00000000bc06sc04i00"
       },
@@ -1134,8 +1182,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E111sv00000000sd00000000bc06sc04i00"
       },
@@ -1203,8 +1255,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E102sv00000000sd00000000bc06sc04i00"
       },
@@ -1382,8 +1438,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E117sv00000000sd00000000bc06sc04i00"
       },
@@ -1451,8 +1511,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E103sv00000000sd00000000bc06sc04i00"
       },
@@ -1575,8 +1639,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E101sv00000000sd00000000bc06sc04i00"
       },
@@ -1644,8 +1712,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E115sv00000000sd00000000bc06sc04i00"
       },
@@ -1713,8 +1785,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E113sv00000000sd00000000bc06sc04i00"
       },
@@ -1782,8 +1858,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E104sv00000000sd00000000bc06sc04i00"
       },
@@ -1906,8 +1986,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E101sv00000000sd00000000bc06sc04i00"
       },
@@ -1975,8 +2059,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E115sv00000000sd00000000bc06sc04i00"
       },
@@ -2044,8 +2132,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E104sv00000000sd00000000bc06sc04i00"
       },
@@ -2113,8 +2205,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E111sv00000000sd00000000bc06sc04i00"
       },
@@ -2182,8 +2278,12 @@
           "prog_if": 0
         },
         "driver": "pcieport",
+        "driver_module": "pcieportdrv",
         "drivers": [
           "pcieport"
+        ],
+        "driver_modules": [
+          "pcieportdrv"
         ],
         "module_alias": "pci:v00001DEFd0000E102sv00000000sd00000000bc06sc04i00"
       },
@@ -2273,13 +2373,16 @@
         "fpu": false,
         "fpu_exception": false,
         "write_protect": false,
-        "address_sizes": {}
+        "address_sizes": {
+          "physical": "0x0",
+          "virtual": "0x0"
+        }
       }
     ],
     "disk": [
       {
         "index": 122,
-        "attached_to": 103,
+        "attached_to": 97,
         "class_list": [
           "disk",
           "block_device",
@@ -2321,11 +2424,11 @@
           "hex": "aa09",
           "value": 43529
         },
-        "serial": "S64FNN0X312136",
+        "serial": "S64FNN0X312137",
         "model": "SAMSUNG MZQL2960HCJR-00A07",
         "sysfs_id": "/class/block/nvme0n1",
         "sysfs_bus_id": "nvme0",
-        "sysfs_device_link": "/devices/pci0002:00/0002:00:01.0/0002:01:00.0/nvme/nvme0",
+        "sysfs_device_link": "/devices/pci0002:00/0002:00:03.0/0002:02:00.0/nvme/nvme0",
         "unix_device_name": "/dev/nvme0n1",
         "unix_device_number": {
           "type": 98,
@@ -2334,11 +2437,10 @@
           "range": 0
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/11",
-          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312136",
-          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312136_1",
-          "/dev/disk/by-id/nvme-eui.36344630583121360025384e00000002",
-          "/dev/disk/by-path/pci-0002:01:00.0-nvme-1",
+          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312137",
+          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312137_1",
+          "/dev/disk/by-id/nvme-eui.36344630583121370025384e00000002",
+          "/dev/disk/by-path/pci-0002:02:00.0-nvme-1",
           "/dev/nvme0n1"
         ],
         "resources": [
@@ -2347,7 +2449,7 @@
             "cylinders": 915715,
             "heads": 64,
             "sectors": 32,
-            "size": 0,
+            "size": "0x0",
             "geo_type": "logical"
           },
           {
@@ -2368,7 +2470,7 @@
       },
       {
         "index": 123,
-        "attached_to": 97,
+        "attached_to": 103,
         "class_list": [
           "disk",
           "block_device",
@@ -2410,11 +2512,11 @@
           "hex": "aa09",
           "value": 43529
         },
-        "serial": "S64FNN0X312137",
+        "serial": "S64FNN0X312136",
         "model": "SAMSUNG MZQL2960HCJR-00A07",
         "sysfs_id": "/class/block/nvme1n1",
         "sysfs_bus_id": "nvme1",
-        "sysfs_device_link": "/devices/pci0002:00/0002:00:03.0/0002:02:00.0/nvme/nvme1",
+        "sysfs_device_link": "/devices/pci0002:00/0002:00:01.0/0002:01:00.0/nvme/nvme1",
         "unix_device_name": "/dev/nvme1n1",
         "unix_device_number": {
           "type": 98,
@@ -2423,11 +2525,10 @@
           "range": 0
         },
         "unix_device_names": [
-          "/dev/disk/by-diskseq/10",
-          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312137",
-          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312137_1",
-          "/dev/disk/by-id/nvme-eui.36344630583121370025384e00000002",
-          "/dev/disk/by-path/pci-0002:02:00.0-nvme-1",
+          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312136",
+          "/dev/disk/by-id/nvme-SAMSUNG_MZQL2960HCJR-00A07_S64FNN0X312136_1",
+          "/dev/disk/by-id/nvme-eui.36344630583121360025384e00000002",
+          "/dev/disk/by-path/pci-0002:01:00.0-nvme-1",
           "/dev/nvme1n1"
         ],
         "resources": [
@@ -2436,7 +2537,7 @@
             "cylinders": 915715,
             "heads": 64,
             "sectors": 32,
-            "size": 0,
+            "size": "0x0",
             "geo_type": "logical"
           },
           {
@@ -2511,6 +2612,7 @@
         "model": "VGA compatible controller",
         "sysfs_id": "/devices/pci0003:00/0003:00:01.0/0003:01:00.0/0003:02:00.0",
         "sysfs_bus_id": "0003:02:00.0",
+        "sysfs_iommu_group_id": 23,
         "resources": [
           {
             "type": "irq",
@@ -2632,8 +2734,12 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
+        ],
+        "driver_modules": [
+          "usbcore"
         ],
         "module_alias": "usb:v174Cp2074d0001dc09dsc00dp02ic09isc00ip02in00"
       },
@@ -2715,8 +2821,12 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
+        ],
+        "driver_modules": [
+          "usbcore"
         ],
         "module_alias": "usb:v1D6Bp0107d0100dc09dsc00dp01ic09isc00ip00in00"
       },
@@ -2787,8 +2897,12 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
+        ],
+        "driver_modules": [
+          "usbcore"
         ],
         "module_alias": "usb:v174Cp3074d0001dc09dsc00dp03ic09isc00ip00in00"
       },
@@ -2859,8 +2973,12 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
+        ],
+        "driver_modules": [
+          "usbcore"
         ],
         "module_alias": "usb:v174Cp3074d0001dc09dsc00dp03ic09isc00ip00in00"
       },
@@ -2887,7 +3005,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.19 xhci-hcd",
+          "name": "Linux 6.14.10 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -2897,11 +3015,11 @@
         },
         "revision": {
           "hex": "0000",
-          "name": "6.12",
+          "name": "6.14",
           "value": 0
         },
         "serial": "0002:03:00.0",
-        "model": "Linux 6.12.19 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.14.10 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0002:00/0002:00:05.0/0002:03:00.0/usb1/1-0:1.0",
         "sysfs_bus_id": "1-0:1.0",
         "resources": [
@@ -2942,10 +3060,14 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
         ],
-        "module_alias": "usb:v1D6Bp0002d0612dc09dsc00dp01ic09isc00ip00in00"
+        "driver_modules": [
+          "usbcore"
+        ],
+        "module_alias": "usb:v1D6Bp0002d0614dc09dsc00dp01ic09isc00ip00in00"
       },
       {
         "index": 131,
@@ -3024,8 +3146,12 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
+        ],
+        "driver_modules": [
+          "usbcore"
         ],
         "module_alias": "usb:v174Cp2074d0001dc09dsc00dp02ic09isc00ip02in00"
       },
@@ -3052,7 +3178,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.19 xhci-hcd",
+          "name": "Linux 6.14.10 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -3062,11 +3188,11 @@
         },
         "revision": {
           "hex": "0000",
-          "name": "6.12",
+          "name": "6.14",
           "value": 0
         },
         "serial": "0002:03:00.0",
-        "model": "Linux 6.12.19 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.14.10 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0002:00/0002:00:05.0/0002:03:00.0/usb2/2-0:1.0",
         "sysfs_bus_id": "2-0:1.0",
         "detail": {
@@ -3097,10 +3223,14 @@
         },
         "hotplug": "usb",
         "driver": "hub",
+        "driver_module": "usbcore",
         "drivers": [
           "hub"
         ],
-        "module_alias": "usb:v1D6Bp0003d0612dc09dsc00dp03ic09isc00ip00in00"
+        "driver_modules": [
+          "usbcore"
+        ],
+        "module_alias": "usb:v1D6Bp0003d0614dc09dsc00dp03ic09isc00ip00in00"
       }
     ],
     "memory": [
@@ -3125,7 +3255,7 @@
           {
             "type": "mem",
             "base": 0,
-            "range": 134308679680,
+            "range": 134302826496,
             "enabled": true,
             "access": "read_write",
             "prefetch": "unknown"
@@ -3233,7 +3363,11 @@
           "prog_if": 0
         },
         "driver": "igb",
+        "driver_module": "igb",
         "drivers": [
+          "igb"
+        ],
+        "driver_modules": [
           "igb"
         ],
         "module_alias": "pci:v00008086d00001533sv00001849sd00001533bc02sc00i00"
@@ -3283,9 +3417,9 @@
         "model": "ASRR USB Ethernet",
         "sysfs_id": "/devices/pci0002:00/0002:00:05.0/0002:03:00.0/usb1/1-2/1-2.3/1-2.3.1/1-2.3.1:2.0",
         "sysfs_bus_id": "1-2.3.1:2.0",
-        "unix_device_name": "eth0",
+        "unix_device_name": "usb0",
         "unix_device_names": [
-          "eth0"
+          "usb0"
         ],
         "resources": [
           {
@@ -3371,16 +3505,16 @@
           "value": 263
         },
         "sub_class": {
-          "hex": "0001",
-          "name": "Ethernet",
-          "value": 1
+          "hex": "000c",
+          "name": "USB-Link",
+          "value": 12
         },
-        "model": "Ethernet network interface",
-        "sysfs_id": "/class/net/eth0",
+        "model": "USB-Link network interface",
+        "sysfs_id": "/class/net/usb0",
         "sysfs_device_link": "/devices/pci0002:00/0002:00:05.0/0002:03:00.0/usb1/1-2/1-2.3/1-2.3.1/1-2.3.1:2.0",
-        "unix_device_name": "eth0",
+        "unix_device_name": "usb0",
         "unix_device_names": [
-          "eth0"
+          "usb0"
         ],
         "resources": [
           {
@@ -3435,7 +3569,11 @@
           }
         ],
         "driver": "igb",
+        "driver_module": "igb",
         "drivers": [
+          "igb"
+        ],
+        "driver_modules": [
           "igb"
         ]
       },
@@ -3833,8 +3971,12 @@
           "prog_if": 48
         },
         "driver": "xhci_hcd",
+        "driver_module": "xhci_pci",
         "drivers": [
           "xhci_hcd"
+        ],
+        "driver_modules": [
+          "xhci_pci"
         ],
         "module_alias": "pci:v00001B21d00003042sv00001B21sd00002142bc0Csc03i30"
       }
