@@ -65,8 +65,10 @@
       # Versioned docs: /docs/<VERSION>/* serves from /var/www/versioned-docs/<VERSION>/docs/<VERSION>/*
       # Each release branch deploys via rsync into /var/www/versioned-docs/<VERSION>/
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
+      # Redirect to latest version
       locations."= /docs".return = "301 /docs/25.11";
       locations."= /docs/".return = "301 /docs/25.11";
+
       locations."^~ /docs/main".extraConfig = ''
         rewrite ^/docs/main(.*)$ /docs/unstable$1 permanent;
       '';
@@ -114,10 +116,12 @@
       locations."/what-is-clan".return = "307 https://clan.lol";
       locations."/thaigersprint".return = "307 https://pad.lassul.us/s/clan-thaigersprint";
       locations."/blog/hello-world/".return = "307 https://clan.lol/blog/introduction-clan/";
+      # unstable is a special case that maps to the main branch.
       locations."= /install/unstable".return =
         "301 https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
-      locations."= /install/25.11".return =
-        "301 https://git.clan.lol/clan/clan-core/archive/25.11.tar.gz";
+      # All other versions pass through, assuming the archive exists.
+      locations."~ ^/install/(?<version>[A-Za-z0-9._-]+)$".return =
+        "301 https://git.clan.lol/clan/clan-core/archive/$version.tar.gz";
     };
 
     virtualHosts."data-mesher.docs.clan.lol" = {
