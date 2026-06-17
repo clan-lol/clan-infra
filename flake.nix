@@ -53,7 +53,7 @@
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
-    gitea-mq.url = "github:Mic92/gitea-mq/pull/40/merge";
+    gitea-mq.url = "github:Mic92/gitea-mq";
     gitea-mq.inputs.nixpkgs.follows = "nixpkgs";
     gitea-mq.inputs.treefmt-nix.follows = "treefmt-nix";
 
