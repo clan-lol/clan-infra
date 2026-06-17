@@ -6,5 +6,9 @@
   {
     "publickey": "age1ms7avpz645fw79zfdcdw0x9ph8l7rpmwxa40msfr3w4u0qtc955qkzx77m",
     "type": "age"
+  },
+  {
+    "publickey": "age1yubikey1qgj0qprapgs3z0h4yzuflwz3qpsqpm9hllu0hqsu2eekgd4re0vkvcuxjgs",
+    "type": "age"
   }
 ]
