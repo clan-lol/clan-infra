@@ -32,5 +32,11 @@
       uid = 2003;
       openssh.authorizedKeys.keys = config.users.ssh-keys.vi;
     };
+    janik = {
+      isNormalUser = true;
+      uid = 2004;
+      extraGroups = [ "samba" ];
+      openssh.authorizedKeys.keys = config.users.ssh-keys.janik;
+    };
   };
 }
