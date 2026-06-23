@@ -66,8 +66,8 @@
       # Each release branch deploys via rsync into /var/www/versioned-docs/<VERSION>/
       # Assets are referenced as absolute paths /_assets/<VERSION>/... and /_app/...
       # Redirect to latest version
-      locations."= /docs".return = "301 /docs/25.11";
-      locations."= /docs/".return = "301 /docs/25.11";
+      locations."= /docs".return = "301 /docs/26.05";
+      locations."= /docs/".return = "301 /docs/25.05";
 
       locations."^~ /docs/main".extraConfig = ''
         rewrite ^/docs/main(.*)$ /docs/unstable$1 permanent;
