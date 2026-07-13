@@ -3,6 +3,7 @@
     ./borgbackup.nix
     ./gitea
     ./gitea-mq.nix
+    ./heisenbridge.nix
     ./homepage.nix
     ./jumphost.nix
     ./matrix-synapse.nix
