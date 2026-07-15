@@ -64,5 +64,19 @@
       self.darwinConfigurations.build02.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
     "build04.clan.lol".publicKey =
       self.darwinConfigurations.build04.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+    # web01 copies storinator01's closure over the tunnel ProxyJump, which loops
+    # back through web01 itself, so it must trust both its own key and storinator01.
+    "web01.clan.lol".publicKey =
+      config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
+    "storinator01.wireguard-infra".publicKey =
+      self.nixosConfigurations.storinator01.config.clan.core.vars.generators.openssh.files."ssh.id_ed25519.pub".value;
   };
+
+  # The buildHost -> targetHost closure copy runs as root on web01 with an empty
+  # /root/.ssh, so point it at web01's clan-managed host key for authentication.
+  programs.ssh.extraConfig = ''
+    Host storinator01.wireguard-infra web01.clan.lol
+      IdentityFile ${config.clan.core.vars.generators.openssh.files."ssh.id_ed25519".path}
+      IdentitiesOnly yes
+  '';
 }
