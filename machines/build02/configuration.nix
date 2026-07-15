@@ -10,6 +10,10 @@
     self.darwinModules.build02
   ];
 
+  # No public IP and often offline, so skip it in implicit `clan machines update`.
+  # Deploy it explicitly with `clan machines update build02`.
+  clan.core.deployment.requireExplicitUpdate = true;
+
   services.tailscale.enable = true;
 
   nix.settings.experimental-features = lib.mkForce [
