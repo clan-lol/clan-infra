@@ -16,30 +16,6 @@
         "type": "gitlab"
       }
     },
-    "buildbot-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1778005233,
-        "narHash": "sha256-VT+oNatOvoPL1hM/WGHJ4NyfxtLnebfE77gd+OEqEP8=",
-        "owner": "Enzime",
-        "repo": "buildbot-nix",
-        "rev": "758b05728fe997dbc2c42b1e3ade11e33688b8dc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Enzime",
-        "ref": "619+629",
-        "repo": "buildbot-nix",
-        "type": "github"
-      }
-    },
     "clan-core": {
       "inputs": {
         "data-mesher": "data-mesher",
@@ -300,6 +276,29 @@
         "url": "https://git.clan.lol/clan/nix-select/archive/main.tar.gz"
       }
     },
+    "nixbot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783862175,
+        "narHash": "sha256-j60+n59/H6SIVAOTBmCIvOEgZ4oas4Sp1zE5CHWEj1M=",
+        "owner": "Mic92",
+        "repo": "nixbot",
+        "rev": "ed84fdbb263071e7615b171c3cad64d8d6dc6c1f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nixbot",
+        "type": "github"
+      }
+    },
     "nixos-mailserver": {
       "inputs": {
         "blobs": "blobs",
@@ -386,7 +385,6 @@
     },
     "root": {
       "inputs": {
-        "buildbot-nix": "buildbot-nix",
         "clan-core": "clan-core",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
@@ -396,6 +394,7 @@
         "niks3": "niks3",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
+        "nixbot": "nixbot",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
         "nixpkgs-terraform-providers-bin": "nixpkgs-terraform-providers-bin",

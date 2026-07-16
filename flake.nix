@@ -41,9 +41,9 @@
     clan-core.inputs.systems.follows = "systems";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    buildbot-nix.url = "github:Enzime/buildbot-nix/619+629";
-    buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
-    buildbot-nix.inputs.treefmt-nix.follows = "treefmt-nix";
+    nixbot.url = "github:Mic92/nixbot";
+    nixbot.inputs.nixpkgs.follows = "nixpkgs";
+    nixbot.inputs.treefmt-nix.follows = "treefmt-nix";
 
     terranix.url = "github:terranix/terranix";
     terranix.inputs.flake-parts.follows = "flake-parts";
