@@ -58,6 +58,13 @@
     nginx.enableACME = true;
   };
 
+  # Old CI URL still referenced from PRs, chat logs and bookmarks.
+  services.nginx.virtualHosts."buildbot.clan.lol" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/".return = "301 https://nixbot.clan.lol$request_uri";
+  };
+
   clan.core.vars.generators.nixbot = {
     prompts."gitea-token" = {
       description = "Gitea API token for the nixbot user (repository read/write scope)";
