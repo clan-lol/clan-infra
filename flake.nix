@@ -41,7 +41,9 @@
     clan-core.inputs.systems.follows = "systems";
     clan-core.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    nixbot.url = "github:Mic92/nixbot";
+    # TODO: switch back to the default branch once
+    # https://github.com/Mic92/nixbot/issues/82 is merged
+    nixbot.url = "github:Mic92/nixbot/fix-project-activation";
     nixbot.inputs.nixpkgs.follows = "nixpkgs";
     nixbot.inputs.treefmt-nix.follows = "treefmt-nix";
 
