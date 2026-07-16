@@ -440,7 +440,20 @@ $ clan machines update storinator01
 
 ## To add a new project to CI
 
-1. Add the 'buildbot-clan' topic to the repository using the "Manage topics"
-   button below the project description
-2. Go to https://buildbot.clan.lol/#/builders/2 and press "Update projects"
-   after you have logged in.
+CI is [nixbot](https://github.com/Mic92/nixbot), running at
+https://nixbot.clan.lol. It builds the `.#checks` flake output of the default
+branch and of every pull request.
+
+1. Log in at https://nixbot.clan.lol via Gitea.
+2. If the repository is missing from the list, press "refresh repos".
+3. Press "enable" next to the repository. Requires instance admin (wheel user
+   on web01) or admin permission on the repository in Gitea; write access only
+   allows restarting and cancelling builds.
+
+nixbot registers a webhook and builds the default branch. Anything else you
+want built (packages, NixOS machines) must be re-exported under `.#checks`;
+test locally with `nix flake check -L` or
+[nix-fast-build](https://github.com/Mic92/nix-fast-build).
+
+Commit statuses use the `buildbot/` prefix (`buildbot/nix-eval`,
+`buildbot/nix-build`), so existing branch protection rules keep working.

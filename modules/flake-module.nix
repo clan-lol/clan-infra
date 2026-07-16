@@ -56,10 +56,9 @@
       ./initrd-networking.nix
     ];
 
-    buildbot.imports = [
-      inputs.buildbot-nix.nixosModules.buildbot-master
-      inputs.buildbot-nix.nixosModules.buildbot-worker
-      ./buildbot.nix
+    nixbot.imports = [
+      inputs.nixbot.nixosModules.nixbot
+      ./nixbot.nix
     ];
 
     build01.imports = [
@@ -80,7 +79,7 @@
       inputs.gitea-mq.nixosModules.default
 
       self.nixosModules.server
-      self.nixosModules.buildbot
+      self.nixosModules.nixbot
 
       ./web01
       ./mailserver.nix
