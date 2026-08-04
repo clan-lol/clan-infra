@@ -1,0 +1,54 @@
+From 1df9c4582d7c9732e7f894cc07a7b70d4b6487f9 Mon Sep 17 00:00:00 2001
+From: Michael Hoang <enzime@users.noreply.github.com>
+Date: Sun, 26 Apr 2026 10:11:01 +0200
+Subject: [PATCH] Fix automerge accepting disallowed merge styles
+
+---
+ routers/api/v1/repo/pull.go | 11 +++++++++++
+ routers/web/repo/pull.go    | 11 +++++++++++
+ 2 files changed, 22 insertions(+)
+
+diff --git a/routers/api/v1/repo/pull.go b/routers/api/v1/repo/pull.go
+index 8b1fc8f5cbe84..5829e0b3e99c5 100644
+--- a/routers/api/v1/repo/pull.go
++++ b/routers/api/v1/repo/pull.go
+@@ -1031,6 +1031,17 @@ func MergePullRequest(ctx *context.APIContext) {
+ 	}
+ 
+ 	if form.MergeWhenChecksSucceed {
++		// Validate merge style before scheduling automerge
++		prUnit, err := ctx.Repo.Repository.GetUnit(ctx, unit.TypePullRequests)
++		if err != nil {
++			ctx.APIErrorInternal(err)
++			return
++		}
++		if !prUnit.PullRequestsConfig().IsMergeStyleAllowed(repo_model.MergeStyle(form.Do)) {
++			ctx.APIError(http.StatusMethodNotAllowed, fmt.Sprintf("%s is not allowed an allowed merge style for this repository", repo_model.MergeStyle(form.Do)))
++			return
++		}
++
+ 		scheduled, err := automerge.ScheduleAutoMerge(ctx, ctx.Doer, pr, repo_model.MergeStyle(form.Do), message, deleteBranchAfterMerge)
+ 		if err != nil {
+ 			if pull_model.IsErrAlreadyScheduledToAutoMerge(err) {
+diff --git a/routers/web/repo/pull.go b/routers/web/repo/pull.go
+index c208bc1907a98..1aa3dacb905eb 100644
+--- a/routers/web/repo/pull.go
++++ b/routers/web/repo/pull.go
+@@ -1095,6 +1095,17 @@ func MergePullRequest(ctx *context.Context) {
+ 	deleteBranchAfterMerge := optional.FromPtr(form.DeleteBranchAfterMerge).Value()
+ 
+ 	if form.MergeWhenChecksSucceed {
++		// Validate merge style before scheduling automerge
++		prUnit, err := ctx.Repo.Repository.GetUnit(ctx, unit.TypePullRequests)
++		if err != nil {
++			ctx.ServerError("GetUnit", err)
++			return
++		}
++		if !prUnit.PullRequestsConfig().IsMergeStyleAllowed(repo_model.MergeStyle(form.Do)) {
++			ctx.JSONError(ctx.Tr("repo.pulls.invalid_merge_option"))
++			return
++		}
++
+ 		// delete all scheduled auto merges
+ 		_ = pull_model.DeleteScheduledAutoMerge(ctx, pr.ID)
+ 		// schedule auto merge
