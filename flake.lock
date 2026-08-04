@@ -286,16 +286,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1784207114,
-        "narHash": "sha256-6wkrzgYfIuFE1PqrV9atLiMhRhs1gIhzVkx7d5ScugM=",
+        "lastModified": 1785671702,
+        "narHash": "sha256-wwhItmpu4E7FrdvFQZwBXkTCN1hnm8QuT/y712MF+e8=",
         "owner": "Mic92",
         "repo": "nixbot",
-        "rev": "7d43e0e95e5c3f684ec85dcb2a09a9732977ed9d",
+        "rev": "5eabc926b26f45d014d062ac47b4511c4e0cf197",
         "type": "github"
       },
       "original": {
         "owner": "Mic92",
-        "ref": "fix-project-activation",
         "repo": "nixbot",
         "type": "github"
       }
