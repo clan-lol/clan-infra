@@ -19,6 +19,9 @@
           inputs'.clan-core.packages.merge-after-ci
           inputs'.clan-core.packages.clan-cli
 
+          # nbo: query and drive nixbot builds from the terminal
+          inputs'.nixbot.packages.nixbot-cli
+
           # treefmt with config defined in ./flake.nix
           config.treefmt.build.wrapper
 
