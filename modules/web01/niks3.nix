@@ -9,7 +9,7 @@
     # Backblaze B2 configuration (S3-compatible)
     s3 = {
       endpoint = "s3.eu-central-003.backblazeb2.com";
-      bucket = "clan-cache";
+      bucket = "clan-cache-geninf";
       useSSL = true;
       accessKeyFile = config.clan.core.vars.generators.niks3-s3.files."access-key".path;
       secretKeyFile = config.clan.core.vars.generators.niks3-s3.files."secret-key".path;

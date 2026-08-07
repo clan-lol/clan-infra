@@ -10,7 +10,8 @@ let
   cache_domain = "cache.clan.lol";
 
   # Backblaze B2 bucket details (S3-compatible)
-  s3_bucket = "clan-cache";
+  s3_bucket = "clan-cache-geninf";
+  s3_bucket_id = "de3ada9ec793c07294f10019";
   s3_region = "eu-central-003";
   s3_endpoint = "s3.${s3_region}.backblazeb2.com";
 in
@@ -69,11 +70,10 @@ in
   provider.b2.application_key = config.data.external.b2-application-key "result.secret";
 
   # Application key for Fastly to read from B2 (S3-compatible)
-  # References the bucket created in cache.nix
   resource.b2_application_key.fastly-prod = {
     key_name = "fastly-prod";
     capabilities = [ "readFiles" ];
-    bucket_id = "3ce17c7644b1072d93b40c1c"; # clan-cache bucket ID
+    bucket_id = s3_bucket_id;
   };
 
   # Application key for niks3 to write to B2 (S3-compatible)
@@ -97,7 +97,7 @@ in
       "writeBuckets"
       "writeFiles"
     ];
-    bucket_id = "3ce17c7644b1072d93b40c1c"; # clan-cache bucket ID
+    bucket_id = s3_bucket_id;
 
     # Write credentials to clan vars for web01
     provisioner.local-exec = [
