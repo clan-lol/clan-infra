@@ -14,6 +14,19 @@ let
   s3_bucket_id = "de3ada9ec793c07294f10019";
   s3_region = "eu-central-003";
   s3_endpoint = "s3.${s3_region}.backblazeb2.com";
+
+  clanSecret = name: {
+    program = [
+      (lib.getExe (
+        pkgs.writeShellApplication {
+          name = "get-clan-secret-${name}";
+          text = ''
+            jq -n --arg secret "$(clan secrets get ${name})" '{"secret":$secret}'
+          '';
+        }
+      ))
+    ];
+  };
 in
 {
   # Variable for state encryption
@@ -23,62 +36,43 @@ in
   terraform.required_providers.fastly.source = "fastly/fastly";
   terraform.required_providers.b2.source = "Backblaze/b2";
 
-  # Fastly API key from secrets
-  data.external.fastly-api-key = {
-    program = [
-      (lib.getExe (
-        pkgs.writeShellApplication {
-          name = "get-fastly-secret";
-          text = ''
-            jq -n --arg secret "$(clan secrets get fastly-api-key)" '{"secret":$secret}'
-          '';
-        }
-      ))
-    ];
-  };
+  data.external.fastly-api-key = clanSecret "fastly-api-key";
+  data.external.b2-key-id = clanSecret "b2-key-id";
+  data.external.b2-application-key = clanSecret "b2-application-key";
+  data.external.b2-geninf-key-id = clanSecret "b2-geninf-key-id";
+  data.external.b2-geninf-application-key = clanSecret "b2-geninf-application-key";
 
   provider.fastly.api_key = config.data.external.fastly-api-key "result.secret";
 
-  # B2 credentials from secrets
-  data.external.b2-key-id = {
-    program = [
-      (lib.getExe (
-        pkgs.writeShellApplication {
-          name = "get-clan-secret";
-          text = ''
-            jq -n --arg secret "$(clan secrets get b2-key-id)" '{"secret":$secret}'
-          '';
-        }
-      ))
-    ];
-  };
+  # The bucket lives in a different B2 account than the keys this state already owns, so the
+  # default provider stays on the old account purely to destroy them. Everything new is
+  # created through the geninf alias.
+  provider.b2 = [
+    {
+      application_key_id = config.data.external.b2-key-id "result.secret";
+      application_key = config.data.external.b2-application-key "result.secret";
+    }
+    {
+      alias = "geninf";
+      application_key_id = config.data.external.b2-geninf-key-id "result.secret";
+      application_key = config.data.external.b2-geninf-application-key "result.secret";
+    }
+  ];
 
-  data.external.b2-application-key = {
-    program = [
-      (lib.getExe (
-        pkgs.writeShellApplication {
-          name = "get-clan-secret";
-          text = ''
-            jq -n --arg secret "$(clan secrets get b2-application-key)" '{"secret":$secret}'
-          '';
-        }
-      ))
-    ];
-  };
-
-  provider.b2.application_key_id = config.data.external.b2-key-id "result.secret";
-  provider.b2.application_key = config.data.external.b2-application-key "result.secret";
-
-  # Application key for Fastly to read from B2 (S3-compatible)
-  resource.b2_application_key.fastly-prod = {
-    key_name = "fastly-prod";
+  # The b2 provider writes both bucket_id and bucket_ids back to state on read, and each
+  # attribute suppresses its own diff when the other is set, so retargeting a key at a new
+  # bucket is invisible to the planner. Renaming the resource is what forces the rebuild.
+  resource.b2_application_key.fastly-geninf = {
+    provider = "b2.geninf";
+    key_name = "fastly-geninf";
     capabilities = [ "readFiles" ];
-    bucket_id = s3_bucket_id;
+    bucket_ids = [ s3_bucket_id ];
   };
 
   # Application key for niks3 to write to B2 (S3-compatible)
-  resource.b2_application_key.niks3 = {
-    key_name = "niks3";
+  resource.b2_application_key.niks3-geninf = {
+    provider = "b2.geninf";
+    key_name = "niks3-geninf";
     capabilities = [
       "deleteFiles"
       "listBuckets"
@@ -97,7 +91,7 @@ in
       "writeBuckets"
       "writeFiles"
     ];
-    bucket_id = s3_bucket_id;
+    bucket_ids = [ s3_bucket_id ];
 
     # Write credentials to clan vars for web01
     provisioner.local-exec = [
@@ -241,8 +235,8 @@ in
             [
               "${s3_bucket}.${s3_endpoint}"
               s3_region
-              (config.resource.b2_application_key.fastly-prod "application_key_id")
-              (config.resource.b2_application_key.fastly-prod "application_key")
+              (config.resource.b2_application_key.fastly-geninf "application_key_id")
+              (config.resource.b2_application_key.fastly-geninf "application_key")
             ]
             (builtins.readFile ./cache/s3-authn.vcl);
       }
