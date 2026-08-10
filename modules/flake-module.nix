@@ -137,7 +137,6 @@
   );
   flake.modules.terranix.dns = ./terranix/dns.nix;
   flake.modules.terranix.vultr = ./terranix/vultr.nix;
-  flake.modules.terranix.cache = ./terranix/cache.nix;
   flake.modules.terranix.cache-new = ./terranix/cache-new.nix;
 
   flake.modules.terranix.build01 =

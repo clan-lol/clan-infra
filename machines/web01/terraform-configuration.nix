@@ -230,22 +230,6 @@ in
       records = [ { value = "0 1 465 mail.clan.lol."; } ];
     };
 
-    # Fastly CDN for cache2.clan.lol
-    cache2 = {
-      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
-      name = "cache2";
-      type = "CNAME";
-      records = [ { value = "x.sni.global.fastly.net."; } ];
-    };
-
-    # Fastly ACME challenge for cache2.clan.lol
-    cache2_acme_challenge = {
-      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
-      name = "_acme-challenge.cache2";
-      type = "CNAME";
-      records = [ { value = "90idichjxpxvxf1cod.fastly-validations.com."; } ];
-    };
-
     # Fastly CDN for cache.clan.lol
     cache = {
       zone = lib.tf.ref "module.dns.clan_lol_zone_name";
