@@ -40,6 +40,46 @@
 
     settings.ui = {
       ONLY_SHOW_RELEVANT_REPOS = true;
+      # Must be a comma-separated string: generators.toINI cannot render a list.
+      # Order here is the reaction picker order, upstream defaults first.
+      REACTIONS = lib.concatStringsSep ", " [
+        "+1"
+        "-1"
+        "laugh"
+        "hooray"
+        "confused"
+        "heart"
+        "rocket"
+        "eyes"
+        "thinking"
+        "fire"
+        "clap"
+        "sob"
+        "sunglasses"
+        "skull"
+        "muscle"
+        "pray"
+        "exploding_head"
+        "shrug"
+        "robot"
+        "poop"
+        "face_with_peeking_eye"
+        "lying_face"
+        "vomiting_face"
+        "flushed"
+        "troll"
+        "zombie"
+        "clown_face"
+        "moyai"
+        "cowboy_hat_face"
+        "nerd_face"
+        "melting_face"
+        "face_with_spiral_eyes"
+        "crystal_ball"
+        "bomb"
+        "salt"
+        "sloth"
+      ];
     };
 
     settings.service = {
