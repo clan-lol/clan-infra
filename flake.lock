@@ -433,11 +433,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786588414,
-        "narHash": "sha256-OVAaMIDfjEDamr1Xh4XZKqoX/Xzhg9ShO40julUxZrs=",
+        "lastModified": 1786842686,
+        "narHash": "sha256-oFm3X2+4im01DGx/0sSDoBtaLmngOObPhrxIR0RPBfA=",
         "owner": "nix-community",
         "repo": "srvos",
-        "rev": "fb298f6a85da3241b2d024e82b618ab3f5cc6de2",
+        "rev": "a0356fa3d214e5ccf23ecb8e956e9d5603d08e60",
         "type": "github"
       },
       "original": {
