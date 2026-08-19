@@ -142,6 +142,21 @@
   };
 
   services.nginx.clientMaxBodySize = "100M";
+
+  # https://github.com/TecharoHQ/anubis/issues/1556
+  services.nginx.additionalModules = [ pkgs.nginxModules.njs ];
+  services.nginx.commonHttpConfig = ''
+    js_import anubis from ${pkgs.writeText "anubis-redirect.js" ''
+      function redirectToAnubis(r) {
+        var uri = r.variables.scheme + "://" + r.variables.host + r.variables.request_uri;
+        return "/.within.website/?redir=" + encodeURIComponent(uri);
+      }
+
+      export default { redirectToAnubis };
+    ''};
+    js_set $anubisRedirect anubis.redirectToAnubis;
+  '';
+
   services.nginx.virtualHosts."git.clan.lol" = {
     forceSSL = true;
     enableACME = true;
@@ -161,11 +176,14 @@
         auth_request off;
         proxy_pass_request_body off;
         proxy_set_header Content-Length "";
+
+        # Necessary for Anubis subrequest auth mode to check the correct URL
+        proxy_set_header X-Original-URI $request_uri;
       '';
     };
 
     locations."@redirectToAnubis".extraConfig = ''
-      return 307 /.within.website/?redir=$scheme://$host$request_uri;
+      return 307 $anubisRedirect;
       auth_request off;
     '';
 
