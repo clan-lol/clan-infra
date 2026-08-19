@@ -176,6 +176,9 @@
         auth_request off;
         proxy_pass_request_body off;
         proxy_set_header Content-Length "";
+
+        # Necessary for Anubis subrequest auth mode to check the correct URL
+        proxy_set_header X-Original-URI $request_uri;
       '';
     };
 
