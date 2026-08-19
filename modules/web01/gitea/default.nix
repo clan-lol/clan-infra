@@ -143,19 +143,8 @@
 
   services.nginx.clientMaxBodySize = "100M";
 
-  # https://github.com/TecharoHQ/anubis/issues/1556
+  # Necessary for the Anubis redirect
   services.nginx.additionalModules = [ pkgs.nginxModules.njs ];
-  services.nginx.commonHttpConfig = ''
-    js_import anubis from ${pkgs.writeText "anubis-redirect.js" ''
-      function redirectToAnubis(r) {
-        var uri = r.variables.scheme + "://" + r.variables.host + r.variables.request_uri;
-        return "/.within.website/?redir=" + encodeURIComponent(uri);
-      }
-
-      export default { redirectToAnubis };
-    ''};
-    js_set $anubisRedirect anubis.redirectToAnubis;
-  '';
 
   services.nginx.virtualHosts."git.clan.lol" = {
     forceSSL = true;
@@ -183,6 +172,17 @@
     };
 
     locations."@redirectToAnubis".extraConfig = ''
+      # https://github.com/TecharoHQ/anubis/issues/1556
+      js_import anubis from ${pkgs.writeText "anubis-redirect.js" ''
+        function redirectToAnubis(r) {
+          var uri = r.variables.scheme + "://" + r.variables.host + r.variables.request_uri;
+          return "/.within.website/?redir=" + encodeURIComponent(uri);
+        }
+
+        export default { redirectToAnubis };
+      ''};
+      js_set $anubisRedirect anubis.redirectToAnubis;
+
       return 307 $anubisRedirect;
       auth_request off;
     '';
