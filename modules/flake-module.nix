@@ -37,7 +37,10 @@
         # The 4G default is evicted within hours by a crash-looping service,
         # taking the logs from before the incident with it. A ceiling rather
         # than a reservation, so quiet machines still use next to nothing.
-        services.journald.extraConfig = lib.mkDefault "SystemMaxUse=32G";
+        services.journald.extraConfig = lib.mkDefault ''
+          SystemMaxUse=32G
+          SystemMaxFiles=1000
+        '';
 
         # Override the mkForce inside SrvOS as it breaks ssh-copy-id and nixos-anywhere
         services.openssh.authorizedKeysFiles = lib.mkOverride 49 [
