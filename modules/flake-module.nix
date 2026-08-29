@@ -34,6 +34,11 @@
           "fs.inotify.max_user_watches" = 524288;
         };
 
+        # The 4G default is evicted within hours by a crash-looping service,
+        # taking the logs from before the incident with it. A ceiling rather
+        # than a reservation, so quiet machines still use next to nothing.
+        services.journald.extraConfig = lib.mkDefault "SystemMaxUse=32G";
+
         # Override the mkForce inside SrvOS as it breaks ssh-copy-id and nixos-anywhere
         services.openssh.authorizedKeysFiles = lib.mkOverride 49 [
           "%h/.ssh/authorized_keys"

@@ -127,6 +127,12 @@ in
       ) cfg.users;
     };
 
+    # REMOVEME when rspamd stops segfaulting when using the PCRE JIT which
+    # causes the mailserver to not accept any mail
+    services.rspamd.overrides."options.inc".text = ''
+      disable_pcre_jit = true;
+    '';
+
     services.postsrsd.secretsFile = config.clan.core.vars.generators.postsrsd.files.secret.path;
 
     services.unbound = {
