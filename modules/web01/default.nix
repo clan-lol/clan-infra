@@ -13,6 +13,8 @@
     ./remote-builder.nix
   ];
 
+  services.journald.extraConfig = "SystemMaxUse=64G";
+
   nix.settings.extra-substituters = [ "https://hetzner-cache.numtide.com" ];
 
   services.cloud-init.xfs.enable = true;
