@@ -133,6 +133,9 @@ in
       disable_pcre_jit = true;
     '';
 
+    # if rspamd is down, still allow sending and receiving mail
+    services.postfix.settings.main.milter_default_action = "accept";
+
     services.postsrsd.secretsFile = config.clan.core.vars.generators.postsrsd.files.secret.path;
 
     services.unbound = {
