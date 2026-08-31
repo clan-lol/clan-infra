@@ -13,7 +13,10 @@
     ./remote-builder.nix
   ];
 
-  services.journald.extraConfig = "SystemMaxUse=64G";
+  services.journald.extraConfig = ''
+    SystemMaxUse=64G
+    SystemMaxFiles=1000
+  '';
 
   nix.settings.extra-substituters = [ "https://hetzner-cache.numtide.com" ];
 
