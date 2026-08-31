@@ -20,6 +20,7 @@
             x86_64-linux = [
               "build-x86-01"
               "jitsi01"
+              "monitoring01"
               "storinator01"
               "web01"
               "web02"

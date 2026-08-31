@@ -8,7 +8,7 @@
 {
   flake.nixosModules = {
     server =
-      { lib, ... }:
+      { config, lib, ... }:
       {
         imports = [
           inputs.srvos.nixosModules.server
@@ -27,6 +27,12 @@
 
         # FIXME: switch to VPN later
         networking.firewall.allowedTCPPorts = [ 9273 ];
+
+        # The nixpkgs module lists the config only in reloadTriggers, and alloy's
+        # reload is best-effort: it keeps the old config when the new one fails.
+        systemd.services = lib.mkIf config.services.alloy.enable {
+          alloy.restartTriggers = config.systemd.services.alloy.reloadTriggers;
+        };
 
         # server
         boot.kernel.sysctl = {
@@ -61,6 +67,11 @@
 
     vultr-vc2.imports = [
       inputs.srvos.nixosModules.hardware-vultr-vm
+      ./initrd-networking.nix
+    ];
+
+    hetzner-cx.imports = [
+      inputs.srvos.nixosModules.hardware-hetzner-cloud
       ./initrd-networking.nix
     ];
 
@@ -107,6 +118,14 @@
 
     storinator.imports = [
       self.nixosModules.server
+    ];
+
+    monitoring01.imports = [
+      inputs.srvos.nixosModules.mixins-nginx
+
+      self.nixosModules.server
+
+      ./monitoring.nix
     ];
   };
 
@@ -156,6 +175,7 @@
   flake.modules.terranix.build04 = ../machines/build04/terraform-configuration.nix;
   flake.modules.terranix.build-x86-01 = ../machines/build-x86-01/terraform-configuration.nix;
   flake.modules.terranix.jitsi01 = ../machines/jitsi01/terraform-configuration.nix;
+  flake.modules.terranix.monitoring01 = ../machines/monitoring01/terraform-configuration.nix;
   flake.modules.terranix.storinator01 =
     flake-parts-lib.importApply ../machines/storinator01/terraform-configuration.nix
       {
