@@ -121,6 +121,12 @@ encrypted root filesystem:
 $ ./machines/web01/reboot.sh
 ```
 
+### Deploy new configuration
+
+```
+$ clan machines update web01
+```
+
 ## web02
 
 - Instance type: [vc2-2c-4gb](https://www.vultr.com/pricing/#cloud-compute)
@@ -131,7 +137,7 @@ $ ./machines/web01/reboot.sh
 ### Initial setup
 
 ```
-$ nix run clan-infra#terraform
+$ nix run .#terraform
 ```
 
 ### Deploy new configuration
@@ -147,8 +153,8 @@ the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- apply -replace "vultr_instance.web02"
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- apply -replace "vultr_instance.web02"
 ```
 
 ### Destroy server
@@ -157,14 +163,8 @@ To destroy just the server without taking down the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.web02"
-```
-
-### Deploy new configuration
-
-```
-$ clan machines update web01
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- destroy -target "vultr_instance.web02"
 ```
 
 ## jitsi01
@@ -177,7 +177,7 @@ $ clan machines update web01
 ### Initial setup
 
 ```
-$ nix run clan-infra#terraform
+$ nix run .#terraform
 ```
 
 ### Deploy new configuration
@@ -193,8 +193,8 @@ the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- apply -replace "vultr_instance.jitsi01"
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- apply -replace "vultr_instance.jitsi01"
 ```
 
 ### Destroy server
@@ -203,8 +203,48 @@ To destroy just the server without taking down the `clan.lol` DNS:
 
 ```
 # Run `apply` script first to ensure `terraform init` gets run
-$ nix run clan-infra#terraform
-$ nix run clan-infra#terraform.terraform -- destroy -target "vultr_instance.jitsi01"
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- destroy -target "vultr_instance.jitsi01"
+```
+
+## monitoring01
+
+- Instance type: [cx43](https://www.hetzner.com/cloud/cost-optimized/)
+- CPU: 8 Intel/AMD vCPU cores
+- RAM: 16 GB
+- Storage: 160 GB NVMe
+
+### Initial setup
+
+```
+$ nix run .#terraform
+```
+
+### Deploy new configuration
+
+```
+$ clan machines update monitoring01
+```
+
+### Redeploy server
+
+To redeploy the server without running `terraform destroy` which will take down
+the `clan.lol` DNS:
+
+```
+# Run `apply` script first to ensure `terraform init` gets run
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- apply -replace "hcloud_server.monitoring01"
+```
+
+### Destroy server
+
+To destroy just the server without taking down the `clan.lol` DNS:
+
+```
+# Run `apply` script first to ensure `terraform init` gets run
+$ nix run .#terraform
+$ nix run .#terraform.terraform -- destroy -target "hcloud_server.monitoring01"
 ```
 
 ## build01
@@ -432,11 +472,11 @@ $ clan machines update storinator01
    Terraform deployment SSH key to your server which you can find by running:
 
    ```
-   $ nix run clan-infra#terraform.terraform -- init
-   $ nix run clan-infra#terraform.terraform -- state show tls_private_key.ssh_deploy_key
+   $ nix run .#terraform.terraform -- init
+   $ nix run .#terraform.terraform -- state show tls_private_key.ssh_deploy_key
    ```
 
-4. `nix run clan-infra#terraform` to run the initial deploy
+4. `nix run .#terraform` to run the initial deploy
 
 ## To add a new project to CI
 

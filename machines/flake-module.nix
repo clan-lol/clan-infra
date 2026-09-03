@@ -17,6 +17,7 @@
       jitsi01.deploy.targetHost = "root@jitsi01.clan.lol";
       build01.deploy.targetHost = "root@build01.clan.lol";
       build-x86-01.deploy.targetHost = "root@build-x86-01.clan.lol";
+      monitoring01.deploy.targetHost = "root@monitoring01.clan.lol";
 
       # no public IP, via jump host
       build02.machineClass = "darwin";
@@ -135,6 +136,19 @@
           };
         };
       };
+      monitoring = {
+        module = {
+          name = "monitoring";
+          input = "clan-core";
+        };
+        # Alloy is a NixOS module, so this excludes the darwin builders.
+        roles.client.tags.nixos = { };
+        roles.client.settings.useSSL = true;
+        roles.server.machines.monitoring01.settings = {
+          grafana.enable = true;
+          host = "monitoring.clan.lol";
+        };
+      };
       wireguard-infra = {
         module = {
           name = "wireguard";
@@ -147,6 +161,7 @@
           build04.settings.endpoint = "build04.clan.lol";
           jitsi01.settings.endpoint = "jitsi.clan.lol";
           web02.settings.endpoint = "thecomputer.co";
+          monitoring01.settings.endpoint = "monitoring01.clan.lol";
         };
         roles.peer.machines = {
           storinator01.settings.controller = "web01";
@@ -212,6 +227,7 @@
               self.modules.terranix.build04
               self.modules.terranix.build-x86-01
               self.modules.terranix.jitsi01
+              self.modules.terranix.monitoring01
               self.modules.terranix.storinator01
               self.modules.terranix.web01
               self.modules.terranix.web02
