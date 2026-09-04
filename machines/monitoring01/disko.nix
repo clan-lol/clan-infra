@@ -103,11 +103,11 @@
           "root/mimir" = {
             type = "zfs_fs";
             options = {
-              mountpoint = "/var/lib/mimir";
+              mountpoint = "/var/lib/private/mimir";
               compression = "zstd";
               "com.sun:auto-snapshot" = "false";
             };
-            mountpoint = "/var/lib/mimir";
+            mountpoint = "/var/lib/private/mimir";
           };
           "root/loki" = {
             type = "zfs_fs";
