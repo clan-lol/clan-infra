@@ -1,0 +1,192 @@
+{
+  "uid": "clan-logs",
+  "title": "Logs and Errors",
+  "description": "Journal logs Alloy ships to Loki. Only units in each machine's monitoredSystemdServices list are shipped.",
+  "tags": ["clan", "fleet", "logs"],
+  "timezone": "utc",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1m",
+  "time": { "from": "now-3h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "instance",
+        "label": "Machine",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+        "definition": "label_values(up, instance)",
+        "query": { "qryType": 1, "query": "label_values(up, instance)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "current": { "text": ["All"], "value": ["$__all"] },
+        "includeAll": true,
+        "multi": true,
+        "refresh": 1,
+        "sort": 1,
+        "options": [],
+        "regex": ""
+      },
+      {
+        "name": "service",
+        "label": "Service",
+        "type": "query",
+        "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+        "definition": "label_values(service_name)",
+        "query": { "label": "service_name", "stream": "", "type": 1, "refId": "LokiVariableQueryEditor-VariableQuery" },
+        "current": { "text": ["All"], "value": ["$__all"] },
+        "includeAll": true,
+        "multi": true,
+        "refresh": 1,
+        "sort": 1,
+        "options": [],
+        "regex": ""
+      },
+      {
+        "name": "search",
+        "label": "Contains",
+        "type": "textbox",
+        "query": "",
+        "current": { "text": "", "value": "" },
+        "options": [],
+        "description": "Substring filter applied to the log panels below."
+      }
+    ]
+  },
+  "panels": [
+    { "id": 1, "type": "row", "title": "Volume", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "collapsed": false },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Errors in range",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(count_over_time({instance=~\"$instance\", level=~\"error|crit|alert|emerg\"}[$__range]))", "queryType": "instant" }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Warnings in range",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(count_over_time({instance=~\"$instance\", level=\"warning\"}[$__range]))", "queryType": "instant" }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Journal volume by level",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum by (level) (rate({instance=~\"$instance\"}[$__auto]))", "legendFormat": "{{level}}" }],
+      "fieldConfig": {
+        "defaults": { "unit": "logs/s", "custom": { "drawStyle": "bars", "fillOpacity": 70, "showPoints": "never", "lineWidth": 0, "stacking": { "mode": "normal", "group": "A" } } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "error" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }] },
+          { "matcher": { "id": "byName", "options": "warning" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } }] },
+          { "matcher": { "id": "byName", "options": "info" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }] }
+        ]
+      },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Journal volume by machine",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 5 },
+      "targets": [{ "refId": "A", "expr": "sum by (instance) (rate({instance=~\"$instance\"}[$__auto]))", "legendFormat": "{{instance}}" }],
+      "fieldConfig": { "defaults": { "unit": "logs/s", "custom": { "fillOpacity": 10, "showPoints": "never" } }, "overrides": [] },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    { "id": 6, "type": "row", "title": "Noisiest and angriest services", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 }, "collapsed": false },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Top services by error volume",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 10 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(20, sum by (instance, service_name) (count_over_time({instance=~\"$instance\", level=~\"error|crit|alert|emerg\"}[$__range])))",
+          "queryType": "instant",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": { "excludeByName": { "Time": true }, "renameByName": { "instance": "Machine", "service_name": "Service", "Value": "Errors", "Value #A": "Errors" } }
+        },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Errors", "desc": true }] } }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } }, "noValue": "no errors in range" },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Errors" },
+            "properties": [
+              { "id": "unit", "value": "short" },
+              { "id": "decimals", "value": 0 },
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" } },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "color": "yellow", "value": null }, { "color": "red", "value": 100 }] } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "type": "table",
+      "title": "Top services by total volume",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 10 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(20, sum by (instance, service_name) (count_over_time({instance=~\"$instance\", service_name=~\"$service\"}[$__range])))",
+          "queryType": "instant",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": { "excludeByName": { "Time": true }, "renameByName": { "instance": "Machine", "service_name": "Service", "Value": "Lines", "Value #A": "Lines" } }
+        },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Lines", "desc": true }] } }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } } },
+        "overrides": [{ "matcher": { "id": "byName", "options": "Lines" }, "properties": [{ "id": "unit", "value": "short" }, { "id": "decimals", "value": 0 }] }]
+      }
+    },
+    { "id": 9, "type": "row", "title": "Journal", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 19 }, "collapsed": false },
+    {
+      "id": 10,
+      "type": "logs",
+      "title": "Errors and worse",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 11, "w": 24, "x": 0, "y": 20 },
+      "targets": [{ "refId": "A", "expr": "{instance=~\"$instance\", level=~\"error|crit|alert|emerg\"} |= \"$search\"" }],
+      "options": { "showTime": true, "showLabels": true, "wrapLogMessage": true }
+    },
+    {
+      "id": 11,
+      "type": "logs",
+      "title": "All shipped journal lines",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 31 },
+      "targets": [{ "refId": "A", "expr": "{instance=~\"$instance\", service_name=~\"$service\"} |= \"$search\"" }],
+      "options": { "showTime": true, "showLabels": true, "wrapLogMessage": true }
+    }
+  ]
+}

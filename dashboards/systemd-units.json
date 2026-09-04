@@ -1,0 +1,281 @@
+{
+  "uid": "clan-units",
+  "title": "Systemd Units",
+  "description": "systemd state across the fleet. node_systemd_unit_state covers every unit; nixos_systemd_unit_state is the copy Alloy filters down to each machine's monitoredSystemdServices list.",
+  "tags": ["clan", "fleet", "systemd"],
+  "timezone": "utc",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1m",
+  "time": { "from": "now-6h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "instance",
+        "label": "Machines",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+        "definition": "label_values(up, instance)",
+        "query": { "qryType": 1, "query": "label_values(up, instance)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "current": { "text": ["All"], "value": ["$__all"] },
+        "includeAll": true,
+        "multi": true,
+        "refresh": 1,
+        "sort": 1,
+        "options": [],
+        "regex": ""
+      },
+      {
+        "name": "focus",
+        "label": "Drill into",
+        "description": "Machine shown in the per-service history panel.",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+        "definition": "label_values(up, instance)",
+        "query": { "qryType": 1, "query": "label_values(up, instance)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "current": { "text": "web01", "value": "web01" },
+        "includeAll": false,
+        "multi": false,
+        "refresh": 1,
+        "sort": 1,
+        "options": [],
+        "regex": ""
+      }
+    ]
+  },
+  "panels": [
+    { "id": 1, "type": "row", "title": "Health", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "collapsed": false },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Machine summary",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 16, "x": 0, "y": 1 },
+      "targets": [
+        { "refId": "A", "expr": "max by (instance) (node_systemd_system_running{instance=~\"$instance\"})", "instant": true, "format": "table" },
+        {
+          "refId": "B",
+          "expr": "sum by (instance) (node_systemd_unit_state{instance=~\"$instance\", state=\"failed\"} == 1) or sum by (instance) (up{instance=~\"$instance\"} * 0)",
+          "instant": true,
+          "format": "table"
+        },
+        { "refId": "C", "expr": "max by (instance) (node_systemd_units{instance=~\"$instance\", state=\"active\"})", "instant": true, "format": "table" },
+        { "refId": "D", "expr": "max by (instance) (node_systemd_units{instance=~\"$instance\", state=\"inactive\"})", "instant": true, "format": "table" },
+        { "refId": "E", "expr": "sum by (instance) (node_systemd_units{instance=~\"$instance\"})", "instant": true, "format": "table" }
+      ],
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "instance", "mode": "outer" } },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "Time 1": true, "Time 2": true, "Time 3": true, "Time 4": true, "Time 5": true },
+            "renameByName": { "instance": "Machine", "Value #A": "System state", "Value #B": "Failed", "Value #C": "Active", "Value #D": "Inactive", "Value #E": "Units known" }
+          }
+        },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Failed", "desc": true }] } }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } }, "decimals": 0 },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "System state" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [{ "type": "value", "options": { "0": { "text": "degraded", "color": "red", "index": 0 }, "1": { "text": "running", "color": "green", "index": 1 } } }]
+              },
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "basic" } },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Failed" },
+            "properties": [
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "basic" } },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": "state-timeline",
+      "title": "System state over time",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "max by (instance) (node_systemd_system_running{instance=~\"$instance\"})", "legendFormat": "{{instance}}" }],
+      "options": { "showValue": "never", "legend": { "showLegend": false }, "rowHeight": 0.85 },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "type": "value", "options": { "0": { "text": "degraded", "color": "red", "index": 0 }, "1": { "text": "running", "color": "green", "index": 1 } } }],
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] },
+          "custom": { "lineWidth": 0, "fillOpacity": 90 }
+        },
+        "overrides": []
+      }
+    },
+    { "id": 4, "type": "row", "title": "Failures", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 }, "collapsed": false },
+    {
+      "id": 5,
+      "type": "table",
+      "title": "Units in failed state",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 10 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max by (instance, name, type) (node_systemd_unit_state{instance=~\"$instance\", state=\"failed\"} == 1)",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        { "id": "organize", "options": { "excludeByName": { "Time": true, "Value": true }, "renameByName": { "instance": "Machine", "name": "Unit", "type": "Type" } } },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Machine" }] } }
+      ],
+      "fieldConfig": { "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } }, "noValue": "no failed units" }, "overrides": [] }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Failed units over time",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 10 },
+      "targets": [{ "refId": "A", "expr": "sum by (instance) (node_systemd_unit_state{instance=~\"$instance\", state=\"failed\"} == 1)", "legendFormat": "{{instance}}" }],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "min": 0, "decimals": 0, "custom": { "fillOpacity": 20, "showPoints": "never", "lineInterpolation": "stepAfter" } },
+        "overrides": []
+      },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    { "id": 7, "type": "row", "title": "Monitored services", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 }, "collapsed": false },
+    {
+      "id": 8,
+      "type": "state-timeline",
+      "title": "All monitored services active",
+      "description": "Green while every service in the machine's monitored list is active.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 19 },
+      "targets": [{ "refId": "A", "expr": "min by (instance) (nixos_systemd_unit_state{instance=~\"$instance\", state=\"active\"})", "legendFormat": "{{instance}}" }],
+      "options": { "showValue": "never", "legend": { "showLegend": false }, "rowHeight": 0.85 },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "type": "value", "options": { "0": { "text": "service down", "color": "red", "index": 0 }, "1": { "text": "all active", "color": "green", "index": 1 } } }],
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] },
+          "custom": { "lineWidth": 0, "fillOpacity": 90 }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 9,
+      "type": "table",
+      "title": "Monitored services not active",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 19 },
+      "targets": [{ "refId": "A", "expr": "max by (instance, name) (nixos_systemd_unit_state{instance=~\"$instance\", state=\"active\"} == 0)", "instant": true, "format": "table" }],
+      "transformations": [
+        { "id": "organize", "options": { "excludeByName": { "Time": true, "Value": true }, "renameByName": { "instance": "Machine", "name": "Service" } } },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Machine" }] } }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } }, "noValue": "every monitored service is active" },
+        "overrides": []
+      }
+    },
+    { "id": 10, "type": "row", "title": "Service history", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 27 }, "collapsed": false },
+    {
+      "id": 11,
+      "type": "state-timeline",
+      "title": "$focus — monitored service history",
+      "description": "Scoped to one machine; every lane at once is unreadable.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 13, "w": 24, "x": 0, "y": 28 },
+      "targets": [{ "refId": "A", "expr": "max by (name) (nixos_systemd_unit_state{instance=\"$focus\", state=\"active\"})", "legendFormat": "{{name}}" }],
+      "options": { "showValue": "never", "legend": { "showLegend": false } },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "type": "value", "options": { "0": { "text": "down", "color": "red", "index": 0 }, "1": { "text": "active", "color": "green", "index": 1 } } }],
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] },
+          "custom": { "lineWidth": 0, "fillOpacity": 90 }
+        },
+        "overrides": []
+      }
+    },
+    { "id": 12, "type": "row", "title": "Unit inventory, timers and sockets", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 41 }, "collapsed": false },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Units by state",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 42 },
+      "targets": [{ "refId": "A", "expr": "sum by (state) (node_systemd_units{instance=~\"$instance\"})", "legendFormat": "{{state}}" }],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "decimals": 0, "custom": { "fillOpacity": 20, "showPoints": "never", "stacking": { "mode": "normal", "group": "A" } } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "failed" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }] },
+          { "matcher": { "id": "byName", "options": "active" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }] }
+        ]
+      },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    {
+      "id": 14,
+      "type": "table",
+      "title": "Timers — time since last trigger",
+      "description": "Catches stalled ACME, backup or GC timers.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 42 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "time() - max by (instance, name) (node_systemd_timer_last_trigger_seconds{instance=~\"$instance\"} > 0)",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "instance": "Machine", "name": "Timer", "Value": "Age" } } },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Age", "desc": true }] } }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } } },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Age" },
+            "properties": [
+              { "id": "unit", "value": "s" },
+              { "id": "decimals", "value": 0 },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 93600 }, { "color": "red", "value": 604800 }] }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Socket connections refused",
+      "description": "Non-zero means a socket unit hit its connection limit.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 50 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (instance, name) (rate(node_systemd_socket_refused_connections_total{instance=~\"$instance\"}[$__rate_interval])) > 0",
+          "legendFormat": "{{instance}} {{name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "cps", "custom": { "fillOpacity": 10, "showPoints": "auto" }, "color": { "mode": "fixed", "fixedColor": "red" }, "noValue": "none refused" },
+        "overrides": []
+      },
+      "options": { "tooltip": { "mode": "multi" } }
+    }
+  ]
+}
