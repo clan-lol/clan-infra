@@ -1,0 +1,314 @@
+{
+  "uid": "clan-fleet",
+  "title": "Fleet Overview",
+  "description": "Fleet health from the Alloy push pipeline. Machines push every 10s and go silent when they die rather than reporting down.",
+  "tags": ["clan", "fleet"],
+  "timezone": "utc",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1m",
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    { "id": 1, "type": "row", "title": "Fleet health", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "collapsed": false },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Reporting",
+      "description": "Machines with a sample in the last 5min.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 3, "x": 0, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "count(up)", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "fieldConfig": { "defaults": { "unit": "short", "noValue": "0", "color": { "mode": "fixed", "fixedColor": "green" } }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Seen in 6h",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 3, "x": 3, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "count(count_over_time(up[6h]))", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "short", "noValue": "0" }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Failed units",
+      "description": "Fleet-wide, including units outside each machine's monitored list.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 4, "x": 6, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(node_systemd_unit_state{state=\"failed\"} == 1)", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Degraded machines",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 4, "x": 10, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "count(node_systemd_system_running == 0)", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Busiest CPU",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 3, "x": 14, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "max(100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m]))))", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 95 }] }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Fullest memory",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 3, "x": 17, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "max(100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 85 }, { "color": "red", "value": 95 }] }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Fullest filesystem",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "max(100 - node_filesystem_avail_bytes{fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_size_bytes)", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
+        },
+        "overrides": []
+      }
+    },
+    { "id": 9, "type": "row", "title": "Per machine", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 }, "collapsed": false },
+    {
+      "id": 10,
+      "type": "table",
+      "title": "Machines",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 6 },
+      "targets": [
+        { "refId": "A", "expr": "100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])))", "instant": true, "format": "table" },
+        {
+          "refId": "B",
+          "expr": "100 * (1 - sum by (instance) (node_memory_MemAvailable_bytes) / sum by (instance) (node_memory_MemTotal_bytes))",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "C",
+          "expr": "max by (instance) (100 - node_filesystem_avail_bytes{fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_size_bytes)",
+          "instant": true,
+          "format": "table"
+        },
+        { "refId": "D", "expr": "sum by (instance) (node_systemd_unit_state{state=\"failed\"} == 1) or sum by (instance) (up * 0)", "instant": true, "format": "table" },
+        { "refId": "E", "expr": "max by (instance) (node_systemd_units{state=\"active\"})", "instant": true, "format": "table" },
+        {
+          "refId": "F",
+          "expr": "time() - max by (instance) (timestamp(up)) or time() - max by (instance) (max_over_time(timestamp(up)[6h:1m]))",
+          "instant": true,
+          "format": "table"
+        },
+        { "refId": "G", "expr": "max by (instance) (scrape_samples_scraped)", "instant": true, "format": "table" }
+      ],
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "instance", "mode": "outer" } },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "Time 1": true, "Time 2": true, "Time 3": true, "Time 4": true, "Time 5": true, "Time 6": true, "Time 7": true },
+            "renameByName": {
+              "instance": "Machine",
+              "Value #A": "CPU",
+              "Value #B": "Memory",
+              "Value #C": "Fullest FS",
+              "Value #D": "Failed units",
+              "Value #E": "Active units",
+              "Value #F": "Last push",
+              "Value #G": "Samples/scrape"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "filterable": true } },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "CPU" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "custom.cellOptions", "value": { "type": "gauge", "mode": "gradient" } },
+              { "id": "min", "value": 0 },
+              { "id": "max", "value": 100 },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 95 }] }
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Memory" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "custom.cellOptions", "value": { "type": "gauge", "mode": "gradient" } },
+              { "id": "min", "value": 0 },
+              { "id": "max", "value": 100 },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 85 }, { "color": "red", "value": 95 }] }
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Fullest FS" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "custom.cellOptions", "value": { "type": "gauge", "mode": "gradient" } },
+              { "id": "min", "value": 0 },
+              { "id": "max", "value": 100 },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Failed units" },
+            "properties": [
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "basic" } },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Last push" },
+            "properties": [
+              { "id": "unit", "value": "s" },
+              { "id": "decimals", "value": 0 },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 300 }] }
+              }
+            ]
+          },
+          { "matcher": { "id": "byName", "options": "Samples/scrape" }, "properties": [{ "id": "unit", "value": "short" }, { "id": "decimals", "value": 0 }] },
+          { "matcher": { "id": "byName", "options": "Active units" }, "properties": [{ "id": "unit", "value": "short" }, { "id": "decimals", "value": 0 }] }
+        ]
+      }
+    },
+    { "id": 11, "type": "row", "title": "Trends", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 15 }, "collapsed": false },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "CPU busy",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "targets": [{ "refId": "A", "expr": "100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[$__rate_interval])))", "legendFormat": "{{instance}}" }],
+      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 10, "showPoints": "never" } }, "overrides": [] },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Memory used",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "targets": [{ "refId": "A", "expr": "100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)", "legendFormat": "{{instance}}" }],
+      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 10, "showPoints": "never" } }, "overrides": [] },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    {
+      "id": 14,
+      "type": "timeseries",
+      "title": "Fullest filesystem per machine",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max by (instance) (100 - node_filesystem_avail_bytes{fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_size_bytes)",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 10, "showPoints": "never" } }, "overrides": [] },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Samples pushed per scrape",
+      "description": "Cardinality per push; node_systemd_unit_state dominates it.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+      "targets": [{ "refId": "A", "expr": "scrape_samples_scraped", "legendFormat": "{{instance}}" }],
+      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 0, "showPoints": "never" } }, "overrides": [] },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    { "id": 16, "type": "row", "title": "Logs", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 32 }, "collapsed": false },
+    {
+      "id": 17,
+      "type": "timeseries",
+      "title": "Journal volume by level",
+      "datasource": { "type": "loki", "uid": "P982945308D3682D1" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 33 },
+      "targets": [{ "refId": "A", "expr": "sum by (level) (rate({instance=~\".+\"}[$__auto]))", "legendFormat": "{{level}}" }],
+      "fieldConfig": {
+        "defaults": { "unit": "logs/s", "custom": { "drawStyle": "bars", "fillOpacity": 60, "showPoints": "never", "lineWidth": 0, "stacking": { "mode": "normal", "group": "A" } } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "error" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }] },
+          { "matcher": { "id": "byName", "options": "warning" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } }] }
+        ]
+      },
+      "options": { "tooltip": { "mode": "multi" } }
+    }
+  ],
+  "links": [
+    {
+      "title": "Fleet dashboards",
+      "type": "dashboards",
+      "tags": ["clan"],
+      "asDropdown": true,
+      "keepTime": true,
+      "includeVars": true,
+      "icon": "external link",
+      "url": "",
+      "tooltip": "",
+      "targetBlank": false
+    }
+  ]
+}

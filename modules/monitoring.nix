@@ -44,6 +44,13 @@
     allow_assign_grafana_admin = true;
   };
 
+  services.grafana.provision.dashboards.settings.providers = [
+    {
+      name = "clan-infra";
+      options.path = ../dashboards;
+    }
+  ];
+
   # Upstream sets instance_interface_names on every Mimir ring but the querier's,
   # which then probes the nonexistent [eth0 en0] default and crash loops.
   services.mimir.configuration.querier.ring.instance_addr = "127.0.0.1";

@@ -1,0 +1,332 @@
+{
+  "uid": "clan-capacity",
+  "title": "Capacity",
+  "description": "Disk and memory headroom. Clients enable only the cpu/filesystem/meminfo/systemd collectors, so there is no disk I/O or network data.",
+  "tags": ["clan", "fleet", "capacity"],
+  "timezone": "utc",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "5m",
+  "time": { "from": "now-24h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "instance",
+        "label": "Machine",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+        "definition": "label_values(up, instance)",
+        "query": { "qryType": 1, "query": "label_values(up, instance)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "current": { "text": ["All"], "value": ["$__all"] },
+        "includeAll": true,
+        "multi": true,
+        "refresh": 1,
+        "sort": 1,
+        "options": [],
+        "regex": ""
+      }
+    ]
+  },
+  "panels": [
+    { "id": 1, "type": "row", "title": "Filesystems", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "collapsed": false },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Mounts over 80%",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(100 - node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_size_bytes > 80)",
+          "instant": true
+        }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Inodes over 80%",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(100 - node_filesystem_files_free{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_files > 80)",
+          "instant": true
+        }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Unexpected read-only mounts",
+      "description": "/nix/store is read-only by design and excluded.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 5, "x": 8, "y": 1 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(node_filesystem_readonly{instance=~\"$instance\", mountpoint!=\"/nix/store\", fstype!~\"tmpfs|ramfs|efivarfs\"} == 1)",
+          "instant": true
+        }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Mounts erroring",
+      "description": "statfs on the mountpoint failed.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 4, "x": 13, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(node_filesystem_device_error{instance=~\"$instance\"})", "instant": true }],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background" },
+      "fieldConfig": {
+        "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Total fleet storage free",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 4, "w": 7, "x": 17, "y": 1 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\", mountpoint!=\"/nix/store\"})",
+          "instant": true
+        }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "bytes", "noValue": "0" }, "overrides": [] }
+    },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Every mounted filesystem",
+      "description": "Time to full extrapolates the last 6h of free-space change.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 5 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max by (instance, mountpoint, fstype) (100 - node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_size_bytes)",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "B",
+          "expr": "max by (instance, mountpoint, fstype) (node_filesystem_size_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"})",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "C",
+          "expr": "max by (instance, mountpoint, fstype) (node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"})",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "D",
+          "expr": "max by (instance, mountpoint, fstype) (100 - node_filesystem_files_free{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_files)",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "E",
+          "expr": "max by (instance, mountpoint, fstype) (node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"} / -deriv(node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"}[6h]) > 0)",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        { "id": "filterFieldsByName", "options": { "exclude": { "names": ["Time"] } } },
+        { "id": "merge", "options": {} },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "renameByName": {
+              "instance": "Machine",
+              "mountpoint": "Mountpoint",
+              "fstype": "FS",
+              "Value #A": "Used",
+              "Value #B": "Size",
+              "Value #C": "Free",
+              "Value #D": "Inodes used",
+              "Value #E": "Time to full"
+            },
+            "indexByName": { "instance": 0, "mountpoint": 1, "fstype": 2, "Value #A": 3, "Value #B": 4, "Value #C": 5, "Value #D": 6, "Value #E": 7 }
+          }
+        },
+        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Used", "desc": true }] } }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } } },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Used" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "min", "value": 0 },
+              { "id": "max", "value": 100 },
+              { "id": "custom.cellOptions", "value": { "type": "gauge", "mode": "gradient" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Inodes used" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 80 }, { "color": "red", "value": 90 }] }
+              }
+            ]
+          },
+          { "matcher": { "id": "byName", "options": "Size" }, "properties": [{ "id": "unit", "value": "bytes" }, { "id": "decimals", "value": 1 }] },
+          { "matcher": { "id": "byName", "options": "Free" }, "properties": [{ "id": "unit", "value": "bytes" }, { "id": "decimals", "value": 1 }] },
+          {
+            "matcher": { "id": "byName", "options": "Time to full" },
+            "properties": [
+              { "id": "unit", "value": "s" },
+              { "id": "decimals", "value": 0 },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 604800 }, { "color": "green", "value": 2592000 }] }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Filesystem used",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 17 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max by (instance, mountpoint) (100 - node_filesystem_avail_bytes{instance=~\"$instance\", fstype!~\"tmpfs|ramfs|efivarfs\"} * 100 / node_filesystem_size_bytes)",
+          "legendFormat": "{{instance}} {{mountpoint}}"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 0, "showPoints": "never" } }, "overrides": [] },
+      "options": { "tooltip": { "mode": "multi" } }
+    },
+    { "id": 9, "type": "row", "title": "Memory", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 26 }, "collapsed": false },
+    {
+      "id": 10,
+      "type": "table",
+      "title": "Memory per machine",
+      "description": "Commit ratio is Committed_AS over CommitLimit; over 100% the kernel has over-promised.",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 27 },
+      "targets": [
+        { "refId": "A", "expr": "max by (instance) (node_memory_MemTotal_bytes{instance=~\"$instance\"})", "instant": true, "format": "table" },
+        { "refId": "B", "expr": "max by (instance) (node_memory_MemAvailable_bytes{instance=~\"$instance\"})", "instant": true, "format": "table" },
+        { "refId": "C", "expr": "max by (instance) (node_memory_Cached_bytes{instance=~\"$instance\"})", "instant": true, "format": "table" },
+        {
+          "refId": "D",
+          "expr": "max by (instance) (100 * (1 - node_memory_SwapFree_bytes{instance=~\"$instance\"} / (node_memory_SwapTotal_bytes{instance=~\"$instance\"} > 0)))",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "refId": "E",
+          "expr": "max by (instance) (100 * node_memory_Committed_AS_bytes{instance=~\"$instance\"} / node_memory_CommitLimit_bytes{instance=~\"$instance\"})",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "instance", "mode": "outer" } },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "Time 1": true, "Time 2": true, "Time 3": true, "Time 4": true, "Time 5": true },
+            "renameByName": { "instance": "Machine", "Value #A": "Total", "Value #B": "Available", "Value #C": "Page cache", "Value #D": "Swap used", "Value #E": "Commit ratio" }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true, "cellOptions": { "type": "auto" } } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Total" }, "properties": [{ "id": "unit", "value": "bytes" }, { "id": "decimals", "value": 1 }] },
+          { "matcher": { "id": "byName", "options": "Available" }, "properties": [{ "id": "unit", "value": "bytes" }, { "id": "decimals", "value": 1 }] },
+          { "matcher": { "id": "byName", "options": "Page cache" }, "properties": [{ "id": "unit", "value": "bytes" }, { "id": "decimals", "value": 1 }] },
+          {
+            "matcher": { "id": "byName", "options": "Swap used" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 1 },
+              { "id": "noValue", "value": "no swap" },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 50 }, { "color": "red", "value": 90 }] }
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Commit ratio" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "decimals", "value": 0 },
+              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
+              {
+                "id": "thresholds",
+                "value": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 100 }, { "color": "red", "value": 150 }] }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "Swap used",
+      "datasource": { "type": "prometheus", "uid": "P46B05499459EE360" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 27 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * (1 - node_memory_SwapFree_bytes{instance=~\"$instance\"} / (node_memory_SwapTotal_bytes{instance=~\"$instance\"} > 0))",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "percent", "min": 0, "max": 100, "noValue": "no swap configured", "custom": { "fillOpacity": 10, "showPoints": "never" } },
+        "overrides": []
+      },
+      "options": { "tooltip": { "mode": "multi" } }
+    }
+  ]
+}
