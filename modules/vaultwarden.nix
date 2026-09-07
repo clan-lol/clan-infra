@@ -115,7 +115,6 @@ in
 
     clan.core.vars.generators = {
       vaultwarden-admin = {
-        migrateFact = "vaultwarden-admin";
         files."vaultwarden-admin" = { };
         files."vaultwarden-admin-hash" = { };
         runtimeInputs = with pkgs; [
@@ -136,7 +135,6 @@ in
         '';
       };
       vaultwarden-smtp = {
-        migrateFact = "vaultwarden-smtp";
         prompts."vaultwarden-smtp".description = "${cfg.smtp.from} SMTP password";
         prompts."vaultwarden-smtp".persist = true;
         runtimeInputs = with pkgs; [ coreutils ];

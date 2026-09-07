@@ -158,7 +158,6 @@ in
       lib.nameValuePair "${username}-mail" {
         files."${username}-password" = { };
         files."${username}-password-hash" = { };
-        migrateFact = "${username}-mail";
         runtimeInputs = with pkgs; [
           coreutils
           xkcdpass

@@ -1,10 +1,7 @@
-{ lib, ... }:
 {
   clan.core.vars.generators.matrix-password-admin = {
     prompts.matrix-recovery-key-admin.persist = true;
     files.matrix-recovery-key-admin.deploy = false;
-
-    migrateFact = lib.mkForce null;
   };
 
   # Increase rate limits for Matrix bots
