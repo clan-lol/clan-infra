@@ -13,10 +13,8 @@
     ./remote-builder.nix
   ];
 
-  services.journald.extraConfig = ''
-    SystemMaxUse=64G
-    SystemMaxFiles=1000
-  '';
+  # Busiest machine we run, so keep more than the shared 32G ceiling.
+  services.journald.settings.Journal.SystemMaxUse = "64G";
 
   nix.settings.extra-substituters = [ "https://hetzner-cache.numtide.com" ];
 
