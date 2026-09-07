@@ -9,7 +9,8 @@
     records = [
       {
         inherit
-          (self.nixosConfigurations.storinator01.config.clan.core.vars.generators.zerotier.files.zerotier-ip)
+          (self.nixosConfigurations.storinator01.config.clan.core.vars.generators."zerotier-ip-storinator01-zerotier-claninfra".files.ip
+          )
           value
           ;
       }

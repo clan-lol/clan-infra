@@ -25,7 +25,8 @@
     records = [
       {
         inherit
-          (self.nixosConfigurations.build01.config.clan.core.vars.generators.zerotier.files.zerotier-ip)
+          (self.nixosConfigurations.build01.config.clan.core.vars.generators."zerotier-ip-build01-zerotier-claninfra".files.ip
+          )
           value
           ;
       }

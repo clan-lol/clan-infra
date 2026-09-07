@@ -55,8 +55,11 @@
           name = "zerotier";
           input = "clan-core";
         };
-        roles.controller.machines.web01 = { };
-        roles.controller.extraModules = [ ../modules/zerotier.nix ];
+        roles.controller.machines.web01.settings.allowedIds = [
+          "e3d6559697" # opnsense router (NewEdge)
+          "6688e8091d" # berwn@laptop
+          "57042912f0" # Mic92@turingmachine
+        ];
         roles.moon.machines.jitsi01.settings = {
           # jitsi.clan.lol
           stableEndpoints = [

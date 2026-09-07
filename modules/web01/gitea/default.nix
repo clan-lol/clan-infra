@@ -112,8 +112,8 @@
     settings.federation.ENABLED = true;
   };
 
-  sops.secrets."vars/gitea-mail/gitea-password".owner =
-    lib.mkForce config.systemd.services.gitea.serviceConfig.User;
+  clan.core.vars.generators.gitea-mail.files.gitea-password.owner =
+    config.systemd.services.gitea.serviceConfig.User;
 
   services.anubis.instances.gitea = {
     settings = {
