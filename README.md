@@ -50,16 +50,9 @@ To connect your device to the clan-infra Zerotier network:
 
 1. **Get the Zerotier network ID:**
 
-   On any existing machine (e.g., `web01`), run:
-
    ```bash
-   clan vars list web01
-   ```
-
-   Look for the line:
-
-   ```
-   zerotier/zerotier-network-id: a9b4872919354736
+   $ clan vars get web01 zerotier-network-zerotier-claninfra/network-id
+   9581a9b77e4e8101
    ```
 
 2. **Configure your device to join the network:**
@@ -68,7 +61,7 @@ To connect your device to the clan-infra Zerotier network:
 
    ```nix
    services.zerotierone.joinNetworks = [
-     "a9b4872919354736" # clan-infra network
+     "9581a9b77e4e8101" # clan-infra network
    ];
    ```
 
@@ -90,14 +83,17 @@ To connect your device to the clan-infra Zerotier network:
 
 4. **Authorize your device on the network:**
 
-   SSH into `web01` (or another admin machine) and run:
+   Add your `<myid>` to the controller's allow list in
+   [`machines/flake-module.nix`](machines/flake-module.nix):
 
-   ```bash
-   sudo zerotier-members allow <myid>
+   ```nix
+   roles.controller.machines.web01.settings.allowedIds = [
+     "<myid>" # your device
+   ];
    ```
 
-   Once authorized, your device will be connected to the clan-infra Zerotier
-   network.
+   Once that change is deployed to `web01`, the controller admits your device
+   and it will be connected to the clan-infra Zerotier network.
 
 ## web01
 
