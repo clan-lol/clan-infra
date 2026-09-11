@@ -1,15 +1,35 @@
+{ self, ... }:
 {
   imports = [
   ];
   perSystem =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     {
       packages =
         let
           writers = pkgs.callPackage ./writers.nix { };
+          web01 = self.nixosConfigurations.web01.config;
         in
         {
           gitea = pkgs.callPackage ./gitea { };
+
+          spam-test = pkgs.callPackage ./spam-test {
+            inherit (web01.mailserver) fqdn;
+            control = "infra@clan.lol";
+            # The sieve that unconditionally files into INBOX is what makes a
+            # mailbox unfiltered, so reading it back is the shipping truth
+            # rather than a second list to keep in sync.
+            unfiltered = lib.attrNames (
+              lib.filterAttrs (
+                _: acct: acct.sieveScript != null && lib.hasInfix ''fileinto "INBOX";'' acct.sieveScript
+              ) web01.mailserver.accounts
+            );
+          };
 
           action-create-pr = pkgs.callPackage ./action-create-pr {
             inherit (writers) writePureShellScriptBin;
