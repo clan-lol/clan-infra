@@ -100,7 +100,7 @@ in
           enablePop3Ssl = true;
           # As on web01: the full text index is another place a message body
           # could outlive its expunge, so the test exercises it.
-          inherit (web01.mailserver) fullTextSearch;
+          fullTextSearch.enable = web01.mailserver.fullTextSearch.enable;
           # As on web01, so postfix resolves through the node's own nameserver
           # rather than a local recursor with no route to the root servers.
           localDnsResolver = false;
