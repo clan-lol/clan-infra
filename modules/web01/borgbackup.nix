@@ -1,8 +1,15 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   user = "u499466";
   host = "${user}.your-storagebox.de";
   port = 23;
+
+  # Mail that gets expunged from the server must not live on in the archives.
+  # Drop this to restore backups for those accounts; it does not bring back
+  # what was never stored.
+  purgedMaildirs = map (username: "${config.mailserver.storage.path}/clan.lol/${username}") (
+    lib.attrNames (lib.filterAttrs (_: u: u.purgeDownloaded) config.services.mailserver.users)
+  );
 
   # Run this from the hetzner network
   # ssh-keyscan -p 23 <host>
@@ -65,7 +72,8 @@ in
       "/var/cache"
       "/var/tmp"
       "/var/log"
-    ];
+    ]
+    ++ purgedMaildirs;
 
     # Disaster recovery:
     # get the backup passphrase and ssh key from the sops and store them in /tmp
