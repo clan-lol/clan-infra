@@ -6,6 +6,56 @@
 }:
 let
   cfg = config.services.mailserver;
+
+  mailDomain = "clan.lol";
+
+  # A `stop` in the user's own script also ends the server-wide `after` script
+  # that files `X-Spam: Yes` into Junk, so INBOX delivery wins.
+  sieveFor =
+    userCfg:
+    let
+      requires =
+        lib.optional (userCfg.redirect != null) "copy" ++ lib.optional userCfg.noJunkFilter "fileinto";
+      body =
+        lib.optional (userCfg.redirect != null) ''redirect :copy "${userCfg.redirect}";''
+        ++ lib.optionals userCfg.noJunkFilter [
+          ''fileinto "INBOX";''
+          "stop;"
+        ];
+    in
+    if requires == [ ] then
+      null
+    else
+      lib.concatStringsSep "\n" (
+        [
+          ''require ["${lib.concatStringsSep "\", \"" requires}"];''
+          ""
+        ]
+        ++ body
+      );
+
+  unfilteredUsers = lib.attrNames (lib.filterAttrs (_: u: u.noJunkFilter) cfg.users);
+  purgedUsers = lib.attrNames (lib.filterAttrs (_: u: u.purgeDownloaded) cfg.users);
+
+  doveadm = lib.getExe' config.services.dovecot2.package "doveadm";
+
+  mailPurge = pkgs.writeShellScript "mail-purge" ''
+    set -eu
+    ${lib.concatMapStrings (username: ''
+      # POP3 only ever shows INBOX, so anything filed into Junk before this was
+      # enabled is invisible to the client. Unread it, then move it where it
+      # belongs instead of expunging mail the user never got to see.
+      ${doveadm} flags remove -u ${username}@${mailDomain} '\Seen' mailbox 'Junk*' all
+      ${doveadm} move -u ${username}@${mailDomain} INBOX mailbox 'Junk*' all
+      # POP3 RETR sets \Seen, so a downloaded message is a read message.
+      ${doveadm} expunge -u ${username}@${mailDomain} mailbox '*' SEEN
+      # Copies a client uploaded over IMAP after submitting via SMTP. Nothing
+      # legitimately lives in these for a POP3 account, downloaded or not.
+      ${doveadm} expunge -u ${username}@${mailDomain} mailbox 'Sent*' all
+      ${doveadm} expunge -u ${username}@${mailDomain} mailbox 'Drafts*' all
+      ${doveadm} expunge -u ${username}@${mailDomain} mailbox 'Trash*' all
+    '') purgedUsers}
+  '';
 in
 {
   # To generate login instructions for a user, run:
@@ -29,7 +79,10 @@ in
   config = {
     services.mailserver.users = {
       golem = { };
-      w = { };
+      w = {
+        noJunkFilter = true;
+        purgeDownloaded = true;
+      };
       chris = { };
       gitea = { };
       pass = { };
@@ -107,16 +160,13 @@ in
 
       accounts = lib.mapAttrs' (
         username: userCfg:
-        lib.nameValuePair "${username}@clan.lol" (
+        lib.nameValuePair "${username}@${mailDomain}" (
           {
             hashedPasswordFile =
               config.clan.core.vars.generators."${username}-mail".files."${username}-password-hash".path;
           }
-          // lib.optionalAttrs (userCfg.redirect != null) {
-            sieveScript = ''
-              require ["copy"];
-              redirect :copy "${userCfg.redirect}";
-            '';
+          // lib.optionalAttrs (sieveFor userCfg != null) {
+            sieveScript = sieveFor userCfg;
           }
           // lib.optionalAttrs (username == "gitea") {
             catchAll = [ "noreply.git.clan.lol" ];
@@ -129,6 +179,32 @@ in
     # causes the mailserver to not accept any mail
     services.rspamd.overrides."options.inc".text = ''
       disable_pcre_jit = true;
+    '';
+
+    # Mail to these recipients skips rspamd entirely: no reject at 15, no
+    # greylisting, no X-Spam or X-Spamd-Result header (extended_spam_headers is
+    # on upstream, so nulling the actions alone would still tag every message),
+    # and no history row. Matching on rcpt is deliberate: keyed on the
+    # authenticated sender instead, want_spam would also skip dkim_signing and
+    # outbound mail would leave unsigned. The match is per SMTP transaction, so
+    # a message addressed to an unfiltered and a filtered mailbox at once
+    # bypasses both.
+    services.rspamd.locals."settings.conf" = lib.mkIf (unfilteredUsers != [ ]) {
+      text = ''
+        no_junk_filter {
+          priority = high;
+          rcpt = [${
+            lib.concatMapStringsSep ", " (username: ''"${username}@${mailDomain}"'') unfilteredUsers
+          }];
+          want_spam = yes;
+        }
+      '';
+    };
+
+    # Outbound mail passes the milter for DKIM signing; without this rspamd would
+    # keep sender, recipients and subject of every relayed message in redis.
+    services.rspamd.locals."history_redis.conf".text = ''
+      enabled = false;
     '';
 
     # if rspamd is down, still allow sending and receiving mail
@@ -150,6 +226,29 @@ in
 
     # use local unbound as dns resolver
     networking.nameservers = [ "127.0.0.1" ];
+
+    # Runs on activation and every five minutes afterwards, so these mailboxes
+    # converge on "INBOX only, nothing retrieved" rather than the policy
+    # applying to new mail alone.
+    systemd.services.mail-purge = lib.mkIf (purgedUsers != [ ]) {
+      description = "Move junk to the inbox, expunge downloaded and sent mail";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "dovecot.service" ];
+      requires = [ "dovecot.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = mailPurge;
+      };
+    };
+
+    systemd.timers.mail-purge = lib.mkIf (purgedUsers != [ ]) {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*:0/5";
+        AccuracySec = "30s";
+        Persistent = true;
+      };
+    };
 
     clan.core.vars.generators = lib.mapAttrs' (
       username: userCfg:

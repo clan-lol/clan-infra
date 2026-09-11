@@ -1,4 +1,9 @@
-{ self, config, ... }:
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
 {
   imports = [
     ./secrets.nix
@@ -60,6 +65,12 @@
           );
           packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
           devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
+          # Needs KVM, and web01 is the only machine with a mailserver.
+          vmTests = lib.optionalAttrs (system == "x86_64-linux") {
+            mail-unfiltered = pkgs.testers.runNixOSTest (
+              import ./mail-unfiltered.nix { inherit self inputs pkgs; }
+            );
+          };
         in
         {
           inherit machinesPerSystemCheck;
@@ -67,6 +78,7 @@
         // nixosMachines
         // darwinMachines
         // packages
-        // devShells;
+        // devShells
+        // vmTests;
     };
 }
