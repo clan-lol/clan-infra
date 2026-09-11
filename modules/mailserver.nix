@@ -86,7 +86,6 @@ in
       domains = [
         "clan.lol"
         "noreply.git.clan.lol"
-        "personal.computer"
       ];
       enablePop3Ssl = true;
 
@@ -112,7 +111,6 @@ in
           {
             hashedPasswordFile =
               config.clan.core.vars.generators."${username}-mail".files."${username}-password-hash".path;
-            aliases = [ "${username}@personal.computer" ];
           }
           // lib.optionalAttrs (userCfg.redirect != null) {
             sieveScript = ''
