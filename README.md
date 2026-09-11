@@ -423,6 +423,96 @@ Add the new user as an admin:
 $ clan secrets groups add-user admins <user>
 ```
 
+## Mailboxes that filter nothing and keep nothing
+
+`w@clan.lol` carries `noJunkFilter = true` and `purgeDownloaded = true` in
+[modules/mailserver.nix](modules/mailserver.nix). It is a POP3-and-SMTP-only
+mailbox, by request: every message reaches INBOX, and nothing stays on the
+server once it has been downloaded.
+
+`noJunkFilter` takes two separate changes because two separate things file
+junk. rspamd gets a `local.d/settings.conf` rule matching that recipient with
+`want_spam = yes`, a full bypass: no reject at 15, no greylisting, no
+`X-Spam`/`X-Spamd-Result` header, no history row. Nulling the individual
+actions is not enough, because upstream sets `extended_spam_headers = true`
+and every scanned message would still be tagged. The account also gets a sieve
+script of `fileinto "INBOX"; stop;`, because dovecot's junk filter is a
+server-wide `after` script; `fileinto` plus `stop` cancels the implicit keep,
+which is the only thing that stops the sequence before that script runs.
+
+Two consequences. The rspamd rule matches per SMTP transaction, so a message
+addressed to this mailbox *and* a filtered one bypasses filtering for both.
+And `want_spam` must never be keyed on the authenticated sender instead: it
+would skip `dkim_signing` too and outbound mail would leave unsigned.
+
+One message type still bounces: anything containing the literal GTUBE test
+pattern. rspamd matches GTUBE while parsing and sets a reject pre-result,
+before settings apply, so `want_spam` cannot undo it. GTUBE is therefore
+useless for probing this setup.
+
+`purgeDownloaded` adds the account to `mail-purge.service`, a oneshot that
+runs on activation and every five minutes. It drains `Junk` back into INBOX
+(clearing `\Seen` first, so mail nobody downloaded is not destroyed in the
+same pass), expunges every `\Seen` message (POP3 `RETR` sets `\Seen`, so a
+downloaded message is a read message), and empties `Sent`, `Drafts` and
+`Trash` unconditionally. Dovecot has no delete-after-`RETR` setting, which is
+why this is a timer. It also makes these single-device mailboxes: a second
+client, or a reinstall, finds an empty INBOX.
+
+Sent mail is never copied server-side - there is no `always_bcc` - but rspamd's
+redis history used to keep the subject, sender and recipients of every scanned
+message, submission included, in `/var/lib/redis-rspamd`. It is now off
+(`local.d/history_redis.conf`), so the rspamd web UI history is empty and
+verdicts have to be read from the journal:
+
+```
+$ journalctl -u rspamd --since -10min | grep rspamd_task_write_log
+```
+
+Disabling it stops new rows but leaves whatever redis already held. Purge that
+once by hand on web01:
+
+```
+$ redis-cli -s /run/redis-rspamd/redis.sock --scan --pattern 'rs_history*' \
+    | xargs -r redis-cli -s /run/redis-rspamd/redis.sock del
+```
+
+The maildirs of purged accounts are excluded from the borg backup
+([modules/web01/borgbackup.nix](modules/web01/borgbackup.nix)), so mail that
+was expunged does not live on in the archives - and a restore will not bring
+those mailboxes back. That is the intent, not a bug.
+
+Postfix still keeps queue files until a message is delivered or bounced, and
+journal lines (envelope sender, recipients, message-id, verdict - no bodies,
+no subjects) are kept as usual.
+
+The behaviour is a flake check,
+[checks/mail-unfiltered.nix](checks/mail-unfiltered.nix). It takes the rspamd
+rule, the sieve script and the purge script straight out of web01's evaluated
+config, so it cannot drift from what ships. Three nodes - the mailserver, a
+client, and an SMTP sink everything non-local relays to - and thirteen
+subtests covering the three promises: nothing is filtered, nothing downloaded
+remains on disk, and nothing submitted is kept. It needs KVM:
+
+```
+$ nix build .#checks.x86_64-linux.mail-unfiltered -L
+```
+
+To probe the live server instead, from a residential connection:
+
+```
+$ nix run .#spam-test
+```
+
+It sends [pkgs/spam-test/spam-test.eml](pkgs/spam-test/spam-test.eml) - a
+forged `paypal.com` sender with no `Date` and no `Message-ID` - to
+`infra@clan.lol`, which must answer `554`, and then to every mailbox with
+filtering off, which must answer `250`, and exits non-zero if either answer is
+wrong. The recipient list comes out of web01's evaluated config. A `554` on
+the control is a pass: it means the reject action is live. Do not send from a
+normal mail provider (SPF and DKIM pass, the message scores near zero) and do
+not probe with GTUBE.
+
 ## Update DNS
 
 Currently DNS can't be updated separately to the machines, so you'll need to
