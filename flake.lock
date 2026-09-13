@@ -301,11 +301,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789068412,
-        "narHash": "sha256-7sR/sLrbyQsg0mjxaiGYvL1utKFQKohItGgErp8YbeU=",
+        "lastModified": 1789304252,
+        "narHash": "sha256-igkXn/yg75EKNo7RknjJwzD+yaF5qzGa+9dLm5zdK0Q=",
         "owner": "Mic92",
         "repo": "nixbot",
-        "rev": "efb600762a8edb244a9f1e90faac0b0f75a89019",
+        "rev": "e2b3729cf574f87bfebc92b037fc1364b20a87ee",
         "type": "github"
       },
       "original": {
