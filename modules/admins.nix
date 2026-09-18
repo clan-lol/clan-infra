@@ -126,16 +126,6 @@
           gitea.username = "Qubasa";
         }
         // grantSudoAccess;
-        kenji = {
-          isNormalUser = true;
-          shell = pkgs.zsh;
-          uid = uid 4;
-          openssh.authorizedKeys.keys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJXGRXiq61BQBUkQLBn720pzxiAZqchHWm504gWa2rE2 kenji"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOu1koO8pJ6t0I+rpSVfjD1m6eDk9KTp8cvGL500tsQ9 kenji"
-          ];
-        }
-        // grantSudoAccess;
         johannes = {
           isNormalUser = true;
           shell = pkgs.zsh;
