@@ -14,7 +14,6 @@
     inventory.machines = {
       web01.deploy.targetHost = "root@web01.clan.lol";
       web02.deploy.targetHost = "root@web02.clan.lol";
-      jitsi01.deploy.targetHost = "root@jitsi01.clan.lol";
       build01.deploy.targetHost = "root@build01.clan.lol";
       build-x86-01.deploy.targetHost = "root@build-x86-01.clan.lol";
       monitoring01.deploy.targetHost = "root@monitoring01.clan.lol";
@@ -60,13 +59,6 @@
           "6688e8091d" # berwn@laptop
           "57042912f0" # Mic92@turingmachine
         ];
-        roles.moon.machines.jitsi01.settings = {
-          # jitsi.clan.lol
-          stableEndpoints = [
-            "207.148.120.82"
-            "2401:c080:1400:5439:5400:5ff:fe43:3de5"
-          ];
-        };
         roles.moon.machines.web01.settings = {
           # clan.lol
           stableEndpoints = [
@@ -162,7 +154,6 @@
           build01.settings.endpoint = "build01.clan.lol";
           build-x86-01.settings.endpoint = "build-x86-01.clan.lol";
           build04.settings.endpoint = "build04.clan.lol";
-          jitsi01.settings.endpoint = "jitsi01.clan.lol";
           web02.settings.endpoint = "thecomputer.co";
           monitoring01.settings.endpoint = "monitoring01.clan.lol";
         };
@@ -229,7 +220,6 @@
               self.modules.terranix.build02
               self.modules.terranix.build04
               self.modules.terranix.build-x86-01
-              self.modules.terranix.jitsi01
               self.modules.terranix.monitoring01
               self.modules.terranix.storinator01
               self.modules.terranix.web01

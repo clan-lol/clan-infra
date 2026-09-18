@@ -195,26 +195,6 @@
         "type": "github"
       }
     },
-    "jitsi-matrix-presence": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1757957807,
-        "narHash": "sha256-NVWOxuoUI3dPk0tB9BcXn2zIuroyRNqfF4hTgFOVd7M=",
-        "owner": "pinpox",
-        "repo": "jitsi-matrix-presence",
-        "rev": "429ee73aba25642059803052f9bb76829468b3ef",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "jitsi-matrix-presence",
-        "type": "github"
-      }
-    },
     "niks3": {
       "inputs": {
         "nixpkgs": [
@@ -405,7 +385,6 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "gitea-mq": "gitea-mq",
-        "jitsi-matrix-presence": "jitsi-matrix-presence",
         "niks3": "niks3",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
