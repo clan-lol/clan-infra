@@ -162,7 +162,7 @@
           build01.settings.endpoint = "build01.clan.lol";
           build-x86-01.settings.endpoint = "build-x86-01.clan.lol";
           build04.settings.endpoint = "build04.clan.lol";
-          jitsi01.settings.endpoint = "jitsi.clan.lol";
+          jitsi01.settings.endpoint = "jitsi01.clan.lol";
           web02.settings.endpoint = "thecomputer.co";
           monitoring01.settings.endpoint = "monitoring01.clan.lol";
         };

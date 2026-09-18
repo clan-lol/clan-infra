@@ -245,5 +245,13 @@ in
       type = "CNAME";
       records = [ { value = "61s5zcfes5290tjs5r.fastly-validations.com."; } ];
     };
+
+    # explicit record, otherwise the wildcard sends it to web01
+    jitsi = {
+      zone = lib.tf.ref "module.dns.clan_lol_zone_name";
+      name = "jitsi";
+      type = "CNAME";
+      records = [ { value = "jitsi.p0.contact."; } ];
+    };
   };
 }
