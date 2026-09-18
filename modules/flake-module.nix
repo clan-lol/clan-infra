@@ -84,12 +84,6 @@
       self.nixosModules.server
     ];
 
-    jitsi01.imports = [
-      self.nixosModules.server
-      ./jitsi.nix
-      ./lasuite-meet.nix
-    ];
-
     web01.imports = [
       inputs.srvos.nixosModules.mixins-nginx
 
@@ -174,7 +168,6 @@
   flake.modules.terranix.build02 = ../machines/build02/terraform-configuration.nix;
   flake.modules.terranix.build04 = ../machines/build04/terraform-configuration.nix;
   flake.modules.terranix.build-x86-01 = ../machines/build-x86-01/terraform-configuration.nix;
-  flake.modules.terranix.jitsi01 = ../machines/jitsi01/terraform-configuration.nix;
   flake.modules.terranix.monitoring01 = ../machines/monitoring01/terraform-configuration.nix;
   flake.modules.terranix.storinator01 =
     flake-parts-lib.importApply ../machines/storinator01/terraform-configuration.nix

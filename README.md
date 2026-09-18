@@ -163,46 +163,6 @@ $ nix run .#terraform
 $ nix run .#terraform.terraform -- destroy -target "vultr_instance.web02"
 ```
 
-## jitsi01
-
-- Instance type: [vc2-2c-4gb](https://www.vultr.com/pricing/#cloud-compute)
-- CPU: 2 Intel vCPU cores
-- RAM: 4 GB
-- Storage: 80 GB SSD
-
-### Initial setup
-
-```
-$ nix run .#terraform
-```
-
-### Deploy new configuration
-
-```
-$ clan machines update jitsi01
-```
-
-### Redeploy server
-
-To redeploy the server without running `terraform destroy` which will take down
-the `clan.lol` DNS:
-
-```
-# Run `apply` script first to ensure `terraform init` gets run
-$ nix run .#terraform
-$ nix run .#terraform.terraform -- apply -replace "vultr_instance.jitsi01"
-```
-
-### Destroy server
-
-To destroy just the server without taking down the `clan.lol` DNS:
-
-```
-# Run `apply` script first to ensure `terraform init` gets run
-$ nix run .#terraform
-$ nix run .#terraform.terraform -- destroy -target "vultr_instance.jitsi01"
-```
-
 ## monitoring01
 
 - Instance type: [cx43](https://www.hetzner.com/cloud/cost-optimized/)
