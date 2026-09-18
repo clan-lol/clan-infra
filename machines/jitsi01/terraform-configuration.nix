@@ -21,24 +21,6 @@
     backups = "disabled";
   };
 
-  resource.hcloud_zone_rrset.jitsi_a = {
-    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
-    name = "jitsi";
-    type = "A";
-    records = [ { value = config.resource.vultr_instance.jitsi01 "main_ip"; } ];
-  };
-
-  resource.hcloud_zone_rrset.jitsi_aaaa = {
-    zone = lib.tf.ref "module.dns.clan_lol_zone_name";
-    name = "jitsi";
-    type = "AAAA";
-    records = [
-      {
-        value = lib.tf.ref ''cidrhost("${config.resource.vultr_instance.jitsi01 "v6_main_ip"}/128", 0)'';
-      }
-    ];
-  };
-
   resource.hcloud_zone_rrset.jitsi01_a = {
     zone = lib.tf.ref "module.dns.clan_lol_zone_name";
     name = "jitsi01";
