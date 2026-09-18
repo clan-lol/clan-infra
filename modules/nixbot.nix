@@ -20,9 +20,6 @@
           _: user: user.isNormalUser && builtins.elem "wheel" user.extraGroups
         ) config.users.users
       )
-      ++ [
-        "brianmcgee"
-      ]
     );
 
     buildSystems = [
